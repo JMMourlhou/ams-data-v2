@@ -9,7 +9,6 @@ from ..Saisie_info_de_base import Saisie_info_de_base
 from ..Stage_creation import Stage_creation
 from ..Visu_stages.RowTemplate3 import RowTemplate3
 from anvil import open_form
-import sign_in_for_AMS_Data
 
 
 #-------------------------------------------------------------------

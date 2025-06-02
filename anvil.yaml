@@ -905,9 +905,6 @@ dependencies:
 - dep_id: dep_7cjrxpuwlnf9l
   resolution_hints: {app_id: T2N6YY2X6Z3W26OE, name: Clone of InputBox, package_name: InputBox}
   version: {dev: false}
-- dep_id: dep_e2swiouc0l52m
-  resolution_hints: {app_id: 2ERGGVOSXP234KTT, name: Sign_In for AMS_Data, package_name: sign_in_for_AMS_Data}
-  version: {branch: master}
 - dep_id: dep_vx6cxetpr63c4r
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {branch: master}
