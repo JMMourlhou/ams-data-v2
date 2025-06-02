@@ -902,17 +902,17 @@ db_schema:
     server: full
     title: Users
 dependencies:
-- dep_id: dep_tf2fn0r0pqdpmc
-  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {dev: false}
 - dep_id: dep_7cjrxpuwlnf9l
   resolution_hints: {app_id: T2N6YY2X6Z3W26OE, name: Clone of InputBox, package_name: InputBox}
   version: {dev: false}
 - dep_id: dep_e2swiouc0l52m
   resolution_hints: {app_id: 2ERGGVOSXP234KTT, name: Sign_In for AMS_Data, package_name: sign_in_for_AMS_Data}
   version: {branch: master}
-metadata: {description: 'Gestion de données, pour AMSport', logo_img: 'asset:logo_fs_small.png', title: AMS Data}
-name: Clone of AMS_Data (2)
+- dep_id: dep_728flw5mgf3ods
+  resolution_hints: {app_id: 5YFTT3XOGNP2J4BZ, name: Anvil extras, package_name: Anvil_extras}
+  version: {branch: master}
+metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMS Data}
+name: ams_data_v2
 package_name: AMS_Data
 renamed: true
 runtime_options:
