@@ -1,0 +1,37 @@
+components:
+- event_bindings: {mouse_down: canvas_1_mouse_down, mouse_leave: canvas_1_mouse_leave, mouse_move: canvas_1_mouse_move, mouse_up: canvas_1_mouse_up}
+  layout_properties: {grid_position: 'OWAAKG,BITZDR'}
+  name: canvas_1
+  properties: {background: '', border: '1px solid #888', foreground: '', height: 332.48114013671875, role: null, spacing_above: small, spacing_below: small, visible: true, width: default}
+  type: Canvas
+- components:
+  - event_bindings: {click: button_save_click}
+    layout_properties: {grid_position: 'EXGGGB,MPCGDB'}
+    name: button_save
+    properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Validation, underline: false, visible: true, width: default}
+    type: Button
+  - event_bindings: {click: button_erase_click}
+    layout_properties: {grid_position: 'EXGGGB,VDBSFH'}
+    name: button_erase
+    properties: {text: Effacer}
+    type: Button
+  - event_bindings: {click: button_retour_click}
+    layout_properties: {grid_position: 'EXGGGB,KTHGHM'}
+    name: button_retour
+    properties: {text: Retour}
+    type: Button
+  layout_properties: {grid_position: 'TAXIDJ,IMRDJY'}
+  name: column_panel_3
+  properties: {wrap_on: never}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'ILCEJE,QGIQVB'}
+    name: image_1
+    properties: {border: '1px solid #888'}
+    type: Image
+  layout_properties: {grid_position: 'GSYNBD,KUFWSY'}
+  name: column_panel_2
+  properties: {background: '', border: '', col_widths: '{}', foreground: '', role: null, row_spacing: 10, spacing_above: small, spacing_below: small, visible: false, width: default, wrap_on: mobile}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

@@ -1,0 +1,22 @@
+components:
+- components:
+  - event_bindings: {click: retour_click}
+    layout_properties: {grid_position: 'UMSACC,GBFKOH'}
+    name: retour
+    properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Retour}
+    type: Button
+  - event_bindings: {click: download_click}
+    layout_properties: {grid_position: 'UMSACC,APKITP'}
+    name: download
+    properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Téléchargement}
+    type: Button
+  layout_properties: {grid_position: 'JYWXYT,QBKIZU'}
+  name: column_panel_1
+  properties: {visible: false}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'RMFEXQ,YZFAEM'}
+  name: images
+  properties: {item_template: Pre_Visu_PDF_into_IMG.ImageItem}
+  type: RepeatingPanel
+container: {type: ColumnPanel}
+is_package: true

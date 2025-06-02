@@ -1,0 +1,81 @@
+components:
+- components:
+  - event_bindings: {tick: timer_1_tick}
+    layout_properties: {grid_position: 'NXTDKC,NYATTY'}
+    name: timer_1
+    properties: {interval: 300}
+    type: Timer
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_3
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Création / MAJ du QCM, tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties:
+    col_widths: {}
+    grid_position: DGXGMW,VQVVNA
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - components:
+    - components:
+      - event_bindings: {change: drop_down_qcm_row_change}
+        layout_properties: {width: 221.94752978515626}
+        name: drop_down_qcm_row
+        properties:
+          align: full
+          background: theme:On Primary Container
+          bold: false
+          border: ''
+          enabled: true
+          font: ''
+          font_size: null
+          foreground: theme:On Primary
+          include_placeholder: true
+          italic: false
+          items: []
+          placeholder: Choisissez le QCM
+          role: outlined
+          spacing_above: small
+          spacing_below: small
+          tooltip: ''
+          underline: false
+          visible: true
+        type: DropDown
+      - event_bindings: {click: button_annuler_click}
+        layout_properties: {}
+        name: button_annuler
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: small, text: Retour, tooltip: '', underline: false, visible: true}
+        type: Button
+      - layout_properties: {}
+        name: label_2
+        properties: {foreground: 'theme:On Primary', text: '#  ', visible: false}
+        type: Label
+      layout_properties: {grid_position: 'WOTOGW,QAOCRN'}
+      name: flow_panel_1
+      properties: {align: center, spacing_below: none, vertical_align: middle}
+      type: FlowPanel
+    layout_properties: {grid_position: 'MZAUBQ,LXEHRW'}
+    name: column_panel_6
+    properties: {background: 'theme:Primary', col_widths: '{"QAOCRN":15}'}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'XGRXOA,LZLTYL'}
+  name: column_panel_1
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'JKQKWS,BTYCFD'}
+  name: column_panel_content
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '', foreground: '', role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'BAQSAH,ZEHNCW'}
+  name: spacer_1
+  properties: {height: 147.67889404296875}
+  type: Spacer
+- event_bindings: {click: button_annuler_click}
+  layout_properties: {grid_position: 'JDCYHT,CVOGDU'}
+  name: button_annuler_copy
+  properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: small, text: Retour, tooltip: '', underline: false, visible: true}
+  type: Button
+container:
+  properties: {col_widths: '{}', spacing_above: medium}
+  type: ColumnPanel
+is_package: true

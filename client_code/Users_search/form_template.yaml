@@ -1,0 +1,186 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_0
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Table users, tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties: {grid_position: 'LPTPHF,UUPLVT'}
+  name: column_panel_header
+  properties:
+    background: ''
+    border: ''
+    col_spacing: medium
+    col_widths: '{}'
+    foreground: ''
+    role: outlined-card
+    spacing:
+      padding: ['8', null, '8', null]
+    spacing_above: small
+    spacing_below: small
+    tooltip: ''
+    visible: true
+    wrap_on: mobile
+  type: ColumnPanel
+- components:
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      layout_properties:
+        col_widths: {}
+        grid_position: COGJPP,SACJUA
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'MZAUBQ,LXEHRW'}
+    name: column_panel_0_1
+    properties: {col_widths: '{}'}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {change: text_box_role_focus, focus: text_box_role_focus}
+      layout_properties: {grid_position: 'IEOFVE,AASIVP'}
+      name: text_box_role
+      properties:
+        background: theme:Olive
+        font_size: 12
+        foreground: theme:On Primary
+        margin: [null, null, null, '']
+        placeholder: R
+        role: null
+      type: TextBox
+    - event_bindings: {change: text_box_nom_focus, focus: text_box_nom_focus}
+      layout_properties: {grid_position: 'IEOFVE,JOXHON'}
+      name: text_box_nom
+      properties: {background: 'theme:Olive', font_size: 12, foreground: 'theme:On Primary', placeholder: Nom, role: null}
+      type: TextBox
+    - event_bindings: {change: text_box_prenom_focus, focus: text_box_prenom_focus}
+      layout_properties: {grid_position: 'IEOFVE,IDAWHI'}
+      name: text_box_prenom
+      properties:
+        background: theme:Olive
+        font_size: 12
+        foreground: theme:On Primary
+        margin: [null, null, '0', null]
+        placeholder: Prénom
+        role: null
+      type: TextBox
+    - event_bindings: {change: text_box_mail_focus, focus: text_box_mail_focus}
+      layout_properties: {grid_position: 'IEOFVE,TXCMYJ'}
+      name: text_box_mail
+      properties:
+        background: theme:Olive
+        font_size: 12
+        foreground: theme:On Primary
+        margin: [null, null, '0', null]
+        placeholder: Mail
+        role: null
+        text: ''
+      type: TextBox
+    - event_bindings: {change: text_box_pw_failure_focus, focus: text_box_pw_failure_focus}
+      layout_properties: {grid_position: 'IEOFVE,TDXJQQ'}
+      name: text_box_pw_failure
+      properties:
+        background: theme:Olive
+        font_size: 12
+        foreground: theme:On Primary
+        margin: [null, null, '0', null]
+        placeholder: Nb PW F
+        role: null
+        text: ''
+      type: TextBox
+    - event_bindings: {change: check_box_confirmed_mail_change}
+      layout_properties: {grid_position: 'IEOFVE,QLSWSS'}
+      name: check_box_confirmed_mail
+      properties:
+        align: left
+        background: theme:Olive
+        checked: false
+        font_size: 12
+        foreground: theme:On Primary
+        spacing:
+          margin: ['6', null, null, null]
+          padding: [null, '4', null, null]
+        spacing_above: none
+        spacing_below: none
+        text: Mail non conf.
+      type: CheckBox
+    - event_bindings: {change: check_box_enabled_change}
+      layout_properties: {grid_position: 'IEOFVE,UFXMMK'}
+      name: check_box_enabled
+      properties:
+        align: left
+        background: theme:Olive
+        checked: false
+        font_size: 12
+        foreground: theme:On Primary
+        spacing:
+          margin: ['6', null, null, null]
+        spacing_above: none
+        spacing_below: none
+        text: Cpt non permis
+      type: CheckBox
+    - event_bindings: {focus: text_box_sign_up_focus, pressed_enter: text_box_sign_up_focus}
+      layout_properties: {grid_position: 'IEOFVE,KFLHLU'}
+      name: text_box_sign_up
+      properties:
+        background: theme:Olive
+        font_size: 12
+        foreground: theme:On Primary
+        margin: [null, null, '0', null]
+        placeholder: 'Créé AAAA '
+        role: null
+        text: Cpt créé le
+      type: TextBox
+    - event_bindings: {change: text_box_connexion_focus, focus: text_box_connexion_focus}
+      layout_properties: {grid_position: 'IEOFVE,RLLRUJ'}
+      name: text_box_connexion
+      properties:
+        background: theme:Olive
+        font_size: 12
+        foreground: theme:On Primary
+        margin: [null, null, '0', null]
+        placeholder: Dern.conn. le
+        role: null
+        text: Dern.conn. le
+      type: TextBox
+    layout_properties: {grid_position: 'HYNVZO,MASFBI'}
+    name: column_panel_recherche
+    properties: {col_spacing: tiny, col_widths: '{"AASIVP":5,"JOXHON":13,"IDAWHI":12,"QLSWSS":10,"TXCMYJ":20,"UFXMMK":10,"KFLHLU":20,"RLLRUJ":14,"TDXJQQ":10}', visible: true}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'IXQCMR,DJOSII'}
+  name: column_panel_0
+  properties:
+    background: theme:Primary
+    border: ''
+    col_spacing: medium
+    col_widths: '{}'
+    foreground: ''
+    role: outlined-card
+    spacing:
+      padding: ['8', null, '8', null]
+    spacing_above: none
+    spacing_below: small
+    tooltip: ''
+    visible: true
+    wrap_on: mobile
+  type: ColumnPanel
+- components:
+  - name: repeating_panel_1
+    properties: {item_template: Users_search.RowTemplate7}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'UJZNPG,PRXYWN'}
+  name: data_grid_1
+  properties:
+    columns:
+    - {data_key: column_1, expand: false, id: JKSDUP, title: Role, width: 50.794097900390625}
+    - {data_key: column_2, expand: false, id: VJQQOR, title: ' Nom', width: 97.738037109375}
+    - {data_key: column_3, expand: false, id: OJLQEN, title: Prénom, width: 148.22018432617188}
+    - {data_key: column_1, expand: false, id: HRXFLR, title: Mail, width: 124.63201904296875}
+    - {data_key: column_1, expand: false, id: PKWNIA, title: Nb pw failure, width: 110.42413330078125}
+    - {data_key: column_1, expand: false, id: RBIJJA, title: Mail conf, width: 48.89398193359375}
+    - {data_key: column_1, expand: false, id: JYSMPI, title: Cpt enabled, width: 68.94293212890625}
+    rows_per_page: 8
+    visible: true
+  type: DataGrid
+container:
+  properties: {col_widths: '{"UUPLVT":60}'}
+  type: ColumnPanel
+is_package: true

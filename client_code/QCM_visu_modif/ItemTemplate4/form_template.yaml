@@ -1,0 +1,166 @@
+components:
+- components:
+  - layout_properties: {}
+    name: label_2
+    properties: {align: center, font_size: 14, foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: '#'}
+    type: Label
+  - layout_properties: {}
+    name: label_3
+    properties: {foreground: 'theme:On Primary', text: /, visible: true}
+    type: Label
+  - layout_properties: {}
+    name: label_nb_questions
+    properties: {foreground: 'theme:On Primary', text: '#', visible: true}
+    type: Label
+  - event_bindings: {change: file_loader_1_change}
+    layout_properties: {}
+    name: file_loader_1
+    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: Choix de l'image, visible: true}
+    type: FileLoader
+  layout_properties: {grid_position: 'QCTQTJ,CDGXYX'}
+  name: flow_panel_num
+  properties: {align: center, spacing_above: none, spacing_below: none, vertical_align: middle}
+  type: FlowPanel
+- components:
+  - components:
+    - data_bindings: []
+      layout_properties: {grid_position: 'NJZSBG,MVJVXU'}
+      name: image_1
+      properties: {display_mode: shrink_to_fit, height: 224.0885009765625, role: null, spacing_above: small, spacing_below: medium}
+      type: Image
+    layout_properties: {grid_position: 'HWSCUQ,YYYUYU'}
+    name: cp_img
+    properties: {background: 'theme:On Primary Container', role: tonal-card}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {change: text_area_question_change, focus: text_area_question_focus, lost_focus: text_area_question_lost_focus, show: text_area_question_show}
+      layout_properties: {grid_position: 'JRGWCO,EAZFGY'}
+      name: text_area_question
+      properties: {align: left, auto_expand: true, background: 'theme:Primary 700', bold: true, enabled: false, font_size: 14, foreground: 'theme:On Primary', height: 56.981689453125, placeholder: Question, spacing_below: small}
+      type: TextArea
+    - components:
+      - event_bindings: {change: rep1_change}
+        layout_properties: {full_width_row: false, grid_position: 'JSZRDP,EICFQK'}
+        name: rep1
+        properties: {align: center, background: 'theme:Primary 700', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: V}
+        type: CheckBox
+      - event_bindings: {change: rep2_change}
+        layout_properties: {grid_position: 'YEFAGY,IYUETY'}
+        name: rep2
+        properties: {align: center, background: 'theme:Primary 700', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: F}
+        type: CheckBox
+      - event_bindings: {change: rep3_change}
+        layout_properties: {grid_position: 'UNTKDO,VKZZDN'}
+        name: rep3
+        properties: {align: center, background: 'theme:Primary 700', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: C, visible: false}
+        type: CheckBox
+      - event_bindings: {change: rep4_change}
+        layout_properties: {grid_position: 'EIBGWA,IJOGUK'}
+        name: rep4
+        properties: {align: center, background: 'theme:Primary 700', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: D, visible: false}
+        type: CheckBox
+      - event_bindings: {change: rep5_change}
+        layout_properties: {grid_position: 'PPWLBL,TJKTNJ'}
+        name: rep5
+        properties: {align: center, background: 'theme:Primary 700', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: E, visible: false}
+        type: CheckBox
+      data_bindings: []
+      layout_properties: {grid_position: 'JRGWCO,SNTWTT'}
+      name: cp_options
+      properties: {col_spacing: tiny}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'VWBXEW,BIJGKW'}
+    name: cp_quest_rep
+    properties: {col_spacing: tiny, col_widths: '{"EAZFGY":82,"SNTWTT":4}'}
+    type: ColumnPanel
+  - event_bindings: {change: text_box_correction_change, focus: text_box_correction_focus, lost_focus: text_box_correction_lost_focus}
+    layout_properties: {grid_position: ''}
+    name: text_box_correction
+    properties: {align: left, auto_expand: true, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', height: 63.784912109375, italic: false, placeholder: '', role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
+    type: TextArea
+  - components:
+    - event_bindings: {change: drop_down_bareme_change}
+      layout_properties: {width: 107.49824106445313}
+      name: drop_down_bareme
+      properties:
+        align: full
+        background: theme:On Primary Container
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 18
+        foreground: theme:Tertiary
+        include_placeholder: true
+        italic: false
+        items: ['']
+        placeholder: Bareme
+        role: null
+        spacing_above: small
+        spacing_below: small
+        tooltip: ''
+        underline: false
+        visible: true
+      type: DropDown
+    - layout_properties: {width: 19.66973876953125}
+      name: spacer_1
+      properties: {height: 32}
+      type: Spacer
+    layout_properties: {grid_position: 'JDGSTY,DTZBML'}
+    name: fp_vf_barem
+    properties: {align: center, spacing: tiny, vertical_align: middle}
+    type: FlowPanel
+  - components:
+    - event_bindings: {click: button_delete_click}
+      layout_properties: {}
+      name: button_delete
+      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', text: Enlever}
+      type: Button
+    - event_bindings: {click: button_modif_click}
+      layout_properties: {}
+      name: button_modif
+      properties: {align: center, background: 'theme:On Primary Container', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Modif, tooltip: '', underline: false, visible: true}
+      type: Button
+    data_bindings: []
+    layout_properties: {grid_position: 'JDGSTY,OFZKXW'}
+    name: fp_modif
+    properties: {align: center, background: 'theme:Primary', spacing: huge, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'ESLINE,TRYYYF'}
+  name: cp_father
+  properties: {spacing_above: none, spacing_below: none}
+  type: ColumnPanel
+- event_bindings: {click: button_fin_qcm_click, show: button_fin_qcm_show}
+  layout_properties: {grid_position: 'MSXBMZ,NBNYDO'}
+  name: button_fin_qcm
+  properties: {background: 'theme:Error', foreground: 'theme:Tertiary', text: Fin du QCM, visible: false}
+  type: Button
+- components:
+  - layout_properties: {grid_position: 'WTMNTD,OYYUQY'}
+    name: label_nb_quest_ok
+    properties: {align: center, foreground: 'theme:On Primary', text: 'XX questions exactes sur XX, soit xx %', visible: false}
+    type: Label
+  - components: []
+    layout_properties: {grid_position: 'MDFWJT,QOACBK'}
+    name: column_panel_plot
+    properties: {background: 'theme:On Primary Container', visible: true}
+    type: ColumnPanel
+  - layout_properties: {grid_position: 'MEUEPA,WTTGBQ'}
+    name: label_nb_points
+    properties: {align: center, font_size: 12, foreground: 'theme:On Primary', text: 'XX points obtenus sur  XX , soit XX %', visible: false}
+    type: Label
+  - event_bindings: {click: button_enregistrer_et_sortir_click}
+    layout_properties: {grid_position: 'ILCZMZ,OEJJCE'}
+    name: button_enregistrer_et_sortir
+    properties: {bold: true, foreground: 'theme:Tertiary', role: outlined-button, text: Sortir du QCM, visible: false}
+    type: Button
+  event_bindings: {show: column_panel_results_show}
+  layout_properties: {grid_position: 'RBTWZY,SNUAFS'}
+  name: column_panel_results
+  properties: {background: 'theme:On Primary Container', role: outlined-card, spacing_above: none, spacing_below: none, visible: false}
+  type: ColumnPanel
+container:
+  event_bindings: {}
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+is_package: true

@@ -1,0 +1,31 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_3
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Génération de QR Code, tooltip: '', underline: false, visible: true}
+    type: Label
+  - event_bindings: {click: button_annuler_click}
+    layout_properties: {grid_position: 'SBGIYF,HHRNSU'}
+    name: button_annuler
+    properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Retour, tooltip: '', underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: button_pdf_click}
+    layout_properties: {grid_position: 'HIXGBO,QNBMSE'}
+    name: button_pdf
+    properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Pdf, tooltip: '', underline: false, visible: true}
+    type: Button
+  layout_properties: {grid_position: 'KMPRUE,WAZHZL'}
+  name: column_panel_1
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'MDBSDJ,CGVPJM'}
+  name: image_1
+  properties: {spacing_above: large}
+  type: Image
+- event_bindings: {pressed_enter: text_box_1_pressed_enter}
+  layout_properties: {grid_position: 'FFFRUV,WNCYKM'}
+  name: text_box_1
+  properties: {align: center, placeholder: Entrez le texte à transformer en QR Code, spacing_above: large, visible: true}
+  type: TextBox
+container: {type: ColumnPanel}
+is_package: true

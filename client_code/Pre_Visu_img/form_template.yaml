@@ -1,0 +1,33 @@
+components:
+- components:
+  - components:
+    - event_bindings: {click: download_click}
+      layout_properties: {grid_position: 'LSXOEP,ZQNCZV'}
+      name: download
+      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Téléchargement, visible: true}
+      type: Button
+    - event_bindings: {click: retour_click}
+      layout_properties: {grid_position: 'LSXOEP,WHUOGR'}
+      name: retour
+      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Retour, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'NHBMTC,WPLHEV'}
+    name: column_panel_1
+    properties: {role: elevated-card}
+    type: ColumnPanel
+  - layout_properties: {grid_position: 'YAFXUA,QQFHDB'}
+    name: label_1
+    properties: {align: center, bold: true, font_size: 12, foreground: 'theme:On Primary Container', role: null}
+    type: Label
+  - layout_properties: {grid_position: 'VISMCM,DEKXKB'}
+    name: image_1
+    properties: {display_mode: fill_width, height: '900'}
+    type: Image
+  layout_properties: {grid_position: 'CBXWWY,HICZXN'}
+  name: column_panel_2
+  properties: {role: elevated-card}
+  type: ColumnPanel
+container:
+  event_bindings: {show: form_show}
+  type: ColumnPanel
+is_package: true

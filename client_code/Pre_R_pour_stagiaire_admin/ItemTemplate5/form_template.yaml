@@ -1,0 +1,62 @@
+components:
+- components:
+  - components:
+    - components:
+      - event_bindings: {click: button_nom_click}
+        layout_properties: {expand: true}
+        name: button_nom
+        properties:
+          align: left
+          background: theme:Tertiary
+          bold: false
+          border: ''
+          enabled: true
+          font: ''
+          font_size: null
+          foreground: theme:On Primary Container
+          icon: ''
+          icon_align: left
+          italic: false
+          role: null
+          spacing:
+            padding: [null, '5', null, '5']
+          spacing_above: small
+          spacing_below: small
+          text: button_nom
+          tooltip: ''
+          underline: false
+          visible: true
+        type: Button
+      layout_properties: {width: 179.5994130859375}
+      name: flow_panel_3
+      properties: {align: left}
+      type: FlowPanel
+    - components:
+      - event_bindings: {click: button_2_click}
+        layout_properties: {}
+        name: button_2
+        properties: {align: left, background: 'theme:On Primary Container', bold: true, foreground: 'theme:Tertiary', icon: '', text: + Perso}
+        type: Button
+      layout_properties: {width: 121.42621630859375}
+      name: flow_panel_2
+      properties: {align: right}
+      type: FlowPanel
+    event_bindings: {}
+    layout_properties: {grid_position: 'MIMVUY,FHKVHU'}
+    name: flow_panel_1
+    properties: {align: center, background: 'theme:Tertiary', border: '', foreground: '', role: null, spacing: medium, spacing_above: small, spacing_below: none, tooltip: '', vertical_align: full, visible: true}
+    type: FlowPanel
+  layout_properties: {grid_position: 'JOLOEV,DKWUFM'}
+  name: column_panel_2
+  properties: {spacing_above: none, spacing_below: none, wrap_on: never}
+  type: ColumnPanel
+- event_bindings: {}
+  layout_properties: {grid_position: 'BYERRJ,QFQLRT'}
+  name: repeating_panel_1
+  properties: {item_template: Pre_R_pour_stagiaire_admin.ItemTemplate5.ItemTemplate6, role: null, spacing_below: none, visible: false}
+  type: RepeatingPanel
+container:
+  event_bindings: {}
+  properties: {spacing_above: none, spacing_below: none}
+  type: ColumnPanel
+is_package: true

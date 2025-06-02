@@ -1,0 +1,19 @@
+components:
+- components:
+  - layout_properties: {width: 717.843201171875}
+    name: plot_1
+    properties: {height: 435.7503662109375, interactive: false}
+    type: Plot
+  layout_properties: {full_width_row: true, grid_position: 'AWOOMP,MXDMAX'}
+  name: flow_panel_1
+  properties: {align: center, spacing: none, spacing_above: medium, vertical_align: middle}
+  type: FlowPanel
+container:
+  event_bindings: {show: form_show}
+  properties: {spacing_above: none}
+  type: ColumnPanel
+custom_component: false
+is_package: true
+properties:
+- {default_binding_prop: true, default_value: '', important: true, name: prop, type: string}
+toolbox_item: {title: JM_Plot}

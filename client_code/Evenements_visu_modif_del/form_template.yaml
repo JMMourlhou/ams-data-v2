@@ -1,0 +1,132 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_0
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Evenements, tooltip: '', underline: false, visible: true}
+    type: Label
+  - event_bindings: {tick: timer_1_tick}
+    layout_properties: {grid_position: 'NJAMYS,SIXLPS'}
+    name: timer_1
+    properties: {interval: 300}
+    type: Timer
+  layout_properties: {grid_position: 'JRDEIG,NSLPKU'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      layout_properties:
+        col_widths: {}
+        grid_position: COGJPP,SACJUA
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'MZAUBQ,LXEHRW'}
+    name: column_panel_0_1
+    properties: {col_widths: '{}'}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {change: drop_down_event_change}
+      layout_properties: {expand: false}
+      name: drop_down_event
+      properties:
+        align: center
+        background: theme:On Primary Container
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 16
+        foreground: theme:On Primary
+        include_placeholder: true
+        italic: false
+        items: []
+        margin: [null, '0', null, null]
+        placeholder: Que voulez vous faire ?
+        role: null
+        spacing_above: small
+        spacing_below: small
+        tooltip: ''
+        underline: false
+        visible: true
+      type: DropDown
+    layout_properties: {grid_position: 'BWKGSA,VNTBFV'}
+    name: flow_panel_0
+    properties: {align: center, background: '', border: '', foreground: '', role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: full, visible: true}
+    type: FlowPanel
+  - components:
+    - layout_properties: {grid_position: 'CFDXWJ,JAOFBT'}
+      name: label_1
+      properties:
+        align: left
+        foreground: theme:On Primary
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '2', null]
+        text: 'Recherche sur tous  les évenements :'
+      type: Label
+    - event_bindings: {change: text_box_date_change, focus: text_box_date_focus}
+      layout_properties: {grid_position: 'IEOFVE,AASIVP'}
+      name: text_box_date
+      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', placeholder: 'AAAA MM JJ HH:MM', role: null}
+      type: TextBox
+    - event_bindings: {change: text_box_mot_clef_change, focus: text_box_mot_clef_focus}
+      layout_properties: {grid_position: 'IEOFVE,JOXHON'}
+      name: text_box_mot_clef
+      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', placeholder: Mot Clef, role: null}
+      type: TextBox
+    - event_bindings: {change: text_box_lieu_change, focus: text_box_lieu_focus}
+      layout_properties: {grid_position: 'IEOFVE,IDAWHI'}
+      name: text_box_lieu
+      properties:
+        background: theme:Olive
+        foreground: theme:On Primary
+        margin: [null, null, '0', null]
+        placeholder: Lieu
+        role: null
+      type: TextBox
+    - event_bindings: {change: check_box_visu_erreurs_change}
+      layout_properties: {grid_position: 'IEOFVE,QLSWSS'}
+      name: check_box_visu_erreurs
+      properties:
+        align: center
+        background: theme:Olive
+        checked: false
+        font_size: 10
+        foreground: theme:On Primary
+        spacing:
+          margin: ['10', null, null, null]
+        spacing_above: medium
+        text: Récupérer saisies non validées
+      type: CheckBox
+    layout_properties: {grid_position: 'HYNVZO,MASFBI'}
+    name: column_panel_recherche
+    properties: {col_widths: '{"AASIVP":15,"JOXHON":15,"IDAWHI":30,"QLSWSS":15}', visible: false}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'AGRPRA,SOATGO'}
+  name: column_panel_0
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - layout_properties: {}
+    name: repeating_panel_1
+    properties: {background: 'theme:On Primary', item_template: Evenements_visu_modif_del.RowTemplate5}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'JJQOMZ,FJJSYG'}
+  name: data_grid_1
+  properties:
+    auto_header: false
+    background: theme:On Primary
+    columns:
+    - {data_key: column_1, expand: false, id: JKSDUP, title: Date, width: 176.52294921875}
+    - {data_key: column_2, expand: false, id: VJQQOR, title: Mot Clef, width: 145.761474609375}
+    - {data_key: column_3, expand: false, id: OJLQEN, title: Lieu, width: 116.62384033203125}
+    foreground: theme:On Primary
+    rows_per_page: 7
+    visible: true
+  type: DataGrid
+container:
+  properties: {visible: true}
+  type: ColumnPanel
+is_package: true

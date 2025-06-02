@@ -1,0 +1,72 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'WJPNVT,VNSUXA'}
+    name: spacer_1
+    properties: {height: -3.9891357421875, visible: false}
+    type: Spacer
+  - layout_properties: {grid_position: 'EFRCWD,VSKSUF'}
+    name: label_3
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'Mailing : Info coll   /  Anciens stagiaires', tooltip: '', underline: false, visible: true}
+    type: Label
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_mailing_click}
+      name: button_mailing
+      properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Error', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: GO !, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_comp_stagiaires_click}
+      name: button_comp_stagiaires
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Comparaison, tooltip: '', underline: false, visible: false}
+      type: Button
+    - event_bindings: {click: button_tri_nom_click}
+      layout_properties: {}
+      name: button_tri_nom
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Tri/mails, tooltip: '', underline: false, visible: true}
+      type: Button
+    - components:
+      - layout_properties: {grid_position: 'IYRVSW,ANDAWQ'}
+        name: label_nb_select
+        properties: {align: center, bold: true, foreground: 'theme:Error'}
+        type: Label
+      - layout_properties: {grid_position: 'UQTROR,NWVHTU IYRVSW,NJMGAJ'}
+        name: label_2
+        properties: {align: center, text: /}
+        type: Label
+      - layout_properties: {grid_position: 'IYRVSW,GKWLMH'}
+        name: label_nb_rows
+        properties: {align: center, bold: true, foreground: 'theme:Primary'}
+        type: Label
+      layout_properties: {width: 71.84384619140624}
+      name: column_panel_2
+      properties: {col_widths: '{"ANDAWQ":19,"NJMGAJ":17,"GKWLMH":24}', wrap_on: never}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'KRLKWV,HDYGOG'}
+    name: flow_panel_1
+    properties: {align: justify, spacing: medium, spacing_above: none, spacing_below: none}
+    type: FlowPanel
+  event_bindings: {}
+  layout_properties: {grid_position: 'ZWRYQL,YAPQID'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: none, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - layout_properties: {}
+    name: repeating_panel_1
+    properties: {item_template: Mail_to_old_stagiaires.RowTemplate6, spacing_above: none, spacing_below: none}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'VRBAVE,TXYJNS'}
+  name: data_grid_1
+  properties:
+    auto_header: false
+    columns:
+    - {data_key: column_1, id: JKSDUP, title: Column 1}
+    - {data_key: column_2, id: VJQQOR, title: Column 2}
+    - {data_key: column_3, id: OJLQEN, title: Column 3}
+    rows_per_page: 4
+    spacing_below: none
+  type: DataGrid
+container: {type: ColumnPanel}
+is_package: true

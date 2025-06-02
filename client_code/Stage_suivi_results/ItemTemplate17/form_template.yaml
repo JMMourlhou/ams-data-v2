@@ -1,0 +1,16 @@
+components:
+- data_bindings:
+  - {code: '', property: tag, writeback: false}
+  layout_properties: {grid_position: 'JEGTOK,OTSBLR'}
+  name: label_1
+  properties: {align: center, background: 'theme:Primary', foreground: 'theme:On Primary', text: Prénom Nom}
+  type: Label
+- layout_properties: {grid_position: 'RHAMWU,PEMAHI'}
+  name: column_panel_content
+  properties: {}
+  type: ColumnPanel
+container:
+  event_bindings: {show: form_show}
+  properties: {spacing_above: large, visible: true}
+  type: ColumnPanel
+is_package: true

@@ -1,0 +1,59 @@
+components:
+- event_bindings: {tick: timer_1_tick}
+  layout_properties: {grid_position: 'GRLOAM,TVIFTF'}
+  name: timer_1
+  properties: {interval: 0}
+  type: Timer
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_3
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Utilitaires JM, tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties: {grid_position: 'PWBWOL,KBZDOY'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      layout_properties:
+        col_widths: {}
+        grid_position: COGJPP,SACJUA
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'MJQSEX,NMYFZF'}
+    name: column_panel_6
+    properties: {col_widths: '{}'}
+    type: ColumnPanel
+  - event_bindings: {click: bt_maj_txt_pre_requis_click}
+    layout_properties: {grid_position: 'DOAWRV,FOMAID'}
+    name: bt_maj_txt_pre_requis
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Maj txt nom prenom pré requis (BG Task)', tooltip: '', underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: bt_maj_txt_stagiaires_inscrits_click}
+    layout_properties: {grid_position: 'LLROGI,YIBZED'}
+    name: bt_maj_txt_stagiaires_inscrits
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Maj txt nom prenom Stagiaires inscrits', tooltip: '', underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: bt_del_qcm_2_mois_click}
+    layout_properties: {grid_position: 'UNJISK,QTBLPG'}
+    name: bt_del_qcm_2_mois
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Del QCM échoués > 2 mois ', tooltip: '', underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: bt_del_qcm_essai_click}
+    layout_properties: {grid_position: 'SFULEP,XZCUQF'}
+    name: bt_del_qcm_essai
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  del QCM Essais', tooltip: '', underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: bt_csv_click}
+    layout_properties: {grid_position: 'CSNKTP,SFBHIQ'}
+    name: bt_csv
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: ' CSV', tooltip: '', underline: false, visible: true}
+    type: Button
+  layout_properties: {grid_position: 'VLMATF,FVCPUI'}
+  name: column_panel_1
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

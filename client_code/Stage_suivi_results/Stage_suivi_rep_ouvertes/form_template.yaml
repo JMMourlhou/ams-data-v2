@@ -1,0 +1,19 @@
+components:
+- layout_properties: {grid_position: 'DXGHUF,JAANQH'}
+  name: label_question
+  properties: {align: center, background: '', bold: false, font: arial, font_size: 16, foreground: 'theme:On Primary', spacing_above: none, spacing_below: small, visible: false}
+  type: Label
+- components: []
+  layout_properties: {grid_position: 'HEEQXV,VRFIPW'}
+  name: column_panel_reponses
+  properties: {background: 'theme:Gray 300', col_spacing: none, foreground: 'theme:On Primary', role: outlined-card, spacing_above: none, spacing_below: none, visible: true}
+  type: ColumnPanel
+container:
+  event_bindings: {show: form_show}
+  properties: {spacing_above: none, spacing_below: none}
+  type: ColumnPanel
+custom_component: false
+is_package: true
+properties:
+- {default_binding_prop: true, default_value: '', important: true, name: prop, type: string}
+toolbox_item: {title: JM_Plot}

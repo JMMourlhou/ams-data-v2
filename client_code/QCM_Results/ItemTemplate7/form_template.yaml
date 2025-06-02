@@ -1,0 +1,14 @@
+components:
+- event_bindings: {click: button_nom_prenom_click}
+  layout_properties: {grid_position: 'PPSTST,ZFDVZT'}
+  name: button_nom_prenom
+  properties: {align: center, background: 'theme:Tertiary', foreground: 'theme:On Primary Container', text: nom_p}
+  type: Button
+- layout_properties: {grid_position: 'BBZOXE,HADKAT'}
+  name: repeating_panel_qcm_results
+  properties: {item_template: QCM_Results.ItemTemplate7.ItemTemplate8, visible: true}
+  type: RepeatingPanel
+container:
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
+is_package: true

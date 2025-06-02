@@ -1,0 +1,693 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_0
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Evaluation en Communication, tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties: {grid_position: 'NDPOEF,AXFLPS'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      layout_properties:
+        col_widths: {}
+        grid_position: COGJPP,SACJUA
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'MZAUBQ,LXEHRW'}
+    name: column_panel_0_1
+    properties: {col_widths: '{}'}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {change: drop_down_cadre_change}
+      layout_properties: {expand: false}
+      name: drop_down_cadre
+      properties:
+        align: full
+        background: theme:On Primary Container
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 16
+        foreground: theme:On Primary
+        include_placeholder: true
+        italic: false
+        items: ['Cours communication ', Cours Aqua, Autres... (à préciser)]
+        margin: [null, '0', null, null]
+        placeholder: Choisir le cadre ...
+        role: null
+        spacing_above: small
+        spacing_below: small
+        tooltip: ''
+        underline: false
+        visible: true
+      type: DropDown
+    layout_properties: {grid_position: 'BWKGSA,VNTBFV'}
+    name: flow_panel_0
+    properties: {align: center, background: '', border: '', foreground: '', role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: full, visible: true}
+    type: FlowPanel
+  - event_bindings: {show: text_box_cadre_show}
+    layout_properties: {grid_position: 'TJFZOO,EEINIJ'}
+    name: text_box_cadre
+    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', placeholder: 'Cadre, ex: Cours Anatomie', text: 'Cours de ', visible: false}
+    type: TextBox
+  - event_bindings: {change: drop_down_code_stage_change}
+    layout_properties: {grid_position: 'YZLVQL,LLTKDD'}
+    name: drop_down_code_stage
+    properties:
+      align: full
+      background: theme:Tertiary
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 16
+      foreground: theme:On Primary Container
+      include_placeholder: true
+      italic: false
+      items: []
+      placeholder: Choix du stage ...
+      role: null
+      spacing_above: small
+      spacing_below: small
+      tooltip: ''
+      underline: false
+      visible: false
+    type: DropDown
+  - event_bindings: {change: drop_down_stagiaires_change}
+    layout_properties: {grid_position: 'VXXUHN,QRSTKY'}
+    name: drop_down_stagiaires
+    properties:
+      align: full
+      background: theme:Tertiary
+      font_size: 16
+      foreground: theme:On Primary Container
+      include_placeholder: true
+      margin: [null, null, null, null]
+      placeholder: Pour  Stagiaire ...
+      visible: false
+    type: DropDown
+  layout_properties: {grid_position: 'PCAMBQ,EBKMZZ'}
+  name: column_panel_0
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_1
+    properties: {align: center, bold: true, font_size: null, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - layout_properties: {grid_position: 'HRJSWS,AEXQWF'}
+      name: button_bad
+      properties: {align: center, background: 'theme:Surface', bold: false, enabled: false, font_size: 30, foreground: 'theme:Error', icon: 'fa:thumbs-down', role: null, text: ' '}
+      type: Button
+    - layout_properties: {grid_position: 'HRJSWS,FYTCZV'}
+      name: label_11
+      properties: {align: center, bold: true, font_size: 40, foreground: 'theme:On Primary', text: '----- >'}
+      type: Label
+    - layout_properties: {grid_position: 'HRJSWS,GSRIRY'}
+      name: button_bad_copy
+      properties: {align: center, background: 'theme:Surface', bold: false, enabled: false, font_size: 30, foreground: 'theme:Vert Foncé', icon: 'fa:thumbs-up', role: null, text: ' '}
+      type: Button
+    layout_properties: {full_width_row: false, grid_position: 'LIPPSJ,JPIDBL'}
+    name: column_panel_11
+    properties: {col_spacing: tiny, col_widths: '{"AEXQWF":9,"FYTCZV":42,"GSRIRY":9}', spacing_above: none, spacing_below: none, wrap_on: never}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {change: check_box_1_1_change}
+      layout_properties: {}
+      name: check_box_1_1
+      properties: {align: left, background: 'theme:Error', checked: false, foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_1_2_change}
+      layout_properties: {}
+      name: check_box_1_2
+      properties: {align: left, background: 'theme:Orange', text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_1_3_change}
+      layout_properties: {}
+      name: check_box_1_3
+      properties: {background: 'theme:Jaune Orange', text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_1_4_change}
+      layout_properties: {}
+      name: check_box_1_4
+      properties: {background: 'theme:Vert Tres Clair', text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_1_5_change}
+      layout_properties: {}
+      name: check_box_1_5
+      properties: {background: 'theme:Vert Clair', text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_1_6_change}
+      layout_properties: {}
+      name: check_box_1_6
+      properties: {background: 'theme:Vert Foncé', foreground: '', text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_1
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'VIKPIZ,GJEHEN'}
+  name: column_panel_1
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, spacing_below: small, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_2
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_2_1_change}
+      layout_properties: {}
+      name: check_box_2_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_2_2_change}
+      layout_properties: {}
+      name: check_box_2_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_2_3_change}
+      layout_properties: {}
+      name: check_box_2_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_2_4_change}
+      layout_properties: {}
+      name: check_box_2_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_2_5_change}
+      layout_properties: {}
+      name: check_box_2_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_2_6_change}
+      layout_properties: {}
+      name: check_box_2_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_2
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'NPMHOX,PPTCJY'}
+  name: column_panel_2
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_3
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_3_1_change}
+      layout_properties: {}
+      name: check_box_3_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_3_2_change}
+      layout_properties: {}
+      name: check_box_3_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_3_3_change}
+      layout_properties: {}
+      name: check_box_3_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_3_4_change}
+      layout_properties: {}
+      name: check_box_3_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_3_5_change}
+      layout_properties: {}
+      name: check_box_3_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_3_6_change}
+      layout_properties: {}
+      name: check_box_3_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_3
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'DEOTOO,OWXFUJ'}
+  name: column_panel_3
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_4
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_4_1_change}
+      layout_properties: {}
+      name: check_box_4_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_4_2_change}
+      layout_properties: {}
+      name: check_box_4_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_4_3_change}
+      layout_properties: {}
+      name: check_box_4_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_4_4_change}
+      layout_properties: {}
+      name: check_box_4_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_4_5_change}
+      layout_properties: {}
+      name: check_box_4_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_4_6_change}
+      layout_properties: {}
+      name: check_box_4_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_4
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'YFRVFH,JMZIUZ'}
+  name: column_panel_4
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_5
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_5_1_change}
+      layout_properties: {}
+      name: check_box_5_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_5_2_change}
+      layout_properties: {}
+      name: check_box_5_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_5_3_change}
+      layout_properties: {}
+      name: check_box_5_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_5_4_change}
+      layout_properties: {}
+      name: check_box_5_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_5_5_change}
+      layout_properties: {}
+      name: check_box_5_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_5_6_change}
+      layout_properties: {}
+      name: check_box_5_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_5
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'ERRPTP,HRVRRA'}
+  name: column_panel_5
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_6
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_6_1_change}
+      layout_properties: {}
+      name: check_box_6_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_6_2_change}
+      layout_properties: {}
+      name: check_box_6_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_6_3_change}
+      layout_properties: {}
+      name: check_box_6_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_6_4_change}
+      layout_properties: {}
+      name: check_box_6_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_6_5_change}
+      layout_properties: {}
+      name: check_box_6_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_6_6_change}
+      layout_properties: {}
+      name: check_box_6_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_6
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'WMUYSU,SHQXOW'}
+  name: column_panel_6
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_7
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_7_1_change}
+      layout_properties: {}
+      name: check_box_7_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_7_2_change}
+      layout_properties: {}
+      name: check_box_7_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_7_3_change}
+      layout_properties: {}
+      name: check_box_7_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_7_4_change}
+      layout_properties: {}
+      name: check_box_7_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_7_5_change}
+      layout_properties: {}
+      name: check_box_7_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_7_6_change}
+      layout_properties: {}
+      name: check_box_7_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_7
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'HTYFTP,TCJGGX'}
+  name: column_panel_7
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_8
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_8_1_change}
+      layout_properties: {}
+      name: check_box_8_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_8_2_change}
+      layout_properties: {}
+      name: check_box_8_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_8_3_change}
+      layout_properties: {}
+      name: check_box_8_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_8_4_change}
+      layout_properties: {}
+      name: check_box_8_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_8_5_change}
+      layout_properties: {}
+      name: check_box_8_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_8_6_change}
+      layout_properties: {}
+      name: check_box_8_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_8
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'UHNJSC,PIJVXA'}
+  name: column_panel_8
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_9
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_9_1_change}
+      layout_properties: {}
+      name: check_box_9_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_9_2_change}
+      layout_properties: {}
+      name: check_box_9_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_9_3_change}
+      layout_properties: {}
+      name: check_box_9_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_9_4_change}
+      layout_properties: {}
+      name: check_box_9_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_9_5_change}
+      layout_properties: {}
+      name: check_box_9_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_9_6_change}
+      layout_properties: {}
+      name: check_box_9_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_9
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'UAIJIN,AJVQRD'}
+  name: column_panel_9
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_10
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - components:
+    - event_bindings: {change: check_box_10_1_change}
+      layout_properties: {}
+      name: check_box_10_1
+      properties: {foreground: '', text: '0'}
+      type: CheckBox
+    - event_bindings: {change: check_box_10_2_change}
+      layout_properties: {}
+      name: check_box_10_2
+      properties: {text: '1'}
+      type: CheckBox
+    - event_bindings: {change: check_box_10_3_change}
+      layout_properties: {}
+      name: check_box_10_3
+      properties: {text: '2'}
+      type: CheckBox
+    - event_bindings: {change: check_box_10_4_change}
+      layout_properties: {}
+      name: check_box_10_4
+      properties: {text: '3'}
+      type: CheckBox
+    - event_bindings: {change: check_box_10_5_change}
+      layout_properties: {}
+      name: check_box_10_5
+      properties: {text: '4'}
+      type: CheckBox
+    - event_bindings: {change: check_box_10_6_change}
+      layout_properties: {}
+      name: check_box_10_6
+      properties: {text: '5'}
+      type: CheckBox
+    layout_properties: {grid_position: 'JRVRQF,OFJMGN'}
+    name: flow_panel_10
+    properties: {align: center, spacing: medium, spacing_above: none, spacing_below: none, vertical_align: middle}
+    type: FlowPanel
+  layout_properties: {grid_position: 'SUBTIB,WDYVCD'}
+  name: column_panel_10
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a1
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a1
+    properties: {auto_expand: true, placeholder: '', role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'BPFSTJ,SNWBBR'}
+  name: column_panel_a1
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a2
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a2
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'ICZESZ,HAHCAI'}
+  name: column_panel_a2
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a3
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a3
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: ''}
+  name: column_panel_a3
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a4
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a4
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: ''}
+  name: column_panel_a4
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a5
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a5
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'KJAFHN,YHYBAG'}
+  name: column_panel_a5
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a6
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a6
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'DTBHMT,VMWBTK'}
+  name: column_panel_a6
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a7
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a7
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'FIDFJP,LNSJOC'}
+  name: column_panel_a7
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a8
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a8
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'CJPGHQ,NEHWIQ'}
+  name: column_panel_a8
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a9
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a9
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'UBQKNM,DTBCTD'}
+  name: column_panel_a9
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a10
+    properties: {align: center, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a10
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'DMQEDT,MBCRXF'}
+  name: column_panel_a10
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- event_bindings: {click: button_valider_click}
+  layout_properties: {grid_position: 'LMNCXX,CDDPQA'}
+  name: button_valider
+  properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Valider, tooltip: '', underline: false, visible: false}
+  type: Button
+container:
+  properties: {visible: true}
+  type: ColumnPanel
+is_package: true

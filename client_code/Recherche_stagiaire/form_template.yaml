@@ -1,0 +1,204 @@
+components:
+- components:
+  - components:
+    - components:
+      - components:
+        - components:
+          - components:
+            - event_bindings: {click: button_mail_to_all_click}
+              name: button_mail_to_all
+              properties: {foreground: 'theme:On Primary Container', icon: 'fa:send', text: à la sélection, visible: false}
+              type: Button
+            - event_bindings: {click: button_trombi_click}
+              name: button_trombi
+              properties: {foreground: 'theme:On Primary Container', icon: 'fa:users', text: Trombi, visible: false}
+              type: Button
+            - event_bindings: {click: button_pre_requis_click}
+              name: button_pre_requis
+              properties: {foreground: 'theme:On Primary Container', icon: 'fa:paperclip', text: Pré-requis, visible: false}
+              type: Button
+            - event_bindings: {click: button_insc_par_qr_click}
+              name: button_insc_par_qr
+              properties: {foreground: 'theme:On Primary Container', icon: 'fa:qrcode', text: + QR, visible: false}
+              type: Button
+            - name: label_titre
+              properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Recherche, tooltip: '', underline: false, visible: true}
+              type: Label
+            layout_properties: {grid_position: 'ZLZXLE,EDSRGW'}
+            name: flow_panel_1
+            properties: {align: center}
+            type: FlowPanel
+          - event_bindings: {click: button_retour_click}
+            layout_properties: {grid_position: 'ZLZXLE,IVZAZR'}
+            name: button_retour
+            properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: medium, spacing_below: small, text: Retour, tooltip: '', underline: false, visible: true}
+            type: Button
+          layout_properties: {grid_position: 'ZDIHWY,CRZXDI'}
+          name: column_panel_8
+          properties: {col_widths: '{"EDSRGW":41,"IVZAZR":16}', wrap_on: mobile}
+          type: ColumnPanel
+        - layout_properties: {grid_position: 'HRNIDI,CZOWDC'}
+          name: label_origine
+          properties: {align: center, visible: false}
+          type: Label
+        - layout_properties: {grid_position: 'DFVUJU,IDGFFB'}
+          name: label_num_stage
+          properties: {align: center, visible: false}
+          type: Label
+        layout_properties: {grid_position: 'QFBRWM,GTQDWQ'}
+        name: column_panel_6
+        properties: {background: 'theme:Tertiary', col_widths: '{}', role: outlined-card, spacing_above: none, spacing_below: small, wrap_on: never}
+        type: ColumnPanel
+      - components:
+        - components:
+          - event_bindings: {change: text_box_role_change, pressed_enter: text_box_role_pressed_enter}
+            layout_properties: {grid_position: 'UJSBSH,OAMGMA'}
+            name: text_box_role
+            properties: {align: center, background: 'theme:Primary', bold: false, font_size: 12, foreground: 'theme:On Primary', hide_text: false, placeholder: R, spacing_above: none, spacing_below: none}
+            type: TextBox
+          - event_bindings: {change: text_box_role_change, pressed_enter: text_box_nom_pressed_enter}
+            layout_properties: {grid_position: 'UJSBSH,RIYYHY'}
+            name: text_box_nom
+            properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nom, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+            type: TextBox
+          - event_bindings: {change: text_box_role_change, pressed_enter: text_box_prenom_pressed_enter}
+            layout_properties: {grid_position: 'UJSBSH,WOUGSC'}
+            name: text_box_prenom
+            properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Prénom, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+            type: TextBox
+          layout_properties: {grid_position: 'FGPZGZ,ETASBM'}
+          name: column_panel_3
+          properties: {col_spacing: tiny, col_widths: '{"OAMGMA":12,"RIYYHY":21,"WOUGSC":27}', spacing_above: none, spacing_below: none, wrap_on: never}
+          type: ColumnPanel
+        - components:
+          - event_bindings: {change: text_box_role_change, pressed_enter: text_box_tel_pressed_enter}
+            layout_properties: {grid_position: 'OPUFKC,CKNCUI'}
+            name: text_box_tel
+            properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Tel, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+            type: TextBox
+          - event_bindings: {change: text_box_role_change, pressed_enter: text_box_email_pressed_enter}
+            layout_properties: {grid_position: 'OPUFKC,RBHOTT'}
+            name: text_box_email
+            properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Mail, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+            type: TextBox
+          layout_properties: {grid_position: 'FGPZGZ,ZUHOMU'}
+          name: column_panel_5
+          properties: {col_spacing: tiny, col_widths: '{"CKNCUI":23,"RBHOTT":37}', spacing_above: none, spacing_below: none, wrap_on: never}
+          type: ColumnPanel
+        layout_properties: {grid_position: 'GAHVSD,GETJRU'}
+        name: column_panel_users
+        properties: {col_spacing: small, col_widths: '{"ETASBM":35,"ZUHOMU":25}', wrap_on: mobile}
+        type: ColumnPanel
+      - components:
+        - event_bindings: {click: button_efface_click}
+          layout_properties: {grid_position: 'SGQLAI,ICDZRS'}
+          name: button_efface
+          properties: {align: center, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: 20, foreground: 'theme:Tertiary', icon: 'fa:recycle', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: '', tooltip: '', underline: false, visible: false}
+          type: Button
+        - event_bindings: {click: button_recherche_click}
+          layout_properties: {grid_position: 'SGQLAI,GQNNHG'}
+          name: button_recherche
+          properties: {align: left, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: ' go !', tooltip: '', underline: false, visible: false}
+          type: Button
+        - event_bindings: {change: drop_down_code_stage_change}
+          layout_properties: {grid_position: 'SGQLAI,GDMMNK'}
+          name: drop_down_code_stage
+          properties:
+            align: left
+            background: theme:Tertiary
+            bold: false
+            border: ''
+            enabled: true
+            font: ''
+            font_size: 12
+            foreground: theme:On Primary Container
+            include_placeholder: true
+            italic: false
+            items: []
+            placeholder: Stage
+            role: null
+            spacing_above: small
+            spacing_below: none
+            tooltip: ''
+            underline: false
+            visible: true
+          type: DropDown
+        - event_bindings: {change: drop_down_num_stages_change}
+          layout_properties: {full_width_row: false, grid_position: 'SGQLAI,JKUPIX'}
+          name: drop_down_num_stages
+          properties:
+            align: left
+            background: theme:Tertiary
+            bold: false
+            border: ''
+            enabled: true
+            font: ''
+            font_size: 12
+            foreground: theme:On Primary Container
+            include_placeholder: true
+            italic: false
+            items: []
+            margin: ['4', null, null, null]
+            placeholder: Date
+            role: null
+            spacing_above: none
+            spacing_below: none
+            tooltip: ''
+            underline: false
+            visible: false
+          type: DropDown
+        layout_properties: {grid_position: 'GAHVSD,CXBXCA'}
+        name: column_panel_7
+        properties: {col_spacing: tiny, col_widths: '{"GDMMNK":14,"JKUPIX":26,"ICDZRS":10,"GQNNHG":10}', spacing_above: none, spacing_below: none, wrap_on: never}
+        type: ColumnPanel
+      layout_properties: {grid_position: 'VFRGMW,CGVGSJ'}
+      name: column_panel_criteres
+      properties: {background: '', border: '', col_spacing: medium, col_widths: '{"GETJRU":26,"CXBXCA":23}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: none, tooltip: '', visible: true, wrap_on: mobile}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'UIMLIO,LNVTOQ'}
+      name: drop_down_mode_fi
+      properties: {visible: false}
+      type: DropDown
+    - components:
+      - components:
+        - layout_properties: {pinned: false}
+          name: repeating_panel_1
+          properties: {background: '', border: '', foreground: 'theme:On Primary', item_template: Recherche_stagiaire.RowTemplate1, items: null, role: null, spacing_above: none, spacing_below: none, tooltip: '', visible: true}
+          type: RepeatingPanel
+        layout_properties: {grid_position: 'VFJRDC,JLDEQO'}
+        name: data_grid_1
+        properties:
+          auto_header: false
+          background: ''
+          border: ''
+          columns: []
+          foreground: ''
+          role: null
+          rows_per_page: 3
+          show_page_controls: true
+          spacing_above: none
+          spacing_below: none
+          tooltip: ''
+          visible: true
+          wrap_on: mobile
+        type: DataGrid
+      data_bindings: []
+      layout_properties: {grid_position: 'RZGCCO,SGLSVW'}
+      name: column_panel_4
+      properties: {col_widths: '{}', spacing_above: small}
+      type: ColumnPanel
+    layout_properties:
+      col_widths: {}
+      grid_position: GXKYQU,JIABHP
+    name: column_panel_1
+    properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'UWMZFM,BGONAC'}
+  name: column_panel_2
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
+container:
+  event_bindings: {show: form_show}
+  properties: {col_spacing: none, col_widths: '{}', wrap_on: mobile}
+  type: ColumnPanel
+is_package: true

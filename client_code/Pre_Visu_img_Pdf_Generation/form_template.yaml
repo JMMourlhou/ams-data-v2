@@ -1,0 +1,16 @@
+components:
+- layout_properties: {grid_position: 'GLMUKC,JQJTEO'}
+  name: label_1
+  properties: {align: center, font_size: 8, spacing_above: none}
+  type: Label
+- components:
+  - layout_properties: {grid_position: 'VISMCM,DEKXKB'}
+    name: image_1
+    properties: {display_mode: shrink_to_fit, height: '1060', spacing_above: none, spacing_below: none}
+    type: Image
+  layout_properties: {grid_position: 'YFJPWI,QCLWMH'}
+  name: column_panel_2
+  properties: {role: null}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

@@ -1,0 +1,51 @@
+components:
+- components:
+  - components:
+    - event_bindings: {change: check_box_selection_change}
+      layout_properties: {grid_position: 'KTWEWF,HEUAGG'}
+      name: check_box_selection
+      properties: {align: right, background: 'theme:On Primary Container', font: '13', foreground: 'theme:Error', spacing_above: none, spacing_below: none, text: ''}
+      type: CheckBox
+    - event_bindings: {change: check_box_envoi_change}
+      layout_properties: {grid_position: 'KTWEWF,FJIXBF'}
+      name: check_box_envoi
+      properties: {align: left, font_size: 13, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: 'Le:'}
+      type: CheckBox
+    - layout_properties: {grid_position: 'KTWEWF,OQZHET'}
+      name: label_date_heure
+      properties: {font_size: 13, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none}
+      type: Label
+    - layout_properties: {grid_position: 'KTWEWF,YGFXGF'}
+      name: label_nom
+      properties: {foreground: 'theme:On Primary', spacing_above: none, spacing_below: none}
+      type: Label
+    layout_properties: {grid_position: 'WXWRQL,XIDGGX'}
+    name: column_panel_2
+    properties: {col_spacing: tiny, col_widths: '{"FJIXBF":5,"YGFXGF":17,"OQZHET":14,"HEUAGG":5}', spacing_above: none, spacing_below: none, wrap_on: never}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'OODWGD,ARYUVR'}
+      name: label_mail
+      properties: {align: left, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none}
+      type: Label
+    - layout_properties: {grid_position: 'OODWGD,QRXNFT'}
+      name: label_type
+      properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none}
+      type: Label
+    - event_bindings: {click: button_del_click}
+      layout_properties: {grid_position: 'OODWGD,ZHKZLP'}
+      name: button_del
+      properties: {align: center, background: 'theme:On Primary', foreground: 'theme:Error', icon: 'fa:minus', role: outlined-button, spacing_above: none, spacing_below: none, text: ''}
+      type: Button
+    layout_properties: {grid_position: 'WXWRQL,HPOJKF'}
+    name: column_panel_3
+    properties: {col_widths: '{"ARYUVR":30,"QRXNFT":20,"ZHKZLP":10}', wrap_on: never}
+    type: ColumnPanel
+  layout_properties: {}
+  name: column_panel_1
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"XIDGGX":25}', role: outlined-card, spacing_above: none, spacing_below: small, wrap_on: mobile}
+  type: ColumnPanel
+container:
+  properties: {auto_display_data: false}
+  type: DataRowPanel
+is_package: true

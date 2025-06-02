@@ -1,0 +1,51 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_1
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Pré-requis à satisfaire, tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties: {grid_position: 'OQDKID,FYNUOC'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - event_bindings: {click: button_annuler_click}
+    layout_properties: {grid_position: 'TIDMPU,QHSFAT'}
+    name: button_annuler
+    properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+    type: Button
+  - data_bindings:
+    - {code: '', property: border, writeback: false}
+    event_bindings: {change: drop_down_code_stage_change}
+    layout_properties: {grid_position: 'BOLHYM,VMDWDT'}
+    name: drop_down_code_stage
+    properties:
+      align: center
+      background: theme:Tertiary
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 16
+      foreground: theme:On Primary Container
+      include_placeholder: true
+      italic: false
+      items: []
+      placeholder: Stage
+      role: null
+      spacing_above: small
+      spacing_below: none
+      tooltip: ''
+      underline: false
+      visible: true
+    type: DropDown
+  layout_properties: {grid_position: 'EZWBXY,BKSOIK'}
+  name: column_panel_1_copy_1
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'QKUWRZ,DLAFWH'}
+  name: repeating_panel_1
+  properties: {background: 'theme:On Primary', item_template: Pre_R_pour_stagiaire.ItemTemplate3, visible: true}
+  type: RepeatingPanel
+container: {type: ColumnPanel}
+is_package: true

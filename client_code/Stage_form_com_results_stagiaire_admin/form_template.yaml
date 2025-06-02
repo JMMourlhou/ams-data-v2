@@ -1,0 +1,311 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
+    name: label_0
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: 'Evaluation en Communication / Admin ', tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties: {grid_position: 'NDPOEF,AXFLPS'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      layout_properties:
+        col_widths: {}
+        grid_position: COGJPP,SACJUA
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'MZAUBQ,LXEHRW'}
+    name: column_panel_0_1
+    properties: {col_widths: '{}'}
+    type: ColumnPanel
+  - event_bindings: {change: drop_down_stage_change}
+    layout_properties: {grid_position: 'QCKSIE,XVNNPO'}
+    name: drop_down_stage
+    properties:
+      align: center
+      background: theme:Tertiary
+      font_size: 16
+      foreground: theme:On Primary Container
+      include_placeholder: true
+      margin: [null, null, null, null]
+      placeholder: Pour  Stage ...
+      visible: true
+    type: DropDown
+  - event_bindings: {change: drop_down_date_change}
+    layout_properties: {grid_position: 'KDOSFA,MDDYEJ'}
+    name: drop_down_date
+    properties:
+      align: center
+      background: theme:Tertiary
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 16
+      foreground: theme:On Primary Container
+      include_placeholder: true
+      italic: false
+      items: []
+      margin: ['4', null, null, null]
+      placeholder: Intervention du  ....
+      role: null
+      spacing_above: small
+      spacing_below: small
+      tooltip: ''
+      underline: false
+      visible: false
+    type: DropDown
+  - event_bindings: {change: drop_down_stagiaires_change}
+    layout_properties: {grid_position: 'QYHHAT,IPBYJY'}
+    name: drop_down_stagiaires
+    properties:
+      align: center
+      background: theme:Tertiary
+      font_size: 16
+      foreground: theme:On Primary Container
+      include_placeholder: true
+      margin: [null, null, null, null]
+      placeholder: Pour  Stagiaire ...
+      visible: false
+    type: DropDown
+  - layout_properties: {grid_position: 'MEOXQV,TBAGMA'}
+    name: label_cadre
+    properties:
+      align: center
+      foreground: theme:On Primary
+      spacing:
+        margin: ['0', null, null, null]
+        padding: ['4', null, null, null]
+      visible: false
+    type: Label
+  layout_properties: {grid_position: 'PCAMBQ,EBKMZZ'}
+  name: column_panel_0
+  properties: {background: 'theme:Primary', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_1
+    properties: {align: center, bold: true, font_size: null, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'VIKPIZ,GJEHEN'}
+  name: column_panel_1
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, spacing_below: small, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_2
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'NPMHOX,PPTCJY'}
+  name: column_panel_2
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_3
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'DEOTOO,OWXFUJ'}
+  name: column_panel_3
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_4
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'YFRVFH,JMZIUZ'}
+  name: column_panel_4
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_5
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'ERRPTP,HRVRRA'}
+  name: column_panel_5
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_6
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'WMUYSU,SHQXOW'}
+  name: column_panel_6
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_7
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'HTYFTP,TCJGGX'}
+  name: column_panel_7
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_8
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'UHNJSC,PIJVXA'}
+  name: column_panel_8
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_9
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'UAIJIN,AJVQRD'}
+  name: column_panel_9
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_10
+    properties: {align: center, bold: true, foreground: '', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  layout_properties: {grid_position: 'SUBTIB,WDYVCD'}
+  name: column_panel_10
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a1
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a1
+    properties: {auto_expand: true, placeholder: '', role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'BPFSTJ,SNWBBR'}
+  name: column_panel_a1
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a2
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a2
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'ICZESZ,HAHCAI'}
+  name: column_panel_a2
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a3
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a3
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: ''}
+  name: column_panel_a3
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a4
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a4
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: ''}
+  name: column_panel_a4
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a5
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a5
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'KJAFHN,YHYBAG'}
+  name: column_panel_a5
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a6
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a6
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'DTBHMT,VMWBTK'}
+  name: column_panel_a6
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a7
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a7
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'FIDFJP,LNSJOC'}
+  name: column_panel_a7
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a8
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a8
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'CJPGHQ,NEHWIQ'}
+  name: column_panel_a8
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a9
+    properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a9
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'UBQKNM,DTBCTD'}
+  name: column_panel_a9
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
+    name: label_a10
+    properties: {align: center, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+    type: Label
+  - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    name: text_area_a10
+    properties: {auto_expand: true, placeholder: Votre réponse ..., role: null, spacing_above: none, spacing_below: none}
+    type: TextArea
+  layout_properties: {grid_position: 'DMQEDT,MBCRXF'}
+  name: column_panel_a10
+  properties: {background: 'theme:Olive', col_spacing: tiny, col_widths: '{"YMLJWU":5}', role: elevated-card, visible: false}
+  type: ColumnPanel
+container:
+  properties: {visible: true}
+  type: ColumnPanel
+is_package: true

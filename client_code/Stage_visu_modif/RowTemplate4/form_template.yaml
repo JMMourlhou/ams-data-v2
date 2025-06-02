@@ -1,0 +1,88 @@
+components:
+- components:
+  - event_bindings: {focus: text_box_3_focus}
+    layout_properties: {expand: false, width: 205.588560546875}
+    name: text_box_3
+    properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+    type: TextBox
+  - event_bindings: {focus: text_box_1_focus}
+    layout_properties: {width: 240.1821396484375}
+    name: text_box_1
+    properties:
+      align: center
+      background: theme:Primary
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 12
+      foreground: theme:On Primary
+      hide_text: false
+      italic: false
+      margin: ['8', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {focus: text_box_2_focus}
+    layout_properties: {width: 125.679583984375}
+    name: text_box_2
+    properties:
+      align: center
+      background: theme:Primary
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: null
+      foreground: theme:On Primary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {change: drop_down_mode_fi_change}
+    layout_properties: {width: 67.22182314453124}
+    name: drop_down_mode_fi
+    properties:
+      background: theme:Primary
+      font_size: 12
+      foreground: theme:On Primary
+      items: [M.Fi]
+      margin: ['8', null, null, null]
+    type: DropDown
+  - event_bindings: {change: check_box_form_satis_change}
+    layout_properties: {}
+    name: check_box_form_satis
+    properties: {font_size: 11, foreground: 'theme:On Primary', text: F.Satisf.}
+    type: CheckBox
+  - event_bindings: {change: check_box_form_suivi_change}
+    layout_properties: {}
+    name: check_box_form_suivi
+    properties: {font_size: 11, foreground: 'theme:On Primary', text: F.Suivi}
+    type: CheckBox
+  - event_bindings: {click: bt_delete}
+    layout_properties: {}
+    name: button_delete
+    properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Primary', icon: 'fa:minus-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+    type: Button
+  layout_properties: {column: null}
+  name: flow_panel_1
+  properties: {align: center, background: 'theme:Primary', border: '', foreground: '', role: null, spacing: small, spacing_above: none, spacing_below: small, tooltip: '', vertical_align: middle, visible: true}
+  type: FlowPanel
+container: {type: DataRowPanel}
+is_package: true

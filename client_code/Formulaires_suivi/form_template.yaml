@@ -1,0 +1,41 @@
+components:
+- components:
+  - components:
+    - layout_properties: {grid_position: 'MZAOLM,FGUSPA'}
+      name: label_3
+      properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Accès aux formulaires de suivi, tooltip: '', underline: false, visible: true}
+      type: Label
+    layout_properties: {grid_position: 'DFASBW,LDPRBH'}
+    name: column_panel_1
+    properties: {}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {click: button_annuler_click}
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'WWFRLO,QWIUMR'}
+    name: flow_panel_1
+    properties: {align: center, spacing: huge}
+    type: FlowPanel
+  layout_properties: {grid_position: 'CSFFMJ,KHGKQO'}
+  name: column_panel_header
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{"LDPRBH":49}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+- components:
+  - name: repeating_panel_1
+    properties: {item_template: Formulaires_suivi.RowTemplate2}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'AELYJE,JCYNJQ'}
+  name: data_grid_1
+  properties:
+    columns:
+    - {data_key: column_1, expand: false, id: JKSDUP, title: Num, width: 97.52499389648438}
+    - {data_key: column_2, expand: false, id: VJQQOR, title: Stage, width: 104.2935791015625}
+    - {data_key: column_3, expand: false, id: OJLQEN, title: Role, width: 69.63006591796875}
+    - {data_key: column_4, expand: false, id: VPLIFY, title: Auteur, width: 243.62799072265625}
+    - {data_key: column_5, expand: false, id: RRLYMG, title: 'Pour ', width: 223.08154296875}
+    rows_per_page: 10
+  type: DataGrid
+container: {type: ColumnPanel}
+is_package: true

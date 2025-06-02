@@ -1,0 +1,88 @@
+components:
+- event_bindings: {tick: timer_1_tick}
+  layout_properties: {grid_position: 'GOZRKR,QUIHUS'}
+  name: timer_1
+  properties: {interval: 0}
+  type: Timer
+- event_bindings: {tick: timer_2_tick}
+  layout_properties: {grid_position: 'CDKQLX,EFPUHT'}
+  name: timer_2
+  properties: {interval: 0}
+  type: Timer
+- components:
+  - layout_properties: {width: 420.462}
+    name: text_box_1
+    properties: {align: center, background: 'theme:Primary', foreground: 'theme:On Primary', role: null}
+    type: TextBox
+  layout_properties: {grid_position: 'DDHRJP,ARCTWR'}
+  name: flow_panel_1
+  properties: {align: center, background: 'theme:Primary', spacing: small, spacing_above: medium, spacing_below: none, vertical_align: middle}
+  type: FlowPanel
+- components:
+  - components:
+    - data_bindings: []
+      layout_properties: {full_width_row: true, grid_position: 'UFTPVX,RFKQMS'}
+      name: image_1
+      properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium}
+      type: Image
+    - event_bindings: {click: button_rotation_click}
+      layout_properties: {grid_position: 'TBQEOC,CTISSM'}
+      name: button_rotation
+      properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
+      type: Button
+    layout_properties: {expand: false, width: 210.978}
+    name: column_panel_2
+    properties: {background: 'theme:On Primary Container', role: tonal-card}
+    type: ColumnPanel
+  - components:
+    - event_bindings: {click: button_visu_click}
+      layout_properties: {}
+      name: button_visu
+      properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: 27, foreground: 'theme:On Primary Container', icon: 'fa:binoculars', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
+      type: Button
+    - event_bindings: {change: file_loader_1_change}
+      layout_properties: {}
+      name: file_loader_1
+      properties:
+        align: center
+        background: ''
+        bold: false
+        border: ''
+        enabled: true
+        file: null
+        file_types: ''
+        files: []
+        font: ''
+        font_size: 40
+        foreground: theme:On Primary Container
+        icon: fa:upload
+        icon_align: left
+        italic: false
+        multiple: false
+        role: outlined-button
+        show_state: false
+        spacing_above: none
+        spacing_below: none
+        text: ''
+        tooltip: ''
+        underline: false
+        visible: true
+      type: FileLoader
+    - data_bindings: []
+      event_bindings: {click: button_del_click}
+      layout_properties: {}
+      name: button_del
+      properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 27, foreground: 'theme:Error', icon: 'fa:remove', icon_align: right, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
+      type: Button
+    layout_properties: {width: 220.4438984375}
+    name: flow_panel_3
+    properties: {align: center}
+    type: FlowPanel
+  layout_properties: {grid_position: 'WDUSKW,RUUKTN'}
+  name: flow_panel_2
+  properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}
+  type: FlowPanel
+container:
+  properties: {col_spacing: large, role: elevated-card}
+  type: ColumnPanel
+is_package: true
