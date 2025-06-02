@@ -908,10 +908,7 @@ dependencies:
 - dep_id: dep_e2swiouc0l52m
   resolution_hints: {app_id: 2ERGGVOSXP234KTT, name: Sign_In for AMS_Data, package_name: sign_in_for_AMS_Data}
   version: {branch: master}
-- dep_id: dep_728flw5mgf3ods
-  resolution_hints: {app_id: 5YFTT3XOGNP2J4BZ, name: Anvil extras, package_name: Anvil_extras}
-  version: {branch: master}
-- dep_id: dep_38zy6q8nd0uc6
+- dep_id: dep_vx6cxetpr63c4r
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.1.0}
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMS Data}
