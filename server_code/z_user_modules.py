@@ -122,8 +122,8 @@ def search(to_be_confirmed_email, hpw):
     print("url hpw; ",hpw)
     print("salt; ",salt)
 
-    if hash_password(hpw, salt) != hash_password(new_user_row['password_hash'], salt):
-        return
+    #if hash_password(hpw, salt) != hash_password(new_user_row['password_hash'], salt):
+    #    return
     user=None   
     if new_user_row is not None and not new_user_row['confirmed_email']:  # User table, Column confirmed_email not checked/True
         new_user_row.update(
