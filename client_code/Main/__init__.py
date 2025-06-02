@@ -110,7 +110,7 @@ class Main(MainTemplate):
         self.bt_se_connecter.visible = False
         self.bt_sign_in.visible = False
         from sign_in_for_AMS_Data.url_from_mail_PW_reset import url_from_mail_PW_reset
-
+        from
         self.content_panel.clear()
         self.content_panel.add_component(
             url_from_mail_PW_reset(self.h["email"], self.h["api"]), full_width_row=True
