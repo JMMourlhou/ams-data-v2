@@ -49,7 +49,7 @@ def confirm_or_pwreset(h, num_stage=0):
 
     """ ***************************** URL du mail de confirmation après sign in  """
     if url_purpose=='confirm':
-        #alert("confirm")
+        alert("confirm1")
         # Hash password in URL ?
         hpw=h["hpw"]
         if not hpw:
@@ -57,6 +57,7 @@ def confirm_or_pwreset(h, num_stage=0):
             return
         try:   
             #test3: is the user in the users data table ?
+            alert("confirm2")
             user=anvil.server.call("search", to_be_confirmed_email, hpw)
             #Displaying the confirm alert 
             msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, connectez-vous avec votre mail et mot de passe."
@@ -66,7 +67,7 @@ def confirm_or_pwreset(h, num_stage=0):
             #if anvil.server.call('_send_email_confirm_link', self.email_box.text):
             #    alert(f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
         except:  #user confirmé
-            #alert("Votre mail est déjà confirmé, essayez de vous connecter.")
+            alert("Votre mail est déjà confirmé, essayez de vous connecter.")
             pass
 
     anvil.users.logout()       #logging out the user

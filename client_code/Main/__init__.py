@@ -121,10 +121,8 @@ class Main(MainTemplate):
         return
 
     def confirm(self, **event_args):
-        # from sign_in_for_AMS_Data.url_from_mail_calls import url_from_mail_calls
-
         self.content_panel.clear()
-        self.content_panel.add_component(z_user_traitement_des_url(self.h, num_stage=0), full_width_row=True)
+        z_user_traitement_des_url.confirm_or_pwreset(self.h, num_stage=0)
         return
 
     # stage number in URL's Hash (le user vient de flasher le Qr code)

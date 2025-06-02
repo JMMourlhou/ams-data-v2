@@ -105,6 +105,39 @@ def mk_api_key():
     #print(f"UUID  généré: {user_api_key}")
     return user_api_key
 
+# Confirmation d'une adresse mail, lien a été cliqué sur le mai envoyé
+#Is the new user in the users data table (for email validation) ?
+@anvil.server.callable
+def search(to_be_confirmed_email, hpw):
+    new_user_row=app_tables.users.get(email=to_be_confirmed_email)
+    if new_user_row is None:
+        print("user not found")
+        return
+
+        #test4: pwh ds lien correspond-il au hpw ds le user row? 
+        # Use bcrypt to hash the api key and compare the hashed version.
+        # The naive way (hpw == user['api_key']) would expose a timing vulnerability.
+
+    salt = bcrypt.gensalt()
+    print("url hpw; ",hpw)
+    print("salt; ",salt)
+
+    if hash_password(hpw, salt) != hash_password(new_user_row['password_hash'], salt):
+        return
+    user=None   
+    if new_user_row is not None and not new_user_row['confirmed_email']:  # User table, Column confirmed_email not checked/True
+        new_user_row.update(
+            confirmed_email=True,
+            signed_up=French_zone.french_zone_time(),
+            last_login=French_zone.french_zone_time()
+        )
+        #new_user_row['histo']={}
+        # Forcing my new user to login
+        user=anvil.users.force_login(new_user_row)
+        print(user["nom"])
+    return user
+
+
 
 def hash_password(password, salt):
     """Hash the password using bcrypt in a way that is compatible with Python 2 and 3."""
