@@ -135,7 +135,7 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
     if user is None:   # user not created yet
         print("non existant")   
         api = mk_api_key()
-        date_heure = french_zone.time_french_zone()
+        date_heure = French_zone.french_zone_time()
         role_user ="S"  # stagiaire par défaut
         num = int(num_stage)
         if num_stage is not None or num_stage != "":

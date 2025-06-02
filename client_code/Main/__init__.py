@@ -9,10 +9,17 @@ from ..Saisie_info_de_base import Saisie_info_de_base
 from ..Stage_creation import Stage_creation
 from ..Visu_stages.RowTemplate3 import RowTemplate3
 from anvil import open_form
+
+# modules de gestion des users: login, reset pw, new user
 from ..z_user_login import z_user_login
+from ..z_user_pw_reset import z_user_pw_reset
+from ..z_user_new_account import z_user_new_account
+from .. import z_user_traitement_des_url 
+
 #-------------------------------------------------------------------
 # Pour mettre au format Francais les calendriers
 from anvil.js.window import moment, document
+
 script = document.createElement('script')
 script.src = "https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js" 
 document.head.appendChild(script)
@@ -65,7 +72,7 @@ class Main(MainTemplate):
                 """
 
             h = {}
-            h = anvil.get_url_hash()
+            h = anvil.get_url_hash() # récup de l'url venant du lien ds le mail envoyé au user
             self.h = h
             # alert(f"h ds init d'AMS_Data: {h}")
 
@@ -109,21 +116,15 @@ class Main(MainTemplate):
         self.display_admin_or_other_buttons()
         self.bt_se_connecter.visible = False
         self.bt_sign_in.visible = False
-        from sign_in_for_AMS_Data.url_from_mail_PW_reset import url_from_mail_PW_reset
-        from
         self.content_panel.clear()
-        self.content_panel.add_component(
-            url_from_mail_PW_reset(self.h["email"], self.h["api"]), full_width_row=True
-        )
+        self.content_panel.add_component(z_user_pw_reset(self.h["email"], self.h["api"]), full_width_row=True)
         return
 
     def confirm(self, **event_args):
-        from sign_in_for_AMS_Data.url_from_mail_calls import url_from_mail_calls
+        # from sign_in_for_AMS_Data.url_from_mail_calls import url_from_mail_calls
 
         self.content_panel.clear()
-        self.content_panel.add_component(
-            url_from_mail_calls(self.h, num_stage=0), full_width_row=True
-        )
+        self.content_panel.add_component(z_user_traitement_des_url(self.h, num_stage=0), full_width_row=True)
         return
 
     # stage number in URL's Hash (le user vient de flasher le Qr code)
@@ -253,12 +254,10 @@ class Main(MainTemplate):
     # ===================================================================================================================
     def bt_sign_in_click(self, h={}, num_stage=0, pour_stage=0, **event_args):  # h qd vient de sign in par qr code
         """This method is called when the button is clicked"""
-        from sign_in_for_AMS_Data.SignupDialog_V2 import SignupDialog_V2
         self.bt_user_mail.visible = False
         self.column_panel_2.visible = False
         self.content_panel.clear()        
-        self.content_panel.add_component(SignupDialog_V2(h, num_stage, pour_stage), full_width_row=True)
-        #open_form('sign_in_for_AMS_Data.SignupDialog_V2',h, num_stage, pour_stage)
+        self.content_panel.add_component(z_user_new_account(h, num_stage, pour_stage), full_width_row=True)
     
     # ===================================================================================================================
     #                                                                                                 BT 'SE DECONNECTER'         
