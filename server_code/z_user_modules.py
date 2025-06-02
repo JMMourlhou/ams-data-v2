@@ -13,10 +13,10 @@ import bcrypt
 import uuid   # this library generates codes (API keys for exemple)
 import sys
 from . import French_zone # importation du module pour le calcul du jour / heure du sign in
-from . import Variables_globales
+
 from . import var_globales # importation du module contenant la variable globale mon logo (a anuler qd j'ai trouvé ce qui ne va pas)
 from datetime import datetime
-
+from . import Variables_globales
 # variables globales du modules qui contiendront les var_globales de l'appli
 # voir le dernier module recup_global_variables():
 global code_app2
