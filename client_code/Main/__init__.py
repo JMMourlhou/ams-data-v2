@@ -9,8 +9,7 @@ from ..Saisie_info_de_base import Saisie_info_de_base
 from ..Stage_creation import Stage_creation
 from ..Visu_stages.RowTemplate3 import RowTemplate3
 from anvil import open_form
-
-
+from ..z_user_login import z_user_login
 #-------------------------------------------------------------------
 # Pour mettre au format Francais les calendriers
 from anvil.js.window import moment, document
@@ -281,10 +280,10 @@ class Main(MainTemplate):
         """Will call the EXTERNAL MODULE DEPENDACY when the link is clicked"""
         self.bt_se_connecter.visible = False
         self.bt_sign_in.visible = False
-        # import sign_in_for_AMS_Data
-        from sign_in_for_AMS_Data.LoginDialog_V2 import LoginDialog_V2
+        #from sign_in_for_AMS_Data.LoginDialog_V2 import LoginDialog_V2
+        
         self.content_panel.clear()
-        self.content_panel.add_component(LoginDialog_V2(), full_width_row=False)
+        self.content_panel.add_component(z_user_login(), full_width_row=False)
 
     # click sur le mail du user (l'icone du petit bonhomme), envoi en "Saisie_info_apres_visu"
     def bt_user_mail_click(self, prem_util=False, **event_args):  # True=1ere utilisation
