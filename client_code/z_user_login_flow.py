@@ -11,7 +11,7 @@ from anvil.tables import app_tables
 
 """
 def login_with_form(allow_cancel=True):
-    """Log in by popping up the custom LoginDialog"""
+    "Log in by popping up the custom LoginDialog
     d = LoginDialog()
 
     BUTTONS = []

@@ -4,8 +4,9 @@ from anvil import *   # to load the alert
 import anvil.users
 import anvil.tables as tables
 import anvil.server
+from . import z_user_login_flow
 
-#from anvil import open_form
+from anvil import open_form
 
 """In a URL, what travels after # is known as hash.
 In an HTTP request that reaches a server (server side)
@@ -29,17 +30,17 @@ def confirm_or_pwreset(h, num_stage=0):
     url_purpose=h["a"]  # contient le but du lien: qrcode ou pwrest ou confirm
 
     """ ***************************** URL crée après que le user ai flaché un qrcode  """
-    """
+    
     if url_purpose == "qrcode":
-        login_flow.signup_with_form(num_stage)        # envoyer en sign in
+        z_user_login_flow.signup_with_form(num_stage)        # envoyer en sign in
 
     # mail in URL ?
     to_be_confirmed_email=h["email"]
     if to_be_confirmed_email == "" :
         alert("email vide")
         return
-    """
     
+    """ ***************************** URL du mail de password reset  """
     """ ***************************** URL du mail de password reset  """
     if url_purpose=='pwreset':
         #alert("pwreset, going to form 'url_from_mail_PW_reset'")
@@ -49,7 +50,7 @@ def confirm_or_pwreset(h, num_stage=0):
 
     """ ***************************** URL du mail de confirmation après sign in  """
     if url_purpose=='confirm':
-        alert("confirm1")
+        #alert("confirm")
         # Hash password in URL ?
         hpw=h["hpw"]
         if not hpw:
@@ -57,23 +58,20 @@ def confirm_or_pwreset(h, num_stage=0):
             return
         try:   
             #test3: is the user in the users data table ?
-            alert("confirm2")
             user=anvil.server.call("search", to_be_confirmed_email, hpw)
-            alert("confirm3")
             #Displaying the confirm alert 
             msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, connectez-vous avec votre mail et mot de passe."
-            alert("confirm4")
             alert(msg)
-        except anvil.users.EmailNotConfirmed:   # pas confirmé 
+        except anvil.users.EmailNotConfirmed:   # pas confirmé ?
             alert("Votre mail est connu par nos services mais n'est pas confirmé, cliquez le dernier lien envoyé par mail.")
-            #if anvil.server.call('_send_email_confirm_link', self.email_box.text):
-            #    alert(f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
         except:  #user confirmé
-            alert("Votre mail est déjà confirmé, essayez de vous connecter.")
+            #alert("Votre mail est déjà confirmé, essayez de vous connecter.")
             pass
-        
+
     anvil.users.logout()       #logging out the user
     open_form("Main",99)
+
+
 
 # This code displays an Anvil alert, rather than
 # the default red box, when an error occurs.

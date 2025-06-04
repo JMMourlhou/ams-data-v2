@@ -180,7 +180,17 @@ def _perform_password_reset(email, api_key, new_password):
     return True
  
 
+def hash_password(password, salt):
+    """Hash the password using bcrypt in a way that is compatible with Python 2 and 3."""
+    if not isinstance(password, bytes):
+        password = password.encode()
+    if not isinstance(salt, bytes):
+        salt = salt.encode()
 
+    result = bcrypt.hashpw(password, salt)
+
+    if isinstance(result, bytes):
+        return result.decode('utf-8')
 
 
 """ ************************************************************************** """

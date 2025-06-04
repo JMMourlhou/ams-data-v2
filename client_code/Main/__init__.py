@@ -14,7 +14,7 @@ from anvil import open_form
 from ..z_user_login import z_user_login
 from ..z_user_pw_reset import z_user_pw_reset
 from ..z_user_new_account import z_user_new_account
-from .. import z_user_traitement_des_url 
+from .. import z_user_url_from_mail
 
 #-------------------------------------------------------------------
 # Pour mettre au format Francais les calendriers
@@ -122,7 +122,7 @@ class Main(MainTemplate):
 
     def confirm(self, **event_args):
         self.content_panel.clear()
-        z_user_traitement_des_url.confirm_or_pwreset(self.h, num_stage=0)
+        z_user_url_from_mail.confirm_or_pwreset(self.h, num_stage=0)
         return
 
     # stage number in URL's Hash (le user vient de flasher le Qr code)
