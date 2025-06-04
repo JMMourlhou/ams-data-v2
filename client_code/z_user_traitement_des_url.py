@@ -55,13 +55,14 @@ def confirm_or_pwreset(h, num_stage=0):
         if not hpw:
             alert("Hash Password empty")
             return
-        #try:   
+        try:   
             #test3: is the user in the users data table ?
-        alert("confirm2")
-        user=anvil.server.call("search", to_be_confirmed_email, hpw)
-        #Displaying the confirm alert 
-        try: # erreur si pas de user avec user["nom"]
+            alert("confirm2")
+            user=anvil.server.call("search", to_be_confirmed_email, hpw)
+            alert("confirm3")
+            #Displaying the confirm alert 
             msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, connectez-vous avec votre mail et mot de passe."
+            alert("confirm4")
             alert(msg)
         except anvil.users.EmailNotConfirmed:   # pas confirmé 
             alert("Votre mail est connu par nos services mais n'est pas confirmé, cliquez le dernier lien envoyé par mail.")
