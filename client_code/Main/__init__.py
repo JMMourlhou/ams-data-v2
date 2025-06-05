@@ -113,9 +113,14 @@ class Main(MainTemplate):
     def pwreset(self, **event_args):
         # handling buttons display
         self.bt_user_mail.text = "Réinitialisation du mot de passe !"
-        self.display_admin_or_other_buttons()
+        #self.display_admin_or_other_buttons()
         self.bt_se_connecter.visible = False
         self.bt_sign_in.visible = False
+        self.column_panel_bt_mail.visible = False
+        self.column_panel_admin.visible = False
+        self.column_panel_others.visible = False
+        self.outlined_card_niv1.visible = False
+        self.flow_panel_1.visible = False
         self.content_panel.clear()
         self.content_panel.add_component(z_user_pw_reset(self.h["email"], self.h["api"]), full_width_row=True)
         return

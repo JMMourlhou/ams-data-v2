@@ -76,7 +76,8 @@ class QrCode_display(QrCode_displayTemplate):
     def link_creation(self, num_stage, pour_stage=0):
         # Lecture de la variable globale "code_app1" ds table variables_globales
         app = anvil.server.call('get_variable_value', "code_app1")
-        
+        # MODIF TEMPORAIRE --------------------------------------------------------- une seule app et code main app ams_data_v2 est temporaire 
+        app = "https://qeundanbg3lckncs.anvil.app/W7CUVJDFPSUN2RLM7YGWK3IA"
         # param 
         time = self.recup_time()
         param="/#?a=qrcode" + "&stage=" + str(num_stage) +  "&pour=" +  str(pour_stage)  + "&t=" + time
