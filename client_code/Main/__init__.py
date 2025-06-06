@@ -15,7 +15,6 @@ from ..z_user_login import z_user_login
 from ..z_user_pw_reset import z_user_pw_reset
 from ..z_user_new_account import z_user_new_account
 from .. import z_user_url_from_mail
-
 #-------------------------------------------------------------------
 # Pour mettre au format Francais les calendriers
 from anvil.js.window import moment, document
