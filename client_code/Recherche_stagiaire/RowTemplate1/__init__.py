@@ -5,8 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-#from InputBox.input_box import InputBox, alert2, input_box, multi_select_dropdown
-from InputBox.input_box import InputBox, alert2, input_box
+from ... InputBox import input_box, alert2
 import time
 from ... import French_zone # calcul tps traitement
 

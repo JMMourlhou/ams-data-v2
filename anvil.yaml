@@ -902,9 +902,6 @@ db_schema:
     server: full
     title: Users
 dependencies:
-- dep_id: dep_lci853hww0n2r
-  resolution_hints: {app_id: T2N6YY2X6Z3W26OE, name: InputBox, package_name: InputBox}
-  version: {branch: master}
 - dep_id: dep_550yr7gd32eql
   resolution_hints: {app_id: 5YFTT3XOGNP2J4BZ, name: anvil_extras_from_git, package_name: anvil_extras}
   version: {branch: master}
