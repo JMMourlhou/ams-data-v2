@@ -5,6 +5,8 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+#from InputBox.input_box import InputBox, alert2, input_box, multi_select_dropdown
+from InputBox.input_box import alert2
 
 global ancien_num_ligne    # pour pouvoir rendre un bt inactif si perte de focus  
 ancien_num_ligne = 0
@@ -564,7 +566,6 @@ class ItemTemplate4(ItemTemplate4Template):
              
     def button_fin_qcm_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from InputBox.input_box import InputBox, alert2, input_box, multi_select_dropdown
        
         # enregistrement des résultats ds table qcm_results
         global nb_bonnes_rep
