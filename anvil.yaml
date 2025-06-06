@@ -907,7 +907,7 @@ dependencies:
   version: {branch: master}
 - dep_id: dep_pqzmnqgofzpb48
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {version_tag: v3.1.0}
+  version: {branch: master}
 - dep_id: dep_io5uo3otsl2tr
   resolution_hints: {app_id: AIS7GMKT6LRHRMRC, name: Validator, package_name: Validator}
   version: {branch: master}
