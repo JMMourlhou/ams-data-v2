@@ -1,7 +1,7 @@
 import anvil.server
 import anvil
 from functools import partial
-from anvil_extras_from_git.Form1 import augment
+from anvil_extras import augment
 # from typing import List, Dict
 
 # automatic validation calling validator.are_all_valid() is only performed when clicking the default button
