@@ -904,7 +904,7 @@ db_schema:
 dependencies:
 - dep_id: dep_scchwgf8bxke8m
   resolution_hints: {app_id: 5YFTT3XOGNP2J4BZ, name: anvil_extras, package_name: anvil_extras_from_git}
-  version: {branch: master}
+  version: {branch: main}
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMSdata V 2.0}
 name: ams_data_v2
 package_name: AMS_Data
