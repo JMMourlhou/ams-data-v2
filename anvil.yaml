@@ -913,11 +913,11 @@ runtime_options:
   client_version: '3'
   server_spec: null
   server_spec_disabled:
-    base: python310-datascience
+    base: python310-minimal
     requirements: |-
       bcrypt==4.0.1
-      qrcode==7.4.2
-      pdf2image==1.17.0
+      anvil-uplink==0.5.2
+      pytz==2012j
   server_version: python3-full
   version: 2
 scheduled_tasks: []

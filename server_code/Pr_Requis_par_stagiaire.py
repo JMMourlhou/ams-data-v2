@@ -6,9 +6,10 @@ import anvil.tables.query as q
 import anvil.tables as tables
 from anvil.tables import app_tables
 import anvil.server
-from PIL import Image
+#from PIL import Image
 import io
 import math
+from Pillow import Image
 
 @anvil.server.callable
 def path_info(file):
