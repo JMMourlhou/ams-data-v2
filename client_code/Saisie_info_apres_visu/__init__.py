@@ -29,7 +29,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
 
         # lecture sur le mail du stagiaire après click sur trombi
         stagiaire=app_tables.users.get(email=self.mel)
-
+        
         if stagiaire:
             self.text_box_id.text = "Id = "+ str(stagiaire.get_id())
             self.text_box_mail.text = stagiaire['email']
@@ -96,13 +96,15 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         if len(self.text_box_tel.text) < 10:    # tel inf à 10 caract ?
             alert("Le numéro de teléphone n'est pas valide")
             return
-        if self.date_naissance.date is None :           # dateN vide ?
-            alert("Entrez la date de naissance")
-            return
-        if self.text_box_ville_naissance.text == "" :    # ville N vide ?
-            alert("Entrez la ville de Naissance")
-            return
-
+        global user
+        if user['role'] == "S":
+            if self.date_naissance.date is None :           # dateN vide ?
+                alert("Entrez la date de naissance")
+                return
+            if self.text_box_ville_naissance.text == "" :    # ville N vide ?
+                alert("Entrez la ville de Naissance")
+                return
+        
         if self.check_box_accept_data_use.checked is not True:
             r=alert("Voulez-vous valider l'utilisation de vos données par AMsport ?",dismissible=False,buttons=[("oui",True),("non",False)])
             if r :   #Non, nom pas correct
