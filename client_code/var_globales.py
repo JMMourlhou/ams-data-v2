@@ -1,3 +1,4 @@
+import anvil.server
 # NE PAS ENLEVER tant que l'affichage de mon logo pas résolu
 
 # Variable globale que j'appelle par 'var_globales.code_app'
