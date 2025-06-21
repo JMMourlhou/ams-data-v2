@@ -26,12 +26,12 @@ def send_mail(emails_list, subject_txt, rich_text, old_stagiaires=False, attachm
     dict_var_glob = Variables_globales.get_variable_names()   # var_globale du mail d'AMS, stockées ds table 
         
     client_mail = dict_var_glob["client_mail"]   # var globale Mail AMS
-    code_app2 = dict_var_glob["code_app2"]      # var_globale de l'apli AMS DATA
+    code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
     #logo_address = code_app2+"/_/theme/"+_Constant_parameters_public_ok.ams_logo
-    en_tete_address = code_app2+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete
+    en_tete_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete
     # ------------------------------------------
-    fin_mail_carte = code_app2+"/_/theme/"+_Constant_parameters_public_ok.carte_ams
-    fin_mail_qualiopi = code_app2+"/_/theme/"+_Constant_parameters_public_ok.logo_qualiopi
+    fin_mail_carte = code_app1+"/_/theme/"+_Constant_parameters_public_ok.carte_ams
+    fin_mail_qualiopi = code_app1+"/_/theme/"+_Constant_parameters_public_ok.logo_qualiopi
     # ------------------------------------------
     # Tps début de traitement
     time_deb=French_zone_server_side.time_french_zone() # time is a datetime format 

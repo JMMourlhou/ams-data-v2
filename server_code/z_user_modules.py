@@ -219,16 +219,14 @@ def recup_time():
 
 def recup_global_variables():
     dict={}
-    dict = anvil.server.call('get_variable_names')   # in AMS_Data
+    dict = anvil.server.call('get_variable_names')   # in AMS_Data V2
     global code_app2
     #code_app2 = dict["code_app2"]
 
     
     global code_app1
     code_app1 = dict["code_app1"]
-    # MODIF TEMPORAIRE --------------------------------------------------------- une seule app et code main app ams_data_v2 est temporaire 
-    code_app1 = "https://qeundanbg3lckncs.anvil.app/W7CUVJDFPSUN2RLM7YGWK3IA"
-    
+        
     
     global nom_app_pour_mail
     nom_app_pour_mail = dict["nom_app_pour_mail"]
