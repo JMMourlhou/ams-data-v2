@@ -772,7 +772,7 @@ db_schema:
   temp:
     client: full
     columns:
-    - admin_ui: {order: 1.5, width: 278}
+    - admin_ui: {order: 1.5, width: 544}
       name: pre_r_pour_stage
       type: simpleObject
     - admin_ui: {width: 282}
