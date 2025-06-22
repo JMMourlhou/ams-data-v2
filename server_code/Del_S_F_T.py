@@ -15,7 +15,7 @@ def del_personne(row):
     sov_mail_pour_verif = row['email']
     msg = "Erreur en effacement"
 
-    # Effacement des enregistrements ds tables com com_sum qcm_result stage_satisf stage_suivi
+    # Effacement des enregistrements liés au user ds tables com com_sum qcm_result stage_satisf stage_suivi
     # com
     list = app_tables.com.search(user=row)
     if list:
@@ -28,14 +28,29 @@ def del_personne(row):
         for r in list:
             r.delete()
 
+    # qcm_result
+    list = app_tables.qcm_result.search(user_qcm=row)
+    if list:
+        for r in list:
+            r.delete()
 
+    # stage_satisf
+    list = app_tables.stage_satisf.search(user_email=row)
+    if list:
+        for r in list:
+            r.delete()
 
-
-    
+    # stage_satisf
+    list = app_tables.stage_suivi.search(user_email=row)
+    if list:
+        for r in list:
+            r.delete()
+            
+    # EFFACEMENT DE LA TABLE USERS        
     row.delete()
     # Vérification
     row1 = app_tables.users.get(email=sov_mail_pour_verif)
     if not row1:
-        msg = "Effacement effectué !"
+        msg = "Effacement complet effectué !"
     return msg
     
