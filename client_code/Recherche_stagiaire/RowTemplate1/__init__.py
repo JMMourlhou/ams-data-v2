@@ -8,6 +8,7 @@ from anvil.tables import app_tables
 from ... InputBox import input_box, alert2
 import time
 from ... import French_zone # calcul tps traitement
+from ... import InputBox
 
 class RowTemplate1(RowTemplate1Template):
     def __init__(self, **properties):
@@ -110,7 +111,7 @@ class RowTemplate1(RowTemplate1Template):
     
                 result={}
                 nom_dropdown = 'mode_fi'  # sera également la clef du dictionnaire de sortie/résultat ib.results
-                ib = InputBox('Choix du mode de financement', ['OK', 'Cancel'], default_button='OK',large=True)  # si touche return = OK
+                ib = InputBox.input_box('Choix du mode de financement', ['OK', 'Cancel'], default_button='OK',large=True)  # si touche return = OK
                 #ib = InputBox('Choix du mode de financement', ['OK', 'Cancel'], default_button='OK', form_show=input_box_show)
                 row = app_tables.mode_financement.get(code_fi="??")   #Pour sélectionner la row selected value de dropdown
                 ib.add_dropdown(name=nom_dropdown, prompt="",items=[(r['intitule_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("intitule_fi", ascending=True))], selected_value=row,events=[('change', dropdown_change)])
