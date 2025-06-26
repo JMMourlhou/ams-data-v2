@@ -96,6 +96,12 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         if len(self.text_box_tel.text) < 10:    # tel inf à 10 caract ?
             alert("Le numéro de teléphone n'est pas valide")
             return
+        if self.check_box_accept_data_use.checked is not True:
+            r=alert("Voulez-vous valider l'utilisation de vos données par AMsport ?",dismissible=False,buttons=[("oui",True),("non",False)])
+            if r :   #Non, nom pas correct
+                self.check_box_accept_data_use.checked = True
+                return
+            
         global user
         if user['role'] == "S":
             if self.date_naissance.date is None :           # dateN vide ?
@@ -104,13 +110,15 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             if self.text_box_ville_naissance.text == "" :    # ville N vide ?
                 alert("Entrez la ville de Naissance")
                 return
-        
-        if self.check_box_accept_data_use.checked is not True:
-            r=alert("Voulez-vous valider l'utilisation de vos données par AMsport ?",dismissible=False,buttons=[("oui",True),("non",False)])
-            if r :   #Non, nom pas correct
-                self.check_box_accept_data_use.checked = True
-                return
-
+        if user['role'] == "A":
+            r = alert(
+                "Voulez-vous enlever le role 'Administrateur à cet utilisateur' ?",
+                dismissible=False,
+                buttons=[("oui", True), ("non", False)],
+            )
+        if not r:  # non
+                self.text_box_role.text = 'A'
+       
         # lecture sur le mail du stagiaire après click sur trombi
         stagiaire=app_tables.users.get(email=self.mel)
         if stagiaire:
