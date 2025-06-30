@@ -905,8 +905,8 @@ dependencies:
 - dep_id: dep_r8peotjju77c2a
   resolution_hints: {app_id: T2N6YY2X6Z3W26OE, name: InputBox, package_name: InputBox}
   version: {branch: master}
-- dep_id: dep_awwobv2eyx7ks9w
-  resolution_hints: {app_id: U2GP4DUSN35I5CPU, name: anvil_extras, package_name: anvil_extras}
+- dep_id: dep_8mmnviwoo83et
+  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.1.0}
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMSdata V 2.0}
 name: ams_data_v2
