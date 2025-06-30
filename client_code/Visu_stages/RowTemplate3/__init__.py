@@ -8,7 +8,6 @@ from anvil.tables import app_tables
 from .. import Visu_stages
 from anvil import open_form
 from ...Pre_R_pour_stagiaire_admin import Pre_R_pour_stagiaire_admin
-from InputBox.input_box import InputBox, alert2, input_box
 
 #import anvil.js    # pour screen size
 from anvil.js import window # to gain access to the window object
@@ -75,19 +74,8 @@ class RowTemplate3(RowTemplate3Template):
 
     def button_inscription_click(self, **event_args):
         """This method is called when the button is clicked"""
-        r=alert2('Si vous voulez effectuer une **inscription**:\n\n'
-               '```\n'
-               '1- Cliquez sur "Oui"\n'
-               '2- Recherchez le stagiaire\n'
-               '   à inscrire\n'
-               '3- Cliquez sur son nom\n'
-                '```\n' 
-                ,
-                buttons=['Oui', 'Non'],
-                default_button='Oui',     # si press return=Oui
-                large=True
-                )
-        if r== "Oui" :   
+        r=alert("'Pour effectuer une inscription ... \n\n... recherchez le stagiaire",dismissible=False,buttons=[("ok",True),("non",False)])
+        if r :   
             from ...Recherche_stagiaire import Recherche_stagiaire
             num_stage = self.text_box_1.text        
             open_form('Recherche_stagiaire',num_stage)
