@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 from .. import Visu_stages
 from anvil import open_form
 from ...Pre_R_pour_stagiaire_admin import Pre_R_pour_stagiaire_admin
-from ... InputBox import input_box, alert2
+from InputBox.input_box import InputBox, alert2, input_box
 #import anvil.js    # pour screen size
 from anvil.js import window # to gain access to the window object
 global screen_size
