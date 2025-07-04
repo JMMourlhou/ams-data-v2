@@ -908,6 +908,9 @@ dependencies:
 - dep_id: dep_3174dptyvav5o9
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.1.0}
+- dep_id: dep_yahs4fsa3c0hnn
+  resolution_hints: {app_id: AIS7GMKT6LRHRMRC, name: Validator, package_name: Validator}
+  version: {branch: master}
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMSdata V 2.0}
 name: ams_data_v2
 package_name: AMS_Data
