@@ -907,7 +907,7 @@ dependencies:
   version: {branch: master}
 - dep_id: dep_olbyoms9lj7n0f
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {version_tag: v3.1.0}
+  version: {branch: published}
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMSdata V 2.0}
 name: ams_data_v2
 package_name: AMS_Data
