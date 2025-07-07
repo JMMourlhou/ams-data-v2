@@ -461,6 +461,11 @@ class Main(MainTemplate):
             alert("fin")
         else:
             alert("pas de fin normale")
+
+    def button_pre_requis_copy_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..TEST_PDF import TEST_PDF
+        open_form('TEST_PDF')
             
 
    
