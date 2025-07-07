@@ -5,7 +5,8 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from Inputbox.input_box import input_box, InputBox, alert2
+#from Inputbox.input_box import input_box, InputBox, alert2
+from ...Box_types_fi import Box_types_fi
 import time
 from ... import French_zone # calcul tps traitement
 
@@ -99,6 +100,8 @@ class RowTemplate1(RowTemplate1Template):
             
             if int(stage) != 1003:
                 # Choix du mode de financement / Création d'une box incluant le drop down mode de fi
+                open_form('Box_types_fi')
+                """
                 def show_results(self, result):
                     #alert(result)
                     pass
@@ -124,6 +127,7 @@ class RowTemplate1(RowTemplate1Template):
                 result=ib.results   #dictionaire  clef 'mode_fi' valeur=row table Mode_financement sélectionnée
                 # ex de result:     {'mode_fi': <anvil.tables.Row: code_fi='ASS', intitule_fi='Association finance'>, 'clicked_button': 'OK'}
                 valid = result.get('clicked_button')   # extraction de la valeur de la clef 'code_fi' ds dropdown 'mode_fi'
+                
                 if valid == 'OK':
                     code_fi = result.get('mode_fi')['code_fi']   # ds dict 'result', extraction de la valeur de la clef 'mode_fi' (row, col 'code_fi')
                     #alert(code_fi)
@@ -135,6 +139,7 @@ class RowTemplate1(RowTemplate1Template):
                     txt_msg = anvil.server.call("add_stagiaire", stagiaire_row, stage,  code_fi, "bt_recherche", 0)
                     alert(txt_msg)
                     open_form('Recherche_stagiaire', stage)  # réouvre la forme mère pour mettre à jour l'affichage de l'histo
+                """
             
             # Stage type tuteur: je fais sélectionner pour quel stage sera le tuteur que je suis en train d'inscrire
             if int(stage)==1003:
