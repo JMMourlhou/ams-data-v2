@@ -1,7 +1,8 @@
 from ._anvil_designer import TEST_PDFTemplate
 from anvil import *
 import anvil.server
-from anvil_extras.PageBreak import PageBreak
+import anvil_extras
+#from anvil_extras.PageBreak import PageBreak
 
 class TEST_PDF(TEST_PDFTemplate):
     def __init__(self, **properties):
