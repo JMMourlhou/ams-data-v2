@@ -93,11 +93,11 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
                 #alert(len(students_rows))
                 if students_rows:    # stagiaires existants
                     with anvil.server.no_loading_indicator:
-                        self.task_list = anvil.server.call('run_bg_task_stage_list',self.text_box_num_stage.text, self.text_box_intitule.text)
+                        self.task_list = anvil.server.call_s('run_bg_task_stage_list',self.text_box_num_stage.text, self.text_box_intitule.text)
                         self.timer_1.interval=0.5
                     
                     with anvil.server.no_loading_indicator:
-                        self.task_trombi = anvil.server.call('run_bg_task_trombi',self.text_box_num_stage.text, self.text_box_intitule.text)
+                        self.task_trombi = anvil.server.call_s('run_bg_task_trombi',self.text_box_num_stage.text, self.text_box_intitule.text)
                         self.timer_2.interval=0.5
         else:
             alert("Stage non trouvé")
