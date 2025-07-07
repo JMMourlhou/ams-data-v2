@@ -15,8 +15,9 @@ ADD & EFFACEMENT d'1 stagiaire du stage
 
 @anvil.server.callable           # ADD d'un nouveau stagiaire ds le stage
 @anvil.tables.in_transaction
-def add_stagiaire(stagiaire_row, stage, mode_fi="???", type_add="", pour_stage=None):   # Stage num pas row
+def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None):   # Stage num pas row
     valid=""
+        
     # lecture fichier père stages
     code_stage = app_tables.stages.get(numero=int(stage))
     if not code_stage :
@@ -36,7 +37,9 @@ def add_stagiaire(stagiaire_row, stage, mode_fi="???", type_add="", pour_stage=N
         valid="User non trouvé ds fichier users !"
         return valid
 
-    # lecture fichier père mode financemnt
+    # lecture fichier père mode financemnt (si int(stage) != 1003):
+    
+        
     mode_fin = app_tables.mode_financement.get(code_fi=mode_fi)    
     if not mode_fin :
         valid="Mode de financemnt non trouvé ds fichier param mode financemnt !"

@@ -7,17 +7,17 @@ components:
   - event_bindings: {change: drop_down_fi_change}
     layout_properties: {grid_position: 'MCALAP,AAVDBV'}
     name: drop_down_fi
-    properties: {}
+    properties: {include_placeholder: true, placeholder: Mode de Financement}
     type: DropDown
   - components:
     - event_bindings: {click: button_annuler_click}
       name: button_annuler
       properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
       type: Button
-    - event_bindings: {click: button_add_click}
+    - event_bindings: {click: button_ok_click}
       layout_properties: {}
       name: button_ok
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Ok, tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Ok, tooltip: '', underline: false, visible: false}
       type: Button
     layout_properties: {grid_position: 'DSFRYF,QYHRWE'}
     name: flow_panel_1
@@ -28,4 +28,4 @@ components:
   properties: {role: outlined-card}
   type: ColumnPanel
 container: {type: ColumnPanel}
-is_package: true
+is_package: false
