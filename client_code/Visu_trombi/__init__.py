@@ -5,7 +5,8 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from anvil_extras.PageBreak import PageBreak
+# from anvil_extras.PageBreak import PageBreak
+from .. import anvil_extras
 global cpt   # Compte le nb d'images visualisées pour le page Break
 cpt = 0
 

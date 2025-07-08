@@ -901,10 +901,7 @@ db_schema:
       type: simpleObject
     server: full
     title: Users
-dependencies:
-- dep_id: dep_g8jm9ugz99s
-  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {branch: master}
+dependencies: []
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMSdata V 2.0}
 name: ams_data_v2
 package_name: AMS_Data
@@ -913,7 +910,7 @@ runtime_options:
   client_version: '3'
   server_spec: null
   server_spec_disabled:
-    base: python310-minimal
+    base: python310-standard
     requirements: |-
       bcrypt==4.0.1
       anvil-uplink==0.5.2
