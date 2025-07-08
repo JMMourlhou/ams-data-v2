@@ -9,7 +9,7 @@ from anvil.tables import app_tables
 from ... import French_zone # calcul tps traitement
 
 #from ..._Constant_parameters_public_ok import nb_fiche_stagiaire_pdf   # pour param nb de fiches à imprimer 
-from anvil_extras.PageBreak import PageBreak
+from ...anvil_extras import Page_Break
 global cpt      # ATTENTION, si j'utilise self.cpt, le décrément ne s'effectue pas
 cpt = 0
 
