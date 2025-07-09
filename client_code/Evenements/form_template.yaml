@@ -72,7 +72,7 @@ components:
         enabled: true
         font: ''
         font_size: 18
-        foreground: theme:Gray 300
+        foreground: theme:On Primary
         include_placeholder: true
         italic: false
         items: []

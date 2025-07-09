@@ -319,10 +319,9 @@ class Evenements(EvenementsTemplate):
         
     # Initialisation du préfixe du nom du fichier img 
     def nom_img(self,num_img_txt):
-        type_row = self.drop_down_event.selected_value   # row du type d'évenemnts
         date = str(self.date1)[0:16]
         date=date.replace(" ", "-")
-        nom_img =type_row + "_" + date + "_"+ num_img_txt
+        nom_img = "Evenement " + num_img_txt + " du "+ date
         return nom_img
 
     def button_visu_1_click(self, **event_args):
