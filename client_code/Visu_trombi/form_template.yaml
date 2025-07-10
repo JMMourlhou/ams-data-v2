@@ -20,6 +20,11 @@ components:
       name: button_trombi_pdf
       properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:download', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
       type: Button
+    - event_bindings: {click: button_screenshot_click}
+      layout_properties: {grid_position: 'OPZVZL,GISJRN'}
+      name: button_screenshot
+      properties: {text: test pdf generation}
+      type: Button
     layout_properties: {grid_position: 'PITLGQ,OXRWKP'}
     name: column_panel_1
     properties: {}

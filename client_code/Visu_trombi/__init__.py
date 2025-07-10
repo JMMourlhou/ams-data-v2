@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from .. import anvil_extras
+#from .. import anvil_extras
 global cpt   # Compte le nb d'images visualisées pour le page Break
 cpt = 0
 
@@ -194,3 +194,19 @@ class Visu_trombi(Visu_trombiTemplate):
             alert("Trombinoscope téléchargé")
         else:
             alert("Pdf du trombi non trouvé")
+
+    def button_screenshot_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from anvil.js.window import html2canvas
+        from anvil import BlobMedia
+        import anvil.server
+        
+        def button_screenshot_click(self, **event_args):
+            # Capture le node DOM principal du formulaire (self)
+            promise = html2canvas(self._dom_node)
+            def on_canvas(canvas):
+                # Convertir le canvas en DataURL (base64 image)
+                data_url = canvas.toDataURL("image/jpeg")
+                # Envoyer au serveur/anvil uplink
+                anvil.server.call('enregistrer_capture', data_url)
+            promise.then(on_canvas)
