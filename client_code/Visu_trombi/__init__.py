@@ -198,24 +198,19 @@ class Visu_trombi(Visu_trombiTemplate):
     def button_screenshot_click(self, **event_args):
         """This method is called when the button is clicked"""
         from anvil.js.window import html2canvas
-        from anvil import BlobMedia
-        import anvil.server
-         
-        # Capture le node DOM principal du formulaire (self)
-        
+        import anvil.js
+
         dom_node = anvil.js.get_dom_node(self.column_panel_all)
-        # Appeler html2canvas
-        promise = html2canvas(dom_node)
+        canvas = html2canvas(dom_node)
+        data_url = canvas.toDataURL("image/jpeg")
+        # Ici, tu envoies ton image au serveur...
+        pdf = anvil.server.call('pdf_generation', data_url, self.num_stage, "jmmourlhou@gmail.com")
+        if pdf:
+            anvil.media.download(pdf)
+            alert("Trombinoscope téléchargé")
+        else:
+            alert("Pdf du trombi non trouvé")
+         
         
-        def on_canvas(canvas):
-            # Convertir le canvas en DataURL (base64 image)
-            data_url = canvas.toDataURL("image/jpeg")
-            # Envoyer au serveur/anvil uplink
-            pdf = anvil.server.call('pdf_generation', data_url, self.num_stage, "jmmourlhou@gmail.com" )
-            if pdf:
-                anvil.media.download(pdf)
-                alert("Trombinoscope téléchargé")
-            else:
-                alert("Pdf du trombi non trouvé")
                 
-        promise.then(on_canvas)
+     
