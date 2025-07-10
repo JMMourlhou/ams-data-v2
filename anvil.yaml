@@ -905,7 +905,8 @@ dependencies: []
 metadata: {description: 'Gestion de données, pour AMSport V2', logo_img: 'asset:logo_fs_small.png', title: AMSdata V 2.0}
 name: ams_data_v2
 native_deps:
-  head_html: |2+
+  head_html: |+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 package_name: AMS_Data
 renamed: true
