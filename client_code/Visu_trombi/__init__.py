@@ -208,5 +208,5 @@ class Visu_trombi(Visu_trombiTemplate):
                 # Convertir le canvas en DataURL (base64 image)
                 data_url = canvas.toDataURL("image/jpeg")
                 # Envoyer au serveur/anvil uplink
-                anvil.server.call('enregistrer_capture', data_url)
+                anvil.server.call('pdf_generation', data_url, self.num_stage, "jmmourlhou@gmail.com" )
             promise.then(on_canvas)
