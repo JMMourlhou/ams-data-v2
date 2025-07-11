@@ -199,7 +199,8 @@ class Visu_trombi(Visu_trombiTemplate):
         """This method is called when the button is clicked"""
         from anvil.js.window import html2canvas
         import anvil.js
-
+        # on inclu pas les boutons dans le pdf
+        self.column_panel_boutons.visible = False
         dom_node = anvil.js.get_dom_node(self.column_panel_all)
         canvas = html2canvas(dom_node)
         data_url = canvas.toDataURL("image/jpeg")

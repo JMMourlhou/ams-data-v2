@@ -27,7 +27,7 @@ components:
         properties: {text: test pdf generation}
         type: Button
       layout_properties: {grid_position: 'PITLGQ,OXRWKP'}
-      name: column_panel_1
+      name: column_panel_boutons
       properties: {}
       type: ColumnPanel
     - components: []
