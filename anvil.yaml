@@ -919,6 +919,8 @@ runtime_options:
       bcrypt
       pytz
       anvil-uplink
+      qrcode
+      pdf2image
   server_version: python3-full
   version: 2
 scheduled_tasks: []
