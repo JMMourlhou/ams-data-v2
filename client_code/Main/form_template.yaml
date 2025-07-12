@@ -239,11 +239,6 @@ components:
         name: button_pre_requis
         properties: {background: 'theme:Primary', bold: true, foreground: 'theme:On Primary', role: elevated-button, text: '   Docs requis à entrer   ', visible: true}
         type: Button
-      - event_bindings: {click: button_pre_requis_copy_click}
-        layout_properties: {grid_position: 'XCGRYV,SMVAPW'}
-        name: button_pre_requis_copy
-        properties: {background: 'theme:On Primary Container', bold: true, foreground: 'theme:On Primary', role: elevated-button, text: Test PDF, visible: true}
-        type: Button
       layout_properties: {grid_position: 'PYTCDC,GMVJKG'}
       name: outlined_card_pr_qcm
       properties:

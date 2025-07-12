@@ -201,11 +201,15 @@ class Visu_trombi(Visu_trombiTemplate):
         import anvil.js
         # on inclu pas les boutons dans le pdf
         self.column_panel_boutons.visible = False
+        
+        # copie du composant et transformation en jpg
         dom_node = anvil.js.get_dom_node(self.column_panel_all)
         canvas = html2canvas(dom_node)
         data_url = canvas.toDataURL("image/jpeg")
-        # Ici, tu envoies ton image au serveur...
-        pdf = anvil.server.call('pdf_generation', data_url, self.num_stage, "jmmourlhou@gmail.com")
+        
+        # Envoie de l'image au serveur...
+        pdf = anvil.server.call('pdf_generation', data_url, self.num_stage)
+        # récupération du pdf
         if pdf:
             anvil.media.download(pdf)
             alert("Trombinoscope téléchargé")
