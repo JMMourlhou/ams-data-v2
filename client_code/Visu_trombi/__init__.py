@@ -91,7 +91,7 @@ class Visu_trombi(Visu_trombiTemplate):
                     txt = stagiaire['nom'] + " " + stagiaire['prenom']
                 except:
                     txt = stagiaire['nom']
-                self.bt = Button(text=txt, tag = mel, spacing_above = None, background="", foreground="blue", bold=True, font_size = 14, enabled = True)
+                self.bt = Button(text=txt, tag = mel, spacing_above = None, background="red", foreground="blue", bold=True, font_size = 14, enabled = True)
                 self.bt.set_event_handler('click',self.bt_click)
 
                 # Tel
