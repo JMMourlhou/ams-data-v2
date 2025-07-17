@@ -2,11 +2,18 @@ from anvil import *
 import anvil.files
 from anvil.files import data_files
 import anvil.email
-import tables
-from tables import app_tables
+
+
+
+from anvil.tables import app_tables
+#import tables
+#from tables import app_tables
+
+
+
+
 import anvil.users
 import anvil.server
-
 from anvil.http import url_encode
 import bcrypt
 
