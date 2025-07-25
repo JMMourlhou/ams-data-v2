@@ -1,6 +1,6 @@
-bcrypt
-pytz
-qrcode
-pdf2image
 pillow==11.3.0
 anvil-uplink==0.6.0
+bcrypt==4.3.0
+pdf2image==1.17.0
+qrcode==8.2
+pytz
