@@ -1,6 +1,6 @@
 bcrypt
 pytz
-anvil-uplink
 qrcode
 pdf2image
 pillow==11.3.0
+anvil-uplink==0.6.0
