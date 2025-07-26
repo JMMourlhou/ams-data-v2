@@ -1,5 +1,8 @@
-import anvil.server
 from anvil.tables import app_tables
+
+import anvil.server
+anvil.server.connect("server_RTZBJFVVIHPARCDIOYGH77Z3-SXGQVEYU3C2NJ5KR")   # code up link pour les bases amsdata.org chez Anvil-works
+
 #from uplink_2 import run_uplink_2
 
 
@@ -32,12 +35,9 @@ def copy_tables_from_anvil():
     # L’itérateur, privé de sa liste de _row_ids, déclenche un IndexError: list index out of range.
     
     # Il faut donc transformer l’itérateur en vraie liste avant de couper la connexion :
-    # Exemple    rows_users_distant = list(app_tables.users.search())
-    
-    
+    # Exemple    rows_users_distant = list(app_tables.users.search())   
    
-    anvil.server.connect("server_RTZBJFVVIHPARCDIOYGH77Z3-SXGQVEYU3C2NJ5KR")   # code up link pour les bases amsdata.org chez Anvil-works
-    
+
     
     # ------------------------------------------------------------------------Fichier cpt_stages
     rows_cpt_stages_distant = list(app_tables.cpt_stages.search())
