@@ -146,6 +146,11 @@ class Parametres(ParametresTemplate):
         from ..Global_Variables_MAJ_table import Global_Variables_MAJ_table
         open_form('Global_Variables_MAJ_table')
 
+    def button_maj_from_anvil_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        txt_msg = anvil.server.call("copy_tables_from_anvil")
+        alert(txt_msg)
+
    
 
     
