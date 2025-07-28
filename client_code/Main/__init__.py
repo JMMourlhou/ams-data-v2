@@ -467,10 +467,7 @@ class Main(MainTemplate):
         from ..TEST_PDF import TEST_PDF
         open_form('TEST_PDF')
 
-    def button_maj_from_anvil_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        txt_msg = anvil.server.call("copy_tables_from_anvil")
-        alert(txt_msg)
+   
             
 
    
