@@ -146,6 +146,7 @@ class RowTemplate3(RowTemplate3Template):
         result = Mail_valideur.is_valid_email(self.mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
         if result is False:
             alert("Le mail n'a pas le bon format !")
+            self.text_box_mail.focus()
             return
         # envoi vers pi5 par uplink du num_stage et de la liste des stagiaires
         # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/export-excel/export_uplink.py
@@ -159,5 +160,9 @@ class RowTemplate3(RowTemplate3Template):
     def text_box_mail_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
         self.button_ok_click()
+
+    def text_box_mail_focus(self, **event_args):
+        """This method is called when the TextBox gets focus"""
+        self.text_box_mail.placeholder = ""
 
 
