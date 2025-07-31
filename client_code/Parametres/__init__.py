@@ -146,6 +146,11 @@ class Parametres(ParametresTemplate):
         from ..Global_Variables_MAJ_table import Global_Variables_MAJ_table
         open_form('Global_Variables_MAJ_table')
 
+    def button_files_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..Files_MAJ_Table import Files_MAJ_Table
+        open_form('Files_MAJ_Table')
+
 
    
 
