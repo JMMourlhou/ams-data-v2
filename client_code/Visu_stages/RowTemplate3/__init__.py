@@ -9,9 +9,10 @@ from .. import Visu_stages
 from anvil import open_form
 from ...Pre_R_pour_stagiaire_admin import Pre_R_pour_stagiaire_admin
 from ...Recherche_stagiaire import Recherche_stagiaire
+from ... import Mail_valideur  # pour button_export_xls_click
 
 #import anvil.js    # pour screen size
-from anvil.js import window # to gain access to the window object
+from anvil.js import window # to gain access to the window object, validation du mail saisi
 global screen_size
 screen_size = window.innerWidth
 
@@ -19,7 +20,7 @@ class RowTemplate3(RowTemplate3Template):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-
+        self.mail = "jmmourlhou@gmail.com"
         # Any code you write here will run before the form opens.
         app_user = anvil.users.get_user()
         if app_user['role'] == "J":
@@ -127,19 +128,36 @@ class RowTemplate3(RowTemplate3Template):
 
     def button_export_xls_click(self, **event_args):
         """This method is called when the button is clicked"""
-        liste_stagiaires = app_tables.stagiaires_inscrits.search(
+        self.liste_stagiaires = app_tables.stagiaires_inscrits.search(
                                                                 tables.order_by("name", ascending=True),
                                                                 numero=self.item['numero'])
-        # envoi vers pi5 par uplink du mail saisi 
-        mail = "jmmourlhou@gmail.com"
-        result = anvil.server.call('get_mail_dest', mail)
+        # saisie du mail posible
+        self.column_panel_mail.visible = True
+
+    def button_annuler_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.text_box_mail.text = ""
+        self.button_ok.visible = False
+        self.column_panel_mail.visible = False
+
+    def button_ok_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.mail = self.text_box_mail.text
+        result = Mail_valideur.is_valid_email(self.mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
         if result is False:
             alert("Le mail n'a pas le bon format !")
             return
-            
         # envoi vers pi5 par uplink du num_stage et de la liste des stagiaires
-        message = anvil.server.call('export_xls', self.item['numero'], self.item['code_txt'], self.item['date_debut'] , liste_stagiaires, "jmmourlhou@gmail.com")
+        # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/export-excel/export_uplink.py
+        message = anvil.server.call('export_xls', self.item['numero'], self.item['code_txt'], self.item['date_debut'] , self.liste_stagiaires, self.mail)
         alert(message)
-  
+
+    def text_box_mail_change(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.button_ok.visible = True
+
+    def text_box_mail_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.button_ok_click()
 
 
