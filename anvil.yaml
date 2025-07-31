@@ -912,15 +912,15 @@ package_name: AMS_Data
 renamed: true
 runtime_options:
   client_version: '3'
-  server_spec: {base: python310-minimal}
+  server_spec: null
   server_spec_disabled:
     base: python310-minimal
     requirements: |-
-      bcrypt
+      pillow==11.3.0
+      bcrypt==4.3.0
+      pdf2image==1.17.0
+      qrcode==8.2
       pytz
-      anvil-uplink
-      qrcode
-      pdf2image
   server_version: python3-full
   version: 2
 scheduled_tasks: []
