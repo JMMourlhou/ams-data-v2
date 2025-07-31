@@ -19,4 +19,4 @@ class ItemTemplate31(ItemTemplate31Template):
         self.check_box_modif.checked = self.item['modifiable']
         self.check_box_annul.checked = self.item['annulable']
         # Any code you write here will run before the form opens.
-        if file.
+    
