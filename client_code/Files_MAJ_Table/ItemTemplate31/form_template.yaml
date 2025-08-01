@@ -38,7 +38,8 @@ components:
     properties: {col_widths: '{"BNBRRK":25,"CZTEAF":35}', role: outlined-card}
     type: ColumnPanel
   - components:
-    - layout_properties: {grid_position: 'SFZRNV,JQPIRQ'}
+    - event_bindings: {change: file_loader_change}
+      layout_properties: {grid_position: 'SFZRNV,JQPIRQ'}
       name: file_loader
       properties: {background: 'theme:On Primary Container', text: Charger}
       type: FileLoader

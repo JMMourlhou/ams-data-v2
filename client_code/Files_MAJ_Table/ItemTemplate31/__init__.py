@@ -19,4 +19,14 @@ class ItemTemplate31(ItemTemplate31Template):
         self.check_box_modif.checked = self.item['modifiable']
         self.check_box_annul.checked = self.item['annulable']
         # Any code you write here will run before the form opens.
-    
+
+    def file_loader_change(self, file, **event_args):
+        """This method is called when a new file is loaded into this FileLoader"""
+        if file is not None:  #pas d'annulation en ouvrant choix de fichier
+            print(f"The file's name is: {file.name}")
+            print(f"The number of bytes in the file is: {file.length}")
+            print(f"The file's content type is: {file.content_type}")
+            print(f"The file's contents[:15] are: '{file.get_bytes()[:15]}'")
+            print(f'url: {file.url}')
+            anvil.server.call('modif_file_table', file, self.item, file.name)   
+            
