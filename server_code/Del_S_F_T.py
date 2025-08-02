@@ -40,11 +40,6 @@ def del_personne(row):
         for r in list:
             r.delete()
 
-    # stage_satisf
-    list = app_tables.stage_suivi.search(user_email=row)
-    if list:
-        for r in list:
-            r.delete()
             
     # EFFACEMENT DE LA TABLE USERS        
     row.delete()
