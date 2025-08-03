@@ -12,6 +12,7 @@ class ItemTemplate31(ItemTemplate31Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.file = self.item['file']
+        self.name = self.item['file'].name
         self.image.source = self.item['file']
         self.text_box_path.text = self.item['path']
         self.text_box_version.text = self.item['file_version']
@@ -34,11 +35,7 @@ class ItemTemplate31(ItemTemplate31Template):
 
     def button_modif_file_click(self, **event_args):
         """This method is called when the button is clicked"""
-        print(f"The file's name is: {self.file.name}")
-        print(f"The number of bytes in the file is: {self.file.length}")
-        print(f"The file's content type is: {self.file.content_type}")
-        print(f"The file's contents[:15] are: '{self.file.get_bytes()[:15]}'")
-        print(f'url: {self.file.url}')
+        
         if self.file:
             r = alert(
                 "Voulez-vous vraiment modifier ce Fichier ?",
@@ -46,7 +43,7 @@ class ItemTemplate31(ItemTemplate31Template):
                 buttons=[("oui", True), ("non", False)],
             )
             if r:  # oui
-                result, msg=anvil.server.call('modif_file_table', self.file, self.item, self.file.name, self.text_box_commentaires.text, self.check_box_modif.checked, self.check_box_annul.checked)
+                result, msg=anvil.server.call('modif_file_table', self.file, self.item, self.name, self.text_box_commentaires.text, self.check_box_modif.checked, self.check_box_annul.checked)
                 alert(msg)
                 if result is False:
                     return
@@ -57,7 +54,14 @@ class ItemTemplate31(ItemTemplate31Template):
 
     def file_loader_modif_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
+        print(f"The file's name is: {self.file.name}")
+        print(f"The number of bytes in the file is: {self.file.length}")
+        print(f"The file's content type is: {self.file.content_type}")
+        print(f"The file's contents[:15] are: '{self.file.get_bytes()[:15]}'")
+        print(f'url: {self.file.url}')
         self.file = file
+        self.name = file.name
+        self.text_box_path.text = file.name
         self.image.source = file   
 
     def image_show(self, **event_args):
