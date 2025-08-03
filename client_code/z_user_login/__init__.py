@@ -58,7 +58,8 @@ class z_user_login(z_user_loginTemplate):
                 alert(f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
                 open_form('Main',99)   #je retourne et efface l'url
         except anvil.users.AuthenticationFailed as e:
-            alert(f"Erreur:\n\n{e}")
+            #alert(f"Erreur:\n\n{e}")
+            alert("Erreur:\n\nAdresse email ou Mot de Passe erroné !")
             return
 
     def password_box_pressed_enter(self, **event_args):

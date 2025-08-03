@@ -56,7 +56,7 @@ def _send_password_reset(email):
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None:
-        logo_address = code_app2+"/_/theme/"+var_globales.mon_logo
+        logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Réinitialisez votre mot de passe",
                          html=f"""
 <p><img src = {logo_address} width="200" height="200"> </p> 
@@ -70,7 +70,7 @@ Si vous désirez poursuivre et ré-initialiser votre mot de passe, <b>clickez le
 {code_app1}/#?a=pwreset&email={url_encode(user['email'])}&api={url_encode(user['api_key'])}&t={t} <br>
 <br><br>
 <b><i>         Jean-Marc</b></i>,<br>
-https://jmweb34.net <br>
+https://jmarc@jmm-formation-et-services.fr <br>
 JM WEB SERVICES
 mail: {mon_mail} <br>
 """)
@@ -101,7 +101,7 @@ Afin de confirmer votre adresse mail, <b>clickez le lien ci-dessous:</b><br>
 <br><br>
 <b><i>         Jean-Marc</b></i>,<br>
 JM WEB SERVICES
-https://jmweb34.net <br>
+https://jmarc@jmm-formation-et-services.fr <br>
 mail: {mon_mail} <br>
 """)
     return True
