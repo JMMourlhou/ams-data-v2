@@ -77,7 +77,7 @@ components:
         type: TextBox
       - layout_properties: {grid_position: 'CBYTMM,CZTEAF FUHZZJ,OIXVKQ'}
         name: check_box_modif
-        properties: {text: Modifiable}
+        properties: {enabled: true, text: Modifiable}
         type: CheckBox
       - event_bindings: {change: check_box_annul_change}
         layout_properties: {grid_position: 'CBYTMM,CZTEAF HBHULW,FWNKRH'}

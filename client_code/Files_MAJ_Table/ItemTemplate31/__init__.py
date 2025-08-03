@@ -62,6 +62,7 @@ class ItemTemplate31(ItemTemplate31Template):
         self.file = file
         self.name = file.name
         self.text_box_path.text = file.name
+        self.text_box_version.text = ""
         self.image.source = file   
 
     def image_show(self, **event_args):

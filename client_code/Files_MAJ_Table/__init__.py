@@ -58,7 +58,11 @@ class Files_MAJ_Table(Files_MAJ_TableTemplate):
         """This method is called when a new file is loaded into this FileLoader"""
         self.file = file
         self.image.source = file
-
+        
+        self.name = file.name
+        self.text_box_path.text = file.name
+        self.text_box_version.text = ""
+        self.image.source = file   
 
     def image_show(self, **event_args):
         """This method is called when the Image is shown on the screen"""

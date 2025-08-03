@@ -13,12 +13,12 @@ components:
     - event_bindings: {change: text_box_version_change}
       layout_properties: {grid_position: 'CBYTMM,CZTEAF BSGEIS,MAZADN'}
       name: text_box_version
-      properties: {background: 'theme:Primary', foreground: 'theme:On Tertiary', role: outlined}
+      properties: {background: 'theme:Primary', enabled: false, foreground: 'theme:On Tertiary', role: outlined}
       type: TextBox
     - event_bindings: {change: text_box_path_change}
       layout_properties: {grid_position: 'CBYTMM,CZTEAF ZDKXLO,WYECAX'}
       name: text_box_path
-      properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+      properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
       type: TextBox
     - event_bindings: {change: text_box_commentaires_change}
       layout_properties: {grid_position: 'CBYTMM,CZTEAF PYRYYA,ADHWVZ'}
