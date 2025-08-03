@@ -28,59 +28,64 @@ class Files_MAJ_Table(Files_MAJ_TableTemplate):
     def button_add_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.column_panel_add.visible = True
+        self.button_add.visible = False
 
-    def button_valid_click(self, **event_args):
+        
+    def button_modif_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # Text_box_1 non vide
-        if self.text_box_1.text == "" or len(self.text_box_1.text) < 3:
-            alert("Entrez un lieu valide!")
-            self.text_box_1.focus()
-            return
-        # Text_box_2 non vide
-        if self.text_box_2.text == "" or len(self.text_box_2.text) < 6:
-            alert("Entrez une adresse supérieure à 5 caractères !")
-            self.text_box_2.focus()
-            return
-        # Text_box_3 non vide
-        """
-        if self.text_box_3.text == "" or len(self.text_box_3.text) < 6:
-            alert("Entrez un commentaire supérieur à 5 caractères !")
-            self.text_box_3.focus()
-            return
-        """
-        # Code existant ?
-        row = app_tables.pre_requis.get(code_pre_requis=self.text_box_1.text)
-        if row:
-            alert("Ce lieu existe déjà !")
-            self.text_box_1.focus()
-            return
-        r = alert(
-            "Voulez-vous vraiment ajouter ce Lieu ?",
-            dismissible=False,
-            buttons=[("oui", True), ("non", False)],
-        )
-        if r:  # oui
-            result = anvil.server.call(
-                "add_lieu",
-                self.text_box_1.text,
-                self.text_box_2.text,
-                self.text_box_3.text,
+        pass
+        
+    # Add -----------------------------------------------------------------------
+    def button_add_file_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if self.file:
+            r = alert(
+                "Voulez-vous vraiment ajouter ce Fichier ?",
+                dismissible=False,
+                buttons=[("oui", True), ("non", False)],
             )
-            if result is not True:
-                alert("ERREUR, Ajout non effectué !")
-                return
-            alert("Création effectuée !")
-        self.column_panel_add.visible = False
-        open_form("Lieux_MAJ_table")
+            if r:  # oui
+                result, msg=anvil.server.call('add_file_table', self.file, self.file.name, self.text_box_commentaires.text, self.check_box_modif.checked, self.check_box_annul.checked)
+                alert(msg)
+                if result is False:
+                    return
+            open_form("Files_MAJ_Table")
+        else:
+            alert("Choisir un fichier !")
+            return
 
-    def text_box_1_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
+    def file_loader_add_change(self, file, **event_args):
+        """This method is called when a new file is loaded into this FileLoader"""
+        self.file = file
+        self.image.source = file
 
-    def text_box_2_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
 
-    def text_box_3_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
+    def image_show(self, **event_args):
+        """This method is called when the Image is shown on the screen"""
+        self.button_add_file.visible = True
+
+    def text_box_commentaires_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.text_box_commentaires.placeholder = ""
+
+   
+
+
+    
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
