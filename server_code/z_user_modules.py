@@ -57,6 +57,7 @@ def _send_password_reset(email):
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None:
         logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
+        print(f"adresse du logo: {logo_address}")
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Réinitialisez votre mot de passe",
                          html=f"""
 <p><img src = {logo_address} width="200" height="200"> </p> 
@@ -86,7 +87,7 @@ def _send_email_confirm_link(email):
     global code_app2, code_app1, nom_app_pour_mail, mon_mail
 
     user = app_tables.users.get(email=email)
-    logo_address = code_app2+"/_/theme/"+var_globales.mon_logo
+    logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None and not user['confirmed_email']:  # User table, Column confirmed_email not checked/True
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Confirmation de votre adresse email",
