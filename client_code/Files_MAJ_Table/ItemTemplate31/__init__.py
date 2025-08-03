@@ -64,6 +64,7 @@ class ItemTemplate31(ItemTemplate31Template):
         self.text_box_path.text = file.name
         self.text_box_version.text = ""
         self.image.source = file   
+        self.button_modif_file.visible = True
 
     def image_show(self, **event_args):
         """This method is called when the Image is shown on the screen"""
