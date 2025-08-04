@@ -42,9 +42,9 @@ def time_over(t):
     diff_in_minutes = diff.seconds/60
 
     # Lecture de la variable globale "timedelay_url_in_min" ds table variables_globales
-    timedelay_url_in_min = anvil.server.call('get_variable_value', "timedelay_url_in_min")
+    timedelay_url_in_min = int(anvil.server.call('get_variable_value', "timedelay_url_in_min"))
     #to get the URL delay
-    if diff_in_minutes < timedelay_url_in_min: # J
+    if diff_in_minutes < timedelay_url_in_min: 
         bool = False # time not over
     return bool
 
