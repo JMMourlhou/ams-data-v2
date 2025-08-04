@@ -9,39 +9,12 @@ import anvil.users
 import anvil.server
 from anvil.http import url_encode
 import bcrypt
-
 import uuid   # this library generates codes (API keys for exemple)
 import sys
 from . import French_zone # importation du module pour le calcul du jour / heure du sign in
 
-from . import var_globales # importation du module contenant la variable globale mon logo (a anuler qd j'ai trouvé ce qui ne va pas)
 from datetime import datetime
-
-from . import Variables_globales
-from . import _Constant_parameters_public_ok
-# variables globales du modules qui contiendront les var_globales de l'appli
-# voir le dernier module recup_global_variables()
-
-global code_app1
-code_app1 = ""
-global nom_app_pour_mail
-nom_app_pour_mail = ""
-global mon_mail
-mon_mail = ""
-global mon_logo
-mon_logo = ""
-global client_mail
-client_mail = ""
-global ams_carte
-ams_carte = ""
-global ams_mail
-ams_mail = ""
-global ams_logo
-ams_logo = ""
-global qualiopi_logo
-qualiopi_logo = ""
-global ams_en_tete
-ams_en_tete =""
+from . import Variables_globales # importation du module de lecture des variables globales (de la table Variables_globales) 
 
 # Forcer login de l'utilisateur qui se connecte    
 @anvil.server.callable
@@ -54,17 +27,19 @@ def force_log(user_row):
 @anvil.server.callable
 def _send_password_reset(email):
     """Send a password reset email to the specified user"""
-    global code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete
-    recup_global_variables()   # appel au module qui va lire les var_globales, stockées ds table 'Global_variables'
+    # Récupération des variables globales utilisées ici
+    dict_var_glob = Variables_globales.get_variable_names()   # var_globale du mail d'AMS, stockées ds table 
+    ams_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
+    code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
+    en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
+    nom_app_pour_mail = code_app1+"/_/theme/"+ dict_var_glob["nom_app_pour_mail"]
     
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None:
-        logo_address = code_app1+"/_/theme/"+ams_logo
-        print(f"adresse du logo: {logo_address}")
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + " Réinitialisez votre mot de passe",
                          html=f"""
-<p><img src = {logo_address} width="200" height="200"> </p> 
+<p><img src = {en_tete_address} width="772" height="263"> </p> 
 <b>Mme/Mr {user["nom"]},</b><br>
 <br>
 Avez-vous bien demandé une modification du mot de passe de votre compte ? Si ce n'est pas vous, supprimez cet email ! <br>
@@ -85,17 +60,19 @@ mail: {ams_mail} <br>
 """Envoi du mail de confirmation: le mail du new user doit être confirmé"""
 @anvil.server.callable
 def _send_email_confirm_link(email):
-    global code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete
-    recup_global_variables()   # appel au module qui va lire les var_globales, stockées ds table 
-
+    # Récupération des variables globales utilisées ici
+    dict_var_glob = Variables_globales.get_variable_names()   # var_globale du mail d'AMS, stockées ds table 
+    ams_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
+    code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
+    en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
+    nom_app_pour_mail = code_app1+"/_/theme/"+ dict_var_glob["nom_app_pour_mail"]
+    
     user = app_tables.users.get(email=email)
-    logo_address = code_app1+"/_/theme/"+ams_logo
-    print(f"adresse du logo: {logo_address}")
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None and not user['confirmed_email']:  # User table, Column confirmed_email not checked/True
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Confirmation de votre adresse email",
                          html=f"""
-<p><img src = {logo_address} width="200" height="200"> </p> 
+<p><img src = {en_tete_address} width="200" height="200"> </p> 
 <b>Mme/Mr {user["nom"]},</b><br>
 <br>
 Merci de votre enregistrement sur {nom_app_pour_mail} !<br>
@@ -223,21 +200,3 @@ def recup_time():
     time_str=str(time)
     time_str=time_str.replace(" ","_")
     return(time_str)
-
-def recup_global_variables():
-    dict={}
-    dict = anvil.server.call('get_variable_names')   # in AMS_Data V2  
-
-    global code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete
-    code_app1 = dict["code_app1"]
-    nom_app_pour_mail = dict["nom_app_pour_mail"]
-    mon_mail = dict["mon_mail"]
-    mon_logo = dict["mon_logo"]
-    ams_en_tete = dict["ams_en_tete"]
-    ams_mail = dict["ams_mail"]
-    ams_carte = dict["ams_carte"]
-    ams_logo = dict["ams_logo"]
-    qualiopi_logo = dict["qualiopi_logo"]
-    
-    print("variables récupérées de table 'Global_variables:':")
-    print(code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete)

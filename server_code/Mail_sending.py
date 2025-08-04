@@ -9,8 +9,7 @@ import anvil.server
 from anvil.http import url_encode
 
 from . import French_zone_server_side
-from . import Variables_globales # importation du module de lecture des variables globales (sauf mon logo)
-from . import _Constant_parameters_public_ok
+from . import Variables_globales # importation du module de lecture des variables globales (de la table Variables_globales) 
 
 
 """Send an email to the specified user"""
@@ -24,14 +23,12 @@ def send_mail(emails_list, subject_txt, rich_text, old_stagiaires=False, attachm
     nb_mails = 0
     # Récupération des variables globales
     dict_var_glob = Variables_globales.get_variable_names()   # var_globale du mail d'AMS, stockées ds table 
-        
     client_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
     code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
-    #logo_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_logo
-    en_tete_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete
+    en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
     # ------------------------------------------
-    fin_mail_carte = code_app1+"/_/theme/"+_Constant_parameters_public_ok.carte_ams
-    fin_mail_qualiopi = code_app1+"/_/theme/"+_Constant_parameters_public_ok.logo_qualiopi
+    fin_mail_carte = code_app1+"/_/theme/"+ dict_var_glob["ams_carte"]
+    fin_mail_qualiopi = code_app1+"/_/theme/"+ dict_var_glob["qualiopi_logo"]
     # ------------------------------------------
     # Tps début de traitement
     time_deb=French_zone_server_side.time_french_zone() # time is a datetime format 
