@@ -3,14 +3,7 @@ import anvil.files
 from anvil.files import data_files
 import anvil.email
 
-
-
 from anvil.tables import app_tables
-#import tables
-#from tables import app_tables
-
-
-
 
 import anvil.users
 import anvil.server
@@ -23,22 +16,32 @@ from . import French_zone # importation du module pour le calcul du jour / heure
 
 from . import var_globales # importation du module contenant la variable globale mon logo (a anuler qd j'ai trouvé ce qui ne va pas)
 from datetime import datetime
+
 from . import Variables_globales
 from . import _Constant_parameters_public_ok
 # variables globales du modules qui contiendront les var_globales de l'appli
-# voir le dernier module recup_global_variables():
-global code_app2
-code_app2 = ""
+# voir le dernier module recup_global_variables()
+
 global code_app1
 code_app1 = ""
 global nom_app_pour_mail
 nom_app_pour_mail = ""
 global mon_mail
 mon_mail = ""
-global mon_logo      # A AJOUTER PLUS TARD, pour l'instant, ne fonctionne pas
+global mon_logo
 mon_logo = ""
-
-
+global client_mail
+client_mail = ""
+global ams_carte
+ams_carte = ""
+global ams_mail
+ams_mail = ""
+global ams_logo
+ams_logo = ""
+global qualiopi_logo
+qualiopi_logo = ""
+global ams_en_tete
+ams_en_tete =""
 
 # Forcer login de l'utilisateur qui se connecte    
 @anvil.server.callable
@@ -51,17 +54,15 @@ def force_log(user_row):
 @anvil.server.callable
 def _send_password_reset(email):
     """Send a password reset email to the specified user"""
-    global code_app2, code_app1, nom_app_pour_mail, mon_mail, mon_logo
+    global code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete
     recup_global_variables()   # appel au module qui va lire les var_globales, stockées ds table 'Global_variables'
     
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None:
-        logo_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete     # fonctionne 
-        #logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
-        #logo_address = code_app1 + "/_/theme/" + mon_logo
-        print(f"adresse du logo: {en_tete_address}")
-        anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Réinitialisez votre mot de passe",
+        logo_address = code_app1+"/_/theme/"+ams_logo
+        print(f"adresse du logo: {logo_address}")
+        anvil.email.send(to=user['email'], subject=nom_app_pour_mail + " Réinitialisez votre mot de passe",
                          html=f"""
 <p><img src = {logo_address} width="200" height="200"> </p> 
 <b>Mme/Mr {user["nom"]},</b><br>
@@ -73,10 +74,8 @@ Si vous désirez poursuivre et ré-initialiser votre mot de passe, <b>clickez le
 
 {code_app1}/#?a=pwreset&email={url_encode(user['email'])}&api={url_encode(user['api_key'])}&t={t} <br>
 <br><br>
-<b><i>         Jean-Marc</b></i>,<br>
-https://jmarc@jmm-formation-et-services.fr <br>
-JM WEB SERVICES
-mail: {mon_mail} <br>
+<b><i>         L'équipe d'AMSport,</b></i>,<br>
+mail: {ams_mail} <br>
 """)
 
         return True
@@ -86,11 +85,12 @@ mail: {mon_mail} <br>
 """Envoi du mail de confirmation: le mail du new user doit être confirmé"""
 @anvil.server.callable
 def _send_email_confirm_link(email):
+    global code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete
     recup_global_variables()   # appel au module qui va lire les var_globales, stockées ds table 
-    global code_app2, code_app1, nom_app_pour_mail, mon_mail
 
     user = app_tables.users.get(email=email)
-    logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
+    logo_address = code_app1+"/_/theme/"+ams_logo
+    print(f"adresse du logo: {logo_address}")
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None and not user['confirmed_email']:  # User table, Column confirmed_email not checked/True
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Confirmation de votre adresse email",
@@ -103,10 +103,8 @@ Afin de confirmer votre adresse mail, <b>clickez le lien ci-dessous:</b><br>
 <br>
 {code_app1}/#?a=confirm&email={url_encode(user['email'])}&hpw={url_encode(user['password_hash'])}&t={t} <br>
 <br><br>
-<b><i>         Jean-Marc</b></i>,<br>
-JM WEB SERVICES
-https://jmarc@jmm-formation-et-services.fr <br>
-mail: {mon_mail} <br>
+<b><i>         L'équipe d'AMSport,</b></i>,<br>
+mail: {ams_mail} <br>
 """)
     return True
 
@@ -219,8 +217,6 @@ def _confirm_email_address(email, api_key):
     anvil.users.force_login(user)
   return bool
 
-
-
 def recup_time(): 
     time=French_zone.french_zone_time()
     time_str=""
@@ -230,18 +226,18 @@ def recup_time():
 
 def recup_global_variables():
     dict={}
-    dict = anvil.server.call('get_variable_names')   # in AMS_Data V2
-    global code_app2
-    #code_app2 = dict["code_app2"]
-    
-    global code_app1
+    dict = anvil.server.call('get_variable_names')   # in AMS_Data V2  
+
+    global code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete
     code_app1 = dict["code_app1"]
-     
-    global nom_app_pour_mail
     nom_app_pour_mail = dict["nom_app_pour_mail"]
-    
-    global mon_mail
     mon_mail = dict["mon_mail"]
-    
-    global mon_logo
     mon_logo = dict["mon_logo"]
+    ams_en_tete = dict["ams_en_tete"]
+    ams_mail = dict["ams_mail"]
+    ams_carte = dict["ams_carte"]
+    ams_logo = dict["ams_logo"]
+    qualiopi_logo = dict["qualiopi_logo"]
+    
+    print("variables récupérées de table 'Global_variables:':")
+    print(code_app1, nom_app_pour_mail, mon_mail, mon_logo, ams_mail, ams_carte, ams_logo, qualiopi_logo, ams_en_tete)
