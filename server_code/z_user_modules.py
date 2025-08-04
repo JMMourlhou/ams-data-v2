@@ -34,8 +34,8 @@ global nom_app_pour_mail
 nom_app_pour_mail = ""
 global mon_mail
 mon_mail = ""
-# global mon_logo      A AJOUTER PLUS TARD, pour l'instant, ne fonctionne pas
-# mon_logo = ""
+global mon_logo      # A AJOUTER PLUS TARD, pour l'instant, ne fonctionne pas
+mon_logo = ""
 
 
 
@@ -50,13 +50,14 @@ def force_log(user_row):
 @anvil.server.callable
 def _send_password_reset(email):
     """Send a password reset email to the specified user"""
-    recup_global_variables()   # appel au module qui va lire les var_globales, stockées ds table 
-    global code_app2, code_app1, nom_app_pour_mail, mon_mail
-
+    global code_app2, code_app1, nom_app_pour_mail, mon_mail, mon_logo
+    recup_global_variables()   # appel au module qui va lire les var_globales, stockées ds table 'Global_variables'
+    
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None:
-        logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
+        #logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
+        logo_address = code_app1 + "/_/theme/" + mon_logo
         print(f"adresse du logo: {logo_address}")
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Réinitialisez votre mot de passe",
                          html=f"""
@@ -230,15 +231,15 @@ def recup_global_variables():
     dict = anvil.server.call('get_variable_names')   # in AMS_Data V2
     global code_app2
     #code_app2 = dict["code_app2"]
-
     
     global code_app1
     code_app1 = dict["code_app1"]
-        
-    
+     
     global nom_app_pour_mail
     nom_app_pour_mail = dict["nom_app_pour_mail"]
+    
     global mon_mail
     mon_mail = dict["mon_mail"]
-    #global mon_logo
-    #mon_logo = dict["mon_logo"]
+    
+    global mon_logo
+    mon_logo = dict["mon_logo"]
