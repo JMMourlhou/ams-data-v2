@@ -27,7 +27,7 @@ def send_mail(emails_list, subject_txt, rich_text, old_stagiaires=False, attachm
         
     client_mail = dict_var_glob["client_mail"]   # var globale Mail AMS
     code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
-    logo_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_logo
+    #logo_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_logo
     en_tete_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete
     # ------------------------------------------
     fin_mail_carte = code_app1+"/_/theme/"+_Constant_parameters_public_ok.carte_ams
