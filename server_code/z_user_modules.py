@@ -57,13 +57,13 @@ def _send_password_reset(email):
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None:
-        en_tete_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete
+        logo_address = code_app1+"/_/theme/"+_Constant_parameters_public_ok.ams_en_tete     # fonctionne 
         #logo_address = code_app1+"/_/theme/"+var_globales.mon_logo
         #logo_address = code_app1 + "/_/theme/" + mon_logo
         print(f"adresse du logo: {en_tete_address}")
         anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Réinitialisez votre mot de passe",
                          html=f"""
-<p><img src = {en_tete_address} width="200" height="200"> </p> 
+<p><img src = {logo_address} width="200" height="200"> </p> 
 <b>Mme/Mr {user["nom"]},</b><br>
 <br>
 Avez-vous bien demandé une modification du mot de passe de votre compte ? Si ce n'est pas vous, supprimez cet email ! <br>
