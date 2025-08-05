@@ -32,7 +32,7 @@ def _send_password_reset(email):
     ams_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
     code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
     en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
-    nom_app = code_app1+"/_/theme/"+ dict_var_glob["nom_app_pour_mail"]
+    nom_app_pour_mail = dict_var_glob["nom_app_pour_mail"]
     
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
@@ -49,7 +49,7 @@ Si vous désirez poursuivre et ré-initialiser votre mot de passe, <b>clickez le
 
 {code_app1}/#?a=pwreset&email={url_encode(user['email'])}&api={url_encode(user['api_key'])}&t={t} <br>
 <br><br>
-<b><i>         L'équipe d'AMSport,</b></i>,<br>
+<b><i>         L'équipe d'AMSport,</b></i><br>
 mail: {ams_mail} <br>
 """)
 
