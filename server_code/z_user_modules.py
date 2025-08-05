@@ -32,7 +32,7 @@ def _send_password_reset(email):
     ams_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
     code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
     en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
-    nom_app_pour_mail = code_app1+"/_/theme/"+ dict_var_glob["nom_app_pour_mail"]
+    nom_app = code_app1+"/_/theme/"+ dict_var_glob["nom_app_pour_mail"]
     
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
@@ -65,14 +65,14 @@ def _send_email_confirm_link(email):
     ams_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
     code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
     en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
-    nom_app_pour_mail = code_app1+"/_/theme/"+ dict_var_glob["nom_app_pour_mail"]
+    nom_app_pour_mail = dict_var_glob["nom_app_pour_mail"]
     
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None and not user['confirmed_email']:  # User table, Column confirmed_email not checked/True
-        anvil.email.send(to=user['email'], subject=nom_app_pour_mail + "Confirmation de votre adresse email",
+        anvil.email.send(to=user['email'], subject="Confirmation de votre adresse email",
                          html=f"""
-<p><img src = {en_tete_address} width="200" height="200"> </p> 
+<p><img src = {en_tete_address} width="772" height="263"> </p> 
 <b>Mme/Mr {user["nom"]},</b><br>
 <br>
 Merci de votre enregistrement sur {nom_app_pour_mail} !<br>
@@ -80,7 +80,7 @@ Afin de confirmer votre adresse mail, <b>clickez le lien ci-dessous:</b><br>
 <br>
 {code_app1}/#?a=confirm&email={url_encode(user['email'])}&hpw={url_encode(user['password_hash'])}&t={t} <br>
 <br><br>
-<b><i>         L'équipe d'AMSport,</b></i>,<br>
+<b><i>         L'équipe d'AMSport,</b></i><br>
 mail: {ams_mail} <br>
 """)
     return True
