@@ -208,7 +208,7 @@ class Visu_trombi(Visu_trombiTemplate):
         data_url = canvas.toDataURL("image/jpeg")
         
         # Envoie de l'image au serveur...
-        pdf = anvil.server.call('pdf_generation', data_url, self.num_stage)   # fonctionne qd l'app est lancée du Pi5, docker ct
+        pdf = anvil.server.call('pdf_generation1', data_url, self.num_stage)   # fonctionne qd l'app est lancée du Pi5, docker ct
         # récupération du pdf
         if pdf:
             anvil.media.download(pdf)
