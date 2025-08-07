@@ -28,8 +28,9 @@ class Visu_trombi(Visu_trombiTemplate):
         self.num_stage = num_stage
         self.intitule = intitule
         self.pdf_mode = pdf_mode
-        larg = 175 # largeur image en pixel
-        inter = 4  # Interval entre image
+        larg = 160 # largeur image en pixel
+        height = larg * 4/3 
+        inter = 10  # Interval entre image
        
         if self.pdf_mode is True:
             self.button_annuler.visible = False
@@ -75,7 +76,7 @@ class Visu_trombi(Visu_trombiTemplate):
                 
                 self.im = Image(background="white", 
                                     display_mode="shrink_to_fit",
-                                    height = larg,
+                                    height = height,
                                     source = table_pic,
                                     spacing_below = None,
                                     horizontal_align = "center",
@@ -86,15 +87,12 @@ class Visu_trombi(Visu_trombiTemplate):
                 #self.im.set_event_handler('mouse_down',self.im_mouse_down)            #POUR RENDRE L'IMAGE CLICKABLE, REVALIDER CETTE LIGNE
                 self.im.set_event_handler('show',self.im_show)
                 
-                # Nom prénom
+                # Nom prénom tel mail
                 try:  #au cas où prenom vide 
                     txt = stagiaire['nom'] + " " + stagiaire['prenom']
                 except:
                     txt = stagiaire['nom']
-                self.bt = Button(text=txt, tag = mel, spacing_above = None, background="", foreground="blue", bold=True, font_size = 14, enabled = True)
-                self.bt.set_event_handler('click',self.bt_click)
-
-                # Tel
+                # tel    
                 tel=row["user_email"]['tel']
                 try:
                     a = tel[0:2]   # mise en forme du tel
@@ -105,17 +103,12 @@ class Visu_trombi(Visu_trombiTemplate):
                     tel = a+"-"+b+"-"+c+"-"+d+"-"+e    
                 except:
                     tel="Tel ?"
-                self.bt2 = Button(text=tel, tag = mel, spacing_above = None, background="", foreground="blue", bold=True, font_size = 14, enabled = True)
-                self.bt2.set_event_handler('click',self.bt_click)
-
-                # mail
-                self.bt3 = Button(text=mel, tag = mel, spacing_above = None, background="", foreground="blue", bold=True, font_size = 12, enabled = True)
-                self.bt3.set_event_handler('click',self.bt_click)
+                #self.bt = Button(text=txt, tag = mel, spacing_above = None, background="black", foreground="blue", bold=True, font_size = 14, enabled = True)
+                self.infos = TextArea(text=f"{txt}\n{tel}\n{mel}", tag = mel, spacing_above = None, background="theme:Primary", foreground="white", bold=True, font_size = 13, enabled = True, align = "center", auto_expand=True )
                 
                 self.xy_panel.add_component(self.im, x=xx, y=yy, width = larg)
-                self.xy_panel.add_component(self.bt, x=xx, y=yy+larg, width = larg)  #nom,prénom
-                self.xy_panel.add_component(self.bt2, x=xx, y=yy+larg+20, width = larg)  #tel
-                self.xy_panel.add_component(self.bt3, x=xx, y=yy+larg+40, width = larg)  #tel
+                self.xy_panel.add_component(self.infos, x=xx, y=yy+height-45, width = larg)  #nom,prénom, tel, mail
+               
                 
 
                 if screen_size < 800:
@@ -129,7 +122,7 @@ class Visu_trombi(Visu_trombiTemplate):
                         cpt_ligne == 0
                        
                     xx = 1
-                    yy += 280   # Je descend de 260 pixels pour afficher la prochaine ligne
+                    yy += 290   # Je descend de 300 pixels pour afficher la prochaine ligne
                     cpt_ligne += 1
                 else :                      # pas 4eme image, je décalle à la prochaine image
                     xx = xx + larg + inter
@@ -199,10 +192,15 @@ class Visu_trombi(Visu_trombiTemplate):
         """This method is called when the button is clicked"""
         from anvil.js.window import html2canvas
         import anvil.js
-        # on inclu pas les boutons dans le pdf
-        self.column_panel_boutons.visible = False
         
-        # copie du composant et transformation en jpg
+        # 1. on inclu pas les boutons dans le pdf
+        self.column_panel_boutons.visible = False
+
+        # 2. Force un ratio précis sur le xy_panel avant la capture
+        #self.xy_panel.width = 900
+        #self.xy_panel.height = 1200   # ratio 4/3
+        
+        # 3.copie du composant et transformation en jpg
         dom_node = anvil.js.get_dom_node(self.column_panel_all)
         canvas = html2canvas(dom_node)
         data_url = canvas.toDataURL("image/jpeg")
