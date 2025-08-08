@@ -103,14 +103,15 @@ class Visu_trombi(Visu_trombiTemplate):
                     tel = a+"-"+b+"-"+c+"-"+d+"-"+e    
                 except:
                     tel="Tel ?"
-                #self.bt = Button(text=txt, tag = mel, spacing_above = None, background="black", foreground="blue", bold=True, font_size = 14, enabled = True)
-                self.infos = TextArea(text=f"{txt}\n{tel}\n{mel}", tag = mel, spacing_above = None, background="theme:Primary", foreground="white", bold=True, font_size = 13, enabled = True, align = "center", auto_expand=True )
-                
-                self.xy_panel.add_component(self.im, x=xx, y=yy, width = larg)
-                self.xy_panel.add_component(self.infos, x=xx, y=yy+height-45, width = larg)  #nom,prénom, tel, mail
-               
-                
+                self.nom_p = TextArea(text=f"{txt}", tag = mel, spacing_above = None, background="white", foreground="blue", bold=False, font_size = 13, enabled = True, align = "center", auto_expand=False )
+                self.tel = TextArea(text=f"{tel}", tag = mel, spacing_above = None, background="white", foreground="blue", bold=False, font_size = 13, enabled = True, align = "center", auto_expand=False )
+                self.mail = TextArea(text=f"{mel}", tag = mel, spacing_above = None, background="white", foreground="blue", bold=False, font_size = 10, enabled = True, align = "center", auto_expand=False )
 
+                self.xy_panel.add_component(self.im, x=xx, y=yy, width = larg)
+                self.xy_panel.add_component(self.nom_p, x=xx, y=yy+height-45, width = larg)  #nom,prénom
+                self.xy_panel.add_component(self.tel, x=xx, y=yy+height-20, width = larg)  #tel
+                self.xy_panel.add_component(self.mail, x=xx, y=yy+height+5, width = larg)  #mail
+                
                 if screen_size < 800:
                     nb_img_par_ligne = 4
                 else:
