@@ -1,0 +1,12 @@
+components: []
+container:
+  properties:
+    html: |-
+      <div anvil-slot="default">
+          <div data-anvil-id="ae-page-break-container" class="ae-page-break-container">
+              <div data-anvil-id="ae-page-break-margin-element"></div>
+              <div class="ae-page-break"></div>
+          </div>
+      </div>
+  type: HtmlTemplate
+is_package: true
