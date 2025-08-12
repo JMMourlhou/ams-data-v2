@@ -1,8 +1,8 @@
 from ._anvil_designer import Stage_satisf_rep_ouvertesTemplate
 from anvil import *
 import anvil.server
-from anvil_extras.PageBreak import PageBreak
-
+#from anvil_extras.PageBreak import PageBreak
+from ...PageBreak import PageBreak
 
 # AFFICHAGE DES RESULTATS d pour 1 question ouverte du formulaire de satisfaction
 # APPELE PAR LA FORM 'STAGE_SATISF_STATISTICS' par add component:
@@ -34,3 +34,4 @@ class Stage_satisf_rep_ouvertes(Stage_satisf_rep_ouvertesTemplate):
           
     def form_show(self, **event_args):
         self.add_component(PageBreak())      # si en création de pdf, je saute une page ts les 25 images, NE FONCTIONNE PAS !!!
+        self.add_component(PageBreak(margin_top=24, border="1px dashed #ccc"))

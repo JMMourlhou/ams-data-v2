@@ -1,8 +1,8 @@
 from ._anvil_designer import videTemplate
 from anvil import *
 import anvil.server
-from anvil_extras.PageBreak import PageBreak
-
+#from anvil_extras.PageBreak import PageBreak
+from ...PageBreak import PageBreak
 
 # AFFICHAGE vide qd le tuteur a plusieurs stagiaires pour le formulaire de suivi
 # APPELE PAR LA FORM 'S.ItemTemplate17' par add component:
@@ -18,3 +18,4 @@ class vide(videTemplate):
 
     def form_show(self, **event_args):
         self.add_component(PageBreak())  
+        self.add_component(PageBreak(margin_top=24, border="1px dashed #ccc"))

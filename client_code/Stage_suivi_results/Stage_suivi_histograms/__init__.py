@@ -9,8 +9,8 @@ import plotly.graph_objects as go
 import anvil.server
 
 from plotly import graph_objects as go
-from anvil_extras.PageBreak import PageBreak
-
+#from anvil_extras.PageBreak import PageBreak
+from ...PageBreak import PageBreak
 
 # AFFICHAGE D'un plot histogramme // RESULTATS pour 1 question fermée du formulaire de suivi
 # APPELE PAR LA FORM 'STAGE_SATISF_Statistics' par add component:
@@ -72,3 +72,4 @@ class Stage_suivi_histograms(Stage_suivi_histogramsTemplate):
     def form_show(self, **event_args):
         """This method is called when the Image is shown on the screen"""
         self.add_component(PageBreak())  # st de page à chaque histogramme
+        self.add_component(PageBreak(margin_top=24, border="1px dashed #ccc"))
