@@ -1099,12 +1099,7 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 
 
 
-/* test jm  */
-
-.page-break {
-    page-break-before: always;
-}
-
+/* ajouts jm  */
 
 
 @media screen and (max-width: 1000px) { /* only on phones*/
@@ -1125,3 +1120,16 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
   min-height: 40em;
 }  
 }
+
+@media print {
+    .ae-page-break {
+        break-after: page;
+        page-break-after: always; /* fallback */
+    }
+}
+
+/* Optionnel: visible à lécran pendant la mise au point */
+.ae-page-break-container {
+    border: none; /* tu peux changer via la props .border */
+}
+
