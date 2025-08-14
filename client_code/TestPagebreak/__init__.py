@@ -1,9 +1,10 @@
 from ._anvil_designer import TestPagebreakTemplate
+import anvil.server
 from ..PageBreak import PageBreak
-import anvil.pdf   # à charger en server side
 from anvil import Button, Label, Spacer
+from anvil import *
 
-class DocForm(TestPagebreakTemplate):
+class TestPagebreak(TestPagebreakTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
@@ -25,7 +26,12 @@ class DocForm(TestPagebreakTemplate):
 
     def btn_pdf_click(self, **event_args):
         # Génère un PDF depuis TOUT le Form (inclut cp + PageBreak)
-        media = anvil.pdf.from_component(self, filename="test-sauts-de-page.pdf")
-        # Télécharge le PDF côté client
-        anvil.media.download(media)
+        anvil.server.call("test_pdf")
+        alert("Vérif le stage 1000")
+
+    def button_annuler_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..Parametres import Parametres
+        open_form("Parametres")
+        
 
