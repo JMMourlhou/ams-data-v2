@@ -1,6 +1,6 @@
 from ._anvil_designer import TestPagebreakTemplate
 from ..PageBreak import PageBreak
-from anvil import Pdf
+import anvil.pdf   # à charger en server side
 from anvil import Button, Label, Spacer
 
 class DocForm(TestPagebreakTemplate):
