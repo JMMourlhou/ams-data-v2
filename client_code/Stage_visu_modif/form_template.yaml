@@ -40,6 +40,41 @@ components:
     name: button_qr_code_display
     properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Inscription par Qr code, tooltip: '', underline: false, visible: true}
     type: Button
+  - components:
+    - components:
+      - event_bindings: {click: button_trombi_click}
+        layout_properties: {grid_position: 'IZERTX,HMIZLO'}
+        name: button_trombi
+        properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Trombi, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_trombi_pdf_click}
+        layout_properties: {grid_position: 'IZERTX,FAELLI'}
+        name: button_trombi_pdf
+        properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:download', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Trombi Pdf, tooltip: '', underline: false, visible: false}
+        type: Button
+      layout_properties: {grid_position: 'CDLPWX,SZMKJI'}
+      name: column_panel_7
+      properties: {role: elevated-card, wrap_on: never}
+      type: ColumnPanel
+    - components:
+      - event_bindings: {click: button_visu_fiches_stagiaires_click}
+        layout_properties: {grid_position: 'FLRYJJ,NMJGXN'}
+        name: button_visu_fiches_stagiaires
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Fiches stagiaires, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_list_pdf_stagiaires_click}
+        layout_properties: {grid_position: 'FLRYJJ,BJFPEI'}
+        name: button_fiches_stagiaires
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:download', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: 'Fiches Pdf ', tooltip: '', underline: false, visible: false}
+        type: Button
+      layout_properties: {grid_position: 'CDLPWX,CWVJSC'}
+      name: column_panel_6
+      properties: {role: elevated-card, wrap_on: never}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'WWUXQS,EFELBG'}
+    name: column_panel_2
+    properties: {col_widths: '{}'}
+    type: ColumnPanel
   layout_properties: {grid_position: 'VWNVBO,TMPNWJ'}
   name: column_panel_1
   properties: {col_widths: '{}'}
@@ -192,41 +227,6 @@ components:
   name: drop_down_mode_fi
   properties: {visible: false}
   type: DropDown
-- components:
-  - components:
-    - event_bindings: {click: button_trombi_click}
-      layout_properties: {grid_position: 'IZERTX,HMIZLO'}
-      name: button_trombi
-      properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Trombi, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_trombi_pdf_click}
-      layout_properties: {grid_position: 'IZERTX,FAELLI'}
-      name: button_trombi_pdf
-      properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:download', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Trombi Pdf, tooltip: '', underline: false, visible: false}
-      type: Button
-    layout_properties: {grid_position: 'CDLPWX,SZMKJI'}
-    name: column_panel_7
-    properties: {role: elevated-card, wrap_on: never}
-    type: ColumnPanel
-  - components:
-    - event_bindings: {click: button_visu_fiches_stagiaires_click}
-      layout_properties: {grid_position: 'FLRYJJ,NMJGXN'}
-      name: button_visu_fiches_stagiaires
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Fiches stagiaires, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_list_pdf_stagiaires_click}
-      layout_properties: {grid_position: 'FLRYJJ,BJFPEI'}
-      name: button_fiches_stagiaires
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:download', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: 'Fiches Pdf ', tooltip: '', underline: false, visible: false}
-      type: Button
-    layout_properties: {grid_position: 'CDLPWX,CWVJSC'}
-    name: column_panel_6
-    properties: {role: elevated-card, wrap_on: never}
-    type: ColumnPanel
-  layout_properties: {grid_position: 'WXMZQM,ZGWPYK'}
-  name: column_panel_2
-  properties: {col_widths: '{}'}
-  type: ColumnPanel
 - components:
   - layout_properties: {}
     name: repeating_panel_1

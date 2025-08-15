@@ -119,11 +119,9 @@ class Visu_trombi(Visu_trombiTemplate):
                     nb_img_par_ligne = 5
                 
                 if cpt_stagiaire % nb_img_par_ligne == 0 : # (modulo 5) si 5eme image de la ligne affichée, j'initialise à 1ere image et saute la ligne
-                    if cpt_ligne == 2:      # si 5eme image de la 4eme ligne, page break
+                    if cpt_ligne == 5:      # si 5eme image de la 4eme ligne, page break
                         self.add_component(PageBreak())      # si en création de pdf, je saute une page après 2 lignes
-                        # --- Insérer le saut de page
-                        # self.add_component(PageBreak(margin_top=24, border="1px dashed #bbb"))
-                        cpt_ligne == 0
+                        cpt_ligne = 0
                        
                     xx = 1
                     yy += 290   # Je descend de 300 pixels pour afficher la prochaine ligne
