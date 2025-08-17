@@ -45,10 +45,10 @@ class Visu_trombi_2(Visu_trombi_2Template):
 
         # ---- Données
         # extraction de la liste (fonction list())
-        rows = list(app_tables.stagiaires_inscrits.search(
+        self.rows = list(app_tables.stagiaires_inscrits.search(
             tables.order_by("name", ascending=True),
             stage=stage_row
-        ))      
+        ))     
         nb_stagiaires = len(rows)
         print("nb-stagiaires", nb_stagiaires)
 
@@ -58,7 +58,7 @@ class Visu_trombi_2(Visu_trombi_2Template):
         cpt_stagiaire = 0
         cpt_ligne = 1  # commence à 1, on veut couper toutes les 2 lignes
 
-        for row in rows:
+        for row in self.rows:
             cpt_stagiaire += 1
 
             mel = row["user_email"]['email']
@@ -224,3 +224,20 @@ class Visu_trombi_2(Visu_trombi_2Template):
             alert("Trombinoscope téléchargé")
         else:
             alert("Pdf du trombi non trouvé")
+
+    def button_visu_html_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pdf = anvil.server.call(
+            "make_trombi_pdf_via_uplink",
+            self.rows,
+            self.num_stage,
+            self.intitule,
+            cols=5,            # 4 ou 5 colonnes
+            lines_per_page=2,  # saut de page toutes les 2 lignes
+            title_enabled=True
+        )
+        if pdf:
+            anvil.media.download(pdf)
+            alert("Trombinoscope html téléchargé")
+        else:
+            alert("Pdf du trombi html non trouvé")

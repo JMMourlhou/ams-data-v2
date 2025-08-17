@@ -24,7 +24,12 @@ components:
       - event_bindings: {click: button_screenshot_click}
         layout_properties: {grid_position: 'OPZVZL,GISJRN'}
         name: button_screenshot
-        properties: {text: test pdf generation}
+        properties: {text: test pdf sans html}
+        type: Button
+      - event_bindings: {click: button_visu_html_click}
+        layout_properties: {grid_position: 'OPZVZL,AUUMMQ'}
+        name: button_visu_html
+        properties: {text: test pdf AVEC HTML}
         type: Button
       layout_properties: {grid_position: 'PITLGQ,OXRWKP'}
       name: column_panel_boutons
