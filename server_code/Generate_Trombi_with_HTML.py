@@ -17,18 +17,14 @@ def _escape(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 @anvil.server.callable
-def make_trombi_pdf_via_uplink(rows, num_stage: int, intitule: str,
+def make_trombi_pdf_via_uplink(stage_row, rows, num_stage: int, intitule: str,
                                cols: int = 5, lines_per_page: int = 2,
                                title_enabled: bool = True):
     """
     Construit un HTML paginé par blocs 'cols * lines_per_page' cartes.
     Appelle l'Uplink (Pi5) 'render_trombi_pdf' et renvoie un BlobMedia PDF.
     """
-    # Récup du stage info pour le titre
-    stage_row = app_tables.stages.get(numero=int(num_stage))
-    if not stage_row:
-        raise ValueError(f"Stage {num_stage} introuvable")
-        
+          
     # Fabrique les cards (image + textes)
     cards_html = []
     for r in rows:

@@ -38,18 +38,18 @@ class Visu_trombi_2(Visu_trombi_2Template):
                 nb_img_par_ligne = 5
 
         # ---- Titre
-        stage_row = app_tables.stages.get(numero=int(num_stage))
-        cod = stage_row["code"]['code']
-        date = str(stage_row["date_debut"].strftime("%d/%m/%Y"))
+        self.stage_row = app_tables.stages.get(numero=int(num_stage))
+        cod = self.stage_row["code"]['code']
+        date = str(self.stage_row["date_debut"].strftime("%d/%m/%Y"))
         self.label_titre.text = f"Trombi stagiaires, {cod} du {date}.   (Stage num {num_stage})"
 
         # ---- Données
         # extraction de la liste (fonction list())
         self.rows = list(app_tables.stagiaires_inscrits.search(
             tables.order_by("name", ascending=True),
-            stage=stage_row
+            stage=self.stage_row
         ))     
-        nb_stagiaires = len(rows)
+        nb_stagiaires = len(self.rows)
         print("nb-stagiaires", nb_stagiaires)
 
         # ---- Placement absolu dans le XYPanel
@@ -229,6 +229,7 @@ class Visu_trombi_2(Visu_trombi_2Template):
         """This method is called when the button is clicked"""
         pdf = anvil.server.call(
             "make_trombi_pdf_via_uplink",
+            self.stage,
             self.rows,
             self.num_stage,
             self.intitule,
