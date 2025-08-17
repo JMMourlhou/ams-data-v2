@@ -229,7 +229,7 @@ class Visu_trombi_2(Visu_trombi_2Template):
         """This method is called when the button is clicked"""
         pdf = anvil.server.call(
             "make_trombi_pdf_via_uplink",
-            self.stage,
+            self.stage_row,
             self.rows,
             self.num_stage,
             self.intitule,
