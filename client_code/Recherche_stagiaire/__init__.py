@@ -260,7 +260,7 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
 
     def button_mail_to_all_click(self, **event_args):
         """This method is called when the button is clicked"""
-        if self.drop_down_num_stages.selected_value != None:    # si drop down date sélectionnée
+        if self.drop_down_num_stages.selected_value is not None:    # si drop down date sélectionnée
             liste = self.liste_date
         else:
             liste = self.liste_type_stage   # sinon je prends la liste par type de stage (PSE1, PSE2...)
