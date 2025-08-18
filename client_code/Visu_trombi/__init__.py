@@ -11,6 +11,7 @@ class Visu_trombi(Visu_trombiTemplate):
         
         self.f = get_open_form() # form appelante
         self.multi_stages = multi_stages
+        self.type_stage_si_multi = type_stage_si_multi
         if self.multi_stages is False:   # 1 seul stage visualisé ds le trombi
             # ---- Titre
             self.num_stage = num_stage
@@ -63,7 +64,7 @@ class Visu_trombi(Visu_trombiTemplate):
         nb_stagiaires = len(self.rows)
         print("nb-stagiaires", nb_stagiaires)
         nb_lignes = nb_stagiaires / nb_img_par_ligne
-        hauteur = nb_lignes * (height+100)
+        hauteur = nb_lignes * (height+100) + 150
         self.xy_panel.height = hauteur
         
         self.intitule = intitule
@@ -97,7 +98,8 @@ class Visu_trombi(Visu_trombiTemplate):
                 visible=True,
                 tag=mel
             )
-
+            im.add_event_handler('mouse_down', self.im_mouse_down)
+            
             # --- Nom / Tel / Mail
             try:
                 nomprenom = f"{stagiaire['nom']} {stagiaire['prenom']}"
@@ -151,26 +153,14 @@ class Visu_trombi(Visu_trombiTemplate):
     """ *************************************************************************************************************************************"""
     """ ******************************              Gestion des évenements click sur image ou nom, extraction grace au TAG de l'image ou nom """
 
-    def bt_click(self, **event_args):
-        """This method is called when the link is clicked"""
-        """ contenu du dictionaire event_args 
-        {'button': 1, 'keys': {'meta': False, 'shift': False, 'ctrl': False, 'alt': False}, 'sender': <anvil.Image object>, 'event_name': 'mouse_down'}"""
-        # print(event_args) # c'est un dictionnaire contenant les infos de lévenement
-        mel = event_args["sender"].tag  # j'extrai le tag du sender (l'image)
-        from ..Saisie_info_apres_visu import Saisie_info_apres_visu
-
-        open_form("Saisie_info_apres_visu", mel, self.num_stage, self.intitule)
-
     def im_mouse_down(self, x, y, **event_args):
         """This method is called when the mouse cursor enters this component"""
         """ contenu du dictionaire event_args 
         {'button': 1, 'keys': {'meta': False, 'shift': False, 'ctrl': False, 'alt': False}, 'sender': <anvil.Image object>, 'event_name': 'mouse_down'}"""
         # print(event_args) #c'est un dictionnaire contenant les infos de lévenement
         mel = event_args["sender"].tag  # j'extrai le tag du sender (l'image)
-        # print("mail",mel)
-        from ..Saisie_info_apres_trombi import Saisie_info_apres_trombi
-
-        open_form("Saisie_info_apres_trombi", self.num_stage, self.intitule, mel)
+        from ..Saisie_info_apres_visu import Saisie_info_apres_visu
+        open_form("Saisie_info_apres_visu", mel)
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -188,16 +178,29 @@ class Visu_trombi(Visu_trombiTemplate):
 
     def button_trombi_pdf_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pdf = anvil.server.call(
-            "make_trombi_pdf_via_uplink",
-            self.stage_row,
-            self.rows,
-            self.num_stage,
-            self.intitule,
-            cols=5,            # 4 ou 5 colonnes
-            lines_per_page=2,  # saut de page toutes les 2 lignes
-            title_enabled=True
-        )
+        if self.multi_stages is False:   # 1 seul stage visualisé ds le trombi
+            pdf = anvil.server.call(
+                "make_trombi_pdf_via_uplink",
+                self.stage_row,
+                self.rows,
+                self.num_stage,
+                cols=5,            # 4 ou 5 colonnes
+                lines_per_page=4,  # saut de page toutes les 4 lignes
+                title_enabled=True,
+                type_stage_si_multi = None
+            )
+        else:
+            pdf = anvil.server.call(
+                "make_trombi_pdf_via_uplink",
+                None,
+                self.rows,
+                None,
+                cols=5,            # 4 ou 5 colonnes
+                lines_per_page=4,  # saut de page toutes les 4 lignes
+                title_enabled=True,
+                type_stage_si_multi = self.type_stage_si_multi
+            )
+        
         if pdf:
             anvil.media.download(pdf)
             alert("Trombinoscope html téléchargé")

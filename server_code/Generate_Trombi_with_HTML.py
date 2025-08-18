@@ -18,9 +18,9 @@ def _escape(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 @anvil.server.callable
-def make_trombi_pdf_via_uplink(stage_row, rows, num_stage: int, intitule: str,
+def make_trombi_pdf_via_uplink(stage_row, rows, num_stage: int,                 # Stage_row et num_stage None si multi stages de même type (vient de Recherche)
                                cols: int = 5, lines_per_page: int = 2,
-                               title_enabled: bool = True):
+                               title_enabled: bool = True, type_stage_si_multi: str = None):
     """
     Construit un HTML paginé par blocs 'cols * lines_per_page' cartes.
     Appelle l'Uplink (Pi5) 'render_trombi_pdf' et renvoie un BlobMedia PDF.
@@ -83,11 +83,14 @@ def make_trombi_pdf_via_uplink(stage_row, rows, num_stage: int, intitule: str,
     # Insère un saut de page entre les tableaux (pas après le dernier)
     grid_pages_html = ("<div class='page-break'></div>").join(pages)
 
-
-    stage_code = stage_row["code"]['code']
-    date_txt = stage_row["date_debut"].strftime("%d/%m/%Y")
-    title = _escape(f"Trombi stagiaires {stage_code} du {date_txt} (Stage {num_stage})")
-
+    if stage_row is not None:   # 1 seul stage
+        stage_code = stage_row["code"]['code']
+        date_txt = stage_row["date_debut"].strftime("%d/%m/%Y")
+        title = _escape(f"Trombi stagiaires {stage_code} du {date_txt} (Stage {num_stage})")
+    else: # Multi stages
+        title = _escape(f"Trombi stagiaires, tous stages {type_stage_si_multi}")
+        num_stage = _escape(f"Trombi_stages_{type_stage_si_multi}")
+        
     # HTML final (la CSS principale est dans ton Uplink, via CSS_BASE)
     html = f"""<!doctype html>
 <html>
