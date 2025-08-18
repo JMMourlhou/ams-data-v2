@@ -47,16 +47,8 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         else:                                              # stage vide, je n'affiche pas les bt et la liste
             self.button_trombi.visible = False
             self.button_trombi_pdf.visible = False
-            self.button_fiches_stagiaires.visible = False
             self.button_visu_fiches_stagiaires.visible = False
 
-        # si option stable cochée, true, on lancera les bgt du trombi et fiches
-        if self.stage_row['allow_bgt_generation'] is False:
-            self.button_fiches_stagiaires.visible = False
-            self.button_trombi_pdf.visible = False
-        else:
-            self.button_fiches_stagiaires.visible = True
-            self.button_trombi_pdf.visible = True
             
         #lecture intitulé stage
         self.intitul = self.stage_row['code']['code']

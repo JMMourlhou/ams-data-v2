@@ -12,11 +12,10 @@ class Visu_trombi(Visu_trombiTemplate):
         
         self.num_stage = num_stage
         self.intitule = intitule
-        self.pdf_mode = pdf_mode
 
-        # Boutons visibles seulement hors PDF
-        for b in (self.button_annuler, self.button_annuler2, self.button_trombi, self.button_trombi_pdf):
-            b.visible = not self.pdf_mode
+        #Boutons visibles seulement hors PDF
+        #for b in (self.button_annuler, self.button_annuler2, self.button_trombi, self.button_trombi_pdf):
+        #    b.visible = not self.pdf_mode
 
         # ---- Paramètres d'affichage
         nb_lignes = 2              # nb de lignes par page: 2 pour test puis changer (puis ajouter ds table Global_variables)
@@ -26,16 +25,11 @@ class Visu_trombi(Visu_trombiTemplate):
         pas_ligne = 290            # hauteur d'une "ligne" (image + textes)
 
         # Nombre d'images par ligne:
-        # en mode PDF => fixe (évite toute dépendance à window.innerWidth durant le rendu)
-        if self.pdf_mode:
+        try:
+            from anvil.js import window
+            nb_img_par_ligne = 2 if window.innerWidth < 800 else 5
+        except Exception:
             nb_img_par_ligne = 5
-        else:
-            # En interactif, tu peux garder ton comportement responsive
-            try:
-                from anvil.js import window
-                nb_img_par_ligne = 4 if window.innerWidth < 800 else 5
-            except Exception:
-                nb_img_par_ligne = 5
 
         # ---- Titre
         self.stage_row = app_tables.stages.get(numero=int(num_stage))
