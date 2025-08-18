@@ -146,9 +146,7 @@ class Visu_trombi(Visu_trombiTemplate):
         # Petit confort
         self.column_panel_header.scroll_into_view()
 
-    # (supprime im_show si tu l'utilisais pour forcer les coupures)
-    def im_show(self, **event_args):
-        pass
+    
 
     """ *************************************************************************************************************************************"""
     """ ******************************              Gestion des évenements click sur image ou nom, extraction grace au TAG de l'image ou nom """
@@ -170,7 +168,6 @@ class Visu_trombi(Visu_trombiTemplate):
         """This method is called when the button is clicked"""
         self.button_retour_click()
 
-       
     def button_fiches_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Visu_liste_1_stage import Visu_liste_1_stage
@@ -189,9 +186,9 @@ class Visu_trombi(Visu_trombiTemplate):
                 title_enabled=True,
                 type_stage_si_multi = None
             )
-        else:
+        else:  # Visu de multi stages du même type
             pdf = anvil.server.call(
-                "make_trombi_pdf_via_uplink",
+                "make_trombi_pdf_via_uplink",                  # envoi au moduleserveur pour construuire le HTML
                 None,
                 self.rows,
                 None,
