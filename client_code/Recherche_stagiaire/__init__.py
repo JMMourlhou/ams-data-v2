@@ -182,6 +182,7 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
         if len(self.liste_type_stage)>0:
             self.button_mail_to_all.visible = True
             self.drop_down_num_stages.visible = True
+            self.button_trombi.visible = True
     
     def drop_down_code_stage_change(self, **event_args):
         """This method is called when an item is selected"""
@@ -193,6 +194,7 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
         self.button_recherche.visible = False
         self.button_efface.visible = True
         self.column_panel_users.visible = False
+        
         self.filtre_type_stage()  
         
     def drop_down_num_stages_change(self, **event_args):
@@ -213,7 +215,7 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
         else:                                           # Pas de stagiaires inscrits
             self.button_mail_to_all.visible = False
             self.button_mail_to_all.visible = False
-            self.button_trombi.visible = False
+            # self.button_trombi.visible = False
             self.button_pre_requis.visible = False
 
     def button_retour_click(self, **event_args):
@@ -273,11 +275,14 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
         # 'formul' indique l'origine, ici 'formulaire de satisfaction'
         open_form("Mail_subject_attach_txt",  liste_email, 'stagiaire_tous') 
 
-    def button_trombi_click(self, **event_args):
+    def button_trombi_click(self, **event_args): 
         """This method is called when the button is clicked"""
         from ..Visu_trombi import Visu_trombi
-        #open_form('Visu_trombi',self.text_box_num_stage.text, self.text_box_intitule.text, False)
-        open_form('Visu_trombi',str(self.selection['numero']), self.selection['code']['intitulé'], False)
+        if self.drop_down_num_stages.selected_value is not None:    # 1 stage sélectionné
+            open_form('Visu_trombi',str(self.selection['numero']), self.selection['code']['intitulé'], False, None, False)
+        else:    
+            code_stage = self.drop_down_code_stage.selected_value['code']
+            open_form('Visu_trombi',None, None, True, code_stage, False)
 
     def button_pre_requis_click(self, **event_args):
         """This method is called when the button is clicked"""

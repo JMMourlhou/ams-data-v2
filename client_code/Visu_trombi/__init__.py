@@ -6,12 +6,35 @@ from anvil.tables import app_tables
 from ..PageBreak import PageBreak
 
 class Visu_trombi(Visu_trombiTemplate):
-    def __init__(self, num_stage, intitule, pdf_mode=False, **properties):
+    def __init__(self, num_stage, intitule, multi_stages=False, type_stage_si_multi=None, pdf_mode=False, **properties):
         self.init_components(**properties)
-        self.f = get_open_form() # form appelante
         
-        self.num_stage = num_stage
-        self.intitule = intitule
+        self.f = get_open_form() # form appelante
+        self.multi_stages = multi_stages
+        if self.multi_stages is False:   # 1 seul stage visualisé ds le trombi
+            # ---- Titre
+            self.num_stage = num_stage
+            self.stage_row = app_tables.stages.get(numero=int(num_stage))
+            cod = self.stage_row["code"]['code']
+            date = str(self.stage_row["date_debut"].strftime("%d/%m/%Y"))
+            self.label_titre.text = f"Trombi stagiaires, {cod} du {date}.   (Stage num {num_stage})"
+            
+            # ---- Données
+            # extraction de la liste (fonction list())
+            self.rows = list(app_tables.stagiaires_inscrits.search(
+                tables.order_by("name", ascending=True),
+                stage=self.stage_row
+            ))    
+        else: # Plusieurs stages du même type PSC, BNSSA, ... (vient de recherche)
+            self.label_titre.text = f"Trombi stagiaires, tous stages {type_stage_si_multi}"
+            # ---- Données
+            # extraction de la liste (fonction list())
+            self.rows = list(app_tables.stagiaires_inscrits.search(
+                tables.order_by("name", ascending=True),
+                stage_txt=type_stage_si_multi
+            ))    
+        
+        
 
         #Boutons visibles seulement hors PDF
         #for b in (self.button_annuler, self.button_annuler2, self.button_trombi, self.button_trombi_pdf):
@@ -27,25 +50,24 @@ class Visu_trombi(Visu_trombiTemplate):
         # Nombre d'images par ligne:
         try:
             from anvil.js import window
-            nb_img_par_ligne = 2 if window.innerWidth < 800 else 5
+            if window.innerWidth < 800:
+                nb_img_par_ligne = 2
+                self.label_titre.font_size = 12
+            else:
+                nb_img_par_ligne = 5
+                self.label_titre.font_size = 14
         except Exception:
             nb_img_par_ligne = 5
-
-        # ---- Titre
-        self.stage_row = app_tables.stages.get(numero=int(num_stage))
-        cod = self.stage_row["code"]['code']
-        date = str(self.stage_row["date_debut"].strftime("%d/%m/%Y"))
-        self.label_titre.text = f"Trombi stagiaires, {cod} du {date}.   (Stage num {num_stage})"
-
-        # ---- Données
-        # extraction de la liste (fonction list())
-        self.rows = list(app_tables.stagiaires_inscrits.search(
-            tables.order_by("name", ascending=True),
-            stage=self.stage_row
-        ))     
+            self.label_titre.font_size = 14
+        
         nb_stagiaires = len(self.rows)
         print("nb-stagiaires", nb_stagiaires)
-
+        nb_lignes = nb_stagiaires / nb_img_par_ligne
+        hauteur = nb_lignes * (height+100)
+        self.xy_panel.height = hauteur
+        
+        self.intitule = intitule
+        
         # ---- Placement absolu dans le XYPanel
         xx = 1
         yy = 1
@@ -152,33 +174,16 @@ class Visu_trombi(Visu_trombiTemplate):
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        """
-        from ..Stage_visu_modif import Stage_visu_modif
-        open_form('Stage_visu_modif', int(self.num_stage), False)  # False: ne pas effectuer les BG tasks
-        """
         open_form(self.f)
 
     def button_retour2_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.button_retour_click()
 
-    """
-    def im_show(self, **event_args):
-        # This method is called when the Image is shown on the screen
-        global cpt  # Cpt le nb d'images imprimées
-        cpt += 1
-        print(cpt)
-        if cpt == 25:
-            print("Page Break", cpt)
-            self.add_component(
-                PageBreak()
-            )  # si en création de pdf, je saute une page ts les 25 images, NE FONCTIONNE PAS !!!
-    """
-    
-    def button_trombi_click(self, **event_args):
+       
+    def button_fiches_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Visu_liste_1_stage import Visu_liste_1_stage
-
         open_form("Visu_liste_1_stage", self.num_stage, self.intitule)
 
     def button_trombi_pdf_click(self, **event_args):
@@ -200,48 +205,3 @@ class Visu_trombi(Visu_trombiTemplate):
             alert("Pdf du trombi html non trouvé")
 
 
-    def button_screenshot_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        from anvil.js.window import html2canvas
-        import anvil.js
-
-        # 1. on inclu pas les boutons dans le pdf
-        self.column_panel_boutons.visible = False
-
-        # 2. Force un ratio précis sur le xy_panel avant la capture
-        # self.xy_panel.width = 900
-        # self.xy_panel.height = 1200   # ratio 4/3
-
-        # 3.copie du composant et transformation en jpg
-        dom_node = anvil.js.get_dom_node(self.column_panel_all)
-        canvas = html2canvas(dom_node)
-        data_url = canvas.toDataURL("image/jpeg")
-
-        # Envoie de l'image au serveur...
-        pdf = anvil.server.call(
-            "pdf_generation", data_url, self.num_stage
-        )  # fonctionne qd l'app est lancée du Pi5, docker ct
-        # récupération du pdf
-        if pdf:
-            anvil.media.download(pdf)
-            alert("Trombinoscope téléchargé")
-        else:
-            alert("Pdf du trombi non trouvé")
-
-    def button_visu_html_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        pdf = anvil.server.call(
-            "make_trombi_pdf_via_uplink",
-            self.stage_row,
-            self.rows,
-            self.num_stage,
-            self.intitule,
-            cols=5,            # 4 ou 5 colonnes
-            lines_per_page=2,  # saut de page toutes les 2 lignes
-            title_enabled=True
-        )
-        if pdf:
-            anvil.media.download(pdf)
-            alert("Trombinoscope html téléchargé")
-        else:
-            alert("Pdf du trombi html non trouvé")
