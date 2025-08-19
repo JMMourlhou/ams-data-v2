@@ -8,8 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from ..Stage_suivi_rep_ouvertes import (Stage_suivi_rep_ouvertes)   #  Forme ajoutée pour questions ouvertes
 from ..vide import vide
-from anvil_extras.PageBreak import PageBreak
-
+from ...PageBreak import PageBreak
 # AFFICHAGE DU PRENOM / NOM du stagiaire ou Tuteur
 # Recherche et affichage de ses Q/Rep ouvertes et fermées
 
