@@ -148,14 +148,15 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
         # AFFICHAGE EN FONCTION DU NB DE QUESTIONS
         global nb_questions_ferm  # nb questions fermées (testé en validation)
         nb_questions_ferm = len(dico_q_ferm)  # nb de questions fermées ds le dico
+        print(f"{nb_questions_ferm} questions_ferm")
         
         global nb_questions_ouvertes  # nb questions ouvertes
         nb_questions_ouvertes = len(dico_q_ouv)
-        
+        print(f"{nb_questions_ouvertes} questions_ouvertes")       
 
-        if (nb_questions_ferm > 0):  # Check du nb de questions fermées à afficher et affectation des questions
+        if nb_questions_ferm > 0:  # Check du nb de questions fermées à afficher et affectation des questions
             self.column_panel_1.visible = True
-            self.label_1.text = dico_q_ferm["1"][0]  # Je prend le 1er elmt de la liste (la question), le 2eme: si question 'obligatoire / facultative'
+            self.label_1.text = dico_q_ferm["1"][0]  # Je prends le 1er elmt de la liste (la question), le 2eme: si question 'obligatoire / facultative'
         if nb_questions_ferm > 1:
             self.column_panel_2.visible = True
             self.label_2.text = dico_q_ferm["2"][0]
