@@ -96,7 +96,8 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                                                     code=code_moto
                                                    )
                 for stage in liste1:
-                    liste_drop_d.append((code_moto["code"] + " débuté le " + str(stage["date_debut"]), stage))
+                    if stage["saisie_suivi_ok"] is True:  # si autorisé à saisir le formulaire de suivi, je l'affiche
+                        liste_drop_d.append((code_moto["code"] + " débuté le " + str(stage["date_debut"]), stage))
                 
             # print(liste_drop_d)
             self.drop_down_code_stage.items = liste_drop_d
