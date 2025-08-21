@@ -80,3 +80,9 @@ class RowTemplate6(RowTemplate6Template):
         else:
             self.check_box_selection.background = "theme:On Primary Container"
         self.f.label_nb_select.text = nb   
+
+    def button_add_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        question = f"Voulez-vous vraiment ajouter {} dans l'application"
+        r=alert("Voulez-vous vraiment ajouter effacer ce lieu ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if r :   # oui

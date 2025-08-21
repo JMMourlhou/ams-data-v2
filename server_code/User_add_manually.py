@@ -12,19 +12,18 @@ import uuid   # this library generates codes (API keys for exemple)
 
 @anvil.server.callable
 @anvil.tables.in_transaction
-def new_user(nom, prenom, tel, email, signed_up):
+def new_user(nom, prenom, tel, email, role, signed_up):
     err = None
     print(email, nom)
     
     user = app_tables.users.get(email=email)
     if user is None:   # user not created yet
         print("non existant")   
-        pwhash = hash_password("du", bcrypt.gensalt())
+        pwhash = hash_password("ams34", bcrypt.gensalt())
         api = str(uuid.uuid4())   # Création de l'identifiant unique et transformation en chaîne
-        role_user ="S"  # stagiaire par défaut
         
         user = app_tables.users.add_row(email=email.lower(),
-                                        role=role_user,
+                                        role=role,
                                         enabled=True,
                                         confirmed_email=True,
                                         nom=nom,

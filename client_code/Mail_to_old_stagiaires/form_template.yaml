@@ -21,15 +21,15 @@ components:
       name: button_comp_stagiaires
       properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Comparaison, tooltip: '', underline: false, visible: false}
       type: Button
+    - event_bindings: {click: button_tri_mail_click}
+      layout_properties: {}
+      name: button_tri_mail
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Tri / mails, tooltip: '', underline: false, visible: true}
+      type: Button
     - event_bindings: {click: button_tri_nom_click}
       layout_properties: {}
       name: button_tri_nom
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Tri/mails, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_add_click}
-      layout_properties: {}
-      name: button_add
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: New user, tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Tri / Noms, tooltip: '', underline: false, visible: true}
       type: Button
     - components:
       - layout_properties: {grid_position: 'IYRVSW,ANDAWQ'}
@@ -52,52 +52,6 @@ components:
     name: flow_panel_1
     properties: {align: justify, spacing: medium, spacing_above: none, spacing_below: none}
     type: FlowPanel
-  - components:
-    - components:
-      - layout_properties: {grid_position: 'VXFMPQ,MCGGHR'}
-        name: label_3_copy
-        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Création d'un utilisateur, tooltip: '', underline: false, visible: true}
-        type: Label
-      layout_properties: {grid_position: 'KSFDAW,TQGJCV'}
-      name: column_panel_1
-      properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
-      type: ColumnPanel
-    - event_bindings: {click: button_validation_click}
-      layout_properties:
-        col_widths: {}
-        grid_position: WZZKXS,VOOVGF
-      name: button_valid
-      properties: {align: center, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Créer, tooltip: '', underline: false, visible: false}
-      type: Button
-    - event_bindings: {click: button_retour_click}
-      layout_properties: {grid_position: 'WZZKXS,CLNUZN'}
-      name: button_retour
-      properties: {align: center, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Retour, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {change: text_box_nom_change}
-      layout_properties: {grid_position: 'EVHQUU,VNKBCQ'}
-      name: text_box_nom
-      properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Nom, role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-      type: TextBox
-    - event_bindings: {change: text_box_nom_change}
-      layout_properties: {grid_position: 'OXNGFR,LQFYRC'}
-      name: text_box_prenom
-      properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Prénom(s), role: outlined, spacing_above: none, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-      type: TextBox
-    - event_bindings: {change: text_box_nom_change}
-      layout_properties: {grid_position: 'YTNQUA,AJMRXT'}
-      name: text_box_tel
-      properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Tel, role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: tel, underline: false, visible: true}
-      type: TextBox
-    - event_bindings: {change: text_box_nom_change}
-      layout_properties: {grid_position: 'POUMKS,VLAEPT'}
-      name: text_box_mail
-      properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Mail, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-      type: TextBox
-    layout_properties: {grid_position: 'IMSDKK,RUAIUY'}
-    name: column_panel_add
-    properties: {background: 'theme:Olive', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: false, wrap_on: mobile}
-    type: ColumnPanel
   event_bindings: {}
   layout_properties: {grid_position: 'HNHOLS,ATCFSL'}
   name: column_panel_header

@@ -5,8 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from .. import Mail_valideur  # pour button_export_xls_click
-from .. import French_zone # POur acquisition de date et heure Francaise (Browser time)
+
 
 class Mail_to_old_stagiaires(Mail_to_old_stagiairesTemplate):
     def __init__(self, **properties):
@@ -64,7 +63,7 @@ class Mail_to_old_stagiaires(Mail_to_old_stagiairesTemplate):
         msg = f"Nb de doublons effacés: {nb}"
         alert(msg)
 
-    def button_tri_nom_click(self, **event_args):
+    def button_tri_mail_click(self, **event_args):
         """This method is called when the button is clicked"""
         # lecture de toute la table old_stagiaires sur le mail
         self.liste_old_stagiaires = app_tables.stagiaires_histo.search(
@@ -73,51 +72,16 @@ class Mail_to_old_stagiaires(Mail_to_old_stagiairesTemplate):
         self.label_nb_rows.text = str(len(self.liste_old_stagiaires))
         self.repeating_panel_1.items = self.liste_old_stagiaires
 
-    def button_valid_click(self, **event_args):
+    def button_tri_nom_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        # lecture de toute la table old_stagiaires sur le mail
+        self.liste_old_stagiaires = app_tables.stagiaires_histo.search(
+            tables.order_by("nom", ascending=True),
+        )
+        self.label_nb_rows.text = str(len(self.liste_old_stagiaires))
+        self.repeating_panel_1.items = self.liste_old_stagiaires
 
-    def button_retour_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        pass
-        self.column_panel_add.visible = False
-        self.button_valid.visible = False
+   
+    
 
-    def button_add_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        self.column_panel_add.visible = True
-
-    def text_box_nom_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
-
-    def button_validation_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        if len(self.text_box_nom.text) < 3:
-            alert("Le nom n'est pas assez long !")
-            self.text_box_nom.focus()
-            return
-        if len(self.text_box_prenom.text) < 3:
-            alert("Le prénom n'est pas assez long !")
-            self.text_box_prenom.focus()
-            return
-        
-        # Mail format validation
-        self.mail = self.text_box_mail.text
-        result = Mail_valideur.is_valid_email(self.mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
-        if result is False:
-            alert("Le mail n'a pas le bon format !")
-            self.text_box_mail.focus()
-            return
-        alert("ok")
-        result = anvil.server.call("new_user",
-                                   self.text_box_nom.text,
-                                   self.text_box_prenom.text,
-                                   self.text_box_tel.text,
-                                   self.text_box_mail.text,
-                                   signed_up = French_zone.french_zone_time(),  # importé en ht de ce script
-                                  )
-        if result is not None:
-            alert(result)
-        else:
-            alert("Création effectuée !")
+ 

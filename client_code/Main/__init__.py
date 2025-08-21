@@ -289,7 +289,6 @@ class Main(MainTemplate):
     # click sur le mail du user (l'icone du petit bonhomme), envoi en "Saisie_info_apres_visu"
     def bt_user_mail_click(self, prem_util=False, **event_args):  # True=1ere utilisation
         self.content_panel.clear()
-        self.bt_se_deconnecter.visible = False
         self.bt_sign_in.visible = False
         # Saisie_info_de_base(False) car pas la 1ere saisie de la fiche de renseignements
         if not self.user:
@@ -468,6 +467,10 @@ class Main(MainTemplate):
         from ..TestPagebreak import TestPagebreak
         open_form("TestPagebreak")
 
+    def button_add_user_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..User_add_sans_procedures import User_add_sans_procedures
+        open_form('User_add_sans_procedures')
    
             
 
