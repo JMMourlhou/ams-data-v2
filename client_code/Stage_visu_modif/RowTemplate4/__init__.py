@@ -70,19 +70,24 @@ class RowTemplate4(RowTemplate4Template):
         """This method is called when this checkbox is checked or unchecked"""
         # Sauvegarde du check box au cas ou l'utilisateur répond 'non'
         sov = self.check_box_form_suivi.checked
-        
-        if self.check_box_form_suivi.checked is False:
-            r=alert("ATTENTION ! Le formulaire de suivi du stagiaire va être annulé.\nIl devra le refaire.\n\nConfirmez svp ! ",dismissible=False,buttons=[("Non",False),("Oui",True)])
-            if not r :   #non
-                if sov is False: # je remets à True
-                    self.check_box_form_suivi.checked = True
-                else:
-                    self.check_box_form_suivi.checked = False
-                return
+        # Si ce n'est pas un formulaire d'un tuteur (un tuteur peur refaire plusieurs années des formulaires)
         stagiaire_row=self.item   # formulaire de suivi rempli T/F
-        valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked)   # module serveur "add_stagiaire"
-        if valid is True:
-            alert("Le formulaire a bien été effacé !\n\n Il peut être ré-entré par le stagiaire si nécessaire.")
+        if self.item['numero'] != 1003:
+            if self.check_box_form_suivi.checked is False: 
+                    r=alert("ATTENTION ! Le formulaire de suivi du stagiaire va être annulé.\nIl devra le refaire.\n\nConfirmez svp ! ",dismissible=False,buttons=[("Non",False),("Oui",True)])
+                    if not r :   #non
+                        if sov is False: # je remets à True
+                            self.check_box_form_suivi.checked = True
+                        else:
+                            self.check_box_form_suivi.checked = False
+                        return
+            valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, True)   # on effecera le formulaire 
+            if valid is True:
+                alert("Le formulaire a bien été effacé !\n\n Il peut être ré-entré par le stagiaire si nécessaire.")
+        else: # stage 1003, tuteur de MTnoto, je peux effacer le check du formulaire de suivi car chaque année il peut le refaire pour un autre stagiaire
+            valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, False)   # False, on n'effacera pas les anciens formulaires
+            if valid is True:
+                alert("Réinitialisation effectuée au niveau du Tuteur, Le ou les formulaires n'ont pas été effacé(s).")
         
     def init_drop_down_mode_fi(self):
         self.f = get_open_form()   # récupération de la forme mère (Stage_visu_modif) ou (Recherche_stagiaire) pour revenir ds la forme appelante
