@@ -83,6 +83,20 @@ class RowTemplate6(RowTemplate6Template):
 
     def button_add_click(self, **event_args):
         """This method is called when the button is clicked"""
-        question = f"Voulez-vous vraiment ajouter {} dans l'application"
-        r=alert("Voulez-vous vraiment ajouter effacer ce lieu ?",dismissible=False,buttons=[("oui",True),("non",False)])
-        if r :   # oui
+        # test existence dans l'application
+        if not app_tables.users.get(email=self.item['mail']):
+            # confirmation
+            try:
+                question = self.item['nom'] + " " + self.item['prenom']   # cas où nom prenom vides
+            except:
+                question = self.item['nom']
+                
+            question = f"Voulez-vous vraiment ajouter {question} dans l'application"
+            r=alert(question,dismissible=False,buttons=[("oui",True),("non",False)])
+            if r :   # oui
+                from ...User_add_sans_procedures import User_add_sans_procedures
+                open_form('User_add_sans_procedures',self.item['nom'], self.item['prenom'], self.item['tel'], self.item['mail'])
+        else:
+            alert("Cette personne est déjà enregistrée dans cette application !")  # user existant
+            from ...Recherche_stagiaire import Recherche_stagiaire
+            open_form("Recherche_stagiaire")

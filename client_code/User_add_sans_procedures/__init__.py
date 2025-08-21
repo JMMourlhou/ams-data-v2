@@ -8,11 +8,18 @@ from .. import Mail_valideur  # pour button_export_xls_click
 from .. import French_zone # POur acquisition de date et heure Francaise (Browser time)
 
 class User_add_sans_procedures(User_add_sans_proceduresTemplate):
-    def __init__(self, **properties):
+    def __init__(self, nom="", prenom="", tel="", mail="" ,**properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.text_box_role.text = "T"
+        self.text_box_nom.text = nom
+        self.text_box_prenom.text = prenom
+        self.text_box_tel.text = tel
+        self.text_box_mail.text = mail
+        if nom != "":
+            self.button_valid.visible = True
         # Any code you write here will run before the form opens.
+        
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Main import Main
@@ -24,7 +31,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
 
     def text_box_nom_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
+        if len(self.text_box_mail.text) > 8:
+            self.button_valid.visible = True
 
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -49,7 +57,6 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             self.text_box_mail.focus()
             return
 
-        alert("ok")
         result = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
                                    self.text_box_prenom.text.capitalize(),
