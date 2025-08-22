@@ -92,8 +92,11 @@ def del_formulaire_suivi(code_row):
     # lecture du row table stagiaire inscrit
     row_stagiaire_inscrit = app_tables.stagiaires_inscrits.get(stage=code_row['stage_row'],
                                             user_email=row_user)
-    row_stagiaire_inscrit.update(enquete_suivi=False)
-
+    try:   # au cas où le stagiaire n'existe plus dans la table des stgiaires inscrits
+        row_stagiaire_inscrit.update(enquete_suivi=False)
+    except:
+        pass
+        
     # Effacement du row du formulaire table Stage_suivi
     code_row.delete()
 
