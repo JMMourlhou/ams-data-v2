@@ -46,7 +46,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             self.repeating_panel_1.items = liste_stagiaires
         else:                                              # stage vide, je n'affiche pas les bt et la liste
             self.button_trombi.visible = False
-            self.button_visu_fiches_stagiaires.visible = False
 
             
         #lecture intitulé stage
@@ -282,10 +281,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
         self.column_panel_header.scroll_into_view()
-
-    def button_visu_fiches_stagiaires_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        open_form('Visu_liste_1_stage',self.stage_row['numero'], self.intitul, False)
 
     def timer_1_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
