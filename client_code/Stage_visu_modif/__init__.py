@@ -46,7 +46,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             self.repeating_panel_1.items = liste_stagiaires
         else:                                              # stage vide, je n'affiche pas les bt et la liste
             self.button_trombi.visible = False
-            self.button_trombi_pdf.visible = False
             self.button_visu_fiches_stagiaires.visible = False
 
             
@@ -263,15 +262,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         from ..Visu_trombi import Visu_trombi
         open_form('Visu_trombi',self.text_box_num_stage.text, self.text_box_intitule.text, False, None, False)
 
-    def button_trombi_pdf_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        stage_row = app_tables.stages.get(numero=int(self.num_stage))
-        pdf = stage_row["trombi_media"]
-        if pdf:
-            anvil.media.download(pdf)
-            alert("Trombinoscope téléchargé")
-        else:
-            alert("Pdf du trombi non trouvé")
        
     def button_list_pdf_stagiaires_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -307,7 +297,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             
     def timer_2_tick(self, **event_args):
         if self.task_trombi.is_completed():
-            self.button_trombi_pdf.visible = True
             self.timer_2.interval=0
             anvil.server.call('task_killer',self.task_trombi)
 
