@@ -43,6 +43,8 @@ class ItemTemplate3(ItemTemplate3Template):
             n = Notification("Traitement en cours...\n\nAttendre la fin du traitement pour prendre une autre photo !",
                  timeout=4)   # par défaut 2 secondes
             n.show()
+
+            
             # pour calcul du temps de traitement
             self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
             # nouveau nom doc SANS extension
@@ -57,8 +59,13 @@ class ItemTemplate3(ItemTemplate3Template):
             if file_extension in list_extensions:   
                 # ---------------------------------------------------------------
                 # Test timing:
-
-
+                self.image_1.source = file
+                result = anvil.server.call('run_bg_task_save_jpg', self.item, file, self.new_file_name, file_extension) 
+                # --------calcul temps de traitement 
+                end = French_zone.french_zone_time()
+                print("Temps de traitement image: ", end-self.start)
+                alert(result)
+                return
                 # ---------------------------------------------------------------- 
                 self.save_file(file, self.new_file_name, file_extension)
                 
