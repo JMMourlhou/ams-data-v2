@@ -250,6 +250,7 @@ class Main(MainTemplate):
             self.column_panel_bureaux.visible = False
             self.column_panel_admin.visible = False
             self.column_panel_others.visible = False
+            self.label_role.text = ""
             
     # ===================================================================================================================
     #                                                                                                         BT 'SIGN IN'          

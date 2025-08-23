@@ -6,15 +6,12 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-stagiaire = None
-
-global user
-user = anvil.users.get_user()  # Acquisition de l'utilisateur (pour le role)
 
 class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
     def __init__(self, mel, num_stage=0, intitule="", **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        self.user = anvil.users.get_user()  # Acquisition de l'utilisateur (pour le role)
         self.num_stage = num_stage
         self.intitule = intitule
         self.mel = mel
@@ -27,47 +24,51 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         self.drop_down_fi.items = [(r['intitule_fi'], r) for r in app_tables.mode_financement.search()]
 
         # lecture sur le mail du stagiaire après click sur trombi
-        stagiaire=app_tables.users.get(email=self.mel)
+        self.stagiaire=app_tables.users.get(email=self.mel)
         
-        if stagiaire:
-            self.text_box_id.text = "Id = "+ str(stagiaire.get_id())
-            self.text_box_mail.text = stagiaire['email']
-            if stagiaire['nom'] is not None :
-                nm = stagiaire["nom"].capitalize()
+        
+        if self.stagiaire:
+            self.text_box_id.text = "Id = "+ str(self.stagiaire.get_id())
+            self.text_box_mail.text = self.stagiaire['email']
+            if self.stagiaire['nom'] is not None :
+                nm = self.stagiaire["nom"].capitalize()
                 nm = nm.strip()
                 self.text_box_nom.text = nm
            
-            if stagiaire['prenom'] is not None:
-                pn = stagiaire["prenom"].capitalize()
+            if self.stagiaire['prenom'] is not None:
+                pn = self.stagiaire["prenom"].capitalize()
                 pn = pn.strip()
                 self.text_box_prenom.text =  pn        
                 
             #self.image_photo.source =                stagiaire["photo"]
-            if stagiaire["photo"] is not None:
-                thumb_pic = anvil.image.generate_thumbnail(stagiaire["photo"], 640)
+            if self.stagiaire["photo"] is not None:
+                thumb_pic = anvil.image.generate_thumbnail(self.stagiaire["photo"], 640)
                 self.image_photo.source = thumb_pic
             else:
-                self.image_photo.source =            stagiaire["photo"]
+                self.image_photo.source =            self.stagiaire["photo"]
 
-            self.text_box_ville_naissance.text =     stagiaire["ville_naissance"]
-            self.text_box_cp_naissance.text =        stagiaire["code_postal_naissance"]
-            self.date_naissance.date =               stagiaire["date_naissance"]
-            self.text_box_pays_naissance.text =      stagiaire["pays_naissance"]
-            if stagiaire["pays_naissance"] is None :
+            self.text_box_ville_naissance.text =     self.stagiaire["ville_naissance"]
+            self.text_box_cp_naissance.text =        self.stagiaire["code_postal_naissance"]
+            self.date_naissance.date =               self.stagiaire["date_naissance"]
+            self.text_box_pays_naissance.text =      self.stagiaire["pays_naissance"]
+            if self.stagiaire["pays_naissance"] is None :
                 self.text_box_pays_naissance.text = "France"
-            self.text_area_rue.text =                stagiaire["adresse_rue"]
-            self.text_box_ville.text =               stagiaire["adresse_ville"]
-            self.text_box_code_postal.text =         stagiaire["adresse_code_postal"]
-            self.text_box_tel.text =                 stagiaire['tel']
-            self.text_box_email2.text =              stagiaire['email2']
-            self.check_box_accept_data_use.checked = stagiaire['accept_data']
-            self.text_area_commentaires.text =       stagiaire['commentaires']
+            self.text_area_rue.text =                self.stagiaire["adresse_rue"]
+            self.text_box_ville.text =               self.stagiaire["adresse_ville"]
+            self.text_box_code_postal.text =         self.stagiaire["adresse_code_postal"]
+            self.text_box_tel.text =                 self.stagiaire['tel']
+            self.text_box_email2.text =              self.stagiaire['email2']
+            self.check_box_accept_data_use.checked = self.stagiaire['accept_data']
+            self.text_area_commentaires.text =       self.stagiaire['commentaires']
             
-            self.text_box_role.text =                stagiaire['role']       # Le role du stagiare 
-            if user['role'] == "A":                                          # si l'utilisateur est l'administrateur,je visualise le role du stagiaire
+            self.text_box_role.text =                self.stagiaire['role']       # Le role du stagiare 
+            
+            if self.user['role'] == "A":      # si l'utilisateur est l'administrateur,je visualise le role du stagiaire
                 self.text_box_email2.visible = True
                 self.text_area_commentaires.visible = True
                 self.text_box_role.visible = True
+            else: # l'utilisateur n'est pas l'admin
+                self.text_box_role.visible = False
         else:
             self.button_annuler_click()
 
@@ -101,26 +102,25 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                 self.check_box_accept_data_use.checked = True
                 return
             
-        global user
-        if user['role'] == "S":
+        if self.user['role'] == "S":
             if self.date_naissance.date is None :           # dateN vide ?
                 alert("Entrez la date de naissance")
                 return
             if self.text_box_ville_naissance.text == "" :    # ville N vide ?
                 alert("Entrez la ville de Naissance")
                 return
-        if user['role'] == "A":
+                
+        if self.user['role'] == "A" and self.stagiaire['role'] == "A":    # L'utilisateur est l'admin et il trai
             r = alert(
                 "Voulez-vous enlever le role 'Administrateur à cet utilisateur' ?",
                 dismissible=False,
                 buttons=[("oui", True), ("non", False)],
             )
-        if not r:  # non
+            if not r:  # non
                 self.text_box_role.text = 'A'
        
         # lecture sur le mail du stagiaire après click sur trombi
-        stagiaire=app_tables.users.get(email=self.mel)
-        if stagiaire:
+        if self.stagiaire:
             result = anvil.server.call("modify_users_after_trombi", self.mel,
                                                     self.text_box_mail.text,
                                                     self.text_box_nom.text,
@@ -163,13 +163,6 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         self.button_validation.visible = True
         self.button_validation_copy.visible = True
 
-    def text_box_prenom_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.text_box_nom_change()
-
-    def text_box_tel_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.text_box_nom_change()
 
     def text_box_mail_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
