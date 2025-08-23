@@ -56,10 +56,10 @@ class ItemTemplate3(ItemTemplate3Template):
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
                 # ---------------------------------------------------------------
+                # Test timing:
 
 
-
-                "---------------------------"
+                # ---------------------------------------------------------------- 
                 self.save_file(file, self.new_file_name, file_extension)
                 
             if file_extension == ".pdf":      
