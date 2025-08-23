@@ -51,7 +51,8 @@ class ItemTemplate3(ItemTemplate3Template):
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
 
             # sauvegarde du 'file' image en jpg, resized 1000 x 800   ou   800x1000  plus thumnail 150 x 100   ou  100 x 150
-            if file_extension == ".jpg" or file_extension == ".jpeg" or file_extension == ".bmp" or file_extension == ".gif" or file_extension == ".jif" or file_extension == ".png":   
+            list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
+            if file_extension in list_extensions:   
                 self.save_file(file, self.new_file_name, file_extension)
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
@@ -94,7 +95,7 @@ class ItemTemplate3(ItemTemplate3Template):
 
     # Sauvegarde du file JPG et resize
     def save_file(self, file, new_file_name, file_extension):
-        # Sauvegarde du 'file' jpg
+        # Sauvegarde du 'file' type image
         # Avec loading_indicator, appel BG TASK
         self.test_img_just_loaded = True  # indique que l'image, donc self.item['doc1'], a changé
         self.task_img = anvil.server.call('run_bg_task_save_jpg', self.item, file, new_file_name, file_extension)    
