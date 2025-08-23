@@ -19,7 +19,7 @@ class ItemTemplate3(ItemTemplate3Template):
         self.text_box_1.text = self.item['requis_txt']
         
         if self.item['doc1'] is not None:    # Si doc existant
-            self.image_1.source = self.item['thumb']              # DIPLAY L'image thumb
+            self.image_1.source = self.item['doc1']              # DIPLAY L'image thumb
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
@@ -40,31 +40,37 @@ class ItemTemplate3(ItemTemplate3Template):
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
             #print("type fichier chargé par file loader: ", type(file))
+            """
             n = Notification("Traitement en cours...\n\nAttendre la fin du traitement pour prendre une autre photo !",
                  timeout=4)   # par défaut 2 secondes
             n.show()
-
+            """
             
             # pour calcul du temps de traitement
             self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
             # nouveau nom doc SANS extension
             self.new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse 
-            print("file just loaded, new file name: ",self.new_file_name)
+            #print("file just loaded, new file name: ",self.new_file_name)
             
             # Type du fichier loaded ?
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
-
             # sauvegarde du 'file' image en jpg, resized 1000 x 800   ou   800x1000  plus thumnail 150 x 100   ou  100 x 150
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
                 # ---------------------------------------------------------------
                 # Test timing:
+                
+                # thumb = anvil.image.generate_thumbnail(file, 50)
                 self.image_1.source = file
-                result = anvil.server.call('run_bg_task_save_jpg', self.item, file, self.new_file_name, file_extension) 
+                #alert(file.content_type)
+                result = anvil.server.call('test_timing', self.item, file, self.new_file_name) 
                 # --------calcul temps de traitement 
                 end = French_zone.french_zone_time()
-                print("Temps de traitement image: ", end-self.start)
-                alert(result)
+                print(f"Temps de traitement image: {end-self.start}, result: {result}")
+                self.file_loader_1.visible = False
+                self.button_rotation.visible = True
+                self.button_visu.visible = True  
+                self.button_del.visible = True
                 return
                 # ---------------------------------------------------------------- 
                 self.save_file(file, self.new_file_name, file_extension)
@@ -72,7 +78,7 @@ class ItemTemplate3(ItemTemplate3Template):
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
                 self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.new_file_name, self.item['stage_num'], self.item['stagiaire_email'])    
-                self.timer_2.interval=0.5   
+                self.timer_2.interval=0.05
         self.file_loader_1.visible = False
         self.button_rotation.visible = True
 
@@ -114,7 +120,7 @@ class ItemTemplate3(ItemTemplate3Template):
         # Avec loading_indicator, appel BG TASK
         self.test_img_just_loaded = True  # indique que l'image, donc self.item['doc1'], a changé
         self.task_img = anvil.server.call('run_bg_task_save_jpg', self.item, file, new_file_name, file_extension)    
-        self.timer_1.interval=0.5
+        self.timer_1.interval=0.05
 
     def timer_1_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
@@ -180,6 +186,8 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
+        # pour calcul du temps de traitement
+        self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
         row = app_tables.pre_requis_stagiaire.get(
                                                         stage_num=self.stage_num,
                                                         item_requis=self.item_requis,

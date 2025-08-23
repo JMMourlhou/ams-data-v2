@@ -30,7 +30,7 @@ components:
       name: button_rotation
       properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
       type: Button
-    layout_properties: {expand: false, width: 210.978}
+    layout_properties: {expand: false, width: 160.9046123046875}
     name: column_panel_2
     properties: {background: 'theme:On Primary Container', role: tonal-card}
     type: ColumnPanel

@@ -27,19 +27,9 @@ class Pre_Visu_img_Pdf(Pre_Visu_img_PdfTemplate):
     
     def download_click(self, **event_args):
         """This method is called when the button is clicked"""
+        new_file_named = anvil.BlobMedia("image/jpg", self.image_1.source.get_bytes(), name=self.new_file_name+".jpg")
         
-        # finding the stagiaire's row et envoi du row au serveur
-        pr_requis_row = app_tables.pre_requis_stagiaire.get(stage_num = self.stage_num,
-                                              stagiaire_email = self.email,
-                                              item_requis = self.item_requis                                             
-                                             )                                      
-        if not pr_requis_row:
-            print("Erreur: stagiaire not found !")
-        
-        # Si le doc pdf a un nom déjà formatté, je le télécharge direct
-        media = pr_requis_row['doc1']   #j'extrai le nom du doc ds la table
-       
-        anvil.media.download(media)
+        anvil.media.download(new_file_named)
         n = Notification("Téléchargement effectué !",
                  timeout=1)   # par défaut 2 secondes
         n.show()
