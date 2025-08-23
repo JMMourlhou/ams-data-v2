@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.media
 from ...import Pre_R_doc_name        # Pour générer un nouveau nom au document chargé
-
+from ...import French_zone # pour calcul tps traitement
 
 class ItemTemplate3(ItemTemplate3Template):
     def __init__(self, **properties):
@@ -43,9 +43,11 @@ class ItemTemplate3(ItemTemplate3Template):
             n = Notification("Traitement en cours...\n\nAttendre la fin du traitement pour prendre une autre photo !",
                  timeout=4)   # par défaut 2 secondes
             n.show()
+            # pour calcul du temps de traitement
+            self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
             # nouveau nom doc SANS extension
             self.new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse 
-            #print("file just loaded, new file name: ",self.new_file_name)
+            print("file just loaded, new file name: ",self.new_file_name)
             
             # Type du fichier loaded ?
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
@@ -54,6 +56,7 @@ class ItemTemplate3(ItemTemplate3Template):
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
                 self.save_file(file, self.new_file_name, file_extension)
+                
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
                 self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.new_file_name, self.item['stage_num'], self.item['stagiaire_email'])    
@@ -116,6 +119,9 @@ class ItemTemplate3(ItemTemplate3Template):
                 self.image_1.source = row['thumb']
                 self.button_visu.visible = True  
                 self.button_del.visible = True
+                # -----------------------------------------------------------calcul temps de traitement 
+                end = French_zone.french_zone_time()
+                print("Temps de traitement image: ", end-self.start)
             else:
                 alert("timer_1_tick: Row stagiaire non trouvé")
                 self.button_visu.visible = False  
