@@ -110,7 +110,8 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                 alert("Entrez la ville de Naissance")
                 return
                 
-        if self.user['role'] == "A" and self.stagiaire['role'] == "A":    # L'utilisateur est l'admin et il trai
+        # il y a eu un changement du role de l'admin au cours de la maj de cette fiche         
+        if self.user['role'] == "A" and self.stagiaire['role'] == "A" and self.text_box_role.text != "A":    # L'utilisateur est l'admin et il traite sa propre fiche
             r = alert(
                 "Voulez-vous enlever le role 'Administrateur à cet utilisateur' ?",
                 dismissible=False,
