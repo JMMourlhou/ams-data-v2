@@ -55,6 +55,11 @@ class ItemTemplate3(ItemTemplate3Template):
             # sauvegarde du 'file' image en jpg, resized 1000 x 800   ou   800x1000  plus thumnail 150 x 100   ou  100 x 150
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
+                # ---------------------------------------------------------------
+
+
+
+                "---------------------------"
                 self.save_file(file, self.new_file_name, file_extension)
                 
             if file_extension == ".pdf":      
