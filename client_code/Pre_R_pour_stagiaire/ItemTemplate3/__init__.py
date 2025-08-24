@@ -19,7 +19,7 @@ class ItemTemplate3(ItemTemplate3Template):
         self.text_box_1.text = self.item['requis_txt']
         
         if self.item['doc1'] is not None:    # Si doc existant
-            self.image_1.source = self.item['doc1']              # DIPLAY L'image thumb
+            self.image_1.source = self.item['doc1']              
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
@@ -63,7 +63,13 @@ class ItemTemplate3(ItemTemplate3Template):
                 # thumb = anvil.image.generate_thumbnail(file, 50)
                 self.image_1.source = file
                 #alert(file.content_type)
-                result = anvil.server.call('test_timing', self.item, file, self.new_file_name) 
+                dict={
+                "row": self.item.get_id(),  
+                "bytes": file.get_bytes(),
+                "name": self.new_file_name,
+                "content_type": file.content_type
+                }
+                result = anvil.server.call('test_timing', dict) 
                 # --------calcul temps de traitement 
                 end = French_zone.french_zone_time()
                 print(f"Temps de traitement image: {end-self.start}, result: {result}")

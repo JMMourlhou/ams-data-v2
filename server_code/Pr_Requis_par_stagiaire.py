@@ -135,8 +135,8 @@ def pr_stagiaire_del(user_email, stage, item_requis, mode="efface"):
 # ===============================================================================================================
 # PRE-REQUIS STAGIAIRES TEST TIMING
 @anvil.server.callable
-def test_timing(pr_requis_row, file, new_file_name):
-    #content_type = file.content_type
+def test_timing(dict):
+    content_type = dict["content_type"]
     new_file = anvil.BlobMedia("image/png", file.get_bytes(), name=new_file_name)
     try:
         # SAUVEGARDE IMG ds doc1,inchangée, renommée
