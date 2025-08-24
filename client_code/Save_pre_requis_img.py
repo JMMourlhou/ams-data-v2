@@ -1,8 +1,4 @@
 import anvil.server
-import anvil.users
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
 import anvil.media
 from .import Pre_R_doc_name        # Pour générer un nouveau nom au document chargé
 from .import French_zone # pour calcul tps traitement
