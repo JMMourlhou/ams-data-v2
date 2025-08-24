@@ -39,12 +39,7 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
-            #print("type fichier chargé par file loader: ", type(file))
-            """
-            n = Notification("Traitement en cours...\n\nAttendre la fin du traitement pour prendre une autre photo !",
-                 timeout=4)   # par défaut 2 secondes
-            n.show()
-            """
+     
             
             # pour calcul du temps de traitement
             self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
@@ -64,8 +59,8 @@ class ItemTemplate3(ItemTemplate3Template):
                 self.image_1.source = file
                 message = anvil.server.call("pre_requis", self.item, file)
                 # --------calcul temps de traitement 
-                end = French_zone.french_zone_time()
-                print(f"Temps de traitement image: {end-self.start}, result: {message}")
+                self.end = French_zone.french_zone_time()
+                print(f"Temps de traitement image: {self.end-self.start}, result: {message}")
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
                 self.button_visu.visible = True  

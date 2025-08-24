@@ -132,23 +132,5 @@ def pr_stagiaire_del(user_email, stage, item_requis, mode="efface"):
         return True
     return False
     
-# ===============================================================================================================
-# PRE-REQUIS STAGIAIRES TEST TIMING
-@anvil.server.callable
-def test_timing(dict):
-    row = dict["row"]
-    bytes = dict["bytes"]
-    new_file_name = dict["name"]
-    content_type = dict["content_type"]
-    media = anvil.BlobMedia("image/png", bytes, name=new_file_name)
-    try:
-        # SAUVEGARDE IMG ds doc1,inchangée, renommée
-        row.update(check=True,               
-                            doc1 = media,
-                            #thumb = thumb,
-                            #size = taille
-                            )
-        return True
-    except:
-        return False
+
     

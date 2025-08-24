@@ -20,11 +20,3 @@ def get_media_data_from_table(user_email):
         }
     return None
 
-# Uplink: Pi5 appel ce module pour extraire l'image du pré-requis 
-# module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/pre_requis_writing/pre_requis_writing.py
-@anvil.server.callable
-def get_media_from_pre_requis(row, media):
-    # Envoie directement (row_id, media) à l'uplink "pre_requis"
-    row_id = row.get_id()
-    message = anvil.server.call("pre_requis", row_id, media)
-    return message
