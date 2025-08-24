@@ -1,12 +1,9 @@
-import anvil.email
-#from anvil import *
 import pathlib
 import anvil.files
-import anvil.tables.query as q
+
 import anvil.tables as tables
 from anvil.tables import app_tables
 import anvil.server
-#from PIL import Image
 import io
 import math
 from PIL import Image

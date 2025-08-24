@@ -390,7 +390,7 @@ db_schema:
     - admin_ui: {width: 261}
       name: requis_txt
       type: string
-    - admin_ui: {order: 6, width: 307}
+    - admin_ui: {order: 6, width: 213}
       name: doc1
       type: media
     - admin_ui: {order: 8.5, width: 200}
