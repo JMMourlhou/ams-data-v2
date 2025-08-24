@@ -8,6 +8,7 @@ from anvil.tables import app_tables
 import anvil.media
 from ...import Pre_R_doc_name        # Pour générer un nouveau nom au document chargé
 from ...import French_zone # pour calcul tps traitement
+from ...import Save_pre_requis_img # pour écriture par uplink
 
 class ItemTemplate3(ItemTemplate3Template):
     def __init__(self, **properties):
@@ -39,59 +40,29 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
-     
-            
-            # pour calcul du temps de traitement
-            self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
-            # nouveau nom doc SANS extension
-            self.new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse 
-            #print("file just loaded, new file name: ",self.new_file_name)
-            
             # Type du fichier loaded ?
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
-            # sauvegarde du 'file' image en jpg, resized 1000 x 800   ou   800x1000  plus thumnail 150 x 100   ou  100 x 150
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
-                # ---------------------------------------------------------------
-                # Test timing:
-                
-                # thumb = anvil.image.generate_thumbnail(file, 50)
+                # on sauve par uplink le file media image
+                Save_pre_requis_img.save_file(self.item, file)
                 self.image_1.source = file
-                message = anvil.server.call("pre_requis", self.item, file)
-                # --------calcul temps de traitement 
-                self.end = French_zone.french_zone_time()
-                print(f"Temps de traitement image: {self.end-self.start}, result: {message}")
-                self.file_loader_1.visible = False
-                self.button_rotation.visible = True
-                self.button_visu.visible = True  
-                self.button_del.visible = True
-                return
-                # ---------------------------------------------------------------- 
-                self.save_file(file, self.new_file_name, file_extension)
                 
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
                 self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.new_file_name, self.item['stage_num'], self.item['stagiaire_email'])    
                 self.timer_2.interval=0.05
+        # gestion des boutons        
         self.file_loader_1.visible = False
         self.button_rotation.visible = True
-
+        self.button_visu.visible = True  
+        self.button_del.visible = True 
+        
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
         # nouveau nom doc
         new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse
-        # si doc type jpg ds table
-        if self.image_1.source != "":
-            self.button_visu.visible = True
-            from ...Pre_Visu_img_Pdf import Pre_Visu_img_Pdf  # pour visu du doc
-            if self.test_img_just_loaded:   # image vient d'etre chargée et self.item['doc1'] n'est pas à jour, re lecture avant affichage
-                row = app_tables.pre_requis_stagiaire.get(stage_num=self.stage_num,
-                                                          stagiaire_email=self.email,
-                                                          item_requis=self.item_requis)
-                if row:
-                    open_form('Pre_Visu_img_Pdf', row['doc1'], new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
-            else:  
-                open_form('Pre_Visu_img_Pdf', self.item['doc1'], new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
+        open_form('Pre_Visu_img_Pdf', self.item['doc1'], new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
 
     def button_del_click(self,  **event_args):
         """This method is called when the button is clicked"""
