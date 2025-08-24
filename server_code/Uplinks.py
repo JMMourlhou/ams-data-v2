@@ -19,3 +19,16 @@ def get_media_data_from_table(user_email):
             "content_type": media.content_type
         }
     return None
+
+# Uplink: Pi5 appel ce module pour extraire l'image du pré-requis 
+#   et mettre à jour les img des users du Pi5 
+@anvil.server.callable
+def get_media_from_pre_requis(row, media):
+    if row and media:
+        return {
+            "id": id,
+            "bytes": media.get_bytes(),
+            "name": media.name,
+            "content_type": media.content_type
+        }
+    return None

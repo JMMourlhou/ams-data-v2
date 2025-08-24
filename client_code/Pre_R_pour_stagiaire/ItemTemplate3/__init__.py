@@ -62,14 +62,8 @@ class ItemTemplate3(ItemTemplate3Template):
                 
                 # thumb = anvil.image.generate_thumbnail(file, 50)
                 self.image_1.source = file
-                #alert(file.content_type)
-                dict={
-                "row": self.item.get_id(),  
-                "bytes": file.get_bytes(),
-                "name": self.new_file_name,
-                "content_type": file.content_type
-                }
-                result = anvil.server.call('test_timing', dict) 
+                
+                result = anvil.server.call('get_media_from_pre_requis', self.item, file) 
                 # --------calcul temps de traitement 
                 end = French_zone.french_zone_time()
                 print(f"Temps de traitement image: {end-self.start}, result: {result}")
