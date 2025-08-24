@@ -62,7 +62,7 @@ class ItemTemplate3(ItemTemplate3Template):
                 
                 # thumb = anvil.image.generate_thumbnail(file, 50)
                 self.image_1.source = file
-                
+                # passe en serveur la fonction qui est appelée par Pi5/uplinks 'pre_requis'
                 result = anvil.server.call('get_media_from_pre_requis', self.item, file)
                 # --------calcul temps de traitement 
                 end = French_zone.french_zone_time()
