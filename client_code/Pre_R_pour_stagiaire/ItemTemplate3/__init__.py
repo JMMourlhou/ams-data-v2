@@ -8,7 +8,6 @@ from anvil.tables import app_tables
 import anvil.media
 from ...import Pre_R_doc_name        # Pour générer un nouveau nom au document chargé
 from ...import French_zone # pour calcul tps traitement
-from ...import Save_pre_requis_img # pour écriture par uplink
 
 class ItemTemplate3(ItemTemplate3Template):
     def __init__(self, **properties):
@@ -20,7 +19,7 @@ class ItemTemplate3(ItemTemplate3Template):
         self.text_box_1.text = self.item['requis_txt']
         
         if self.item['doc1'] is not None:    # Si doc existant
-            self.image_1.source = self.item['doc1']              
+            self.image_1.source = self.item['thumb']              
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
@@ -45,8 +44,9 @@ class ItemTemplate3(ItemTemplate3Template):
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
                 # on sauve par uplink le file media image
-                Save_pre_requis_img.save_file(self.item, file)
                 self.image_1.source = file
+                result = anvil.server.call('save_file',self.item, file)
+                alert(result)
                 
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
