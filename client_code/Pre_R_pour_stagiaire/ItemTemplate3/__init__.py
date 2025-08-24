@@ -62,12 +62,11 @@ class ItemTemplate3(ItemTemplate3Template):
                 
                 # thumb = anvil.image.generate_thumbnail(file, 50)
                 self.image_1.source = file
-            
-                message = anvil.server.call('get_media_from_pre_requis',self.item, file)
-                alert(message)
+                row_id = self.item.get_id()
+                message = anvil.server.call("pre_requis", row_id, file)
                 # --------calcul temps de traitement 
                 end = French_zone.french_zone_time()
-                print(f"Temps de traitement image: {end-self.start}, result: {result}")
+                print(f"Temps de traitement image: {end-self.start}, result: {message}")
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
                 self.button_visu.visible = True  
