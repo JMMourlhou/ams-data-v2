@@ -138,7 +138,7 @@ class ItemTemplate3(ItemTemplate3Template):
                                                         item_requis=self.item_requis,
                                                         stagiaire_email=self.email
                                                     )
-        self.image_1.source = row['thumb']
+        self.image_1.source = row['doc1']
             
             
 
