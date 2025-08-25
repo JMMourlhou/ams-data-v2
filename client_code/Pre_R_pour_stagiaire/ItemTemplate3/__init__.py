@@ -19,7 +19,7 @@ class ItemTemplate3(ItemTemplate3Template):
         self.text_box_1.text = self.item['requis_txt']
         
         if self.item['doc1'] is not None:    # Si doc existant
-            self.image_1.source = self.item['thumb']              
+            self.image_1.source = self.item['doc1']              
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
@@ -39,24 +39,32 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
+            start = French_zone.french_zone_time()
+        
             # Type du fichier loaded ?
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
             list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             if file_extension in list_extensions:   
+                
                 # on sauve par uplink le file media image
                 self.image_1.source = file
-                result = anvil.server.call('save_file',self.item, file)
-                alert(result)
+                result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
+                print(result)
                 
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
                 self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.new_file_name, self.item['stage_num'], self.item['stagiaire_email'])    
                 self.timer_2.interval=0.05
+                
         # gestion des boutons        
         self.file_loader_1.visible = False
         self.button_rotation.visible = True
         self.button_visu.visible = True  
         self.button_del.visible = True 
+
+        end = French_zone.french_zone_time()
+        temps = f"Temps de traitement image: {end-start}"
+        alert(temps)
         
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
