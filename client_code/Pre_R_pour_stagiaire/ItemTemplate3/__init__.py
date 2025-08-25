@@ -87,39 +87,6 @@ class ItemTemplate3(ItemTemplate3Template):
         else:
             alert("Pré Requis non enlevé")
 
-    # Sauvegarde du file JPG et resize
-    def save_file(self, file, new_file_name, file_extension):
-        # Sauvegarde du 'file' type image
-        # Avec loading_indicator, appel BG TASK
-        self.test_img_just_loaded = True  # indique que l'image, donc self.item['doc1'], a changé
-        self.task_img = anvil.server.call('run_bg_task_save_jpg', self.item, file, new_file_name, file_extension)    
-        self.timer_1.interval=0.05
-
-    def timer_1_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-
-        if self.task_img.is_completed(): # lecture de l'image sauvée en BG task
-            print("fin")
-            row = app_tables.pre_requis_stagiaire.get(q.fetch_only('thumb'),
-                                                        stage_num=self.stage_num,
-                                                        item_requis=self.item_requis,
-                                                        stagiaire_email=self.email
-                                                    )
-            
-            if row:
-                self.image_1.source = row['thumb']
-                self.button_visu.visible = True  
-                self.button_del.visible = True
-                # -----------------------------------------------------------calcul temps de traitement 
-                end = French_zone.french_zone_time()
-                print("Temps de traitement image: ", end-self.start)
-            else:
-                alert("timer_1_tick: Row stagiaire non trouvé")
-                self.button_visu.visible = False  
-                self.button_del.visible = False
-            self.timer_1.interval=0
-            anvil.server.call('task_killer',self.task_img)
-
     # Un fichier pdf a été chargé
     def timer_2_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
@@ -133,34 +100,24 @@ class ItemTemplate3(ItemTemplate3Template):
                                                       user_email=self.item['stagiaire_email']
                                                       )
             if row:
-                
                 # Venant d'une table et non d'un file loader, file est un lazy BlobMedia
                 file=row['temp_pr_pdf_img']
-                #print("type fichier chargé de la table : ", type(file))
-                #self.image_1.source = file        # affichage de l'image anciennement pdf transformée en jpg 
-                """
-                print(f'url: {file.url}')
-                print(f'content_type: {file.content_type}')
-                print(f'length: {file.length} bytes')
-                # This will be `None` since this is a website, not a file
-                print(f'name: {file.name}')
-                # Only print the first 15 bytes
-                print(f'raw bytes: {file.get_bytes()[:15]} ...')
-                """
                 
                 """  ---------------------------------------------------------------------------------------------------------------------------------------------
                 TRANSFORMATION D'UN LAZY MEDIA (img qui vient d'une table) EN BLOB MEDIA (En sortie du file loader et transformable en SERVER side pour resize...)
                 """
                 media_object = anvil.URLMedia(file.url)
                 # -----------------------------------------------------------------------------------------------------------------------------------------------
-                self.save_file(media_object, self.new_file_name, ".jpg") 
+                # on sauve par uplink le file media image
+                self.image_1.source = file
+                result = anvil.server.call('pre_requis',self.item, media_object)  # appel uplink fonction pre_requis sur Pi5
+                print(result)
             else:
                 alert('timer_2_tick: row stagiaire inscrit non trouvée')
 
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
         # pour calcul du temps de traitement
-        self.start = French_zone.french_zone_time()  # pour calcul du tps de traitement
         row = app_tables.pre_requis_stagiaire.get(
                                                         stage_num=self.stage_num,
                                                         item_requis=self.item_requis,
@@ -169,8 +126,12 @@ class ItemTemplate3(ItemTemplate3Template):
         file=row["doc1"]
         media_object1 = anvil.URLMedia(file.url)
         media_object2 = anvil.image.rotate(media_object1,90)
-        # Sauvegarde
-        self.save_file(media_object2, file.name, ".jpg")
+        # -----------------------------------------------------------------------------------------------------------------------------------------------
+        # on sauve par uplink le file media image
+        self.image_1.source = file
+        result = anvil.server.call('pre_requis',self.item, media_object2)  # appel uplink fonction pre_requis sur Pi5
+        print(result)
+        
         #relecture pour affichage du thumb rotated
         row = app_tables.pre_requis_stagiaire.get(
                                                         stage_num=self.stage_num,
