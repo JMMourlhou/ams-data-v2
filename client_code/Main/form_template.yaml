@@ -94,11 +94,6 @@ components:
       properties: {visible: false}
       type: ColumnPanel
     - components:
-      - event_bindings: {click: bt_gestion_stages_click}
-        layout_properties: {}
-        name: bt_gestion_stages
-        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Stages  ', tooltip: '', underline: false, visible: true}
-        type: Button
       - event_bindings: {click: bt_maj_txt_stagiaires_inscrits_click}
         layout_properties: {}
         name: bt_maj_txt_stagiaires_inscrits
@@ -171,21 +166,26 @@ components:
       - event_bindings: {click: button_event_visu_click}
         layout_properties: {grid_position: 'NUSGHJ,SEPIDY'}
         name: button_event_visu
-        properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Evenements, tooltip: '', underline: false, visible: true}
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:random', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Evenements, tooltip: '', underline: false, visible: true}
         type: Button
       layout_properties: {grid_position: 'SSWAQW,IFZVNG'}
       name: column_panel_events
       properties: {}
       type: ColumnPanel
-    - event_bindings: {click: button_create_recherche_click}
-      layout_properties: {grid_position: 'UOACON,BSBBQI'}
-      name: button_create_recherche
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:user', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Rechercher 1 stagiaire / groupe, tooltip: '', underline: false, visible: true}
-      type: Button
     - event_bindings: {click: button_add_user_click}
       layout_properties: {grid_position: 'GOBKRE,XSTFWL'}
       name: button_add_user
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:user', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Ajouter un utilisateur sans procédures, tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:plus-square-o', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Ajouter un utilisateur sans procédures, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_create_recherche_click}
+      layout_properties: {grid_position: 'XQPTLK,EGEBGF'}
+      name: button_create_recherche
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:user', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Rechercher 1 stagiaire / groupe, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: bt_gestion_stages_click}
+      layout_properties: {grid_position: 'XOIFZD,ZGANVD'}
+      name: bt_gestion_stages
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Stages  ', tooltip: '', underline: false, visible: true}
       type: Button
     layout_properties: {grid_position: 'OKHWRD,CHXZFJ'}
     name: outlined_card_niv1

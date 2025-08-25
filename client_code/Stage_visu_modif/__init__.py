@@ -305,6 +305,16 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             return
         self.text_box_intitule.text=row['intitulé']
 
+    def button_qr_code_display_copy_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        num_stage = self.text_box_num_stage.text
+        if num_stage != "1003":
+            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1)   # par défaut 2 secondes
+        else:
+            n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
+        n.show()
+        open_form('Recherche_stagiaire',num_stage)
+
     
 
 

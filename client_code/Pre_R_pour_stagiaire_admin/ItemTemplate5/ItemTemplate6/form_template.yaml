@@ -1,9 +1,4 @@
 components:
-- event_bindings: {tick: timer_1_tick}
-  layout_properties: {grid_position: 'ZKLWHU,ZMHODM'}
-  name: timer_1
-  properties: {interval: 0}
-  type: Timer
 - event_bindings: {tick: timer_2_tick}
   layout_properties: {grid_position: 'ZVOULK,TWSFYN'}
   name: timer_2

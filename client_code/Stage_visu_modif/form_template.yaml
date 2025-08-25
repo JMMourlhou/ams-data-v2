@@ -33,6 +33,11 @@ components:
         name: button_qr_code_display
         properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Inscription par Qr code, tooltip: '', underline: false, visible: true}
         type: Button
+      - event_bindings: {click: button_qr_code_display_copy_click}
+        layout_properties: {grid_position: 'SYQOXH,DILXRK'}
+        name: button_qr_code_display_copy
+        properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Ajout personne existante, tooltip: '', underline: false, visible: true}
+        type: Button
       - event_bindings: {click: button_trombi_click}
         layout_properties: {grid_position: 'SYQOXH,XFCBMG'}
         name: button_trombi

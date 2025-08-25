@@ -12,7 +12,11 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-            
+        self.f = get_open_form() # form appelante
+
+
+
+        
         # Pour une inscription (self.num_stage != "")
         self.label_origine.text = str(get_open_form())
         self.num_stage = num_stage
@@ -220,9 +224,10 @@ class Recherche_stagiaire(Recherche_stagiaireTemplate):
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from ..Main import Main
-        open_form('Main',99)
-
+        #from ..Main import Main
+        #open_form('Main',99)
+        open_form(self.f)
+        
     def button_recherche_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.drop_down_code_stage.selected_value = None

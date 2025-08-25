@@ -239,6 +239,54 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         """This method is called when the form is shown on the page"""
         self.column_panel_1.scroll_into_view()
 
+    def button_qcm_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+    def button_histo_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+    def drop_down_code_stage_change(self, **event_args):
+        """This method is called when an item is selected"""
+        pass
+
+    def button_mail_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        liste_email = []
+        liste_email.append((self.text_box_mail.text,self.text_box_prenom.text,""))   # mail et prénom, id pas besoin
+        open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
+
+    def button_del_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # Effacement du stagiaire/formateur si pas ds un stage et si je suis l'administrateur
+        user = anvil.users.get_user()
+        if user["role"] == "A" or user["role"]=="B":   # seul,l'administrateur et bureaux peuvent effacer definitivement un stagiaire ou formateur ou tuteur
+            # Cette personne est-elle inscrite ds un ou plusieurs stages ?
+            list = app_tables.stagiaires_inscrits.search(user_email=self.stagiaire)
+            detail =""
+            for stage in list:
+                detail=detail+str(stage['numero'])+"  "
+
+            nb_stages = len(list)
+            if nb_stages != 0:
+                txt="stage"
+                if nb_stages > 1:
+                    txt = "stages"
+                alert(f"Effacement impossible:\nCette personne est inscrite dans {nb_stages} {txt}\n\n Détail:\n{txt} N°{detail}")
+                self.button_histo_click()   # visu de l'histo du stagiaire
+                return
+            # Effact de la personne si confirmation
+            r=alert("Voulez-vous vraiment enlever définitivement cette personne ? ",dismissible=False ,buttons=[("oui",True),("non",False)])
+            if r :   # oui
+                # lecture row users
+                if self.stagiaire:
+                    txt_msg = anvil.server.call("del_personne",self.stagiaire)
+                alert(txt_msg)
+                open_form("Recherche_stagiaire")
+            else:
+                return
+
    
 
 

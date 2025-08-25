@@ -40,7 +40,7 @@ components:
     - event_bindings: {click: creation_stage_click}
       layout_properties: {expand: true, grid_position: 'SVCHXN,ROGZCQ', width: null}
       name: creation_stage
-      properties: {align: full, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Création d'1 stage, tooltip: '', underline: false, visible: true}
+      properties: {align: full, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Création d'1 stage, tooltip: '', underline: false, visible: true}
       type: Button
     layout_properties: {grid_position: 'CZIKBP,MPYWTC'}
     name: flow_panel_2
