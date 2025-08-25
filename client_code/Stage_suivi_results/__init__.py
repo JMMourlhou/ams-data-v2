@@ -508,11 +508,13 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         """ ============================================================================================= FIN DE L'AFFICHAGE DU RESULTAT GLOBAL des Q Fermées"""
         # Génération du pdf A CHANGER QD L'ENQUETE EST COMPLETE
         print("génération du pdf")
+        """
         if self.pdf_mode is False:
             with anvil.server.no_loading_indicator:
                 self.task_suivi = anvil.server.call('run_bg_task_suivi', type_de_suivi, row["numero"],row["code_txt"], row)
                 self.timer_1.interval=0.5
-
+        """
+        
     def timer_1_tick(self, **event_args):
         """This method is called Every 0.5 seconds. Does not trigger if [interval] is 0."""
         if self.task_suivi.is_completed():

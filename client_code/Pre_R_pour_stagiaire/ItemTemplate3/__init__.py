@@ -64,7 +64,7 @@ class ItemTemplate3(ItemTemplate3Template):
 
         end = French_zone.french_zone_time()
         temps = f"Temps de traitement image: {end-start}"
-        alert(temps)
+        print(temps)
         
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
