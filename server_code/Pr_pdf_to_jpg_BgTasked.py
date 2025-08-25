@@ -1,9 +1,8 @@
-import anvil.email
 # Transform a pdf file loaded into 1 or several pictures
 import anvil.files
 from anvil.files import data_files
-import anvil.tables as tables
 import anvil.tables.query as q
+import anvil.tables as tables
 from anvil.tables import app_tables
 import anvil.media
 import anvil.server
@@ -15,16 +14,17 @@ from typing import List
 from io import BytesIO
 from shutil import copyfile
 
+
 global filename 
 filename=""
 
 @anvil.server.background_task
-def pdf_into_jpg_bg(pdf_file, new_file_name, stage_row, email_row) -> List:  
+def pdf_into_jpg_bg(pdf_file, stage_row, email_row) -> List:  
     # file est un pdf qui vient d'être choisi par le user
     # new_file_name est sans extension
     # stage_row et email row: pour sauver l'image jpg générée en table du stagiaire inscrit, col  "temp_pr_pdf_img"
     global filename
-    filename = new_file_name       
+    filename = "pdf"   
     media = pdf_file
     #return get_pdf_file_images(media=pdf_file)             # à sauver
     # sauvegarde de la liste ds le row temp du stgiaire inscrit
@@ -103,7 +103,6 @@ def pdf_to_jpg(source_file_path: str, target_folder_path: str) -> List[str]:    
 # -----------------------------------------------------------------------------------------
 # A FAIRE APPELER from client side
 @anvil.server.callable
-def pdf_into_jpg_bgtasked(pdf_file, new_file_name,stage_row, email_row):
-    print("bg task timer1,nom, new_name: ",pdf_file.name, new_file_name, stage_row, email_row)
-    task = anvil.server.launch_background_task("pdf_into_jpg_bg",pdf_file, new_file_name,stage_row, email_row)
+def pdf_into_jpg_bgtasked(pdf_file, stage_row, email_row):
+    task = anvil.server.launch_background_task("pdf_into_jpg_bg",pdf_file, stage_row, email_row)
     return task

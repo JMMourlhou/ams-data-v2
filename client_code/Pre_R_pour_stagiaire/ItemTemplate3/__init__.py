@@ -53,7 +53,7 @@ class ItemTemplate3(ItemTemplate3Template):
                 
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
-                self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.new_file_name, self.item['stage_num'], self.item['stagiaire_email'])    
+                self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
                 self.timer_2.interval=0.05
                 
         # gestion des boutons        
