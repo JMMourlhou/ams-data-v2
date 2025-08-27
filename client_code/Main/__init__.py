@@ -241,7 +241,7 @@ class Main(MainTemplate):
                 self.outlined_card_formulaires.visible = False  
                 self.outlined_card_com.visible = True           # évaluer avec sa classe une intervention, voir ses propres résultats
                 
-                self.outlined_card_niv1.visible = True          # ds le panneau priv niveau 1 ...
+                self.outlined_card_niv1.visible = False          # ds le panneau priv niveau 1 ...
                 self.column_panel_formulaires.visible = False           
                 self.button_create_qcm.visible = True           # créer un qcm
                 self.button_create_recherche.visible = True     # rechercher un stagiaire
