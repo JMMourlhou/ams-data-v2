@@ -6,7 +6,31 @@ import os
 import tempfile
 from pdf2image import convert_from_path
 from typing import List
+import io
+import pypdf   # pour le module du calcul de nb de pages
 
+@anvil.server.callable
+def get_pdf_page_count(pdf_file):
+    """
+    Lit un fichier PDF et retourne le nombre de pages.
+    L'entrée 'pdf_file' est un objet media Anvil.
+    """
+    try:
+        # pypdf.PdfReader a besoin d'un objet de type fichier
+        # 1. Récupère le contenu du fichier sous forme d'octets
+        file_bytes = pdf_file.get_bytes()
+
+        # 2. Crée un objet BytesIO en mémoire
+        pdf_stream = io.BytesIO(file_bytes)
+
+        # 3. Passe l'objet BytesIO "seekable" à pypdf
+        pdf_reader = pypdf.PdfReader(pdf_stream)
+        return len(pdf_reader.pages)
+    except pypdf.errors.PdfReadError:
+        # Gère les erreurs si le fichier n'est pas un PDF valide
+        return "Le fichier n'est pas un PDF valide."
+
+#_______________________________________________________________________________________
 @anvil.server.background_task
 def process_pdf_background(pdf_file, stage_row, email_row):
     try:

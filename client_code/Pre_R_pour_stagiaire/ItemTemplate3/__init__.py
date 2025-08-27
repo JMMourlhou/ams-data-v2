@@ -43,33 +43,45 @@ class ItemTemplate3(ItemTemplate3Template):
         
             # Type du fichier loaded ?
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
-            list_extensions = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
-            if file_extension in list_extensions:   
-                
+            list_extensions_img = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
+            list_possible = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png", "pdf"]
+            if file_extension in list_extensions_img:   
                 # on sauve par uplink le file media image
                 self.image_1.source = file
                 result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
                 print(result)
-               
-            if file_extension == ".pdf":      
-                # calcul taille du fichiercar si trop de pages : erreur blocant pi5 !
-                taille_en_octets = file.length/1024
-                alert(f"fichier pdf de {taille_en_octets} octets")
-                # génération du JPG à partir du pdf bg task en bg task
-                #self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
-                self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    
-                self.timer_2.interval=0.05   
-
+                # gestion des boutons        
+                self.file_loader_1.visible = False
+                self.button_rotation.visible = True
+                self.button_visu.visible = True  
+                self.button_del.visible = True 
+            elif file_extension == ".pdf":      
+                MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
+                # Appelle la fonction serveur pour vérifier le nombre de pages
+                result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages ou msg d'erreur
+                alert(result)
+                if isinstance(result, int) and result > MAX_PAGES:
+                    alert("Le PDF est trop grand.")
+                elif result == "Le fichier n'est pas un PDF valide.":
+                    alert(result)
+                else:
+                    # génération du JPG à partir du pdf bg task en bg task
+                    #self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
+                    self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    
+                    self.timer_2.interval=0.05   
+                    # gestion des boutons        
+                    self.file_loader_1.visible = False
+                    self.button_rotation.visible = True
+                    self.button_visu.visible = True  
+                    self.button_del.visible = True 
+    
+                    end = French_zone.french_zone_time()
+                    temps = f"Temps de traitement image: {end-start}"
+                    print(temps)
+            else:
+                alert(f"le type de fichier doit être un de ces types : {list_possible}")
+                
             
-        # gestion des boutons        
-        self.file_loader_1.visible = False
-        self.button_rotation.visible = True
-        self.button_visu.visible = True  
-        self.button_del.visible = True 
-
-        end = French_zone.french_zone_time()
-        temps = f"Temps de traitement image: {end-start}"
-        print(temps)
         
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
