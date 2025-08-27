@@ -45,7 +45,7 @@ class ItemTemplate3(ItemTemplate3Template):
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
             list_extensions_img = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
             list_possible = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png", "pdf"]
-            if file_extension in list_extensions_img:   
+            if file_extension in list_extensions_img:   # Fichier image choisit
                 # on sauve par uplink le file media image
                 self.image_1.source = file
                 result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
@@ -58,8 +58,8 @@ class ItemTemplate3(ItemTemplate3Template):
             elif file_extension == ".pdf":      
                 MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
-                result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages ou msg d'erreur
-                alert(result)
+                result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages du pdf ou msg d'erreur
+                # alert(result)
                 if isinstance(result, int) and result > MAX_PAGES:
                     alert("Le PDF est trop grand.")
                 elif result == "Le fichier n'est pas un PDF valide.":
@@ -67,8 +67,8 @@ class ItemTemplate3(ItemTemplate3Template):
                 else:
                     # génération du JPG à partir du pdf bg task en bg task
                     #self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
-                    self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    
-                    self.timer_2.interval=0.05   
+                    self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    # on extrait la 1ere page
+                    self.timer_2.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
                     # gestion des boutons        
                     self.file_loader_1.visible = False
                     self.button_rotation.visible = True
@@ -78,7 +78,7 @@ class ItemTemplate3(ItemTemplate3Template):
                     end = French_zone.french_zone_time()
                     temps = f"Temps de traitement image: {end-start}"
                     print(temps)
-            else:
+            else:  # erreur: le format choisit n'est pas un fichierimage ou pdf
                 alert(f"le type de fichier doit être un de ces types : {list_possible}")
                 
             

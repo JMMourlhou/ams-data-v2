@@ -34,9 +34,9 @@ def get_pdf_page_count(pdf_file):
 @anvil.server.background_task
 def process_pdf_background(pdf_file, stage_row, email_row):
     try:
-        images = get_images_from_pdf_file(pdf_file)
+        images = get_images_from_pdf_file(pdf_file)                #fonction ds ce même module qui extrait la premier page du pdf
 
-        # Enregistre la première image dans la base de données
+        # Enregistre la première image dans la base de données stagiaires_inscrits temporairement
         if images:
             first_image = images[0]
             row_stagiaire_inscrit = app_tables.stagiaires_inscrits.get(
@@ -69,7 +69,7 @@ def get_images_from_pdf_file(media: anvil.media) -> List:
         # Le nom du fichier est basé sur le nom du fichier d'origine.
         im_path = os.path.join(tmpdirname, f"{os.path.splitext(media.name)[0]}_page_1.jpg")
 
-        # Sauvegarde seulement la première image
+        # Sauvegarde seulement la première image   EN UPLINK
         if images:
             images[0].save(im_path, 'JPEG')
             print(f"Première page convertie en JPEG : {im_path}")
