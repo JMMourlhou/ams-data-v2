@@ -25,9 +25,11 @@ class ItemTemplate6(ItemTemplate6Template):
             self.image_1.source = self.item['doc1']              # DISPLAY L'image basse qualité
             self.button_visu.visible = True
             self.button_del.visible = True
+            self.file_loader_1.visible = False
         else:
             self.button_del.visible = False
             self.button_rotation.visible = False
+            self.file_loader_1.visible = True
         
         self.stage_num =   self.item['stage_num'] 
         self.item_requis = self.item['item_requis']
