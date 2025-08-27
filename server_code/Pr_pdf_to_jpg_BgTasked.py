@@ -54,7 +54,7 @@ def get_pdf_file_images(media: anvil.media) -> List:
 def _write_file(file_name, media):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
     with open(file_name, "wb") as f:                        # with permet de fermer auto le fichier binaire à la fin
-        if type(media) == BytesIO:
+        if type(media) is BytesIO:
             _write_bytes_io(file_name, media)
         else:
             f.write(media.get_bytes())

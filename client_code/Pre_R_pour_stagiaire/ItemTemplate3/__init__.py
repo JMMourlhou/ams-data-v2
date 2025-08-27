@@ -50,12 +50,12 @@ class ItemTemplate3(ItemTemplate3Template):
                 self.image_1.source = file
                 result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
                 print(result)
-                
+            """    
             if file_extension == ".pdf":      
                 # génération du JPG à partir du pdf bg task en bg task
                 self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
                 self.timer_2.interval=0.05
-                
+            """    
         # gestion des boutons        
         self.file_loader_1.visible = False
         self.button_rotation.visible = True
