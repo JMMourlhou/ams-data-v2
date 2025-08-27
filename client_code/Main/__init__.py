@@ -39,7 +39,7 @@ class Main(MainTemplate):
         
         # renseignements user 
         self.user = anvil.users.get_user(q.fetch_only("nom","prenom","role","email","enabled"))
-        
+        print(f"Main menu: {self.user['nom']} {self.user['prenom']} connected as {self.user['role']}.")
         """
         self.bt_se_deconnecter.visible = False
         self.bt_user_mail.enabled = False
@@ -399,9 +399,8 @@ class Main(MainTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(f"ping on server to prevent 'session expired' every 5 min, server answer:{result}")
+        print(f"Main menu: Ping: {result}")
 
-    
     #==============================================================
     # Les UTILITAIRES suivants sont à TRANSFERER DS UTILITAIRES POUR alléger module MAIN
     #==============================================================
