@@ -39,7 +39,12 @@ class Main(MainTemplate):
         
         # renseignements user 
         self.user = anvil.users.get_user(q.fetch_only("nom","prenom","role","email","enabled"))
-        print(f"Main menu: {self.user['nom']} {self.user['prenom']} connected as {self.user['role']}.")
+        print("======================================================================")
+        if self.user:
+            print(f"Main menu: {self.user['nom']} {self.user['prenom']} connected as {self.user['role']}.")
+        else:
+            print('AMSDATA on line, user not connected yet')
+        print("========================================================================================================================")
         """
         self.bt_se_deconnecter.visible = False
         self.bt_user_mail.enabled = False
