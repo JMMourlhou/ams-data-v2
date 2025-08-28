@@ -8,6 +8,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
+from .. import Mail_valideur  # pour test du mail format 
 from .. import French_zone   #pour tester la date de naissance
 from datetime import datetime
 from datetime import timedelta
@@ -28,7 +29,8 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             
         global user
         user=anvil.users.get_user()
-        # Si col temp en table user contient un chiffre, le user sera inscrit dans le stage correspondant
+        # Si col temp en table user contient un chiffre, le user sera inscrit dans le stage correspondant ...
+        #  ...  qd il entrera dans l'app pour la 1ere fois
         self.stage=str(user['temp'])
 
         try:
@@ -44,8 +46,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
         self.drop_down_fi.items = [(r['intitule_fi'], r) for r in app_tables.mode_financement.search()]
 
         if user:
-            self.row_id = user.get_id()   # Récup du row_id
-            alert(self.row_id)
+            self.row_id = user.get_id()   # Récup du row_id de la fiche du stagiaire
             self.text_box_mail.text =  user['email']
             if user["nom"] is not None:
                 nm = user["nom"]
@@ -206,16 +207,26 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 self.check_box_accept_data_use.checked = True
                 return
 
-        # TEST SI MAIL EXISTE DEJA (il a peut être été modifié):
-        # Je lis le user selon le mail entré dans self.text_box_mail
+        # TEST Mail format & MAIL EXISTE DEJA ? (il a peut être été modifié):
+        # 1-Test mail au bon format ?
+        # Mail format validation
+        mail = self.text_box_mail.text.lower()
+        result = Mail_valideur.is_valid_email(mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
+        if result is False:
+            alert("Le mail n'a pas le bon format !")
+            self.text_box_mail.focus()
+            return
+            
+        # 2- Je lis le user selon le mail entré dans self.text_box_mail
         try:
             test = app_tables.users.get(email=self.text_box_mail.text)
+            if test:  # un mail existe déjà en table user, est-ce bien cet utisateur ?  
+                row_id2 = test.get_id()
+                if self.row_id != row_id2: # 2 id pour le même mail !
+                    alert("Le mail entré existe déjà dans la base de données !")
+                    return
         except:
             alert("Erreur en lecture du mail entré !")
-            return
-        row_id2 = test.get_id()
-        if self.row_id != row_id2: # 2 id pour le même mail !
-            alert("Le mail entré existe déjà dans la base de données !")
             return
         
         if user:

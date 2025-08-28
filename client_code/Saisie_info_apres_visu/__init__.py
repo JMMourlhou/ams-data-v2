@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+from .. import Mail_valideur  # pour test du mail format 
 
 class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
     def __init__(self, mel, num_stage=0, intitule="", row_id=None, **properties):
@@ -30,7 +30,8 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             self.stagiaire=app_tables.users.get_by_id(self.row_id)
         
         if self.stagiaire:
-            self.text_box_id.text = "Id = "+ str(self.stagiaire.get_id())
+            self.id_fiche_stagiaire = self.stagiaire.get_id()
+            self.text_box_id.text = "Id = "+ str(self.id_fiche_stagiaire)
             self.text_box_mail.text = self.stagiaire['email']
             if self.stagiaire['nom'] is not None :
                 nm = self.stagiaire["nom"].capitalize()
@@ -121,13 +122,24 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             )
             if not r:  # non
                 self.text_box_role.text = 'A'
-       
-        # TEST SI MAIL EXISTE DEJA (il a peut être été modifié):
+
+        # Deux tests sur le mail: Mail format & MAIL EXISTE DEJA ? (il a peut être été modifié):
+        
+        # 1-Test mail au bon format ?
+        # Mail format validation
+        mail = self.text_box_mail.text.lower()
+        result = Mail_valideur.is_valid_email(mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
+        if result is False:
+            alert("Le mail n'a pas le bon format !")
+            self.text_box_mail.focus()
+            return
+            
+        # 2- TEST SI MAIL EXISTE DEJA (il a peut être été modifié):
         # Je lis le user selon le mail entré dans self.text_box_mail
         test = app_tables.users.get(email=self.text_box_mail.text)
         if test:
             row_id2 = test.get_id()
-            if self.row_id != row_id2: # 2 id pour le même mail !
+            if self.id_fiche_stagiaire != row_id2: # 2 id pour le même mail !
                 alert("Le mail entré existe déjà dans la base de données !")
                 return
             

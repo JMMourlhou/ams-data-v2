@@ -11,7 +11,7 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
     def __init__(self, nom="", prenom="", tel="", mail="" ,**properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        self.text_box_role.text = "T"
+        #self.text_box_role.text = "T"
         self.text_box_nom.text = nom
         self.text_box_prenom.text = prenom
         self.text_box_tel.text = tel
@@ -75,6 +75,4 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert("Création effectuée !")
         open_form('User_add_sans_procedures')
 
-    def column_panel_add_show(self, **event_args):
-        """This method is called when the column panel is shown on the screen"""
-        self.text_box_role.text = "T"
+    
