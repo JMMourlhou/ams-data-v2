@@ -67,9 +67,12 @@ class RowTemplate3(RowTemplate3Template):
         
     def text_box_1_click(self, **event_args):
         """This method is called when the button is clicked"""
+        
         num_stage = int(self.text_box_1.text)
         open_form('Stage_visu_modif', num_stage)   
-        
+            
+
+            
     def text_box_2_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.text_box_1_click()
@@ -105,7 +108,9 @@ class RowTemplate3(RowTemplate3Template):
         # Stagiaires ds le stage ?
         liste_test = app_tables.stagiaires_inscrits.search(numero=self.item['numero'])
         if len(liste_test) == 0:
-            result = anvil.server.call('del_stage',self.item['numero'])
+            # acquistion durow id pour éviter les erreurs 
+            row_id = self.item.get_id()
+            result = anvil.server.call('del_stage',row_id, self.item['numero'] )
             if result is True:
                 alert("Stage annulé !")
                 open_form('Visu_stages')

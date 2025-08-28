@@ -228,10 +228,10 @@ def update_com_pour_un_stage(stage_row, com_ouv, com_ferm):   # stage_row : 1 ro
 # ==========================================================================================
 #Effact d'un stage existant (si pas de stagiaires), le test a été effectué en client side
 @anvil.server.callable 
-def del_stage(stage_num):   # stage_num: num de stage en txt
+def del_stage(row_id, stage_num):   # row id du stage à annuler, numéro du stage
     result = False
     #lecture du row du stage:
-    stage_row = app_tables.stages.get(numero=stage_num)
+    stage_row = app_tables.stages.get_by_id(row_id)
     if stage_row:
         stage_row.delete()
         result = True

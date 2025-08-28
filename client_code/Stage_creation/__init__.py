@@ -52,8 +52,6 @@ class Stage_creation(Stage_creationTemplate):
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Visu_stages import Visu_stages
-        #from ..Main import Main
-        #open_form('Main')
         open_form('Visu_stages')
 
     def button_validation_click(self, **event_args):
@@ -98,11 +96,9 @@ class Stage_creation(Stage_creationTemplate):
                                                  )
         if result is True :
             alert("Stage enregisté !")
-            self.button_qr_code_display.visible = True
-            self.button_validation.visible = False
         else :
             alert("Stage non enregisté !")
-            self.button_annuler_click()
+        self.button_annuler_click()
 
     def button_qr_code_display_click(self, **event_args):
         """This method is called when the button is clicked"""
