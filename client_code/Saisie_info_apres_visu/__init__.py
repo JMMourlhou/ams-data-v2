@@ -8,13 +8,14 @@ from anvil.tables import app_tables
 
 
 class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
-    def __init__(self, mel, num_stage=0, intitule="", **properties):
+    def __init__(self, mel, num_stage=0, intitule="", row_id=None, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.user = anvil.users.get_user()  # Acquisition de l'utilisateur (pour le role)
         self.num_stage = num_stage
         self.intitule = intitule
         self.mel = mel
+        self.row_id = row_id
         
         # Any code you write here will run before the form opens.
         self.f = get_open_form()   # récupération de la forme mère pour revenir ds la forme appelante
@@ -22,10 +23,11 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         
         # Drop down mode de financemnt
         self.drop_down_fi.items = [(r['intitule_fi'], r) for r in app_tables.mode_financement.search()]
-
-        # lecture sur le mail du stagiaire après click sur trombi
-        self.stagiaire=app_tables.users.get(email=self.mel)
-        
+        if row_id is None:
+            # lecture sur le mail du stagiaire après click sur trombi
+            self.stagiaire=app_tables.users.get(email=self.mel)
+        else: 
+            self.stagiaire=app_tables.users.get_by_id(self.row_id)
         
         if self.stagiaire:
             self.text_box_id.text = "Id = "+ str(self.stagiaire.get_id())

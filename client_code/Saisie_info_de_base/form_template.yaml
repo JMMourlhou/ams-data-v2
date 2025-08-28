@@ -34,7 +34,7 @@ components:
   - event_bindings: {change: text_box_mail_change}
     layout_properties: {grid_position: 'FDMGZB,AFDUFM POUMKS,VLAEPT'}
     name: text_box_mail
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Mail, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Mail, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: file_loader_photo_change}
     layout_properties: {grid_position: 'FDMGZB,AFDUFM YCLYGC,WXNCKV'}

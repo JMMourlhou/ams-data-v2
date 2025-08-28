@@ -40,10 +40,12 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert("Le nom n'est pas assez long !")
             self.text_box_nom.focus()
             return
+        """
         if len(self.text_box_prenom.text) < 3:
             alert("Le prénom n'est pas assez long !")
             self.text_box_prenom.focus()
             return
+        """
         test_role = ["S","s","F","f","T","t","B","b","A","a","V","v"] # je n'accepte que ces lettres, minuscules accptées car upper ensuite
         if self.text_box_role.text not in test_role:
             alert("Le role doit être soit: S, F, T, B, A, V !")

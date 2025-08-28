@@ -29,17 +29,22 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
         global user
         user=anvil.users.get_user()
         self.stage=str(user['temp'])
+
+        try:
+            if int(self.stage) > 998:
+                self.column_panel_naissance.visible = False
+                self.column_panel_adresse.visible = False
+                self.drop_down_fi.visible = False
+                self.column_panel_mail2_commentaires.visible = False
+        except:
+            pass
         
-        if int(self.stage) > 998:
-            self.column_panel_naissance.visible = False
-            self.column_panel_adresse.visible = False
-            self.drop_down_fi.visible = False
-            self.column_panel_mail2_commentaires.visible = False
-            
         # Drop down mode de financemnt
         self.drop_down_fi.items = [(r['intitule_fi'], r) for r in app_tables.mode_financement.search()]
 
         if user:
+            self.row_id = user.get_id()   # Récup du row_id
+            alert(self.row_id)
             self.text_box_mail.text =  user['email']
             if user["nom"] is not None:
                 nm = user["nom"]
@@ -199,6 +204,13 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             if r :   #Non, nom pas correct
                 self.check_box_accept_data_use.checked = True
                 return
+
+        # TEST SI MAIL EXISTE DEJA (il a peut être été modifié)
+        test = app_tables.users.get(email=self.text_box_mail.text)
+        row_id2 = test.get_id()
+        if self.row_id != row_id2:
+            alert("Le mail existe déjà !")
+            return
         
         if user:
             result = anvil.server.call("modify_users", user,
