@@ -886,8 +886,6 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         if nb_ouv != nb_ouv_obligatoires :
             alert("Répondez à toutes les questions vertes obligatoires svp !")
             return
-        else:
-            print("test ok")
             
         """
                           CREATION DES DICT REPONSES

@@ -985,8 +985,6 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
         if nb_ouv != nb_ouv_obligatoires:
             alert("Répondez à toutes les questions vertes obligatoires svp !")
             return
-        else:
-            print("test ok")
 
         """
                           CREATION DES DICT REPONSES
