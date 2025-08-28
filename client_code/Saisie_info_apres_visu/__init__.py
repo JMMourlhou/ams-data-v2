@@ -163,8 +163,8 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                                                     self.text_box_role.text
                                                     )
             if result is True :
-                self.button_validation_copy.visible = False
-                self.button_validation.visible = False
+                # self.button_validation_copy.visible = False
+                # self.button_validation.visible = False
                 n=Notification("Modifications enregistées !",timeout=0.5)
                 n.show()
             else :
@@ -254,8 +254,10 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Je connais la forme appelante: en init : self.f = get_open_form()
-        open_form(self.f)
-        
+        if self.button_validation.visible is not True: # si pas de changements
+            open_form(self.f)
+        else:
+            open_form("Visu_stages")
         
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""

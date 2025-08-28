@@ -115,4 +115,6 @@ class RowTemplate4(RowTemplate4Template):
                 alert("Modification du mode de financemnt NON effectuée !")
         else:
             self.drop_down_mode_fi.selected_value = self.item["financement"]
+
+
         

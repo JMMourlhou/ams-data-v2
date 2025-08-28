@@ -1,6 +1,6 @@
 components:
 - components:
-  - event_bindings: {focus: text_box_3_focus}
+  - event_bindings: {focus: text_box_3_focus, pressed_enter: text_box_3_pressed_enter}
     layout_properties: {expand: false, width: 205.588560546875}
     name: text_box_3
     properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}

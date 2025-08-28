@@ -116,12 +116,12 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Je connais la forme appelante: en init : self.f = get_open_form()
-        if str(self.f) != str(self):
+        if str(self.f) != str(self) and self.button_validation.visible is not True:
             open_form(self.f)
         else:
             from ..Visu_stages import Visu_stages
             open_form("Visu_stages")
-        
+
         
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""

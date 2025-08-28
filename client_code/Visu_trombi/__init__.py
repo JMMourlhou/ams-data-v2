@@ -162,7 +162,7 @@ class Visu_trombi(Visu_trombiTemplate):
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        open_form(self.f)
+        open_form(self.f) 
 
     def button_retour2_click(self, **event_args):
         """This method is called when the button is clicked"""
