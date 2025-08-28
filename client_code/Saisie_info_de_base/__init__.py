@@ -206,11 +206,16 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 self.check_box_accept_data_use.checked = True
                 return
 
-        # TEST SI MAIL EXISTE DEJA (il a peut être été modifié)
-        test = app_tables.users.get(email=self.text_box_mail.text)
+        # TEST SI MAIL EXISTE DEJA (il a peut être été modifié):
+        # Je lis le user selon le mail entré dans self.text_box_mail
+        try:
+            test = app_tables.users.get(email=self.text_box_mail.text)
+        except:
+            alert("Erreur en lecture du mail entré !")
+            return
         row_id2 = test.get_id()
-        if self.row_id != row_id2:
-            alert("Le mail existe déjà !")
+        if self.row_id != row_id2: # 2 id pour le même mail !
+            alert("Le mail entré existe déjà dans la base de données !")
             return
         
         if user:

@@ -122,7 +122,15 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             if not r:  # non
                 self.text_box_role.text = 'A'
        
-        # lecture sur le mail du stagiaire après click sur trombi
+        # TEST SI MAIL EXISTE DEJA (il a peut être été modifié):
+        # Je lis le user selon le mail entré dans self.text_box_mail
+        test = app_tables.users.get(email=self.text_box_mail.text)
+        if test:
+            row_id2 = test.get_id()
+            if self.row_id != row_id2: # 2 id pour le même mail !
+                alert("Le mail entré existe déjà dans la base de données !")
+                return
+            
         if self.stagiaire:
             result = anvil.server.call("modify_users_after_trombi", self.mel,
                                                     self.text_box_mail.text,
