@@ -10,6 +10,9 @@ import anvil.server
 import bcrypt
 import uuid   # this library generates codes (API keys for exemple)
 
+# Création d'un utilisateur sans procédure (validation par mail)
+# --> ira dans stage 1009 automatiqt en saisie_info_de_base SI PRENOM EST à Vide
+
 @anvil.server.callable
 @anvil.tables.in_transaction
 def new_user(nom, prenom, tel, email, role, signed_up):
@@ -32,6 +35,7 @@ def new_user(nom, prenom, tel, email, role, signed_up):
                                         password_hash=pwhash,
                                         api_key=api,
                                         signed_up=signed_up,
+                                        temp=1009,
                                        )
         print("création user", user['email'])
     else:  # erreur 

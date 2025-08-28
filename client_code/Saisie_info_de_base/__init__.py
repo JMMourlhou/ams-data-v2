@@ -28,6 +28,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             
         global user
         user=anvil.users.get_user()
+        # Si col temp en table user contient un chiffre, le user sera inscrit dans le stage correspondant
         self.stage=str(user['temp'])
 
         try:

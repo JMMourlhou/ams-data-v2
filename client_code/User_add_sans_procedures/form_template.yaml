@@ -36,7 +36,7 @@ components:
   - event_bindings: {change: text_box_nom_change}
     layout_properties: {grid_position: 'OXNGFR,LQFYRC'}
     name: text_box_prenom
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Prénom(s), role: outlined, spacing_above: none, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: 'Prénom,  Laisser à vide pour qu''il aille en stage 1009  ', role: outlined, spacing_above: none, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: text_box_nom_change}
     layout_properties: {grid_position: 'YTNQUA,AJMRXT'}
