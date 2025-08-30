@@ -19,11 +19,12 @@ class ItemTemplate3(ItemTemplate3Template):
         self.text_box_1.text = self.item['requis_txt']
         
         if self.item['doc1'] is not None:    # Si doc existant
-            self.image_1.source = self.item['doc1']              
+            self.image_1.source = self.item['doc1']
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
         else:                                 # si doc none
+            self.image_1.source = None       # permet de tester le click sur l'image
             self.button_del.visible = False 
             self.button_visu.visible = False
             self.button_rotation.visible = False
@@ -134,7 +135,6 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # pour calcul du temps de traitement
         row = app_tables.pre_requis_stagiaire.get(
                                                         stage_num=self.stage_num,
                                                         item_requis=self.item_requis,
@@ -149,15 +149,33 @@ class ItemTemplate3(ItemTemplate3Template):
         result = anvil.server.call('pre_requis',self.item, media_object2)  # appel uplink fonction pre_requis sur Pi5
         print(result)
         
-        #relecture pour affichage du thumb rotated
+        #relecture pour affichage de doc1 rotated
         row = app_tables.pre_requis_stagiaire.get(
                                                         stage_num=self.stage_num,
                                                         item_requis=self.item_requis,
                                                         stagiaire_email=self.email
                                                     )
         self.image_1.source = row['doc1']
-            
-            
+
+    def image_1_mouse_down(self, x, y, button, keys, **event_args):
+        """This method is called when a mouse button is pressed on this component"""
+        if self.image_1.source is not None:        # non Vide
+            self.button_visu_click()
+
+    def button_scan_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # envoi vers pi5 par uplink du media, stage_num, item_requis, stagiaire_email
+        # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/scan_image/scan.py
+        media = self.item['doc1']
+        row_id = self.item.get_id()  # row ds table Pre_Requis_stagiaire pour sauver l'image traitée
+        try:
+            self.image_scanned.source = anvil.server.call('scan_media', media, row_id)
+        except Exception as e:
+            alert(f"Erreur pendant le scan: {e}")
+        
+        
+        
+        
 
             
 
