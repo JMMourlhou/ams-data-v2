@@ -30,7 +30,7 @@ components:
       event_bindings: {mouse_down: image_1_mouse_down}
       layout_properties: {grid_position: 'CQWMWA,QBWFTI'}
       name: image_scanned
-      properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium, visible: true}
+      properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium, visible: false}
       type: Image
     layout_properties: {expand: false, width: 160.9046123046875}
     name: column_panel_2
@@ -79,7 +79,7 @@ components:
     - event_bindings: {click: button_scan_click}
       layout_properties: {}
       name: button_scan
-      properties: {foreground: 'theme:On Primary', icon: 'fa:image', text: ''}
+      properties: {foreground: 'theme:On Primary', icon: 'fa:image', text: '', visible: false}
       type: Button
     layout_properties: {width: 363.1191015625}
     name: flow_panel_3
