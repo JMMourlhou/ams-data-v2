@@ -48,7 +48,8 @@ class ItemTemplate6(ItemTemplate6Template):
             if file_extension in list_extensions_img:   # Fichier image choisit
                 # on sauve par uplink le file media image
                 self.image_1.source = file
-                result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
+                # result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
+                result = anvil.server.call('scan_and_compress_media',file, self.item)  # appel uplink fonction pre_requis sur Pi5
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
