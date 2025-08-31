@@ -50,6 +50,7 @@ class ItemTemplate3(ItemTemplate3Template):
                 self.button_rotation.visible = True
                 self.button_visu.visible = True  
                 self.button_del.visible = True 
+                end = French_zone.french_zone_time()
                 temps = f"Temps de traitement image: {end-start}"
                 print(temps)
             elif file_extension == ".pdf":      
