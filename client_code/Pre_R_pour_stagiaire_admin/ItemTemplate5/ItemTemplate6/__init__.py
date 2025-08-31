@@ -13,23 +13,24 @@ class ItemTemplate6(ItemTemplate6Template):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-
         # Any code you write here will run before the form opens.
         self.test_img_just_loaded = False  # pour savoir si l'image vient d'être chargée (voir visu image)
+        
         txt0 = "Pour le " + self.item['code_txt']+" de "  # le stage
         txt1 = self.item['nom']+"."+self.item['prenom'][0]+" : "
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
         
         if self.item['doc1'] is not None:
-            self.image_1.source = self.item['doc1']              # DISPLAY L'image basse qualité
-            self.button_visu.visible = True
+            self.image_1.source = self.item['doc1']
             self.button_del.visible = True
+            self.button_visu.visible = True
             self.file_loader_1.visible = False
         else:
-            self.button_del.visible = False
+            self.image_1.source = None       # permet de tester le click sur l'image
+            self.button_del.visible = False 
+            self.button_visu.visible = False
             self.button_rotation.visible = False
-            self.file_loader_1.visible = True
         
         self.stage_num =   self.item['stage_num'] 
         self.item_requis = self.item['item_requis']
@@ -48,12 +49,13 @@ class ItemTemplate6(ItemTemplate6Template):
                 # on sauve par uplink le file media image
                 self.image_1.source = file
                 result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
-                print(result)
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
                 self.button_visu.visible = True  
                 self.button_del.visible = True 
+                temps = f"Temps de traitement image: {end-start}"
+                print(temps)
             elif file_extension == ".pdf":      
                 MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
@@ -99,8 +101,6 @@ class ItemTemplate6(ItemTemplate6Template):
             self.button_rotation.visible = False
         else:
             alert("Pré Requis non enlevé")
-
-    
 
     def timer_2_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
@@ -153,6 +153,23 @@ class ItemTemplate6(ItemTemplate6Template):
             stagiaire_email=self.email
         )
         self.image_1.source = row['doc1']
+
+    def button_scan_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # envoi vers pi5 par uplink du media, stage_num, item_requis, stagiaire_email
+        # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/scan_image/scan.py
+        media = self.item['doc1']
+        row_id = self.item.get_id()  # row ds table Pre_Requis_stagiaire pour sauver l'image traitée
+        try:
+            self.image_1.source = anvil.server.call('scan_media', media, row_id)
+        except Exception as e:
+            alert(f"Erreur pendant le scan: {e}")
+
+    def image_1_mouse_down(self, x, y, button, keys, **event_args):
+        """This method is called when a mouse button is pressed on this component"""
+        alert(self.image_1.source)
+        if self.image_1.source is not None:        # non Vide
+            self.button_visu_click()
 
     
 

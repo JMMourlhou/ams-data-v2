@@ -28,12 +28,7 @@ class ItemTemplate3(ItemTemplate3Template):
             self.button_del.visible = False 
             self.button_visu.visible = False
             self.button_rotation.visible = False
-            """
-            try:     # si pas de doc en table, erreur
-                self.button_visu.visible = False
-            except:
-                pass
-            """
+            
         self.stage_num =   self.item['stage_num']        # Row stage
         self.item_requis = self.item['item_requis']      # Row Item requis
         self.email =       self.item['stagiaire_email']  # Row user
@@ -50,12 +45,13 @@ class ItemTemplate3(ItemTemplate3Template):
                 # on sauve par uplink le file media image
                 self.image_1.source = file
                 result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
-                print(result)
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
                 self.button_visu.visible = True  
                 self.button_del.visible = True 
+                temps = f"Temps de traitement image: {end-start}"
+                print(temps)
             elif file_extension == ".pdf":      
                 MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
@@ -81,8 +77,6 @@ class ItemTemplate3(ItemTemplate3Template):
                     print(temps)
             else:  # erreur: le format choisit n'est pas un fichierimage ou pdf
                 alert(f"le type de fichier doit être un de ces types : {list_possible}")
-                
-            
         
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""

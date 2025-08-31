@@ -19,7 +19,7 @@ components:
       event_bindings: {mouse_down: image_1_mouse_down}
       layout_properties: {full_width_row: true, grid_position: 'UFTPVX,RFKQMS'}
       name: image_1
-      properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium, visible: true}
+      properties: {display_mode: original_size, height: 42.49542236328125, role: null, spacing_above: small, spacing_below: medium, visible: true}
       type: Image
     - event_bindings: {click: button_rotation_click}
       layout_properties: {grid_position: 'TBQEOC,CTISSM'}
@@ -30,7 +30,7 @@ components:
       event_bindings: {mouse_down: image_1_mouse_down}
       layout_properties: {grid_position: 'CQWMWA,QBWFTI'}
       name: image_scanned
-      properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium, visible: false}
+      properties: {display_mode: original_size, height: 60.339447021484375, role: null, spacing_above: small, spacing_below: medium, visible: false}
       type: Image
     layout_properties: {expand: false, width: 160.9046123046875}
     name: column_panel_2
