@@ -14,6 +14,7 @@ class ItemTemplate6(ItemTemplate6Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        self.row_id = self.item.get_id()  # pour sauver l'image traitée
         self.test_img_just_loaded = False  # pour savoir si l'image vient d'être chargée (voir visu image)
         
         txt0 = "Pour le " + self.item['code_txt']+" de "  # le stage
@@ -40,7 +41,7 @@ class ItemTemplate6(ItemTemplate6Template):
         """This method is called when a new file is loaded into this FileLoader"""
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
             start = French_zone.french_zone_time()
-
+            
             # Type du fichier loaded ?
             path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
             list_extensions_img = [".jpg", ".jpeg", ".bmp", ".gif", ".jif", ".png"]
@@ -49,7 +50,7 @@ class ItemTemplate6(ItemTemplate6Template):
                 # on sauve par uplink le file media image
                 self.image_1.source = file
                 # result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
-                result = anvil.server.call('scan_and_compress_media',file, self.item)  # appel uplink fonction pre_requis sur Pi5
+                self.image_1.source = anvil.server.call('scan_and_compress_media',file, self.row_id)  # appel uplink fonction pre_requis sur Pi5
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
@@ -86,9 +87,15 @@ class ItemTemplate6(ItemTemplate6Template):
             
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
+        row = app_tables.pre_requis_stagiaire.get(
+            stage_num=self.stage_num,
+            item_requis=self.item_requis,
+            stagiaire_email=self.email
+        )
+        file=row["doc1"]
         # nouveau nom doc
         new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse
-        open_form('Pre_Visu_img_Pdf', self.item['doc1'], new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
+        open_form('Pre_Visu_img_Pdf', file, new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
                 
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -133,7 +140,6 @@ class ItemTemplate6(ItemTemplate6Template):
 
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # pour calcul du temps de traitement
         row = app_tables.pre_requis_stagiaire.get(
             stage_num=self.stage_num,
             item_requis=self.item_requis,
@@ -161,15 +167,13 @@ class ItemTemplate6(ItemTemplate6Template):
         # envoi vers pi5 par uplink du media, stage_num, item_requis, stagiaire_email
         # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/scan_image/scan.py
         media = self.item['doc1']
-        row_id = self.item.get_id()  # row ds table Pre_Requis_stagiaire pour sauver l'image traitée
         try:
-            self.image_1.source = anvil.server.call('scan_media', media, row_id)
+            self.image_1.source = anvil.server.call('scan_media', media, self.row_id)
         except Exception as e:
             alert(f"Erreur pendant le scan: {e}")
 
     def image_1_mouse_down(self, x, y, button, keys, **event_args):
         """This method is called when a mouse button is pressed on this component"""
-        alert(self.image_1.source)
         if self.image_1.source is not None:        # non Vide
             self.button_visu_click()
 
