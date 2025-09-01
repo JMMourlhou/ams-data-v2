@@ -9,6 +9,7 @@ from anvil.tables import app_tables
 import anvil.js   # pour fermer la fenêtre qd on a demandé à l'utilisateur d'aller ds ses mails pour valider le mail de confirmation
 from anvil.js.window import localStorage
 from anvil.js import window
+from .. import Mail_valideur  # pour button_export_xls_click
 
 class z_user_new_account(z_user_new_accountTemplate):
     def __init__(self, h={}, num_stage=0, pour_stage=0, x=0, **properties):
@@ -48,6 +49,7 @@ class z_user_new_account(z_user_new_accountTemplate):
         # mail vide ?
         if self.email_box.text == "":
             alert("Entrez votre mail svp !")
+            self.email_box.focus()
             return
         # mail en minuscule    et strip
         mel = self.email_box.text
@@ -55,9 +57,11 @@ class z_user_new_account(z_user_new_accountTemplate):
         mel = mel.strip()
         self.email_box.text = mel
 
-        # @ ds mail ?
-        if "@" not in self.email_box.text:
-            alert("Entrez un mail valide !")
+        # Mail format validation
+        result = Mail_valideur.is_valid_email(mel)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
+        if result is False:
+            alert("Le mail n'a pas le bon format !")
+            self.email_box.focus()
             return
 
         if self.password_box.text != self.password_repeat_box.text:
@@ -84,8 +88,7 @@ class z_user_new_account(z_user_new_accountTemplate):
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # open_form('Main')
-        window.close()
+        open_form('Main')
         
     def password_repeat_box_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

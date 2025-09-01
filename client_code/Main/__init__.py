@@ -120,11 +120,11 @@ class Main(MainTemplate):
         #self.display_admin_or_other_buttons()
         self.bt_se_connecter.visible = False
         self.bt_sign_in.visible = False
-        self.column_panel_bt_mail.visible = False
+        self.flow_panel_connect.visible = False
         self.column_panel_admin.visible = False
         self.column_panel_others.visible = False
         self.outlined_card_niv1.visible = False
-        self.flow_panel_1.visible = False
+        self.flow_panel_user_role.visible = False
         self.content_panel.clear()
         self.content_panel.add_component(z_user_pw_reset(self.h["email"], self.h["api"]), full_width_row=True)
         return
@@ -154,7 +154,7 @@ class Main(MainTemplate):
     def display_bt_mail(self, **event_args):
         if self.user:
             self.bt_user_mail.text = self.user["email"]
-            self.column_panel_bt_mail.visible = True
+            self.flow_panel_connect.visible = True
             self.bt_se_connecter.visible = False
             self.bt_se_deconnecter.visible = True
         else:
@@ -195,7 +195,7 @@ class Main(MainTemplate):
                 self.outlined_card_niv1.visible = True
                 
             if self.user["role"] == "B":                    # Bureaux:   
-                self.column_panel_bt_mail.visible = True        # se déconnecter
+                self.flow_panel_connect.visible = True        # se déconnecter
                 self.outlined_card_pr_qcm.visible = True        
                 self.button_qcm.visible = True                  # faire 1 qcm et voir ses résultats
                 self.button_pre_requis.visible = True
@@ -211,7 +211,7 @@ class Main(MainTemplate):
                 self.column_panel_events.visible = True            # Saisir et voir les évenemnts
 
             if self.user["role"] == "J":                    #  JC:   
-                self.column_panel_bt_mail.visible = True        # se déconnecter
+                self.flow_panel_connect.visible = True        # se déconnecter
                 self.outlined_card_pr_qcm.visible = False        
                 self.button_pre_requis.visible = False
                 
@@ -262,8 +262,8 @@ class Main(MainTemplate):
     # ===================================================================================================================
     def bt_sign_in_click(self, h={}, num_stage=0, pour_stage=0, **event_args):  # h qd vient de sign in par qr code
         """This method is called when the button is clicked"""
-        self.bt_user_mail.visible = False
-        self.column_panel_2.visible = False
+        self.bt_user_mail.text = "Création de votre compte"
+        self.flow_panel_connect.visible = False
         self.content_panel.clear()        
         self.content_panel.add_component(z_user_new_account(h, num_stage, pour_stage), full_width_row=True)
     
@@ -284,11 +284,9 @@ class Main(MainTemplate):
     # ===================================================================================================================
     def button_se_connecter_click(self, **event_args):
         """This method is called when the button is clicked"""
-        """Will call the EXTERNAL MODULE DEPENDACY when the link is clicked"""
-        self.bt_se_connecter.visible = False
-        self.bt_sign_in.visible = False
+        self.bt_user_mail.text = "Connection"
+        self.flow_panel_connect.visible = False
         #from sign_in_for_AMS_Data.LoginDialog_V2 import LoginDialog_V2
-        
         self.content_panel.clear()
         self.content_panel.add_component(z_user_login(), full_width_row=False)
 

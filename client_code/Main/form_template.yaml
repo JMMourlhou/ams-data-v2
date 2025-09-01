@@ -11,42 +11,39 @@ components:
     name: timer_1
     properties: {interval: 300}
     type: Timer
-  - event_bindings: {click: bt_user_mail_click}
-    layout_properties: {grid_position: 'CXCWWB,VWMMAU'}
-    name: bt_user_mail
-    properties: {align: center, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:Tertiary', icon: 'fa:user', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: '', tooltip: '', underline: false, visible: true}
-    type: Button
   - components:
-    - components:
-      - event_bindings: {click: bt_se_deconnecter_click}
-        layout_properties:
-          col_widths: {}
-          grid_position: GXBZDW,UYTBFE
-        name: bt_se_deconnecter
-        properties: {align: center, background: 'theme:On Primary Container', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: ' Se déconnecter ', tooltip: '', underline: false, visible: true}
-        type: Button
-      - event_bindings: {click: button_se_connecter_click}
-        layout_properties:
-          col_widths: {}
-          grid_position: OPHTMO,HRACXZ
-        name: bt_se_connecter
-        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Connectez vous !, tooltip: '', underline: false, visible: true}
-        type: Button
-      layout_properties: {grid_position: 'YOXQOW,UEQISO'}
-      name: column_panel_bt_mail
-      properties: {col_widths: '{}'}
-      type: ColumnPanel
-    - event_bindings: {click: bt_sign_in_click}
-      layout_properties:
-        col_widths: {}
-        grid_position: LRXJXA,CUVIXY
-      name: bt_sign_in
-      properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: ' Créez votre compte ', tooltip: '', underline: false, visible: true}
+    - event_bindings: {click: bt_user_mail_click}
+      name: bt_user_mail
+      properties: {align: center, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:On Primary Container', icon: 'fa:user', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: '', tooltip: '', underline: false, visible: true}
       type: Button
-    layout_properties: {grid_position: 'EOVRLY,HGJCCZ'}
-    name: column_panel_2
-    properties: {col_widths: '{}'}
-    type: ColumnPanel
+    - components:
+      - name: label_role
+        properties: {align: right, font_size: 10, foreground: 'theme:On Primary', spacing_below: none}
+        type: Label
+      name: flow_panel_2
+      properties: {}
+      type: FlowPanel
+    layout_properties: {grid_position: 'KPXXCZ,LDHRFR'}
+    name: flow_panel_user_role
+    properties: {align: center, spacing_above: none, spacing_below: none}
+    type: FlowPanel
+  - components:
+    - event_bindings: {click: button_se_connecter_click}
+      name: bt_se_connecter
+      properties: {align: center, background: 'theme:Olive', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Connectez vous !, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: bt_sign_in_click}
+      name: bt_sign_in
+      properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: ' Créez votre compte ', tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: bt_se_deconnecter_click}
+      name: bt_se_deconnecter
+      properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: ' Se déconnecter ', tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'LYGEQH,ZRBSWZ'}
+    name: flow_panel_connect
+    properties: {align: center}
+    type: FlowPanel
   - components:
     - components:
       - event_bindings: {click: button_xls_click}
@@ -263,15 +260,6 @@ components:
     name: column_panel_others
     properties: {col_widths: '{}'}
     type: ColumnPanel
-  - components:
-    - layout_properties: {}
-      name: label_role
-      properties: {align: right, font_size: 10, foreground: 'theme:On Primary', spacing_below: none}
-      type: Label
-    layout_properties: {grid_position: 'WCVLDL,YYHSXL'}
-    name: flow_panel_1
-    properties: {align: right, spacing_above: none, spacing_below: none}
-    type: FlowPanel
   layout_properties:
     col_widths: {}
     grid_position: OFJBPV,VKAECL

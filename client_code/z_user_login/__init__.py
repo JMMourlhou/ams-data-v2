@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-#from .. import login_flow
+from .. import Mail_valideur  # pour button_export_xls_click
 
 
 class z_user_login(z_user_loginTemplate):
@@ -68,20 +68,24 @@ class z_user_login(z_user_loginTemplate):
 
     def reset_pw_link_click(self, **event_args):
         """This method is called when the link is clicked"""
+        
         # --------------------------------Tests sur mail
         # mail vide ?
         if self.email_box.text == "":
             alert("Entrez votre mail svp !")
+            self.email_box.focus()
             return
+            
         # mail en minuscule    et strip
         mel = self.email_box.text
         mel = mel.lower()
         mel = mel.strip()
         self.email_box.text = mel
 
-        # @ ds mail ?
-        if "@" not in self.email_box.text:
-            alert("Entrez un mail valide !")
+        # Mail format validation
+        result = Mail_valideur.is_valid_email(mel)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
+        if result is False:
+            alert("Le mail n'a pas le bon format !")
             self.email_box.focus()
             return
 

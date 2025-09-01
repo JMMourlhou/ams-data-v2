@@ -5,36 +5,38 @@ components:
       col_widths: {}
       grid_position: GMACWM,CAOLPZ
     name: email_box
-    properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Adresse mail, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: email, underline: false, visible: true}
+    properties: {align: center, background: 'theme:Olive', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Adresse mail, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: email, underline: false, visible: true}
     type: TextBox
   - event_bindings: {pressed_enter: password_box_pressed_enter}
     layout_properties:
       col_widths: {}
       grid_position: BKNGUM,PQKVYZ
     name: password_box
-    properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: true, italic: false, placeholder: Mot de passe, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: center, background: 'theme:Olive', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: true, italic: false, placeholder: Mot de passe, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - components:
-    - event_bindings: {click: button_retour_click}
-      layout_properties: {grid_position: ''}
-      name: button_retour
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: raised, spacing_above: none, spacing_below: small, text: Retour, tooltip: '', underline: false, visible: true}
-      type: Button
     - event_bindings: {click: button_validation_click}
-      layout_properties: {grid_position: ',UHJJNI'}
       name: button_validation
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: raised, spacing_above: none, spacing_below: small, text: '   OK    ', tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:Olive', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:White', icon: '', icon_align: left, italic: false, role: raised, spacing_above: none, spacing_below: small, text: Valider, tooltip: '', underline: false, visible: true}
       type: Button
-    layout_properties: {grid_position: 'XMXSXV,EQFWFY'}
-    name: column_panel_1
-    properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: null, spacing_above: none, spacing_below: small, tooltip: '', visible: true, wrap_on: never}
-    type: ColumnPanel
+    - layout_properties: {width: 45.5137939453125}
+      name: spacer_1
+      properties: {height: 31.8165283203125}
+      type: Spacer
+    - event_bindings: {click: button_retour_click}
+      name: button_retour
+      properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: raised, spacing_above: none, spacing_below: small, text: Abandon, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'PSSFZG,SVNEHP'}
+    name: flow_panel_1
+    properties: {align: center}
+    type: FlowPanel
   - event_bindings: {click: reset_pw_link_click}
     layout_properties:
       col_widths: {}
       grid_position: CIFXKQ,PHSVPE
     name: reset_pw_link
-    properties: {align: center, background: '', bold: true, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: red, icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'Mot de passe oublié ?', tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
+    properties: {align: center, background: '', bold: true, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: none, text: 'Mot de passe oublié ?', tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
     type: Link
   event_bindings: {}
   layout_properties: {grid_position: 'YILUDU,RSDWPV'}
