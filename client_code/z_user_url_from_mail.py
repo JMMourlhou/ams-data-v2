@@ -68,7 +68,7 @@ def confirm_or_pwreset(h, num_stage=0):
             #alert("Votre mail est déjà confirmé, essayez de vous connecter.")
             pass
 
-    anvil.users.logout()       #logging out the user
+    #anvil.users.logout()       #logging out the user
     open_form("Main",99)
 
 
