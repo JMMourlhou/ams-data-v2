@@ -60,7 +60,7 @@ def confirm_or_pwreset(h, num_stage=0):
             #test3: is the user in the users data table ?
             user=anvil.server.call("search", to_be_confirmed_email, hpw)
             #Displaying the confirm alert 
-            msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, connectez-vous avec votre mail et mot de passe."
+            msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, rentrez maintenant vos données personnelles."
             alert(msg)
         except anvil.users.EmailNotConfirmed:   # pas confirmé ?
             alert("Votre mail est connu par nos services mais n'est pas confirmé, cliquez le dernier lien envoyé par mail.")

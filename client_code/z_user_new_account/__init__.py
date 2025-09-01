@@ -88,7 +88,7 @@ class z_user_new_account(z_user_new_accountTemplate):
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        open_form('Main')
+        open_form('Main', 99)
         
     def password_repeat_box_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

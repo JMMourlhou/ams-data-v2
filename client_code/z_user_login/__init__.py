@@ -59,7 +59,7 @@ class z_user_login(z_user_loginTemplate):
                 open_form('Main',99)   #je retourne et efface l'url
         except anvil.users.AuthenticationFailed as e:
             #alert(f"Erreur:\n\n{e}")
-            alert("Erreur:\n\nAdresse email ou Mot de Passe erroné !")
+            alert("Adresse email ou Mot de Passe erroné !",title="Erreur")
             return
 
     def password_box_pressed_enter(self, **event_args):
