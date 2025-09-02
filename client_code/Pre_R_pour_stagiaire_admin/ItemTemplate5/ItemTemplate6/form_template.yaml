@@ -15,19 +15,13 @@ components:
       event_bindings: {mouse_down: image_1_mouse_down}
       layout_properties: {grid_position: 'VTTKFP,XTKJOS'}
       name: image_1
-      properties: {background: '', display_mode: shrink_to_fit, height: 119.3455810546875, role: null, spacing_above: small, spacing_below: none, visible: true}
+      properties: {background: '', display_mode: original_size, height: 72.80029296875, role: null, spacing_above: small, spacing_below: none, visible: true}
       type: Image
     - event_bindings: {click: button_rotation_click}
       layout_properties: {grid_position: 'MIQDYO,JLEOBX'}
       name: button_rotation
       properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
       type: Button
-    - data_bindings: []
-      event_bindings: {mouse_down: image_1_mouse_down}
-      layout_properties: {grid_position: 'SUQCWL,HGQKEZ'}
-      name: image_scanned
-      properties: {display_mode: shrink_to_fit, height: 114.8837890625, role: null, spacing_above: small, spacing_below: medium, visible: true}
-      type: Image
     layout_properties: {width: 202.02621728515626}
     name: column_panel_1
     properties: {background: 'theme:On Primary Container', role: tonal-card, spacing_above: none}
@@ -75,7 +69,7 @@ components:
     - event_bindings: {click: button_scan_click}
       layout_properties: {grid_position: 'IGGCAF,RDCZEN'}
       name: button_scan
-      properties: {foreground: 'theme:On Primary', icon: 'fa:image', text: '', visible: true}
+      properties: {foreground: 'theme:On Primary', icon: 'fa:image', text: '', visible: false}
       type: Button
     layout_properties: {width: 129.09600830078125}
     name: column_panel_2

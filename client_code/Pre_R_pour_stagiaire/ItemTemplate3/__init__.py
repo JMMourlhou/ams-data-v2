@@ -164,7 +164,7 @@ class ItemTemplate3(ItemTemplate3Template):
         media = self.item['doc1']
         row_id = self.item.get_id()  # row ds table Pre_Requis_stagiaire pour sauver l'image traitée
         try:
-            self.image_scanned.source = anvil.server.call('scan_media', media, row_id)
+            self.image_1.source = anvil.server.call('scan_media', media, row_id)
         except Exception as e:
             alert(f"Erreur pendant le scan: {e}")
         
