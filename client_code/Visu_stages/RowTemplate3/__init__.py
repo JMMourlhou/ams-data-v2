@@ -34,6 +34,8 @@ class RowTemplate3(RowTemplate3Template):
             self.text_box_1.visible = False   # numéro du stage non visible
             self.button_del_stage.visible = False  # BT annulation du stage non visible
             self.button_sending.text = ""
+            self.button_trombi.text = ""
+            self.button_export_xls.text = ""
             if self.item['date_debut'] is not None:
                 self.text_box_3.text = self.item['date_debut'].strftime("%m/%Y")   # format date française avec fonction Python strftime
         else:
@@ -170,4 +172,8 @@ class RowTemplate3(RowTemplate3Template):
         """This method is called when the TextBox gets focus"""
         self.text_box_mail.placeholder = ""
 
+    def button_trombi_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ...Visu_trombi import Visu_trombi
+        open_form('Visu_trombi',self.item['numero'], self.item['code_txt'], False, None, False)
 
