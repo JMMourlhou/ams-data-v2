@@ -61,8 +61,7 @@ class Pre_R_pour_1_stagiaire(Pre_R_pour_1_stagiaireTemplate):
         print("ajout: ", result)
        
         # réaffichage des pré requis par reinitialisation 
-        self.display()
-                        
+        self.display()                        
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""

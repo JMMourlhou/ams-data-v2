@@ -14,7 +14,7 @@ class ItemTemplate5(ItemTemplate5Template):
         self.f = get_open_form()
         # Any code you write here will run before the form opens.
         self.button_nom.text=self.item['name'].capitalize()+" "+self.item['prenom']
-        
+
 
     def button_nom_click(self, **event_args):          # Click sur le BT nom/prénom pour voir ses pré requis
         """This method is called when the button is clicked"""
@@ -26,11 +26,11 @@ class ItemTemplate5(ItemTemplate5Template):
             self.button_nom.background = "theme:Tertiary"
             #self.button_nom.foreground = "black"
         liste_pr = app_tables.pre_requis_stagiaire.search(
-                                                        tables.order_by("requis_txt", ascending=True),
-                                                        q.fetch_only("item_requis", "thumb", "stagiaire_email"),
-                                                        stagiaire_email = self.item['user_email'],        # user_email row
-                                                        stage_num = self.item['stage']                    # stage      row
-                                                        )
+            tables.order_by("requis_txt", ascending=True),
+            q.fetch_only("item_requis", "thumb", "stagiaire_email"),
+            stagiaire_email = self.item['user_email'],        # user_email row
+            stage_num = self.item['stage']                    # stage      row
+        )
         self.repeating_panel_1.items = liste_pr
         if self.repeating_panel_1.visible is True:
             self.repeating_panel_1.visible = False
@@ -43,7 +43,6 @@ class ItemTemplate5(ItemTemplate5Template):
         open_form('Pre_R_pour_1_stagiaire',self.item)   # j'envoie le row 'stagiaire inscrit' en entier
 
 
-        
 
  
         
