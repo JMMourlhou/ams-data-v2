@@ -26,7 +26,7 @@ class ItemTemplate29(ItemTemplate29Template):
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
         # enlever le qcm enfant du dictionaire source en table qcm_description
-        # self.sov_qcm_nb contient le qcm à elever du dico
+        # self.sov_qcm_nb contient le qcm à enlever du dico
         #                                        qcm_exam_row,    qcm_enfant_nb,      
         result = anvil.server.call("qcm_enfant_del", self.item[0],    str(self.item[1]))    # qcm_exam_row
         if result is True:

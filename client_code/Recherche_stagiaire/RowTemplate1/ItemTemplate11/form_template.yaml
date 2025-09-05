@@ -11,6 +11,7 @@ components:
 - components:
   - components:
     - data_bindings: []
+      event_bindings: {mouse_down: image_1_mouse_down}
       layout_properties: {full_width_row: true, grid_position: 'LSIOOU,UOWYNL'}
       name: image_1
       properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium}
@@ -25,17 +26,11 @@ components:
     properties: {background: 'theme:On Primary Container', role: tonal-card}
     type: ColumnPanel
   - components:
-    - event_bindings: {click: button_visu_click}
-      layout_properties: {grid_position: 'CFBKGE,IOYJUG'}
-      name: button_visu
-      properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:On Primary Container', icon: 'fa:binoculars', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
-      type: Button
     - event_bindings: {change: file_loader_1_change}
-      layout_properties: {grid_position: 'GHLKMF,CEYBAC'}
       name: file_loader_1
       properties:
         align: center
-        background: ''
+        background: theme:Primary
         bold: false
         border: ''
         enabled: true
@@ -43,31 +38,41 @@ components:
         file_types: ''
         files: []
         font: ''
-        font_size: 18
-        foreground: theme:On Primary Container
+        font_size: 14
+        foreground: theme:On Primary
         icon: fa:upload
         icon_align: left
         italic: false
         multiple: false
         role: outlined-button
-        show_state: false
+        show_state: true
         spacing_above: small
         spacing_below: small
-        text: ''
+        text: Choisir
         tooltip: ''
         underline: false
-        visible: true
+        visible: false
       type: FileLoader
     - data_bindings: []
-      event_bindings: {click: button_del_click}
-      layout_properties: {grid_position: 'DVCURO,NCVZFL'}
-      name: button_del
-      properties: {align: right, background: '', bold: false, border: '', enabled: true, font: '', font_size: 27, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   ', tooltip: '', underline: false, visible: true}
+      event_bindings: {click: button_del_pour_ce_stagiaire_click}
+      layout_properties: {}
+      name: button_del_pour_ce_stagiaire
+      properties: {align: left, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:On Primary', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Enlever ce PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
       type: Button
-    layout_properties: {width: 100}
-    name: column_panel_1
-    properties: {col_widths: '{}'}
-    type: ColumnPanel
+    - event_bindings: {click: button_visu_click}
+      layout_properties: {}
+      name: button_visu
+      properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:binoculars', icon_align: left, role: filled-button, text: '   Voir / PDF', visible: false}
+      type: Button
+    - data_bindings: []
+      event_bindings: {click: button_del_click}
+      layout_properties: {}
+      name: button_del
+      properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
+      type: Button
+    name: flow_panel_2_copy
+    properties: {align: center, background: 'theme:Primary'}
+    type: FlowPanel
   layout_properties: {grid_position: 'XWJESW,TGRIWD'}
   name: flow_panel_2
   properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}

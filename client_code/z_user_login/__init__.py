@@ -62,9 +62,7 @@ class z_user_login(z_user_loginTemplate):
             alert("Adresse email ou Mot de Passe erroné !",title="Erreur")
             return
 
-    def password_box_pressed_enter(self, **event_args):
-        """This method is called when the user presses Enter in this text box"""
-        self.button_validation_click()
+    
 
     def reset_pw_link_click(self, **event_args):
         """This method is called when the link is clicked"""
@@ -93,7 +91,13 @@ class z_user_login(z_user_loginTemplate):
             alert(f"Un mail de réinitilisation du mot de passe vous a été envoyé à {self.email_box.text}.")
             open_form('Main',99)     #je retourne et efface l'url
 
+    def email_box_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.button_validation_click()
 
+    def password_box_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.button_validation_click()
 
 
 

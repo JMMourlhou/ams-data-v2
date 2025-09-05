@@ -32,11 +32,14 @@ class ItemTemplate11(ItemTemplate11Template):
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
+            self.button_del_pour_ce_stagiaire.visible = False
             self.button_rotation.visible = True
         else:
+            self.image_1.source = None       # permet de tester le click sur l'image
             self.button_del.visible = False
             self.button_visu.visible = False
             self.file_loader_1.visible = True
+            self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
 
     def button_visu_click(self, **event_args):
@@ -102,6 +105,7 @@ class ItemTemplate11(ItemTemplate11Template):
             self.file_loader_1.text = ""
             self.file_loader_1.font_size = 18
             self.file_loader_1.visible = True
+            self.button_del_pour_ce_stagiaire.visible = True
         else:
             alert("Pré Requis non enlevé")
 
@@ -157,5 +161,24 @@ class ItemTemplate11(ItemTemplate11Template):
             stagiaire_email=self.email
         )
         self.image_1.source = row['doc1']
+
+    def image_1_mouse_down(self, x, y, button, keys, **event_args):
+        """This method is called when a mouse button is pressed on this component"""
+        if self.image_1.source is not None:        # non Vide
+            self.button_visu_click()
+
+    def button_del_pour_ce_stagiaire_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if self.item['doc1'] is not None:
+            r=alert("Ce pré-requis n'est pas vide, Voulez-vous vraiment le détruire ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        else:
+            r=alert(f"Voulez-vous enlever ce pré-requis ({self.item['requis_txt']}) pour {self.item['prenom']} {self.item['nom']}?", dismissible=False ,buttons=[("oui",True),("non",False)])
+        if r :   # Oui               
+            result = anvil.server.call('pr_stagiaire_del',self.item['stagiaire_email'], self.item['stage_num'], self.item['item_requis'], "destruction" )  # mode  destruction de PR pour ce stgiaire
+            if not result:
+                alert("Pré Requis non enlevé pour ce stagiaire")
+            else:
+                alert("Pré Requis enlevé pour ce stagiaire")
+                open_form('Pre_R_pour_stagiaire_admin', self.item['numero'])
 
                 

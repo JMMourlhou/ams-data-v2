@@ -25,12 +25,12 @@ class ItemTemplate7(ItemTemplate7Template):
                 self.repeating_panel_qcm_results.items = qcm_results
         else:
             self.button_nom_prenom.background = "grey"
-            self.button_nom_prenom.foreground = "blue"
+            self.button_nom_prenom.foreground = "white"
     
     def button_nom_prenom_click(self, **event_args):
         """This method is called when the button is clicked"""
         
-        if self.repeating_panel_qcm_results.visible == True:
+        if self.repeating_panel_qcm_results.visible is True:
             self.repeating_panel_qcm_results.visible = False
         else:
             self.repeating_panel_qcm_results.visible = True

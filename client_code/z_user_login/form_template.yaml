@@ -1,6 +1,6 @@
 components:
 - components:
-  - event_bindings: {}
+  - event_bindings: {pressed_enter: email_box_pressed_enter}
     layout_properties:
       col_widths: {}
       grid_position: GMACWM,CAOLPZ

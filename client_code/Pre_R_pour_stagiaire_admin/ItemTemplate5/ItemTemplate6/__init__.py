@@ -14,6 +14,7 @@ class ItemTemplate6(ItemTemplate6Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        self.f = get_open_form()
         self.row_id = self.item.get_id()  # pour sauver l'image traitée
         self.test_img_just_loaded = False  # pour savoir si l'image vient d'être chargée (voir visu image)
 
@@ -32,6 +33,8 @@ class ItemTemplate6(ItemTemplate6Template):
             self.button_del.visible = False 
             self.button_visu.visible = False
             self.button_rotation.visible = False
+            self.file_loader_1.visible = True
+            self.button_del_pour_ce_stagiaire.visible = True   # si pas d'image, je peux enlever le pré requis pour ce stagiaire
 
         self.stage_num =   self.item['stage_num'] 
         self.item_requis = self.item['item_requis']
@@ -108,6 +111,7 @@ class ItemTemplate6(ItemTemplate6Template):
             self.file_loader_1.text = "Choisir"
             self.file_loader_1.font_size = 14
             self.file_loader_1.visible = True
+            self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
         else:
             alert("Pré Requis non enlevé")
@@ -180,8 +184,17 @@ class ItemTemplate6(ItemTemplate6Template):
 
     def button_del_pour_ce_stagiaire_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
-
+        if self.item['doc1'] is not None:
+            r=alert("Ce pré-requis n'est pas vide, Voulez-vous vraiment le détruire ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        else:
+            r=alert(f"Voulez-vous enlever ce pré-requis ({self.item['requis_txt']}) pour {self.item['prenom']} {self.item['nom']}?", dismissible=False ,buttons=[("oui",True),("non",False)])
+        if r :   # Oui               
+            result = anvil.server.call('pr_stagiaire_del',self.item['stagiaire_email'], self.item['stage_num'], self.item['item_requis'], "destruction" )  # mode  destruction de PR pour ce stgiaire
+            if not result:
+                alert("Pré Requis non enlevé pour ce stagiaire")
+            else:
+                alert("Pré Requis enlevé pour ce stagiaire")
+                open_form('Pre_R_pour_stagiaire_admin', self.item['numero'])
 
 
             
