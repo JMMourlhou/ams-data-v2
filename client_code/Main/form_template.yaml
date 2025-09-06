@@ -193,6 +193,7 @@ components:
     - components:
       - components:
         - event_bindings: {click: button_form_com_click}
+          layout_properties: {}
           name: button_form_com
           properties:
             background: theme:Primary
@@ -201,8 +202,8 @@ components:
             role: elevated-button
             spacing:
               padding: [null, null, null, null]
-            spacing_above: none
-            spacing_below: none
+            spacing_above: small
+            spacing_below: small
             text: Evaluer en communication
             visible: true
           type: Button
@@ -216,7 +217,7 @@ components:
             role: elevated-button
             spacing:
               padding: [null, null, null, null]
-            spacing_above: none
+            spacing_above: small
             spacing_below: none
             text: '   Com: Mes résultats     '
             visible: true
@@ -234,9 +235,10 @@ components:
         - event_bindings: {click: button_form_suivi_stage_click}
           layout_properties: {}
           name: button_form_suivi_stage
-          properties: {background: 'theme:Primary', bold: true, foreground: 'theme:On Primary', role: elevated-button, spacing_above: none, spacing_below: small, text: ' Formulaire suivi de stage', visible: true}
+          properties: {background: 'theme:Primary', bold: true, foreground: 'theme:On Primary', role: elevated-button, spacing_above: small, spacing_below: small, text: ' Formulaire suivi de stage', visible: true}
           type: Button
         - event_bindings: {click: button_form_satisf_click}
+          layout_properties: {}
           name: button_form_satisf
           properties: {background: 'theme:Primary', bold: true, foreground: 'theme:On Primary', role: elevated-button, spacing_below: none, text: Formulaire Fin de Stage, visible: true}
           type: Button

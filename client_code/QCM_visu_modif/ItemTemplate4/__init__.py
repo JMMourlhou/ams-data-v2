@@ -572,7 +572,7 @@ class ItemTemplate4(ItemTemplate4Template):
         global reponses     # liste type dict  des réponses du stagiaire    
         #alert(f"liste réponses contient : {len(reponses)}")
         if len(reponses) != int(self.label_nb_questions.text):
-            r=alert2('Ce QCM est inachevé, \n\n'
+            r=alert('Ce QCM est inachevé, \n\n'
                       'Voulez-vous vraiment abandonner ?\n'
                       ,
                 buttons=['Oui', 'Non'],
