@@ -91,7 +91,65 @@ def make_trombi_pdf_via_uplink(stage_row, rows, num_stage: int,                 
         title = _escape(f"Trombi stagiaires, tous stages {type_stage_si_multi}")
         num_stage = _escape(f"Trombi_stages_{type_stage_si_multi}")
         
-    # HTML final (la CSS principale est dans ton Uplink, via CSS_BASE)
+    # =========================================================================================================
+    # Fabrique le CSS pour les TROMBIS, contenu dans la variable 'CSS' de type text
+    css = """
+@page {
+  size: A4;
+  margin: 10mm;                    /* ≈ 1 cm */  
+}
+
+@media print {
+  .page-break { break-after: page; page-break-after: always; }
+  td.card { break-inside: avoid; page-break-inside: avoid; }
+}
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+/* Table compacte et stable */
+table.trombi {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+table.trombi td.card {
+  width: 20%;                      /* 5 colonnes */
+  box-sizing: border-box;
+  vertical-align: top;
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+
+/* Image cadrée uniformément (hauteur identique) */
+.img-box {
+  width: 100%;
+  height: 38mm;                    /* ajuste 34–42 mm si besoin */
+  overflow: hidden;
+}
+.img-box > img.trombi {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;               /* pas de distorsion */
+}
+
+/* Textes */
+.name { color: #0047ab; font-size: 10pt; margin-top: 4px; }
+.tel  { color: #0047ab; font-size: 10pt; }
+
+/* 3) Email plus petit et cassable sur plusieurs lignes */
+.mail {
+  color: #0047ab;
+  font-size: 7pt;                  
+  line-height: 1.2;
+  overflow-wrap: anywhere;         /* coupe proprement les longues adresses */
+  word-break: break-word;
+}
+"""
+
+    
+    # =========================================================================================================
+    # HTML final (la CSS principale est dans mon Uplink "render_trombi_pdf" hors du docker amsdata sur PI5)
     html = f"""<!doctype html>
 <html>
   <head>
@@ -123,7 +181,8 @@ def make_trombi_pdf_via_uplink(stage_row, rows, num_stage: int,                 
   </body>
 </html>
 """
+    
     filename = f"trombi_{num_stage}.pdf"
     # Appel Uplink → Pi5
-    return anvil.server.call("render_trombi_pdf", html, filename)
+    return anvil.server.call("render_pdf", html, css, filename)
 
