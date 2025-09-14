@@ -1,89 +1,9 @@
-import anvil.email
 from anvil.tables import app_tables
 import anvil.server
-from anvil.pdf import PDFRenderer
-
-import time   # Pour calculer le tps de traitement
-from datetime import datetime  # pour mettre la date et heure ds nomde fichier pdf (temporaire pour test)
-from pytz import timezone      # 
-
 import html, re, unicodedata  # POur génération du HTML 
 
-"""
-    quality :
-    "original": All images will be embedded at original resolution. Output file can be very large.
-    "screen": Low-resolution output similar to the Acrobat Distiller “Screen Optimized” setting.
-    "printer": Output similar to the Acrobat Distiller “Print Optimized” setting.
-    "prepress": Output similar to Acrobat Distiller “Prepress Optimized” setting.
- ** "default": Output intended to be useful across a wide variety of uses, possibly at the expense of a larger output file.
-    """
-# Calculer la taille du file et ajuster la qualité (screen : pas assez bon)
-
-"""----------------------------------------------------------------------------------------------------------
-                   BG task    Formulaire de SATISFACTION  Génération du PDF et sauvegarde en table stage
-   ---------------------------------------------------------------------------------------------------------
-"""
-@anvil.server.background_task
-def generate_satisf_results(stage_num, type, row):
-    start = time.time()   # pour calcul du tpsde traitement (environ 25 sec)
-    now_utc = datetime.now(timezone('UTC'))
-    date_time = now_utc.astimezone(timezone('Europe/Paris')) # initialisation of the date & time of writing
-
-    pdf_object = PDFRenderer(page_size ='A4',
-                            filename = f"Enquete_satisf_{type}_{stage_num}_{date_time}.pdf",
-                            #filename = f"Enquete_satisf_{type}_{stage_num}.pdf",
-                            landscape = False,
-                            margins = {'top': 0.3, 'bottom': 0.1, 'left': 0.2, 'right': 0.2},  #  cm
-                            scale = 1.0,                                                       
-                            quality = "screen"      
-                            ).render_form('Stage_satisf_statistics',True,row)    # True: pdf mode, j'efface le bt return et passe le row du stage qui avait été sélectionné
-   
-    # sauvegarde du résultat de l'enquete media
-    row.update(satis_pdf = pdf_object) 
-    end = time.time()
-    print("Temps de traitement: ", end-start)
-    
-# A FAIRE APPELER from client side
-@anvil.server.callable
-def run_bg_task_satisf(stage_num, type, row):
-    task = anvil.server.launch_background_task('generate_satisf_results',stage_num, type, row)
-    return task
-
-
-"""----------------------------------------------------------------------------------------------------------
-                   BG task    Formulaire de SUIVI Génération du PDF et sauvegarde en table stage
-    ---------------------------------------------------------------------------------------------------------
-"""
-@anvil.server.background_task
-def generate_suivi_results(type_suivi, stage_num, type, row):
-    start = time.time()   # pour calcul du tpsde traitement (environ 25 se)
-    now_utc = datetime.now(timezone('UTC'))
-    date_time = now_utc.astimezone(timezone('Europe/Paris')) # initialisation of the date & time of writing
-
-    pdf_object = PDFRenderer(page_size ='A4',
-                            filename = f"Enquete_satisf_{type}_{stage_num}_{date_time}.pdf",
-                            #filename = f"Enquete_satisf_{type}_{stage_num}.pdf",
-                            landscape = False,
-                            margins = {'top': 0.3, 'bottom': 0.1, 'left': 0.2, 'right': 0.2},  #  cm
-                            scale = 1.0,                                                       
-                            quality = "screen"      
-                            ).render_form('Stage_suivi_results',type_suivi, True,row)    # True: pdf mode, j'efface le bt return et passe le row du stage qui avait été sélectionné
-   
-    # sauvegarde du résultat de l'enquete media
-    row.update(suivi_pdf = pdf_object) 
-    end = time.time()
-    print("Temps de traitement: ", end-start)
-    
-# A FAIRE APPELER from client side
-@anvil.server.callable
-def run_bg_task_suivi(type_suivi, stage_num, type, row):
-    task = anvil.server.launch_background_task('generate_suivi_results', type_suivi, stage_num, type, row)
-    return task
-
-
-
-#import html, re, unicodedata
-
+# Génération de formulaires de suivi / stagiaires
+#   à partir de HTML, CSS
 # ------------------ Helpers ------------------
 
 def _esc(s):
@@ -138,58 +58,122 @@ def _render_open_blocks(rep_ouv: dict) -> str:
 
 def _render_ratings_table(rep_ferm: dict) -> str:
     """
-    rep_ferm est supposé être { 'Intitulé note' : 0..5 | 'texte', ... }
-    On rend un tableau simple, proche du PDF d'exemple (libellé + valeur).
+    Accepte deux formes:
+    A) { "1": ["Libellé", 4], "2": ["Libellé", 5], ... }  (comme dans ton PDF)
+    B) { "Libellé": 4, "Libellé2": 5, ... }               (fallback)
+    Rend un tableau 3 colonnes: n° | libellé | note (+barre)
+    Coloration de ligne selon la note (0→5).
     """
     if not rep_ferm:
         return ""
+
     rows = []
-    for label, val in rep_ferm.items():
-        label = _esc(_clean_text(label))
-        value_txt = _esc(_clean_text(val))
-        # barre visuelle (optionnelle si val numérique)
-        bar = ""
+
+    # Normalisation en liste de tuples (qnum, label, value)
+    norm = []
+    for k, v in rep_ferm.items():
+        qnum = None
+        label = ""
+        value = v
+        # Forme A : clé = numéro, valeur = [label, note]
+        if (isinstance(v, (list, tuple)) and len(v) >= 2):
+            qnum = str(k)
+            label = str(v[0])
+            value = v[1]
+        else:
+            # Forme B : clé = libellé, val = note
+            label = str(k)
+
+        # Valeur texte + entier (si possible)
+        value_txt = str(value)
+        score = None
         try:
-            n = int(str(val).strip())
-            n_clamped = max(0, min(5, n))
-            bar = f"<div class='bar'><div class='bar-fill' style='width:{n_clamped*20}%'>&nbsp;</div></div>"
+            score = int(str(value).strip())
+            score = max(0, min(5, score))
         except Exception:
-            pass
+            score = None
+
+        norm.append((qnum, label, value_txt, score))
+
+    # Tri croissant par n° si présent
+    def _key(x):
+        qnum = x[0]
+        try:
+            return (0, int(qnum))
+        except:
+            return (1, str(qnum) if qnum is not None else "~")
+    norm.sort(key=_key)
+
+    # Génération HTML
+    for qnum, label, value_txt, score in norm:
+        bar = ""
+        if score is not None:
+            bar = f"<div class='bar'><div class='bar-fill' style='width:{score*20}%'></div></div>"
+        tr_class = f"score-{score}" if score is not None else ""
         rows.append(f"""
-          <tr>
-            <td class="r-label">{label}</td>
-            <td class="r-value">{value_txt}{bar}</td>
+          <tr class="{tr_class}">
+            <td class="qnum">{_esc(qnum) if qnum is not None else ""}</td>
+            <td class="rlabel">{_esc(_clean_text(label))}</td>
+            <td class="rval">{_esc(value_txt)}{bar}</td>
           </tr>
         """)
+
     return f"""
       <table class="rating-table">
+        <colgroup>
+          <col class="qnum"><col class="rlabel"><col class="rval">
+        </colgroup>
         <tbody>
           {''.join(rows)}
         </tbody>
       </table>
     """
 
+
 def _css_enquete():
-    # CSS dédiée au rendu "résultats de formulaires de suivi"
     return """
 @page {
   size: A4;
-  margin: 14mm 14mm 16mm 14mm;
+  /* marge haute augmentée pour accueillir l'en-tête répété */
+  margin: 22mm 14mm 16mm 14mm;
+
+  /* Pied de page (pagination) */
   @bottom-center {
     content: "Page " counter(page) " / " counter(pages);
-    font-size: 9pt;
-    color: #0047ab;
+    font-size: 9pt; color: #0047ab;
+  }
+
+  /* En-tête répété à chaque page */
+  @top-center {
+    content: element(doc-header);
   }
 }
+
+/* police & rendu print */
 * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; color: #111; }
 
-.header { text-align: center; margin-bottom: 8px; }
+/* ----- En-têtes ----- */
+/* En-tête répété (police 12) */
+.page-header {
+  position: running(doc-header);
+  text-align: center;
+  padding-top: 2mm;
+}
+.page-header .h1, .page-header .h2 {
+  margin: 0; font-size: 12pt; line-height: 1.2;
+}
+.page-header .h1 { color: #0047ab; font-weight: 700; }
+.page-header .h2 { color: #222;  font-weight: 600; }
+
+/* Grand en-tête de la 1re page (optionnel) */
+.header { text-align: center; margin: 6px 0 8px; }
 .header h1 { margin: 0; font-size: 16pt; color: #0047ab; }
 .header h2 { margin: 2px 0 0 0; font-size: 12pt; color: #222; }
 
 .stage-meta { text-align:center; font-size:10pt; color:#444; margin: 2px 0 10px; }
 
+/* ----- Cartes personnes ----- */
 .person-card {
   border: 1px solid #e2e6ef; border-radius: 6px;
   padding: 10px 12px; margin: 10px 0;
@@ -199,6 +183,7 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
 .person-name { font-weight:700; color:#0047ab; font-size:12.5pt; }
 .person-tel { font-size:10.5pt; color:#333; }
 
+/* ----- Questions ouvertes ----- */
 .qa-block { margin: 8px 0; }
 .qa-title {
   font-weight: 700; color: #222; background: #f3f6ff;
@@ -208,18 +193,33 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
 .qa-list { margin: 6px 0 0 18px; }
 .qa-empty { margin: 6px 0 0 6px; color:#777; }
 
-.rating-table { width:100%; border-collapse:collapse; margin-top:8px; }
-.rating-table td { border: 1px solid #d7dbe6; padding: 6px; vertical-align: middle; }
-.rating-table td.r-label { width: 70%; }
-.rating-table td.r-value { width: 30%; white-space: nowrap; }
+/* ----- Questions fermées (notes) ----- */
+.rating-table { width:100%; border-collapse:collapse; margin-top:8px; table-layout: fixed; }
+.rating-table col.qnum   { width: 4ch; }         /* 1re colonne limitée à ~4 caractères */
+.rating-table col.rlabel { width: auto; }
+.rating-table col.rval   { width: 8ch; }         /* colonne note compacte */
 
+.rating-table td { border: 1px solid #d7dbe6; padding: 6px; vertical-align: middle; }
+.rating-table td.qnum   { text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rating-table td.rval   { text-align: center; white-space: nowrap; }
+.rating-table td.rlabel { word-wrap: break-word; overflow-wrap: anywhere; }
+
+/* Barre visuelle optionnelle sous la note */
 .bar { height: 6px; margin-top: 4px; border-radius: 3px; background: #eef2ff; overflow: hidden; }
 .bar-fill { height: 100%; background: #0047ab; }
 
-.small-note { font-size:9pt; color:#666; text-align:right; margin-top:2px; }
+/* Coloration de ligne en fonction de la note (0→5) */
+tr.score-0 { background: #fbe9e9; }  /* Error */
+tr.score-1 { background: #ffe5cc; }  /* Orange */
+tr.score-2 { background: #fff2cc; }  /* Jaune Orange */
+tr.score-3 { background: #e8f5e9; }  /* Vert Très Clair */
+tr.score-4 { background: #dcedc8; }  /* Vert Clair */
+tr.score-5 { background: #c8e6c9; }  /* Vert Foncé */
 
+.small-note { font-size:9pt; color:#666; text-align:right; margin-top:2px; }
 .hr { height:0; border:0; border-top:1px solid #e6eaf2; margin: 10px 0; }
 """
+
 
 # ------------------ Générateur principal ------------------
 
@@ -288,15 +288,24 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
     <style>{_css_enquete()}</style>
   </head>
   <body>
+
+    <!-- En-tête répété à chaque page (police 12pt) -->
+    <div class="page-header">
+      <div class="h1">{_esc(titre_haut)}</div>
+      <div class="h2">{_esc(sous_titre)}</div>
+    </div>
+
+    <!-- Grand en-tête de la 1re page (facultatif) -->
     <header class="header">
       <h1>{_esc(titre_haut)}</h1>
       <h2>{_esc(sous_titre)}</h2>
     </header>
+
     <div class="stage-meta">Généré automatiquement depuis les formulaires de suivi</div>
     {''.join(people_blocks) if people_blocks else '<p>Aucune réponse trouvée.</p>'}
     <div class="small-note">Rôle: {_esc(role)}</div>
   </body>
-</html>
+  </html>
 """
     filename = f"Enquete_satisf_{_esc(stage_code)}_{_esc(stage_num)}.pdf"
     return anvil.server.call("render_pdf", html_doc, filename)
