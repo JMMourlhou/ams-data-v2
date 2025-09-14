@@ -508,6 +508,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         """ ============================================================================================= FIN DE L'AFFICHAGE DU RESULTAT GLOBAL des Q Fermées"""
         # Génération du pdf A CHANGER QD L'ENQUETE EST COMPLETE
         print("génération du pdf")
+        self.button_downl_pdf1.visible = True
         """
         if self.pdf_mode is False:
             with anvil.server.no_loading_indicator:
@@ -526,14 +527,18 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
 
     def button_downl_pdf1_click(self, **event_args):
         """This method is called when the button is clicked"""
+
+        """
         stage_row = app_tables.stages.get(numero=self.row["numero"])
         pdf = stage_row["suivi_pdf"]
+        """
+        pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, role="S")
         if pdf:
             anvil.media.download(pdf)
             alert("Enquête téléchargée")
         else:
-            alert("Pdf non trouvé en table Stages")
-
+            alert("Pdf non généré")
+        
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Main import Main

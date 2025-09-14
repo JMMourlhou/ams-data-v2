@@ -5,6 +5,8 @@ import anvil.media
 @anvil.server.callable
 def render_pdf(html: str, css: str, filename: str = "trombi.pdf"):
     """
+    Permet de générer n'importe quel PDF, à partie d'un HTML et CSS construit auparavant 
+    
     Reçoit un HTML complet (avec balises <html> ... ),
     Reçoit un CSS complet
     génère un PDF avec WeasyPrint et renvoie un BlobMedia.
