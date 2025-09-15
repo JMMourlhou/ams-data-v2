@@ -509,6 +509,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         # Génération du pdf A CHANGER QD L'ENQUETE EST COMPLETE
         print("génération du pdf")
         self.button_downl_pdf1.visible = True
+        self.button_downl_pdf0.visible = True
         """
         if self.pdf_mode is False:
             with anvil.server.no_loading_indicator:

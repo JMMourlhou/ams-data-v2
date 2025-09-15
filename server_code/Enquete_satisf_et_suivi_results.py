@@ -1,7 +1,13 @@
 from anvil.tables import app_tables
 import anvil.server
 import html, re, unicodedata  # POur génération du HTML 
-
+from datetime import datetime
+try:
+    from zoneinfo import ZoneInfo
+    TZ_PARIS = ZoneInfo("Europe/Paris")
+except Exception:
+    TZ_PARIS = None
+    
 # Génération de formulaires de suivi / stagiaires
 #   à partir de HTML, CSS
 # ------------------ Helpers ------------------
@@ -134,91 +140,72 @@ def _css_enquete():
     return """
 @page {
   size: A4;
-  /* marge haute augmentée pour accueillir l'en-tête répété */
-  margin: 22mm 14mm 16mm 14mm;
-
-  /* Pied de page (pagination) */
-  @bottom-center {
-    content: "Page " counter(page) " / " counter(pages);
-    font-size: 9pt; color: #0047ab;
-  }
-
-  /* En-tête répété à chaque page */
-  @top-center {
-    content: element(doc-header);
-  }
+  margin: 18mm 14mm 16mm 14mm;
+  @bottom-center { content: "Page " counter(page) " / " counter(pages); font-size: 9pt; color: #0047ab; }
+  @top-center    { content: element(doc-header); }
+  @top-right     { content: element(doc-meta); }   /* <- horodatage à droite */
 }
 
-/* police & rendu print */
+/* Print */
 * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; color: #111; }
 
-/* ----- En-têtes ----- */
-/* En-tête répété (police 12) */
-.page-header {
-  position: running(doc-header);
-  text-align: center;
-  padding-top: 2mm;
-}
-.page-header .h1, .page-header .h2 {
-  margin: 0; font-size: 12pt; line-height: 1.2;
-}
+/* En-tête répété (centre) */
+.page-header { position: running(doc-header); text-align: center; padding-top: 2mm; }
+.page-header .h1, .page-header .h2 { margin: 0; font-size: 10pt; line-height: 1.2; }
 .page-header .h1 { color: #0047ab; font-weight: 700; }
-.page-header .h2 { color: #222;  font-weight: 600; }
+.page-header .h2 { color: #0047ab; font-weight: 600; }
 
-/* Grand en-tête de la 1re page (optionnel) */
-.header { text-align: center; margin: 6px 0 8px; }
-.header h1 { margin: 0; font-size: 16pt; color: #0047ab; }
-.header h2 { margin: 2px 0 0 0; font-size: 12pt; color: #222; }
+/* En-tête répété (droite) */
+.page-header-right {
+  position: running(doc-meta);
+  text-align: right;
+  padding-top: 2mm;
+  font-size: 10pt;
+  color: #666;
+}
 
-.stage-meta { text-align:center; font-size:10pt; color:#444; margin: 2px 0 10px; }
-
-/* ----- Cartes personnes ----- */
+/* Cartes personnes */
 .person-card {
   border: 1px solid #e2e6ef; border-radius: 6px;
   padding: 10px 12px; margin: 10px 0;
-  page-break-inside: avoid; background: #fff;
+  page-break-inside: auto;
+  background: #fff;
 }
-.person-head { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; margin-bottom:8px; }
+.person-head { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; justify-content: center; margin-bottom:8px; }
 .person-name { font-weight:700; color:#0047ab; font-size:12.5pt; }
-.person-tel { font-size:10.5pt; color:#333; }
+.person-tel  { font-size:9pt; color:#0047ab; }
 
-/* ----- Questions ouvertes ----- */
-.qa-block { margin: 8px 0; }
-.qa-title {
-  font-weight: 700; color: #222; background: #f3f6ff;
-  border-left: 3px solid #0047ab; padding: 6px 8px; border-radius: 4px;
-  font-size: 10.5pt;
-}
+/* Ouvertes */
+.qa-block { margin: 8px 0; break-inside: avoid; }
+.qa-title { font-weight:700; color:#222; background:#f3f6ff; border-left:3px solid #0047ab; padding:6px 8px; border-radius:4px; font-size:10.5pt; }
 .qa-list { margin: 6px 0 0 18px; }
 .qa-empty { margin: 6px 0 0 6px; color:#777; }
 
-/* ----- Questions fermées (notes) ----- */
+/* Fermées / notes */
 .rating-table { width:100%; border-collapse:collapse; margin-top:8px; table-layout: fixed; }
-.rating-table col.qnum   { width: 4ch; }         /* 1re colonne limitée à ~4 caractères */
+.rating-table col.qnum   { width: 4ch; }
 .rating-table col.rlabel { width: auto; }
-.rating-table col.rval   { width: 8ch; }         /* colonne note compacte */
+.rating-table col.rval   { width: 8ch; }
+.rating-table td { border:1px solid #d7dbe6; padding:6px; vertical-align:middle; }
+.rating-table td.qnum { text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rating-table td.rval { text-align:center; white-space:nowrap; }
+.rating-table td.rlabel { word-wrap:break-word; overflow-wrap:anywhere; }
 
-.rating-table td { border: 1px solid #d7dbe6; padding: 6px; vertical-align: middle; }
-.rating-table td.qnum   { text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.rating-table td.rval   { text-align: center; white-space: nowrap; }
-.rating-table td.rlabel { word-wrap: break-word; overflow-wrap: anywhere; }
+.bar { height:6px; margin-top:4px; border-radius:3px; background:#eef2ff; overflow:hidden; }
+.bar-fill { height:100%; background:#0047ab; }
 
-/* Barre visuelle optionnelle sous la note */
-.bar { height: 6px; margin-top: 4px; border-radius: 3px; background: #eef2ff; overflow: hidden; }
-.bar-fill { height: 100%; background: #0047ab; }
-
-/* Coloration de ligne en fonction de la note (0→5) */
-tr.score-0 { background: #fbe9e9; }  /* Error */
-tr.score-1 { background: #ffe5cc; }  /* Orange */
-tr.score-2 { background: #fff2cc; }  /* Jaune Orange */
-tr.score-3 { background: #e8f5e9; }  /* Vert Très Clair */
-tr.score-4 { background: #dcedc8; }  /* Vert Clair */
-tr.score-5 { background: #c8e6c9; }  /* Vert Foncé */
+/* Couleurs selon note */
+tr.score-0 { background:#fbe9e9; }
+tr.score-1 { background:#ffe5cc; }
+tr.score-2 { background:#fff2cc; }
+tr.score-3 { background:#e8f5e9; }
+tr.score-4 { background:#dcedc8; }
+tr.score-5 { background:#c8e6c9; }
 
 .small-note { font-size:9pt; color:#666; text-align:right; margin-top:2px; }
-.hr { height:0; border:0; border-top:1px solid #e6eaf2; margin: 10px 0; }
 """
+
 
 
 # ------------------ Générateur principal ------------------
@@ -234,8 +221,8 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
     stage_num = str(stage_row.get('numero') if hasattr(stage_row, 'get') else stage_row['numero'])
     stage_code = (stage_row.get('code') or {}).get('code') if hasattr(stage_row, 'get') else stage_row['code']['code']
     date_txt = stage_row.get('date_debut').strftime("%Y-%m-%d")  # ton PDF montre AAAA-MM-JJ
-    titre_haut = "Résultat Formulaires de suivi de stages"
-    sous_titre = f"Stagiaires du Stage n°{stage_num} {stage_code} du {date_txt}"
+    titre_haut = "Formulaires de suivi"
+    sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
 
     # Récupération des formulaires de ce stage + rôle
     forms = app_tables.stage_suivi.search(stage_num_txt=stage_num, user_role=role)
@@ -278,6 +265,9 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
           {ratings_html}
         </section>
         """)
+        
+    now = datetime.now(TZ_PARIS) if TZ_PARIS else datetime.now()
+    gen_txt = now.strftime("%d/%m/%Y %H:%M")
 
     # HTML complet
     html_doc = f"""<!doctype html>
@@ -289,23 +279,17 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
   </head>
   <body>
 
-    <!-- En-tête répété à chaque page (police 12pt) -->
+    <!-- En-têtes répétés -->
     <div class="page-header">
       <div class="h1">{_esc(titre_haut)}</div>
       <div class="h2">{_esc(sous_titre)}</div>
     </div>
+    <div class="page-header-right">{_esc(gen_txt)}</div>
 
-    <!-- Grand en-tête de la 1re page (facultatif) -->
-    <header class="header">
-      <h1>{_esc(titre_haut)}</h1>
-      <h2>{_esc(sous_titre)}</h2>
-    </header>
-
-    <div class="stage-meta">Généré automatiquement depuis les formulaires de suivi</div>
     {''.join(people_blocks) if people_blocks else '<p>Aucune réponse trouvée.</p>'}
     <div class="small-note">Rôle: {_esc(role)}</div>
   </body>
-  </html>
+</html>
 """
-    filename = f"Enquete_satisf_{_esc(stage_code)}_{_esc(stage_num)}.pdf"
+    filename = f"Enquete_suivi_{_esc(stage_code)}_{_esc(stage_num)}.pdf"
     return anvil.server.call("render_pdf", html_doc, filename)
