@@ -11,6 +11,24 @@ except Exception:
 # Génération de formulaires de suivi / stagiaires
 #   à partir de HTML, CSS
 # ------------------ Helpers ------------------
+_qnum_re = re.compile(r'^\s*(\d+)\s*[\)\.\-:]?\s*(.*)$')
+
+def _split_qnum_label(q):
+    """Retourne (qnum, qlabel) en acceptant:
+       - str: '1) Ton nom...'  -> ('1','Ton nom...')
+       - dict: {'num':1,'label':'Ton nom...'} etc.
+       - ou juste un libellé sans numéro.
+    """
+    if isinstance(q, dict):
+        qnum = q.get('num') or q.get('numero') or q.get('qnum')
+        qlabel = q.get('label') or q.get('libelle') or q.get('question') or ''
+        return (str(qnum) if qnum is not None else None, _clean_text(qlabel))
+
+    s = _clean_text(q)
+    m = _qnum_re.match(s)
+    if m:
+        return m.group(1), m.group(2)
+    return None, s
 
 def _esc(s):
     return html.escape(s or "")
@@ -47,20 +65,57 @@ def _user_from_email(email_or_obj):
 
 def _render_open_blocks(rep_ouv: dict) -> str:
     """
-    rep_ouv est supposé être { 'Question label'|id : ['réponse 1', 'réponse 2' ...], ... }
+    Accepte plusieurs formes :
+      A) { '1) Ton nom ?': ['Alice', ...], ... }         # clé = numéro+libellé
+      B) { '1': ['Ton nom ?', 'Alice', ...], ... }       # clé = numéro, 1er val = libellé, puis réponses
+      C) { '1': ['Ton nom ?', ['Alice','Bob']], ... }    # clé = numéro, val = [libellé, [réponses...]]
+      D) { 'Ton nom ?': ['Alice', ...], ... }            # clé = libellé, sans numéro
+    Rend : bandeau bleu avec | n°  libellé |, puis la liste des réponses.
     """
     blocks = []
-    for q, vals in (rep_ouv or {}).items():
-        q_label = _esc(_clean_text(q))
-        lis = "".join(f"<li>{_esc(_clean_text(v))}</li>" for v in (vals or []))
+    for k, vals in (rep_ouv or {}).items():
+        # 1) Tenter d'extraire (qnum, qlabel) depuis la clé
+        qnum, qlabel = _split_qnum_label(k)
+
+        # 2) Normaliser les réponses
+        answers = []
+        if isinstance(vals, (list, tuple)):
+            # Cas C: ['label', [answers...]]
+            if len(vals) == 2 and isinstance(vals[0], str) and isinstance(vals[1], (list, tuple)):
+                if not qlabel:
+                    qlabel = vals[0]
+                answers = list(vals[1])
+            else:
+                # Cas B: ['label', 'rep1', 'rep2'...]
+                if (not qlabel) and vals and isinstance(vals[0], str):
+                    # Heuristique: le 1er élément ressemble à un libellé
+                    # (souvent court et avec ':' ou '?')
+                    first = vals[0].strip()
+                    if first.endswith((':', '?')) or len(first) <= 80:
+                        qlabel = first
+                        answers = list(vals[1:])
+                    else:
+                        answers = list(vals)
+                else:
+                    answers = list(vals)
+        else:
+            answers = [str(vals)] if vals else []
+
+        qlabel = _clean_text(qlabel or "")
+        lis = "".join(f"<li>{_esc(_clean_text(v))}</li>" for v in answers)
         answer_html = f"<ul class='qa-list'>{lis}</ul>" if lis else "<div class='qa-empty'>—</div>"
+
         blocks.append(f"""
           <section class="qa-block">
-            <div class="qa-title">{q_label}</div>
+            <div class="qa-title">
+              <span class="qnum">{_esc(qnum) if qnum else ""}</span>
+              <span class="qlabel">{_esc(qlabel)}</span>
+            </div>
             {answer_html}
           </section>
         """)
     return "".join(blocks)
+
 
 def _render_ratings_table(rep_ferm: dict) -> str:
     """
@@ -161,24 +216,58 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
   position: running(doc-meta);
   text-align: right;
   padding-top: 2mm;
-  font-size: 10pt;
+  font-size: 6pt;
   color: #666;
+  font-weight: 700
 }
 
 /* Cartes personnes */
 .person-card {
   border: 1px solid #e2e6ef; border-radius: 6px;
   padding: 10px 12px; margin: 10px 0;
-  page-break-inside: auto;
   background: #fff;
+
+  /* >>> Sauts de page propres par fiche <<< */
+  page-break-inside: avoid;   /* ancienne prop. */
+  break-inside: avoid;        /* équivalent moderne */
+  page-break-after: always;   /* force un saut APRÈS chaque fiche */
+}
+.person-card:last-child {
+  page-break-after: auto;     /* pas de page blanche finale */
 }
 .person-head { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:baseline; justify-content: center; margin-bottom:8px; }
-.person-name { font-weight:700; color:#0047ab; font-size:12.5pt; }
-.person-tel  { font-size:9pt; color:#0047ab; }
+.person-name { font-weight:700; color:#B3261E; font-size:12.5pt; }
+.person-tel  { font-size:9pt; color:#B3261E; }
 
 /* Ouvertes */
 .qa-block { margin: 8px 0; break-inside: avoid; }
-.qa-title { font-weight:700; color:#222; background:#f3f6ff; border-left:3px solid #0047ab; padding:6px 8px; border-radius:4px; font-size:10.5pt; }
+.qa-title {
+  /* Grille 2 colonnes : n° étroit + libellé qui prend la place restante */
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 6px;
+  align-items: center;
+
+  font-weight: 700; color: #222;
+  background: #f3f6ff;             /* fond bleu clair conservé */
+  border-left: 3px solid #0047ab;
+  padding: 6px 8px; border-radius: 4px;
+  font-size: 10.5pt;
+  width: 100%;
+  box-sizing: border-box;
+}
+.qa-title .qnum {
+  color: #0047ab;
+  min-width: 2ch;
+  text-align: right;
+}
+.qa-title .qlabel {
+  min-width: 0;      /* permet le retour à la ligne si le libellé est long */
+  white-space: normal;
+  color: #0047ab;       /* <- même bleu que le numéro */
+  font-weight: 700;     /* même emphase que le n° */
+}
+
 .qa-list { margin: 6px 0 0 18px; }
 .qa-empty { margin: 6px 0 0 6px; color:#777; }
 
@@ -196,12 +285,12 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
 .bar-fill { height:100%; background:#0047ab; }
 
 /* Couleurs selon note */
-tr.score-0 { background:#fbe9e9; }
-tr.score-1 { background:#ffe5cc; }
-tr.score-2 { background:#fff2cc; }
-tr.score-3 { background:#e8f5e9; }
-tr.score-4 { background:#dcedc8; }
-tr.score-5 { background:#c8e6c9; }
+tr.score-0 { background:#B3261E; }
+tr.score-1 { background:#FF7B22; }
+tr.score-2 { background:#FFD707; }
+tr.score-3 { background:#DDF9A5; }
+tr.score-4 { background:#61D007; }
+tr.score-5 { background:#00FF00; }
 
 .small-note { font-size:9pt; color:#666; text-align:right; margin-top:2px; }
 """

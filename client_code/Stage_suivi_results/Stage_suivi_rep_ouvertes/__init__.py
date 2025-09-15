@@ -71,7 +71,7 @@ class Stage_suivi_rep_ouvertes(Stage_suivi_rep_ouvertesTemplate):
             if ligne == 4:
                 bg_couleur = "theme:Vert Clair"    
             if ligne == 5:
-                bg_couleur = "theme:Vert Foncé"
+                bg_couleur = "theme:Green"
         else: # rep fermées
             bg_couleur = "theme:Gray 300"    # gris clair
         return bg_couleur
