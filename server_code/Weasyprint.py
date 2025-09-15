@@ -3,7 +3,7 @@ import anvil.server
 import anvil.media
 
 @anvil.server.callable
-def render_pdf(html: str, css: str, filename: str = "trombi.pdf"):
+def render_pdf(html: str, css: str):
     """
     Permet de générer n'importe quel PDF, à partie d'un HTML et CSS construit auparavant 
     
@@ -14,4 +14,4 @@ def render_pdf(html: str, css: str, filename: str = "trombi.pdf"):
     pdf_bytes = HTML(string=html, base_url=".").write_pdf(
         stylesheets=[CSS(string=css)]
     )
-    return anvil.BlobMedia("application/pdf", pdf_bytes, name=filename)
+    return anvil.BlobMedia("application/pdf", pdf_bytes)

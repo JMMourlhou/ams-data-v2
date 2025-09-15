@@ -191,7 +191,7 @@ def _render_ratings_table(rep_ferm: dict) -> str:
     """
 
 
-def _css_enquete():
+def _css():
     return """
 @page {
   size: A4;
@@ -300,7 +300,7 @@ tr.score-5 { background:#00FF00; }
 
 
 
-# ------------------ Générateur principal ------------------
+# --------------------------------- Générateur principal --------------------------------------------
 
 @anvil.server.callable
 def enquete_suivi_pdf_gen(stage_row, role="S"):
@@ -313,7 +313,10 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
     stage_num = str(stage_row.get('numero') if hasattr(stage_row, 'get') else stage_row['numero'])
     stage_code = (stage_row.get('code') or {}).get('code') if hasattr(stage_row, 'get') else stage_row['code']['code']
     date_txt = stage_row.get('date_debut').strftime("%Y-%m-%d")  # ton PDF montre AAAA-MM-JJ
-    titre_haut = "Formulaires de suivi"
+    if role=="S":
+        titre_haut = "Formulaires de suivi"
+    else:
+        titre_haut = "Formulaires de suivi des Tuteurs"
     sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
 
     # Récupération des formulaires de ce stage + rôle
@@ -360,17 +363,16 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
         
     now = datetime.now(TZ_PARIS) if TZ_PARIS else datetime.now()
     gen_txt = now.strftime("%d/%m/%Y %H:%M")
-
+    # -----------------------------------------------------------------------
     # HTML complet
     html_doc = f"""<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>{_esc(titre_haut)}</title>
-    <style>{_css_enquete()}</style>
+    <style>{_css()}</style>
   </head>
   <body>
-
     <!-- En-têtes répétés -->
     <div class="page-header">
       <div class="h1">{_esc(titre_haut)}</div>
@@ -382,5 +384,6 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
   </body>
 </html>
 """
-    filename = f"Enquete_suivi_{_esc(stage_code)}_{_esc(stage_num)}.pdf"
-    return anvil.server.call("render_pdf", html_doc, filename)
+    #------------------------------------------------------------------------------
+    css = _css()   # Récupération du CSS
+    return anvil.server.call("render_pdf", html_doc, css)  # dans module weasyprint 

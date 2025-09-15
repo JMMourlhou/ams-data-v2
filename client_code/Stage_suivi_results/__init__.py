@@ -533,9 +533,13 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         stage_row = app_tables.stages.get(numero=self.row["numero"])
         pdf = stage_row["suivi_pdf"]
         """
-        pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, role="S")
-        if pdf:
-            anvil.media.download(pdf)
+        alert(self.type_de_suivi)
+        pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, self.type_de_suivi)
+        file_name=(f"Suivi {self.row['code_txt']} stage num {self.row['numero']}")
+        
+        new_file_named = anvil.BlobMedia("image/jpg", pdf.get_bytes(), name=file_name+".pdf")
+        if new_file_named:
+            anvil.media.download(new_file_named)
             alert("Enquête téléchargée")
         else:
             alert("Pdf non généré")
