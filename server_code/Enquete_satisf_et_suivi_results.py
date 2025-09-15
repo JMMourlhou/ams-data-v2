@@ -221,16 +221,19 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
   font-weight: 700
 }
 
-/* Cartes personnes */
+/* La fiche n'est pas coupée */
 .person-card {
   border: 1px solid #e2e6ef; border-radius: 6px;
   padding: 10px 12px; margin: 10px 0;
   background: #fff;
+  break-inside: avoid;           /* (= page-break-inside: avoid) */
+  page-break-inside: avoid;
+}
 
-  /* >>> Sauts de page propres par fiche <<< */
-  page-break-inside: avoid;   /* ancienne prop. */
-  break-inside: avoid;        /* équivalent moderne */
-  page-break-after: always;   /* force un saut APRÈS chaque fiche */
+/* Saut AVANT chaque fiche sauf la première */
+.person-card + .person-card {
+  break-before: page;            /* (= page-break-before: always) */
+  page-break-before: always;
 }
 .person-card:last-child {
   page-break-after: auto;     /* pas de page blanche finale */
@@ -376,7 +379,6 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
     <div class="page-header-right">{_esc(gen_txt)}</div>
 
     {''.join(people_blocks) if people_blocks else '<p>Aucune réponse trouvée.</p>'}
-    <div class="small-note">Rôle: {_esc(role)}</div>
   </body>
 </html>
 """

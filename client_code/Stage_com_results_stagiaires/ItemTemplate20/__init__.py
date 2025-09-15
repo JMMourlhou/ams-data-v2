@@ -86,7 +86,7 @@ class ItemTemplate20(ItemTemplate20Template):
         elif nb < 90:
             bg_couleur = "theme:Vert Clair"    
         else:
-            bg_couleur = "theme:Vert Foncé"
+            bg_couleur = "theme:Green"
         return bg_couleur
         
 
