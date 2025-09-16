@@ -181,8 +181,6 @@ table.trombi td.card {
   </body>
 </html>
 """
-    
-    filename = f"trombi_{num_stage}.pdf"
     # Appel Uplink → Pi5
-    return anvil.server.call("render_pdf", html, css, filename)
+    return anvil.server.call("render_pdf", html, css)
 
