@@ -186,6 +186,7 @@ class Visu_trombi(Visu_trombiTemplate):
                 title_enabled=True,
                 type_stage_si_multi = None
             )
+            file_name=(f"Trombi {self.stage_row['code_txt']} stage num {self.num_stage}")
         else:  # Visu de multi stages du même type
             pdf = anvil.server.call(
                 "make_trombi_pdf_via_uplink",                  # envoi au moduleserveur pour construuire le HTML
@@ -197,9 +198,11 @@ class Visu_trombi(Visu_trombiTemplate):
                 title_enabled=True,
                 type_stage_si_multi = self.type_stage_si_multi
             )
-        
+            file_name=(f"Trombi tous stages {self.type_stage_si_multi}")
+
+        new_file_named = anvil.BlobMedia("image/jpg", pdf.get_bytes(), name=file_name+".pdf")
         if pdf:
-            anvil.media.download(pdf)
+            anvil.media.download(new_file_named)
             alert("Trombinoscope html téléchargé")
         else:
             alert("Pdf du trombi html non trouvé")
