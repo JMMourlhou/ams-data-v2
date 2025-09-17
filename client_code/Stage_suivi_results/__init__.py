@@ -536,7 +536,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, self.type_de_suivi)
         file_name=(f"Suivi {self.row['code_txt']} stage num {self.row['numero']}")
         
-        new_file_named = anvil.BlobMedia("image/jpg", pdf.get_bytes(), name=file_name+".pdf")
+        new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=file_name+".pdf")
         if new_file_named:
             anvil.media.download(new_file_named)
             alert("Enquête téléchargée")

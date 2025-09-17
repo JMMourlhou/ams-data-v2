@@ -200,7 +200,7 @@ class Visu_trombi(Visu_trombiTemplate):
             )
             file_name=(f"Trombi tous stages {self.type_stage_si_multi}")
 
-        new_file_named = anvil.BlobMedia("image/jpg", pdf.get_bytes(), name=file_name+".pdf")
+        new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=file_name+".pdf")
         if pdf:
             anvil.media.download(new_file_named)
             alert("Trombinoscope html téléchargé")
