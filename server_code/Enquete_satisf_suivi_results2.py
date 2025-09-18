@@ -63,25 +63,30 @@ def _render_open_blocks(rep_ouv: dict) -> str:
     return "".join(blocks)
 
 def _render_ratings_table(rep_ferm: dict) -> str:
-    """Affiche les questions fermées dans un tableau, comme stagiaires."""
+    """
+    Affiche les questions fermées comme dans le PDF stagiaires :
+    - Libellé : note
+    - puis la ligne de puces et l’échelle 1–5
+    """
     if not rep_ferm:
         return ""
-    rows = []
-    for k, v in (rep_ferm or {}).items():
+
+    lines = []
+    for k, v in rep_ferm.items():
         if isinstance(v, (list, tuple)) and len(v) >= 2:
             label, value = v[0], v[1]
         else:
             label, value = str(k), v
-        rows.append(f"""
-          <tr>
-            <td class="rlabel">{_esc(_clean_text(label))}</td>
-            <td class="rval">{_esc(value)}</td>
-          </tr>
-        """)
+        lines.append(f"<div>{_esc(_clean_text(label))} : {_esc(value)}</div>")
+
+    # Ligne de puces et échelle
+    bullets = " ".join("•" for _ in range(8))   # 8 puces (comme dans ton PDF)
+    scale = " ".join(str(i) for i in range(1, 6))
+
     return f"""
-      <table class="rating-table">
-        <tbody>{''.join(rows)}</tbody>
-      </table>
+      {''.join(lines)}
+      <div style="margin-top:6px;">{bullets}</div>
+      <div style="margin-top:2px;">{scale}</div>
     """
 
 def _css():
