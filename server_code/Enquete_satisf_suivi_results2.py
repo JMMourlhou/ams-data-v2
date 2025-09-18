@@ -64,30 +64,62 @@ def _render_open_blocks(rep_ouv: dict) -> str:
 
 def _render_ratings_table(rep_ferm: dict) -> str:
     """
-    Affiche les questions fermées comme dans le PDF stagiaires :
-    - Libellé : note
-    - puis la ligne de puces et l’échelle 1–5
+    Affiche les questions fermées dans un tableau coloré,
+    avec barre visuelle et coloration selon la note (0-5).
     """
     if not rep_ferm:
         return ""
 
-    lines = []
+    rows = []
     for k, v in rep_ferm.items():
-        if isinstance(v, (list, tuple)) and len(v) >= 2:
-            label, value = v[0], v[1]
-        else:
-            label, value = str(k), v
-        lines.append(f"<div>{_esc(_clean_text(label))} : {_esc(value)}</div>")
+        qnum = None
+        label = ""
+        value = v
 
-    # Ligne de puces et échelle
-    bullets = " ".join("•" for _ in range(8))   # 8 puces (comme dans ton PDF)
-    scale = " ".join(str(i) for i in range(1, 6))
+        # Forme A : clé = numéro, valeur = [label, note]
+        if isinstance(v, (list, tuple)) and len(v) >= 2:
+            qnum = str(k)
+            label = str(v[0])
+            value = v[1]
+        else:
+            # Forme B : clé = libellé, valeur directe
+            label = str(k)
+
+        # Normalisation valeur
+        value_txt = str(value)
+        score = None
+        try:
+            score = int(str(value).strip())
+            score = max(0, min(5, score))  # bornage entre 0 et 5
+        except Exception:
+            score = None
+
+        # Barre visuelle
+        bar = ""
+        if score is not None:
+            bar = f"<div class='bar'><div class='bar-fill' style='width:{score*20}%'></div></div>"
+
+        # Ligne du tableau avec classe score-X
+        tr_class = f"score-{score}" if score is not None else ""
+        rows.append(f"""
+          <tr class="{tr_class}">
+            <td class="qnum">{_esc(qnum) if qnum else ""}</td>
+            <td class="rlabel">{_esc(_clean_text(label))}</td>
+            <td class="rval">{_esc(value_txt)}{bar}</td>
+          </tr>
+        """)
 
     return f"""
-      {''.join(lines)}
-      <div style="margin-top:6px;">{bullets}</div>
-      <div style="margin-top:2px;">{scale}</div>
+      <table class="rating-table">
+        <colgroup>
+          <col class="qnum"><col class="rlabel"><col class="rval">
+        </colgroup>
+        <tbody>
+          {''.join(rows)}
+        </tbody>
+      </table>
     """
+
 
 def _css():
     return """
