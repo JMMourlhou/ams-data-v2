@@ -61,7 +61,7 @@ def add_1_formulaire_suivi( user_stagiaire,              # users row (celui qui 
                             dico_rep_q_ouv,
                             date_time,
                             user_role, # S ou T ou F
-                            stagiaire_du_tuteur  # si tuteur ou formateur a rempli, c'est le mail du stagiaire
+                            stagiaire_du_tuteur=None  # si tuteur ou formateur a rempli, c'est le mail du stagiaire
                         ):
     # Print pour vérif des 2 dicos    
     print("=============== serveur side:")

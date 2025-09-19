@@ -87,17 +87,20 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                         else:
                             liste_drop_d.append((type["intitulé"], stage))
                             
-            # si c'est un tuteur qui a ouvert, il faut savoir pour quel code stage motoN               
+            # si c'est un tuteur qui a ouvert, il faut savoir pour quel code stage         
             if user_row["role"]=="T":
                 # Drop down stages de BPMotoN 
-                code_moto = app_tables.codes_stages.get(code="BPMOTO")
+                # code_moto = app_tables.codes_stages.get(code="BPMOTO")
                 liste1 = app_tables.stages.search(
                                                     tables.order_by("date_debut", ascending=False),
-                                                    code=code_moto
+                                                    q.any_of(
+                                                    q.any_of(code_txt="BPMOTO"),
+                                                    q.any_of(code_txt="BPAAN")
+                                                    )
                                                    )
                 for stage in liste1:
                     if stage["saisie_suivi_ok"] is True:  # si autorisé à saisir le formulaire de suivi, je l'affiche
-                        liste_drop_d.append((code_moto["code"] + " débuté le " + str(stage["date_debut"]), stage))
+                        liste_drop_d.append((stage["code"]['code'] + " débuté le " + str(stage["date_debut"]), stage))
                 
             # print(liste_drop_d)
             self.drop_down_code_stage.items = liste_drop_d
@@ -117,6 +120,7 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
             return
             
         # Si c'est un tuteur (ou formateur)    
+        """
         if user_row["role"]=="T" or  user_row["role"]=="F": 
             # sélection des stagiaires du stage sélectionné
             liste_stagiaires = app_tables.stagiaires_inscrits.search(tables.order_by("prenom", ascending=True),
@@ -131,7 +135,7 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
             self.drop_down_stagiaires.items = liste_drop_d_stagiaires
             self.text_area_a3.visible = False
             self.drop_down_stagiaires.visible = True
-       
+        """
         self.text_area_a1.text = None
         # extraction des 2 dictionnaires du stage
         global dico_q_ferm
@@ -1109,7 +1113,7 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                                         dico_rep_q_ouv,
                                         date_time,
                                         user_row["role"],  # Type du user qui a rempli le F:    S=stagiaire   T=Tuteur   F=Formateur
-                                        stagiaire_du_tuteur=self.row_stagiaire["email"]   #le stagiaire qui est l'objet du formulaire (si user est Tuteur ou Formateur) 
+                                        #stagiaire_du_tuteur=self.row_stagiaire["email"]   #le stagiaire qui est l'objet du formulaire (si user est Tuteur ou Formateur) 
                                     )
         if result is True:
             if user_row["role"]=="T":
