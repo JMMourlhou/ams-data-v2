@@ -119,7 +119,8 @@ class RowTemplate3(RowTemplate3Template):
             else:
                 alert("Stage non trouvé, annulation impossible")
         else:
-            alert("Ce stage contient des stagiaires, vous ne pouvez pas l'annuler !")    
+            msg = f"{str(self.item['numero'])} {self.item['code']['code']}"
+            alert(f"Ce stage {msg} contient {len(liste_test)} stagiaires, vous ne pouvez pas l'annuler !")    
 
     def button_sending_click(self, **event_args):
         """This method is called when the button is clicked"""

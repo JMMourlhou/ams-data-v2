@@ -80,7 +80,7 @@ class Stage_creation(Stage_creationTemplate):
         stage = app_tables.stages.search(numero=int(self.text_box_num_stage.text))
         if len(stage)>0:
             alert("Le numéro de stage existe déjà !")
-            self.button_annuler_click()
+            return
             
         #result = anvil.server.call("add_stage", row['code'],         #num du stage  de la ligne 
         result = anvil.server.call("add_stage", row,         # row  table codes_stages
