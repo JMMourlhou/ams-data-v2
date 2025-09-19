@@ -1135,3 +1135,5 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                                             )
         if len(test) >0:
             alert(f"Attention vous avez déjà rempli un rapport pour {self.text_area_a3.text} ! \n\n Vous pouvez toutefois remplir un nouveau rapport pour ce ou cette stagiaire.\n Tous les rapports seront conservés.")
+
+    

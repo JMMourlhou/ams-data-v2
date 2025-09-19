@@ -533,7 +533,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         stage_row = app_tables.stages.get(numero=self.row["numero"])
         pdf = stage_row["suivi_pdf"]
         """
-        pdf = anvil.server.call('enquete_suivi_pdf_generetor', self.row, self.type_de_suivi)
+        pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, self.type_de_suivi)
         file_name=(f"Suivi {self.row['code_txt']} stage num {self.row['numero']}")
         
         new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=file_name+".pdf")

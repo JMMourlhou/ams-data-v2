@@ -62,9 +62,10 @@ components:
   - components:
     - layout_properties: {grid_position: 'KWCYPI,YMLJWU'}
       name: label_a1
-      properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: ESSAI}
+      properties: {align: center, bold: true, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: Question}
       type: Label
-    - layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
+    - event_bindings: {change: text_area_a1_change}
+      layout_properties: {grid_position: 'DKFTBM,BWCZLC'}
       name: text_area_a1
       properties: {auto_expand: true, placeholder: '', role: null, spacing_above: none, spacing_below: none}
       type: TextArea
