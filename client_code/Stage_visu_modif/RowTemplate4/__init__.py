@@ -116,5 +116,11 @@ class RowTemplate4(RowTemplate4Template):
         else:
             self.drop_down_mode_fi.selected_value = self.item["financement"]
 
+    def button_sending_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        liste_email = []
+        liste_email.append((self.text_box_1.text, self.item['user_email']["prenom"].capitalize(),""))   # mail et prénom, id pas besoin
+        open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
+
 
         
