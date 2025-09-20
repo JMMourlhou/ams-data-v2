@@ -232,7 +232,7 @@ class Main(MainTemplate):
                 
                 self.outlined_card_formulaires.visible = True   
                 self.button_form_suivi_stage.visible = True     # Rentrer le formulaire de suivi de stage du stagiaire BPMotoN
-                self.button_form_satisf.visible = False       # Rentrer le formulaire de fin de stage du stagiaire BPMotoN   ?????
+                self.button_form_satisf.visible = True       # Rentrer le formulaire de fin de stage du stagiaire BPMotoN   ?????
                 
                 self.outlined_card_com.visible = False           
 

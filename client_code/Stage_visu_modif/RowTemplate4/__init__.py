@@ -46,7 +46,8 @@ class RowTemplate4(RowTemplate4Template):
             txt_msg = anvil.server.call("del_stagiaire", stagiaire_row, stage_num)   # module serveur "add_stagiaire"
             alert(txt_msg)
             # réaffichage par initialisation de la forme mère 
-            open_form('Stage_visu_modif', self.item['numero']) # réinitialisation de la fenêtre
+            id=self.item['stage'].get_id()
+            open_form('Stage_visu_modif', self.item['numero'], id) # réinitialisation de la fenêtre
 
     def check_box_form_satis_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""

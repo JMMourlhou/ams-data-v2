@@ -20,4 +20,5 @@ class ItemTemplate9(ItemTemplate9Template):                             # bt His
     def button_detail_histo_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ....Stage_visu_modif import Stage_visu_modif
-        open_form('Stage_visu_modif', int(self.item['numero']), False)  # False: ne pas effectuer les BG tasks
+        id=self.item['stage'].get_id()
+        open_form('Stage_visu_modif', int(self.item['numero']), id, False)  # False: ne pas effectuer les BG tasks
