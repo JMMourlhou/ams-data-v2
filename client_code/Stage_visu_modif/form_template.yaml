@@ -90,7 +90,7 @@ components:
     type: TextBox
   - layout_properties: {grid_position: 'YZUQOI,WOBQLI'}
     name: text_box_num_stage
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: num, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: num, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: date_picker_from_change}
     layout_properties: {grid_position: 'NCHHTY,EWWKQU'}

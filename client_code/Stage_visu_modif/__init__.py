@@ -9,10 +9,11 @@ from datetime import datetime
 from .. import French_zone
 
 class Stage_visu_modif(Stage_visu_modifTemplate):
-    def __init__(self, num_stage=0, bg_task=False, **properties):     # bg_task True: je crée les bg task en entrée de stage visu modif
+    def __init__(self, num_stage=0, id=None, bg_task=False, **properties):     # bg_task True: je crée les bg task en entrée de stage visu modif
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.num_stage=num_stage
+        self.id = id  # get_id() du stage
         self.bg_task = bg_task
         
         self.f = get_open_form()   # récupération de la forme mère pour revenir ds la forme appelante
@@ -33,9 +34,9 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche ET en Stage_visu_modif le drop down des modees de fi
         self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
         
-        #lecture du stage
-        self.stage_row=app_tables.stages.get(numero=int(num_stage))
-        
+        #lecture du stage à partir de l'id du stage
+        #self.stage_row=app_tables.stages.get(numero=int(num_stage))
+        self.stage_row=app_tables.stages.get_by_id(id)      
         
         #lecture des stagiaires inscrits
         liste_stagiaires = app_tables.stagiaires_inscrits.search(   q.fetch_only("name", "prenom", "financement", "numero", user_email=q.fetch_only("email", "tel")),
@@ -148,7 +149,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         stage = app_tables.stages.search(numero=int(self.text_box_num_stage.text))
         if len(stage) == 0:
             alert("Le numéro de stage n'existe pas !")
-            self.button_annuler_click()
+            return
 
         # ! modif du  num de stage possible !!!
         result = anvil.server.call("modif_stage", row,
