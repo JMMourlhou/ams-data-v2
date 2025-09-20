@@ -138,7 +138,8 @@ def add_stage(code_stage,     # row codes_stage concernée
 # ==========================================================================================
 @anvil.server.callable           #modif d'un stage
 @anvil.tables.in_transaction
-def modif_stage(code,    # row stage
+def modif_stage(row_stage,    # row table stages
+              row_type,     # row type de stage PSC, PSE1 ...  
               numero,   # attention numero est txt
               lieu,
               date_debut,
@@ -155,7 +156,7 @@ def modif_stage(code,    # row stage
     numero=int(numero)
     print(f" +++++++++++++++++++++ check_box_allow_com (en début de serveur): {allow_form_com}")
     # lecture fichier père code stages
-    code_stage = app_tables.codes_stages.get(code=code['code'])
+    code_stage = app_tables.codes_stages.get(code=row_stage['code']['code'])
     if not code_stage:   
         alert("Code stage non trouvé ds fichier param Code_stages")
         valid=False
@@ -170,11 +171,10 @@ def modif_stage(code,    # row stage
     # lecture du stage à modifier par son numéro             
     stage = app_tables.stages.get(numero=numero) 
     if not stage:
-        print(f"Stage {numero} non trouvé en modif ")
-        valid=False
-    else:   
-        print(f" +++++++++++++++++++++ check_box_allow_com (en début de serveur): {allow_form_com}")
-        stage.update(code = code,                      # Code stage modifiable pour faciliter les chgt eventuels de type de stage
+        print(f"Changement de numéro de stage: {numero}")
+    try:   
+        row_stage.update(code = row_type,                      # type de stage modifiable pour faciliter les chgt eventuels de type de stage
+                    numero = int(numero),                      # numero du stage modifiable en cas d'erreur
                     lieu = lieu_stage,
                     date_debut = date_debut,
                     nb_stagiaires_deb = nb_stagiaires_deb,
@@ -188,6 +188,9 @@ def modif_stage(code,    # row stage
                     display_com = allow_form_com                 # formulaire de communication autorisé ? T/F
                     )
         valid=True
+    except Exception as e:
+        print(f"Erreur en modif du stage: {e}")
+        valid=False
     return valid
 
 # Appelé par Stage_visu_modif, click sur self.check_box_allow_satisf.checked = TRUE

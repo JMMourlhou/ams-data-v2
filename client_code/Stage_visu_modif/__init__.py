@@ -144,15 +144,25 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             alert("Entrez la date de début du stage")
             return
 
-        # Test si numero stage code existant pour permettre la modif
+        # Test si numero stage est nouveau, il ne faut pas qu'il soit un numéro d'un stage déjà existant
         stage=None
-        stage = app_tables.stages.search(numero=int(self.text_box_num_stage.text))
-        if len(stage) == 0:
-            alert("Le numéro de stage n'existe pas !")
-            return
-
+        stage = app_tables.stages.get(numero=int(self.text_box_num_stage.text))
+        if stage is None:
+            r=alert("Voulez-vous vraiment modifier le numéro de stage ?",dismissible=False,buttons=[("oui",True),("non",False)])
+            if not r :   # Non
+                return
+        else:
+            # un stage existe déjà, est-ce bien celui qui est en train d'être modifié ?
+            id2 = stage.get_id() # j'extraie son id
+            # est-ce le même ?
+            if self.id != id2:
+                alert("Ce numéro de stage existe déja !")
+                self.button_validation.visible = False
+                return
+                
         # ! modif du  num de stage possible !!!
-        result = anvil.server.call("modif_stage", row,
+        result = anvil.server.call("modif_stage", self.stage_row,            # row table stage
+                                                row,                         # row table Codes_stages sélectionné (type de stage)
                                                 self.text_box_num_stage.text,  # num du stage  de la ligne  
                                                 row2['lieu'],                                              
                                                 self.date_picker_from.date,
@@ -168,9 +178,11 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
                                                  )
         if result is True :
             alert("Stage mis à jour !")
+            open_form(self.f)
         else :
             alert("Stage non modifié !")
-        self.button_annuler_click()
+            self.button_validation.visible = False
+            return
 
    
     def drop_down_lieux_change(self, **event_args):
@@ -315,6 +327,10 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
         n.show()
         open_form('Recherche_stagiaire',num_stage)
+
+    def text_box_num_stage_change(self, **event_args):
+        """This method is called when the text in this text box is edited"""
+        self.button_validation.visible = True
 
     
 
