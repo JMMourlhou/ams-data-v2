@@ -23,7 +23,7 @@ components:
     type: ColumnPanel
   - components:
     - event_bindings: {change: drop_down_code_stage_change}
-      layout_properties: {grid_position: 'GYKKPW,LJENHL', row_background: '', width: 263.110107421875}
+      layout_properties: {grid_position: 'GYKKPW,LJENHL', row_background: '', width: 316.25394482421876}
       name: drop_down_code_stage
       properties:
         align: full

@@ -227,39 +227,16 @@ class Main(MainTemplate):
 
                 
             if self.user["role"] == "T":                    # Tuteurs MotoN ou AAN:   Juste Saisie Formulaire de suivi et pré requis
-                self.outlined_card_pr_qcm.visible = True 
                 self.button_pre_requis.visible = True           # Rentrer ses pré requis
-                self.button_qcm.visible = False
-                
-                self.outlined_card_formulaires.visible = True   
-                # Rentrer le formulaire de suivi de stage du stagiaire ou tuteur si il est dans un stage avec le tag TRUE
-                self.button_form_suivi_stage.visible = True     
-                
-                self.button_form_satisf.visible = True       # Rentrer le formulaire de fin de stage du stagiaire BPMotoN   ?????
-                
-                self.outlined_card_com.visible = False           
-
-                self.outlined_card_niv1.visible = False   
-                self.flow_panel_formulaires.visible = False          
-                self.button_create_qcm.visible = False
                 self.button_create_recherche.visible = False
 
             if self.user["role"] == "F":                 # 1 Formateur peut .... 
-                self.outlined_card_pr_qcm.visible = True        # faire 1 qcm et voir ses résultats 
-                self.outlined_card_formulaires.visible = False  
-                self.outlined_card_com.visible = True           # évaluer avec sa classe une intervention, voir ses propres résultats
-                
-                self.outlined_card_niv1.visible = False          # ds le panneau priv niveau 1 ...
-                self.flow_panel_formulaires.visible = False           
+                     
                 self.button_create_qcm.visible = True           # créer un qcm
                 self.button_create_recherche.visible = True     # rechercher un stagiaire
 
-            # Affichage des bouttons de formulaires
+            # Affichage des bouttons de formulaires ---------------------------------------------------------
             satisf, suivi, com, qcm = Test_si_stage_avec_formulaire.test_si_formulaire(self.user)
-            print('com: ', str(com))
-            print('satisf: ', str(satisf))
-            print('suivi: ', str(suivi))
-            print('qcm: ', str(qcm))
             
             if com:
                 self.outlined_card_com.visible = True
@@ -284,6 +261,7 @@ class Main(MainTemplate):
                 self.button_qcm.visible = True
             else:
                 self.button_qcm.visible = False
+            # ------------------------------------------------------------------------------------------------------------
         else: #pas de user
             self.column_panel_bureaux.visible = False
             self.column_panel_admin.visible = False
