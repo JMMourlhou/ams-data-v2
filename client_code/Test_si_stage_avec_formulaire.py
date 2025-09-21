@@ -16,12 +16,15 @@ def test_si_formulaire(user_email):
     suivi = False
     com = False
     qcm = False
-    for stage in stages_liste:
-        if stage['enquete_satisf'] is True:
-            satisf = True
-        if stage['enquete_suivi'] is True:
-            suivi = True
-        # lecture du type de stgae et test si dico com est renseigné
+    for stage in stages_liste:   # Si les dico des stgages du user décrivants les formulaires ne sont pas vides, je peux afficher l'option dans le menu, si le stagiaire n'a pas encore effectué le formulaire
+        if stage['stage']['code']['satisf_q_ferm_template'] is not None or stage['stage']['code']['satisf_q_ferm_template'] != {}:
+            # si le stagiaire n'a pas encore effectué le formulaire
+            if stage['enquete_satisf'] is False:
+                satisf = True
+        if stage['stage']['code']['suivi_stage_q_ferm_template'] is not None or stage['stage']['code']['suivi_stage_q_ferm_template'] != {}:
+            if stage['enquete_suivi'] is False:
+                suivi = True
+        # lecture du type de stage et test si dico com est renseigné
         if stage['stage']['code']['com_ferm'] is not None or stage['stage']['code']['com_ferm'] != {}:
             com = True
         if stage['stage']['code']['droit_qcm'] is not None or stage['stage']['code']['droit_qcm'] != {}:
