@@ -18,8 +18,16 @@ def add_type_stage( code,     # row codes_stage concernée
     new_row=app_tables.codes_stages.add_row(
                                                 code=code,     # row codes_stage concernée
                                                 intitulé=intitule,
-                                                type_stage=type_stage
-                                                dico_menu=
+                                                type_stage=type_stage,
+                                                dico_menu={},     # initialisation des dicos
+                                                pre_requis={},
+                                                droit_qcm={},
+                                                satisf_q_ferm_template={},
+                                                satisf_q_ouv_template={},
+                                                suivi_stage_q_ferm_template={},
+                                                suivi_stage_q_ouv_template={},
+                                                com_ferm={},
+                                                com_ouv={}
                                                     )
     row = app_tables.codes_stages.search(code=new_row['code'])
     if len(row)>0:
