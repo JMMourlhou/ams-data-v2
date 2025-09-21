@@ -75,7 +75,7 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
             # Drop down stages inscrits du user
             liste0 = app_tables.stagiaires_inscrits.search(q.fetch_only("user_email","stage"),           # <----------------------  A Modifier? 
                                                            user_email=user_stagiaire,
-                                                           enquete_satisf=False
+                                                           #enquete_satisf=False                         # Je permets plusieurs saisie
                                                           )
             print("nb de stages où le stagiaire est inscrit; ", len(liste0))
             liste_drop_d = []

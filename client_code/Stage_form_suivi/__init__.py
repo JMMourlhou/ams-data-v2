@@ -69,7 +69,7 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
             liste0 = app_tables.stagiaires_inscrits.search(
                                                 q.fetch_only("user_email", "stage"),  # <----------------------  A Modifier?
                                                 user_email=user_row,
-                                                enquete_suivi = False   
+                                                #enquete_suivi = False   s  # je permmets plusieurs saisies (pour les tuteurs qui ont plusieurs stgiaires)
                                                              )
             print("nb de stages où le stagiaire est inscrit; ", len(liste0))
             
