@@ -83,8 +83,13 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
             self.button_downl_pdf0.visible = True
             self.button_downl_pdf1.visible = True
             self.test_existence_pdf = True
-       
-        self.label_titre.text = "Stage n°"+str(row["numero"])+" "+row["code_txt"]+" du "+str(row["date_debut"])
+            
+        # titre sans la date de début pour les stages non stgiaires, donc num sup à 999    
+        if row["numero"]<999:
+            self.label_titre.text = "Stage n°"+str(row["numero"])+" "+row["code_txt"]+" du "+str(row["date_debut"])
+        else:
+            self.label_titre.text = f"Groupe {row['code_txt']}, n°{str(row['numero'])}"
+            
         self.column_panel_titres.visible = True
         self.drop_down_code_stages.visible = False
         self.column_panel_header.visible = False
@@ -378,7 +383,7 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
         print("nb de rep 5/10: ", rep5_cumul["10"])
         """
         
-        # à partir du dico  j'extrai les questions pour les afficher 
+        # à partir du dico  j'extrais les questions pour les afficher 
         cpt_questions = 0
         for cle, val in dico_rep_ferm.items():
             cpt_questions += 1

@@ -23,8 +23,8 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
 
         # Any code you write here will run before the form opens.
         self.column_panel_header.tag = "header"
-        self.column_panel_0.tag = 0
-        self.column_panel_1.tag = 1
+        self.column_panel_0.tag = 0  
+        self.column_panel_1.tag = 1    # cp question fermée 1
         self.column_panel_2.tag = 2
         self.column_panel_3.tag = 3
         self.column_panel_4.tag = 4
@@ -34,6 +34,20 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         self.column_panel_8.tag = 8
         self.column_panel_9.tag = 9
         self.column_panel_10.tag = 10
+        self.column_panel_0.tag = 0   # en tête
+
+        # cp des questions ouvertes tag à 0 pour qu'ils soient ignorés
+        self.column_panel_a1.tag = 0  # cp question ouverte 1 ne doit pas être lue (voir ligne 916)
+        self.column_panel_a2.tag = 0
+        self.column_panel_a3.tag = 0
+        self.column_panel_a4.tag = 0
+        self.column_panel_a5.tag = 0
+        self.column_panel_a6.tag = 0
+        self.column_panel_a7.tag = 0
+        self.column_panel_a8.tag = 0
+        self.column_panel_a9.tag = 0
+        self.column_panel_a10.tag = 0
+        
         self.flow_panel_1.tag = "fp"
         self.flow_panel_2.tag = "fp"
         self.flow_panel_3.tag = "fp"
@@ -90,17 +104,19 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         global stage_row
         stage_row = self.drop_down_code_stage.selected_value
         if stage_row is None:
-            alert("Vous devez sélectionner un pré-requis !")
+            alert("Vous devez sélectionner un stage !")
             self.drop_down_code_stage.focus()
             return
         self.text_area_a1.text = None
-        # extraction des 2 dictionnaires du stage
+        
+        # extraction dictionnaire questions fermées du stage
+        # check du nb de questions fermées à afficher et affectation des questions
         dico_q_ferm = {}
         dico_q_ouv = {}
         dico_q_ferm = stage_row['satis_dico1_q_ferm']
         global nb_questions_ferm                   # nb questions fermées (testé en validation)
         nb_questions_ferm = len(dico_q_ferm)   # nb de questions fermées ds le dico = nb de clés
-
+        
         if nb_questions_ferm > 0:   # Check du nb de questions fermées à afficher et affectation des questions
             self.column_panel_1.visible = True
             self.label_1.text = dico_q_ferm['1'][0]    # Je prend le 1er elmt de la liste (la question), le 2eme: si question 'obligatoire / facultative'
@@ -131,8 +147,10 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         if nb_questions_ferm > 9:
             self.column_panel_10.visible = True
             self.label_10.text = dico_q_ferm['10'][0]
-
-        dico_q_ouv = stage_row['satis_dico2_q_ouv']  # check du nb de questions ouvertes à afficher et affectation des questions
+            
+        # extraction dictionnaire questions ouvertes du stage
+        # check du nb de questions ouvertes à afficher et affectation des questions
+        dico_q_ouv = stage_row['satis_dico2_q_ouv']  
         global nb_questions_ouvertes  # nb questions ouvertes
         nb_questions_ouvertes = len(dico_q_ouv)
         if nb_questions_ouvertes > 0:
@@ -826,6 +844,7 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
             (self.check_box_10_5.checked is True) or \
             (self.check_box_10_6.checked is True):
             nb += 1  
+            
         print("test nb questions fermées répondues: ",nb)
         global nb_questions_ferm
         print("test nb questions fermées dico: ",nb_questions_ferm)
@@ -893,15 +912,17 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         dico_rep_q_ferm = {}  #     clé:num question   valeur: = question txt,reponse (0 à 5)
         dico_rep_q_ouv = {}   #     clé:num question   valeur: = question txt,reponse (txt)
         
-        for cp in self.get_components(): # column panels in form self
-            if cp.tag != 0 and cp.tag != "header": # si pas les col panel du haut de la forme, ce sont des cp des questions
+        for cp in self.get_components(): # tous column panels in form self
+            if cp.tag != 0 and cp.tag != "header": # uniquement les cp des questions fermées sont lues
                 num_question = cp.tag
+                print("numero",num_question)
                 if num_question <= nb_questions_ferm:
                     try:
                         for objet in cp.get_components():    # objets ds column panel
                             try: 
                                 if objet.tag == "label":
                                     question = objet.text
+                                    print("question",question)
                                 if objet.tag == "fp":
                                     cpt = 0
                                     rep = ""
@@ -921,7 +942,11 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
                         pass
                 else: # nb de questions atteint, on sort
                     break
-
+        # vérif de la création du dico rep fermées            
+        print()    
+        print("============== Dict reponses fermées: ")
+        print(dico_rep_q_ferm)
+        
         # Création du dict réponses ouvertes
         clef = "1"          # num question ,  la clé doit être str qd j'envoie le dico en server-side
         if int(clef) <= nb_questions_ouvertes:
@@ -974,9 +999,7 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
             dico_rep_q_ouv[clef]=valeur
             
         # Print pour vérif des 2 dicos    
-        print()    
-        print("============== Dict reponses fermées: ")
-        print(dico_rep_q_ferm)   
+       
         print()
         print("============== Dict reponses ouvertes: ")
         print(dico_rep_q_ouv)

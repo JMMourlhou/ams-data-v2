@@ -554,7 +554,7 @@ db_schema:
       name: stage_row
       target: stages
       type: link_single
-    - admin_ui: {order: 1, width: 94}
+    - admin_ui: {order: 9, width: 94}
       name: user_role
       type: string
     - admin_ui: {order: 0.5, width: 131}
@@ -569,7 +569,7 @@ db_schema:
     - admin_ui: {order: 6, width: 200}
       name: rep_dico_rep_ouv
       type: simpleObject
-    - admin_ui: {order: 1.5, width: 200}
+    - admin_ui: {order: 8, width: 200}
       name: user_email
       type: string
     - admin_ui: {order: 2.5, width: 200}
