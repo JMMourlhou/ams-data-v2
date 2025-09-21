@@ -18,4 +18,5 @@ def test_si_formulaire(user_email):
         if stage['enquete_suivi'] is True:
             suivi = True
         # lecture du type de stgae et test si dico com est renseigné
-        if stage['stage']['code']['com_ferm'] != None
+        if stage['stage']['code']['com_ferm'] != None:
+            

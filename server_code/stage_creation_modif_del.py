@@ -19,6 +19,7 @@ def add_type_stage( code,     # row codes_stage concernée
                                                 code=code,     # row codes_stage concernée
                                                 intitulé=intitule,
                                                 type_stage=type_stage
+                                                dico_menu=
                                                     )
     row = app_tables.codes_stages.search(code=new_row['code'])
     if len(row)>0:
