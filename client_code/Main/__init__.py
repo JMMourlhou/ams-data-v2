@@ -225,13 +225,15 @@ class Main(MainTemplate):
                 self.column_panel_events.visible = True         # Saisir et voir les évenemnts
 
                 
-            if self.user["role"] == "T":                    # Tuteurs MotoN:   Juste Saisie Formulaire de suivi et pré requis
+            if self.user["role"] == "T":                    # Tuteurs MotoN ou AAN:   Juste Saisie Formulaire de suivi et pré requis
                 self.outlined_card_pr_qcm.visible = True 
                 self.button_pre_requis.visible = True           # Rentrer ses pré requis
                 self.button_qcm.visible = False
                 
                 self.outlined_card_formulaires.visible = True   
-                self.button_form_suivi_stage.visible = True     # Rentrer le formulaire de suivi de stage du stagiaire BPMotoN
+                # Rentrer le formulaire de suivi de stage du stagiaire ou tuteur si il est dans un stage avec le tag TRUE
+                self.button_form_suivi_stage.visible = True     
+                
                 self.button_form_satisf.visible = True       # Rentrer le formulaire de fin de stage du stagiaire BPMotoN   ?????
                 
                 self.outlined_card_com.visible = False           
