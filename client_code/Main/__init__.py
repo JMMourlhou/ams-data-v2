@@ -4,6 +4,7 @@ import anvil.server
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
+from .. import Test_si_stage_avec_formulaire
 from .. import French_zone
 from ..Saisie_info_de_base import Saisie_info_de_base
 from ..Stage_creation import Stage_creation
@@ -252,7 +253,37 @@ class Main(MainTemplate):
                 self.flow_panel_formulaires.visible = False           
                 self.button_create_qcm.visible = True           # créer un qcm
                 self.button_create_recherche.visible = True     # rechercher un stagiaire
+
+            # Affichage des bouttons de formulaires
+            satisf, suivi, com, qcm = Test_si_stage_avec_formulaire.test_si_formulaire(self.user)
+            print('com: ', str(com))
+            print('satisf: ', str(satisf))
+            print('suivi: ', str(suivi))
+            print('qcm: ', str(qcm))
+            
+            if com:
+                self.outlined_card_com.visible = True
+                print("self.outlined_card_com.visible = True")
+            else:
+                self.outlined_card_com.visible = False
+            
+            if satisf:
+                self.button_form_satisf.visible = True
+            else:
+                self.button_form_satisf.visible = False
                 
+            if suivi:
+                self.button_form_suivi_stage.visible = True
+            else:
+                self.button_form_suivi_stage.visible = False
+
+            if satisf is False and suivi is False:
+                self.outlined_card_formulaires.visible = False
+
+            if qcm:
+                self.button_qcm.visible = True
+            else:
+                self.button_qcm.visible = False
         else: #pas de user
             self.column_panel_bureaux.visible = False
             self.column_panel_admin.visible = False
