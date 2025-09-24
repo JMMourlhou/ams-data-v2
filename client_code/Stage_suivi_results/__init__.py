@@ -507,7 +507,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         
         """ ============================================================================================= FIN DE L'AFFICHAGE DU RESULTAT GLOBAL des Q Fermées"""
         # Génération du pdf A CHANGER QD L'ENQUETE EST COMPLETE
-        print("génération du pdf")
+        print("génération du pdf possible")
         self.button_downl_pdf1.visible = True
         self.button_downl_pdf0.visible = True
         """

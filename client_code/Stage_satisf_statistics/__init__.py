@@ -540,13 +540,16 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
             
         """ ============================================================================================= FIN DE L'AFFICHAGE DU RESULTAT """
         # Génération du pdf si non existant A CHANGER QD L'ENQUETE EST COMPLETE
-        print("génération du pdf")
+        print("génération du pdf possible")
+        self.button_downl_pdf1.visible = True
+        self.button_downl_pdf0.visible = True
         #if self.test_existence_pdf is not True or self.test_existence_pdf is True:
+        """
         if self.pdf_mode is False:
             with anvil.server.no_loading_indicator:
                 self.task_satisf = anvil.server.call('run_bg_task_satisf',row["numero"],row["code_txt"], row)
                 self.timer_1.interval=0.5
-            
+        """    
     def timer_1_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         if self.task_satisf.is_completed():
@@ -558,13 +561,16 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
             
     def button_downl_pdf1_click(self, **event_args):
         """This method is called when the button is clicked"""
-        stage_row = app_tables.stages.get(numero=self.row["numero"])
-        pdf = stage_row['satis_pdf']
-        if pdf:
-            anvil.media.download(pdf)
+        
+        pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row)
+        file_name=(f"Fin stage {self.row['code_txt']} stage num {self.row['numero']}")
+
+        new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=file_name+".pdf")
+        if new_file_named:
+            anvil.media.download(new_file_named)
             alert("Enquête téléchargée")
         else:
-            alert("Pdf non trouvé en table Stages")
+            alert("Pdf non généré")
         
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
