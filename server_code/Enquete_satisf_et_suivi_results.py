@@ -56,7 +56,11 @@ def _user_from_email(email_or_obj):
         tel = email_or_obj.get("tel")
     else:
         email_str = email_or_obj
-    u = app_tables.users.get(email=email_str) if email_str else None
+        try:  # suivi
+            u = app_tables.users.get(email=email_str) if email_str else None
+        except:   # satisf
+            u = app_tables.users.get(email=email_str['email']) if email_str else None
+            
     prenom = (u and u.get("prenom")) or ""
     nom = (u and (u.get("nom") or u.get("name"))) or ""
     # priorité au tel issu de la ligne users si dispo
@@ -314,7 +318,10 @@ def enquete_suivi_pdf_gen(stage_row, role="S", type="suivi"):
     stage_code = (stage_row.get('code') or {}).get('code') if hasattr(stage_row, 'get') else stage_row['code']['code']
     date_txt = stage_row.get('date_debut').strftime("%Y-%m-%d")  # ton PDF montre AAAA-MM-JJ
     if role=="S":
-        titre_haut = "Formulaires de suivi"
+        if type=="suivi":
+            titre_haut = "Formulaires de suivi des Stagiaires"
+        else:
+            titre_haut = "Formulaires de satisfaction des Stagiaires"
     else:
         titre_haut = "Formulaires de suivi des Tuteurs"
     sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
@@ -322,7 +329,7 @@ def enquete_suivi_pdf_gen(stage_row, role="S", type="suivi"):
     # Récupération des formulaires de ce stage + rôle
     if type == "suivi":
         forms = app_tables.stage_suivi.search(stage_num_txt=stage_num, user_role=role)
-    else:
+    else:  #satisfaction
         forms = app_tables.stage_satisf.search(stage_num_txt=stage_num)
         
     # Grouper par email stagiaire
