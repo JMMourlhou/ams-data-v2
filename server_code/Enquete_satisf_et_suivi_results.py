@@ -303,7 +303,7 @@ tr.score-5 { background:#00FF00; }
 # --------------------------------- Générateur principal --------------------------------------------
 
 @anvil.server.callable
-def enquete_suivi_pdf_gen(stage_row, role="S"):
+def enquete_suivi_pdf_gen(stage_row, role="S", type="suivi"):
     """
     Produit un PDF 'Résultat Formulaires de suivi de stages' pour un stage donné.
     - stage_row: ligne du stage (contient p.ex. 'numero', 'code', 'date_debut')
@@ -320,8 +320,11 @@ def enquete_suivi_pdf_gen(stage_row, role="S"):
     sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
 
     # Récupération des formulaires de ce stage + rôle
-    forms = app_tables.stage_suivi.search(stage_num_txt=stage_num, user_role=role)
-
+    if type == "suivi":
+        forms = app_tables.stage_suivi.search(stage_num_txt=stage_num, user_role=role)
+    else:
+        forms = app_tables.stage_satisf.search(stage_num_txt=stage_num)
+        
     # Grouper par email stagiaire
     grouped = {}  # email -> [formulaires]
     for f in forms:
