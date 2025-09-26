@@ -182,13 +182,11 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             if self.text_box_code_postal.text == "":
                 alert("Entrez votre Code Postal (adresse postale) !")
                 return
-             # Test sur Code postal adresse, non vide, 5 caractères numériques.
-            if self.text_box_code_postal.text == "":
-                alert("Entrez votre adresse (Code Postal) !")
-                return
+         
             if len(self.text_box_code_postal.text) != 5:
                 alert("Le Code Postal (adresse postale) doit être de 5 chiffres !")
                 return
+                
             try:
                 cp_test = int(self.text_box_code_postal.text)
             except:
