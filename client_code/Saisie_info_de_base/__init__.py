@@ -167,7 +167,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             if self.text_area_rue.text == "":
                 alert("Entrez votre Rue !")
                 return  
-            if len(self.text_area_rue.text)<10:
+            if len(self.text_area_rue.text)<5:
                 alert("La Rue est incomplète !")
                 return 
                 
