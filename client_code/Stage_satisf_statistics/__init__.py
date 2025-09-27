@@ -561,7 +561,8 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
             
     def button_downl_pdf1_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, "S", "satisf" )
+        #pdf = anvil.server.call('enquete_suivi_pdf_gen', self.row, "S", "satisf" )
+        pdf = anvil.server.call('enquete_suivi_tuteurs_pdf_gen', self.row, "S", "satisf" )
         file_name=(f"Fin stage {self.row['code_txt']} stage num {self.row['numero']}")
 
         new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=file_name+".pdf")

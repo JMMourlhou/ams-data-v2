@@ -299,15 +299,28 @@ def enquete_suivi_tuteurs_pdf_gen(stage_row, role="T", type="suivi"):
     sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
 
     # Récupération des formulaires de ce stage + rôle
-    forms = app_tables.stage_suivi.search(stage_num_txt=stage_num, user_role=role)
-    
+    if type=="suivi":                                                                      # Formulaires de suivi
+        forms = app_tables.stage_suivi.search(stage_num_txt=stage_num, user_role=role)
+    else:                                                                                  # Formulaire de satisf
+        forms = app_tables.stage_satisf.search(stage_num_txt=stage_num)
+        
     # Construire les blocs stagiaires
     people_blocks = []
     for formulaire in forms:
         # Lecture nom/prénom du tuteur
-        tuteur_user_row = app_tables.users.get(email=formulaire['user_email'])
-        nom = tuteur_user_row['nom']
-        prenom = tuteur_user_row['prenom']
+        if type=="suivi": 
+            tuteur_user_row = app_tables.users.get(email=formulaire['user_email'])
+            nom = tuteur_user_row['nom']
+            prenom = tuteur_user_row['prenom']
+        else:
+            try:
+                tuteur_user_row = app_tables.users.get(email=formulaire['user_email']['email'])
+                nom = tuteur_user_row['nom']
+                prenom = tuteur_user_row['prenom']
+            except Exception as e:
+                print("Formulaire anonyme")
+                nom = "Anonyme"
+                prenom = ""
 
         # Récupérer les réponses propres à ce formulaire
         rep_ouv = formulaire.get('rep_dico_rep_ouv') or {}
