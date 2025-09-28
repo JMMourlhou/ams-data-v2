@@ -1101,7 +1101,6 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 
 /* ajouts jm  */
 
-
 @media screen and (max-width: 1000px) { /* only on phones*/
    .anvil-role-home-header {
   background-image: linear-gradient(80deg, %color:Primary 500% 0%, #5396BC00 120%), url(_/theme/home-img0.jpg);
@@ -1109,7 +1108,6 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
   min-height: 10em;
 }  
 }
-
 
 @media screen and (min-width: 1000px) { /* Tablets and above*/
   .anvil-role-home-header {
@@ -1121,6 +1119,7 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 }  
 }
 
+/* Si le document est rendu pour impression/PDF!’ chaque élément ayant la classe ae-page-break provoque un saut de page. */
 @media print {
     .ae-page-break {
         break-after: page;
