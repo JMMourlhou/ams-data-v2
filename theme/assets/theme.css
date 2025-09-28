@@ -1128,7 +1128,7 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
     }
 }
 
-/* Optionnel: visible à lécran pendant la mise au point */
+/* Optionnel: visible à l'écran pendant la mise au point */
 .ae-page-break-container {
     border: none; /* tu peux changer via la props .border */
 }
