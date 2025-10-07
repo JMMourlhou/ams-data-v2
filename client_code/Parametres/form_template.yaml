@@ -184,6 +184,11 @@ components:
       name: button_mails
       properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Modèles de Mails, visible: true}
       type: Button
+    - event_bindings: {click: button_types_mails_click}
+      layout_properties: {grid_position: 'TJWBZJ,EJLIKC'}
+      name: button_types_mails
+      properties: {background: 'theme:Primary', foreground: 'theme:Error', text: Modèles de Mails, visible: true}
+      type: Button
     layout_properties: {grid_position: 'ERYFBS,WDORWT'}
     name: column_panel_3
     properties: {background: 'theme:On Primary', role: outlined-card}
