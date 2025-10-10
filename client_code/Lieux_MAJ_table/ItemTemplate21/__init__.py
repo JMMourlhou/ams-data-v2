@@ -46,7 +46,7 @@ class ItemTemplate21(ItemTemplate21Template):
         r=alert("Voulez-vous vraiment modifier ce Lieu ?",buttons=[("oui",True),("non",False)])
         if r :   # oui
             # 1 modif ds les lieux stages 
-            result = anvil.server.call("modif_lieu", self.item, self.text_box_1.text, self.text_box_2.text, sov_old_lieu)
+            result = anvil.server.call("modif_lieu", self.item, self.text_box_1.text, self.text_box_2.text, self.sov_old_lieu)
             if result is not True:
                 alert("ERREUR, Modification non effectuée !")
                 return
