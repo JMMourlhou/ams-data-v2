@@ -67,6 +67,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
     def drop_down_qcm_row_change(self, **event_args):
         """This method is called when an item is selected"""
         qcm_row = self.drop_down_qcm_row.selected_value          #qcm description row
+        print(f"{self.user['prenom']} {self.user['nom']} a sélectionné le QCM nb {qcm_row['qcm_nb']}, {qcm_row['destination']} ")
         if qcm_row is None:
             alert("Choisissez un QCM !")
             return
@@ -124,7 +125,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
 
     def liste_qcm_partie_x(self, qcm_nb, nb_max, **event_args):
         liste = []
-        print(f"{self.user['prenom']} {self.user['nom']} a sélectionné le QCM nb {qcm_nb} ")
+        
         #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ nb max: ", nb_max)
         #extraction du nb de questions pour le qcm Master
         qcm_row = app_tables.qcm_description.get(qcm_nb=qcm_nb)

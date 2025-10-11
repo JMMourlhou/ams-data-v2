@@ -13,7 +13,7 @@ from datetime import datetime
 def french_zone_time():
     date_time = datetime.now(anvil.tz.tzlocal()) #recup browser time
     #print(type(date_time))
-    print(date_time)
+    #print(date_time)
     return date_time
 
 
