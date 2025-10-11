@@ -18,7 +18,9 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
         self.qcm_row = None
         # acquisition du user
         user=anvil.users.get_user()
+        self.user = user
         if user:
+            #print(f"User {user['nom']} débute un Qcm")
             self.admin = user['role']
             rol = self.admin[0:1]
             if rol=="S" or rol=="T" or rol=="J":         # si stagiaire
@@ -36,16 +38,16 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                     droits_stagiaire = stage['droits_stagiaire_qcms']
                     # je boucle sur ce dictionaire des qcm authorisés pour ce stage et rempli dict 
                     for clef, valeur in droits_stagiaire.items():   #clef=numqcm   valeur=("intitulé", "TRUE/False")   True si on le montre
-                        print(f"clé: {clef},valeur: {valeur[1]}")
+                        #print(f"clé: {clef},valeur: {valeur[1]}")
                         if valeur[1]=="True":
                             dict[clef]= valeur  # num_qcm:intitulé 
-                            print(f"Mise en dico de : {clef}")
+                            #print(f"Mise en dico de : {clef}")
                     
         # J'initialise la liste en transformant le "dict" des qcm authorisés en liste
         # boucle de "dict"
         liste_qcm_rows=[]   # liste des qcm lus
         for clef, valeur in dict.items():
-            print(clef)
+            #print(clef)
             # lecture sur la clef
             qcm_row = app_tables.qcm_description.get(qcm_nb=int(clef))
             if qcm_row['visible'] is True:                               # SI QCM VISIBLE
@@ -70,7 +72,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
             return
         
         self.qcm_row = qcm_row
-        print("dropD change :",qcm_row["qcm_nb"],qcm_row["qcm_source"])
+        #print("dropD change :",qcm_row["qcm_nb"],qcm_row["qcm_source"])
         # Pour les lignes QCM déjà crée du qcm choisi
         global liste  
         if qcm_row["qcm_source"] is None:                                  # si source est null : Qcm unique, non sous élement d'un QCM master
@@ -78,7 +80,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
         else:                                                              # si source non null : QCM master, créer à partir de qcm enfants
             dico = {}
             dico = qcm_row["qcm_source"]
-            print("------------------------------------------------------  dico: ", dico)
+            #print("------------------------------------------------------  dico: ", dico)
             liste = list(self.liste_qcm_master(dico))
         nb_questions = len(liste)
         self.label_2.text = nb_questions + 1   # Num ligne à partir du nb lignes déjà créées
@@ -122,14 +124,14 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
 
     def liste_qcm_partie_x(self, qcm_nb, nb_max, **event_args):
         liste = []
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ qcm nb: ", qcm_nb)
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ nb max: ", nb_max)
+        print(f"{self.user['prenom']} {self.user['nom']} a sélectionné le QCM nb {qcm_nb} ")
+        #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ nb max: ", nb_max)
         #extraction du nb de questions pour le qcm Master
         qcm_row = app_tables.qcm_description.get(qcm_nb=qcm_nb)
         if qcm_row:
             liste_entierre = app_tables.qcm.search(qcm_nb=qcm_row )
             nb_total_questions = len(liste_entierre)
-            print(f"nb question ds qcm_nb {qcm_nb}: {nb_total_questions}" )
+            #print(f"nb question ds qcm_nb {qcm_nb}: {nb_total_questions}" )
         else:
             print(f"pb accès table qcm n° {qcm_nb} (enfant d'un qcm master)")
             return
@@ -141,7 +143,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                                              )
             clef = num_question           # clé du dict de questions     Comme il ne peut y avoir 2 même clé, si random prend 2 fois la même question, elle écrase l'autre
             valeur = question_row
-            print("clef: ",clef)
+            #print("clef: ",clef)
             dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
         
         for cle, valeur in dict.items():

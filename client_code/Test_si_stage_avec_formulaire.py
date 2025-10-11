@@ -10,7 +10,7 @@ from anvil import *
 def test_si_formulaire(user_email):
     # historique du stagiaire
     stages_liste = app_tables.stagiaires_inscrits.search(user_email=user_email)
-    print(str(stages_liste))
+    #print(str(stages_liste))
     # lecture des stages où le stagiaire est inscrit
     satisf = False
     suivi = False
@@ -31,12 +31,12 @@ def test_si_formulaire(user_email):
             
         # lecture du type de stage et test si dico qcm est renseigné
         if stage['stage']['code']['droit_qcm'] != {} and stage['stage']['code']['droit_qcm'] is not None:
-            print(stage['stage']['code']['droit_qcm'])
+            #print(stage['stage']['code']['droit_qcm'])
             qcm = True
             
-    print('com: ', str(com))
-    print('satisf: ', str(satisf))
-    print('suivi: ', str(suivi))
-    print('qcm: ', str(qcm))
+    #print('com: ', str(com))
+    #print('satisf: ', str(satisf))
+    #print('suivi: ', str(suivi))
+    #print('qcm: ', str(qcm))
     
     return satisf, suivi, com, qcm

@@ -225,9 +225,9 @@ def qcm_result(user, qcm_numero, nb_bonnes_rep, max_points, points, reponses):  
                 liste_stages_stagiaire = app_tables.stagiaires_inscrits.search(user_email=user)
                 if liste_stages_stagiaire:
                     for st in liste_stages_stagiaire:
-                        print(st['stage']['code']['code'])
+                        print(f"Stagiaire inscrit à: {st['stage']['code']['code']}")
                         dict = st['droits_stagiaire_qcms']
-                        print("dict droits stagiaire :", dict)
+                        print(f"Ce stagiaire a droit aux QCM suivants: {dict}")
                         try:
                             valeur = dict.get(next_qcm)
                             #print(" ----  next qcm: ", next_qcm)
@@ -238,7 +238,7 @@ def qcm_result(user, qcm_numero, nb_bonnes_rep, max_points, points, reponses):  
                             st.update(droits_stagiaire_qcms = dict)
                         except:
                             pass
-    
+    print(f"Time fin du QCM: {French_zone_server_side.time_french_zone()}")
     app_tables.qcm_result.add_row(
                                     user_qcm= user,
                                     name = user['nom'],

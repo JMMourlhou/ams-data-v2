@@ -105,8 +105,8 @@ class ItemTemplate4(ItemTemplate4Template):
         self.rep5.tag.correction = ""
         self.rep1.tag.correction = self.item['rep_multi'][0:1]   # 1er caractère, correspond à la réponse vrai (0 ou 1)
         self.rep2.tag.correction = self.item['rep_multi'][1:2]   # 2eme caractère, correspond à la réponse faux (0 ou 1)
-        print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep1: {self.item['rep_multi'][0:1]} ")
-        print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep2: {self.item['rep_multi'][1:2]} ")
+        #print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep1: {self.item['rep_multi'][0:1]} ")
+        #print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep2: {self.item['rep_multi'][1:2]} ")
         
         if self.nb_options > 1:     
             if self.type_question == "V/F":
@@ -122,19 +122,19 @@ class ItemTemplate4(ItemTemplate4Template):
             self.rep3.text = "C"
             self.rep3.visible = True
             self.rep3.tag.correction = self.item['rep_multi'][2:3]   # 3eme caractère, correspond à la réponse faux (0 ou 1) 
-            print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep3: {self.item['rep_multi'][2:3]} ")
+            #print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep3: {self.item['rep_multi'][2:3]} ")
             
         if self.nb_options > 3:        
             self.rep4.text = "D"
             self.rep4.visible = True
             self.rep4.tag.correction = self.item['rep_multi'][3:4]   # 4eme caractère, correspond à la réponse faux (0 ou 1)
-            print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep4: {self.item['rep_multi'][3:4]} ")
+            #print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep4: {self.item['rep_multi'][3:4]} ")
             
         if self.nb_options > 4:
             self.rep5.text = "E"
             self.rep5.visible = True
             self.rep5.tag.correction = self.item['rep_multi'][4:5]   # 5eme caractère, correspond à la réponse faux (0 ou 1)      
-            print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep5: {self.item['rep_multi'][4:5]} ")
+            #print(f" ++++++++++++++++++++++++++++++++++++++++++   INITIALISATION CORRECTION DE LA LIGNE, rep5: {self.item['rep_multi'][4:5]} ")
         
         self.drop_down_bareme.tag.nom = "bareme"
         
@@ -194,9 +194,9 @@ class ItemTemplate4(ItemTemplate4Template):
         self.button_modif.tag.nom = "button"
         if self.item['photo'] != None:
             self.image_1.source = self.item['photo']
-            print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
+            #print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
         else:
-            print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
+            #print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
             self.image_1.source = None
             self.cp_img.visible = False
             self.image_1.visible = False
@@ -276,7 +276,7 @@ class ItemTemplate4(ItemTemplate4Template):
         self.text_area_question_focus()  
 
         if self.item["type"] == "V/F":
-            if self.rep1.checked == True:   # question V/F
+            if self.rep1.checked is True:   # question V/F
                 self.rep2.checked = False
             else:
                 self.rep2.checked = True
@@ -344,19 +344,19 @@ class ItemTemplate4(ItemTemplate4Template):
         # Je remonte au conteneur parent du bouton (le flow panel)
         
         n1 = self.button_modif.parent    # conteneur fpanel du bt modif
-        print("n1",n1)
+        #print("n1",n1)
         #print("n1",n1,n1.nom)
         n2 = n1.parent            # conteneur cpanel : contient cp_img, tb question, tb correction
-        print("n2",n2)
+        #print("n2",n2)
         #print("n2",n2,n2.nom)
     
         for cpnt in n2.get_components():   #(contient cp_img, tb question, tb correction)
-            print("début boucle cpnt",cpnt.tag.nom)
+            #print("début boucle cpnt",cpnt.tag.nom)
             if cpnt.tag.nom =="cp_img":
                 for cpnt1 in cpnt.get_components():   #( cp_img contient image_1)
                     if cpnt1.tag.nom =="photo":
-                        print(cpnt, cpnt.tag.nom)
-                        print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ img: ",cpnt1.source)
+                        #print(cpnt, cpnt.tag.nom)
+                        #print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ img: ",cpnt1.source)
                         if cpnt1.source == None:
                             photo = None
                         else:
@@ -364,10 +364,10 @@ class ItemTemplate4(ItemTemplate4Template):
                         
             if cpnt.tag.nom == "cp_quest_rep":
                 for cpnt1 in cpnt.get_components():
-                    print(f"+++++++++++++++++++++++++++++++++++++++++++++++++++++ {cpnt1.tag.nom}")
+                    #print(f"+++++++++++++++++++++++++++++++++++++++++++++++++++++ {cpnt1.tag.nom}")
                     if cpnt1.tag.nom == "question":
-                        print(cpnt1, cpnt1.tag.nom)
-                        print("mode :", self.mode)
+                        #print(cpnt1, cpnt1.tag.nom)
+                        #print("mode :", self.mode)
                         question = cpnt1.text
                         # mettre la 1ere lettre en maj mais laisser le reste comme tappé
                         #je boucle à partir de la deuxieme lettre et cumul le text             
@@ -377,17 +377,17 @@ class ItemTemplate4(ItemTemplate4Template):
                         
                     if cpnt1.tag.nom == "cp_options":
                         rep_multi_stagiaire = ""    #                                                         CUMUL de la codif des réponses du stagiaire
-                        print(f"+++++++++++++++++++++++++++++++++++++++++++ {cpnt1}, {cpnt1.tag.nom}")
+                        #print(f"+++++++++++++++++++++++++++++++++++++++++++ {cpnt1}, {cpnt1.tag.nom}")
                         for repo in cpnt1.get_components():
                             if repo.tag.nom == "rep1-true": 
-                                print(f"rep1 trouvé {repo.checked}")   
+                                #print(f"rep1 trouvé {repo.checked}")   
                                 if repo.checked is True:
                                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                 else:
                                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
                                 
                             if repo.tag.nom == "rep2-false":
-                                print(f"rep2 trouvé {repo.checked}")
+                                #print(f"rep2 trouvé {repo.checked}")
                                 if repo.checked is True:
                                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                 else:
@@ -395,7 +395,7 @@ class ItemTemplate4(ItemTemplate4Template):
 
                             if self.nb_options == 3:
                                 if repo.tag.nom == "rep3":
-                                    print(f"rep3 trouvé {repo.checked}")
+                                    #print(f"rep3 trouvé {repo.checked}")
                                     if repo.checked is True:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                     else:
@@ -403,13 +403,13 @@ class ItemTemplate4(ItemTemplate4Template):
                            
                             if self.nb_options == 4:
                                 if repo.tag.nom == "rep3":
-                                    print(f"rep3 trouvé {repo.checked}")
+                                    #print(f"rep3 trouvé {repo.checked}")
                                     if repo.checked is True:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                     else:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "0"
                                 if repo.tag.nom == "rep4":
-                                    print(f"rep4 trouvé {repo.checked}")
+                                    #print(f"rep4 trouvé {repo.checked}")
                                     if repo.checked is True:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                     else:
@@ -417,41 +417,41 @@ class ItemTemplate4(ItemTemplate4Template):
 
                             if self.nb_options == 5:
                                 if repo.tag.nom == "rep3":
-                                    print(f"rep3 trouvé {repo.checked}")
+                                    #print(f"rep3 trouvé {repo.checked}")
                                     if repo.checked is True:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                     else:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "0"
                                 if repo.tag.nom == "rep4":
-                                    print(f"rep4 trouvé {repo.checked}")
+                                    #print(f"rep4 trouvé {repo.checked}")
                                     if repo.checked is True:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                     else:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "0"
                                 if repo.tag.nom == "rep5":
-                                    print(f"rep5 trouvé {repo.checked}")
+                                    #print(f"rep5 trouvé {repo.checked}")
                                     if repo.checked is True:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "1"
                                     else:
                                         rep_multi_stagiaire = rep_multi_stagiaire + "0"
                            
-                            print(f" ++++++++++++++++++++++++++++++++++ rep_multi/reponse: {rep_multi_stagiaire}, ({len(rep_multi_stagiaire)} options)")
+                            #print(f" ++++++++++++++++++++++++++++++++++ rep_multi/reponse: {rep_multi_stagiaire}, ({len(rep_multi_stagiaire)} options)")
                 
             if cpnt.tag.nom == "correction":
-                print(cpnt, cpnt.tag.nom)
+                #print(cpnt, cpnt.tag.nom)
                 correction = cpnt.text                                #    j'ai la correction
                 
-            print("avt test2",cpnt, cpnt.tag.nom)
+            #print("avt test2",cpnt, cpnt.tag.nom)
             if cpnt.tag.nom == "fp_vrai/faux_bareme":                 # fp_vf_barem contient  bareme   
-                print("test2", cpnt, cpnt.tag.nom)
+                #print("test2", cpnt, cpnt.tag.nom)
                 for cpnt2 in cpnt.get_components():   #( cp_img contient image_1)
                         
                         if cpnt2.tag.nom =="bareme":
-                            print(cpnt2, cpnt2.tag.nom)
+                            #print(cpnt2, cpnt2.tag.nom)
                             bareme = cpnt2.selected_value                 # j'ai le bareme
 
         qcm_descro_row = self.qcm_nb
-        print(qcm_descro_row)
+        #print(qcm_descro_row)
         
         if self.mode == "creation":  # ===================================================  MODE CREATION QCM
             result = anvil.server.call('modif_qcm', qcm_descro_row, num, question, rep_multi_stagiaire, bareme, photo, correction)
@@ -515,30 +515,29 @@ class ItemTemplate4(ItemTemplate4Template):
         if ancien_num_ligne != 0 and num != ancien_num_ligne:
 
             n1 = self.button_modif.parent    # conteneur bt bouton modif (flow panel)     
-            print("n1_nom/type; ", n1.tag.nom, type(n1))
+            #print("n1_nom/type; ", n1.tag.nom, type(n1))
             n2 = n1.parent            # conteneur cpanel : contient cp_img, tb question, tb correction
-            print("n2_nom/type; ", n2.tag.nom, type(n2))
+            #print("n2_nom/type; ", n2.tag.nom, type(n2))
             n3 = n2.parent
-            print("n3_nom/type; ", n3.tag.nom, type(n3))
+            #print("n3_nom/type; ", n3.tag.nom, type(n3))
             repeat_panel = n3.parent  # conteneur des lignes (repeat panel) ds QCM_visu_modi
-            print("**** repeating panel ", type(repeat_panel))
+            #print("**** repeating panel ", type(repeat_panel))
         
             for lignes in repeat_panel.get_components():
-                print("item_lignes", type(lignes))
-                
+                #print("item_lignes", type(lignes))
                 for ligne in lignes.get_components():
-                    print("cpnts", type(ligne))
+                    #print("cpnts", type(ligne))
                     
                     if ligne.tag.nom == "cp_father":        # control panel incluant img, question, rep, fp_vrai faux
                         for c in ligne.get_components():
-                            print("ligne", type(c))
-                            print("ligne", c.tag.nom)
+                            #print("ligne", type(c))
+                            #print("ligne", c.tag.nom)
                             
                             if c.tag.nom == "fp_modif":     # je suis ds le fp bareme qui contient le bouton modif/valid
                                 for cpnt in c.get_components():   
-                                    print("ligne  **********************************************",cpnt.tag.numero,'ancien num',ancien_num_ligne)
+                                    #print("ligne  **********************************************",cpnt.tag.numero,'ancien num',ancien_num_ligne)
                                     if cpnt.tag.nom == "button" and cpnt.tag.numero == ancien_num_ligne:                    # <=============  mode utiiisation qcm
-                                        print("=============================================================== ok bouton ancienne ligne trouvé")
+                                        #print("=============================================================== ok bouton ancienne ligne trouvé")
                                         #c'est le bt de l'ancienne ligne
                                         cpnt.enabled = False
                                         cpnt.background = "theme:On Primary Container"
@@ -586,9 +585,10 @@ class ItemTemplate4(ItemTemplate4Template):
             user=anvil.users.get_user()
             if user:
                 result = anvil.server.call("qcm_result", user, int(self.vrai_numero_qcm), nb_bonnes_rep, max_points, points, reponses)  
+                print(f"Fin normale du QCM pour {user['prenom']} {user['nom']}")
                 if result is False :
                     alert("QCM non enregisté !")
-                    
+                    print(f"QCM non enregistré pour {user['prenom']}{user['nom']}")
             # affichage des résultats   
             self.label_nb_quest_ok.text = (f"{nb_bonnes_rep} bonnes réponses sur {self.label_nb_questions.text}.")
             self.label_nb_points.text = (f"{points} points obtenus sur {max_points} possibles.")
@@ -596,21 +596,21 @@ class ItemTemplate4(ItemTemplate4Template):
     
             ##############################################################################################   affichage des corrections
             n1 = self.button_fin_qcm.parent    # conteneur bt bouton fin qcm (self) 
-            print("n1", type(n1))
-            print("n1_nom; ", n1.tag.nom)
+            #print("n1", type(n1))
+            #print("n1_nom; ", n1.tag.nom)
             
             repeat_panel = n1.parent  # conteneur des lignes (repeat panel) ds QCM_visu_modi
-            print("**** repeating panel *****", type(repeat_panel))
+            #print("**** repeating panel *****", type(repeat_panel))
             
             for lignes in repeat_panel.get_components():
-                print("item_lignes", type(lignes))
+                #print("item_lignes", type(lignes))
                 for cpt in lignes.get_components():
-                    print("cpnts", type(cpt))
+                    #print("cpnts", type(cpt))
                     
                     if cpt.tag.nom == "cp_father":
                         for c in cpt.get_components():
-                            print("c", type(c))
-                            print("c", c.tag.nom)
+                            #print("c", type(c))
+                            #print("c", c.tag.nom)
                             
                             if c.tag.nom == "correction" :
                                 if c.text != "":
@@ -629,7 +629,7 @@ class ItemTemplate4(ItemTemplate4Template):
                                         
                                     if cpnt1.tag.nom == "cp_options":
                                         for rep in cpnt1.get_components():
-                                            print(f"++++++++ {rep}, {rep.tag.nom}")
+                                            #print(f"++++++++ {rep}, {rep.tag.nom}")
                                             
                                             num_question = rep.tag.numero
                                             
@@ -639,27 +639,27 @@ class ItemTemplate4(ItemTemplate4Template):
                                             # acquisition de la réponse du stagiaire en lisant le dictionaire avec clef numero de question 
                                             # --------------------------------------------------------------------------------------------
                                             rep_stagiaire = reponses[str(num_question)]   # reponses est le dictionaire des réponses stagiaire
-                                            print(f" ****************** nb options:{nb_options} rep corrigée:{rep_corrigée}  rep stagiaire:{rep_stagiaire}")
+                                            #print(f" ****************** nb options:{nb_options} rep corrigée:{rep_corrigée}  rep stagiaire:{rep_stagiaire}")
                                             
                                             rep1_stagiaire = rep_stagiaire[0:1]  # réponse du stagiaire pour option 1
                                             rep1_correction = rep_corrigée[0:1]   # 1er caractère, correspond à la réponse vrai (0 ou 1)
-                                            print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep1_stagiaire} / rep corr: {rep1_correction} / check: {rep.checked}")
+                                            #print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep1_stagiaire} / rep corr: {rep1_correction} / check: {rep.checked}")
                                             if nb_options > 1:
                                                 rep2_stagiaire = rep_stagiaire[1:2]  # réponse du stagiaire pour option 1
                                                 rep2_correction = rep_corrigée[1:2]   # 2eme caractère, correspond à la réponse faux (0 ou 1)
-                                                print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep2_stagiaire} / rep corr: {rep2_correction} / check: {rep.checked}")
+                                                #print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep2_stagiaire} / rep corr: {rep2_correction} / check: {rep.checked}")
                                             if nb_options > 2:
                                                 rep3_stagiaire = rep_stagiaire[2:3]  # réponse du stagiaire pour option 1
                                                 rep3_correction = rep_corrigée[2:3]   # 2eme caractère, correspond à la réponse faux (0 ou 1)
-                                                print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep3_stagiaire} / rep corr: {rep3_correction} / check: {rep.checked}")
+                                                #print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep3_stagiaire} / rep corr: {rep3_correction} / check: {rep.checked}")
                                             if nb_options > 3:
                                                 rep4_stagiaire = rep_stagiaire[3:4]  # réponse du stagiaire pour option 1
                                                 rep4_correction = rep_corrigée[3:4]   # 2eme caractère, correspond à la réponse faux (0 ou 1)
-                                                print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep4_stagiaire} / rep corr: {rep4_correction} / check: {rep.checked}")
+                                                #print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep4_stagiaire} / rep corr: {rep4_correction} / check: {rep.checked}")
                                             if nb_options > 4:
                                                 rep5_stagiaire = rep_stagiaire[4:5]  # réponse du stagiaire pour option 1
                                                 rep5_correction = rep_corrigée[4:5]   # 2eme caractère, correspond à la réponse faux (0 ou 1)
-                                                print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep5_stagiaire} / rep corr: {rep5_correction} / check: {rep.checked}")
+                                                #print(f"num quest: {num_question} / copnt: {rep.tag.nom} / rep Stag: {rep5_stagiaire} / rep corr: {rep5_correction} / check: {rep.checked}")
                                                 
                                             # SI REPONSE STAGIAIRE EXACTE, je mets chq option en vert, sinon je recherche l'erreur au niveau des options
                                             if rep_corrigée == rep_stagiaire:  
@@ -679,17 +679,14 @@ class ItemTemplate4(ItemTemplate4Template):
                                                         # comparaison et affichage
                                                         if rep2_stagiaire != rep2_correction:
                                                             rep.background = "Orange"
-                                                    
                                                         else:
                                                             rep.background = "green"
-                                            
-        
+                                                    
                                                 if nb_options > 2:
                                                     if rep.tag.nom == "rep3":
                                                         # comparaison et affichage
                                                         if rep3_stagiaire != rep3_correction:
                                                             rep.background = "Orange"
-                                                            
                                                         else:
                                                             rep.background = "green"
                                                         
@@ -699,7 +696,6 @@ class ItemTemplate4(ItemTemplate4Template):
                                                         # comparaison et affichage
                                                         if rep4_stagiaire != rep4_correction:
                                                             rep.background = "Orange"
-                                                        
                                                         else:
                                                             rep.background = "green"
                                                         
@@ -709,7 +705,6 @@ class ItemTemplate4(ItemTemplate4Template):
                                                         # comparaison et affichage
                                                         if rep5_stagiaire != rep5_correction:
                                                             rep.background = "Orange"
-                                                         
                                                         else:
                                                             rep.background = "green"
                                                             
@@ -728,7 +723,6 @@ class ItemTemplate4(ItemTemplate4Template):
         
     def button_enregistrer_et_sortir_click(self, **event_args):
         """This method is called when the button is clicked"""
-        
         from ...Main import Main
         open_form('Main',99)
 

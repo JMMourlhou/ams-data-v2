@@ -41,7 +41,7 @@ class Plot(PlotTemplate):
                 )
             )
             nb_qcm_passe = len(qcm_rows)
-            print("nb de qcm", nb_qcm_passe)
+            #print("nb de qcm", nb_qcm_passe)
 
         else:
             print("plot: user non trouvé")
@@ -60,13 +60,13 @@ class Plot(PlotTemplate):
                 str(q["time"].strftime("%d/%m/%Y, %Hh%M"))
             )  # 1 seul qcm, j'affiche les détails du timing
 
-        print("date / h : ", str(liste_date_long[nb_qcm_passe - 1]))
-        print("date / h : ", str(liste_date_short[nb_qcm_passe - 1]))
+        
+        #print(str(liste_date_short[nb_qcm_passe - 1]))
 
-        print("x int  ", listx_int)
-        print("x text ", listx_str)
-        print("y", listy)
-        print(list_min)
+        #print("x int  ", listx_int)
+        #print("x text ", listx_str)
+        #print("y", listy)
+        #print(list_min)
 
         # Plot some data     SI PLUSIEURS QCM EFFECTUES j'affiche la ligne des résultats, avec la ligne de mini recquis
         if len(qcm_rows) > 1:
@@ -139,7 +139,6 @@ class Plot(PlotTemplate):
 
         self.plot_1.layout.yaxis.title = "% réponses ok - " + user["email"]
         # self.plot_1.layout.title.fontsize = 5
-
         date_deb = liste_date_short[0]  # dernière date
         date_fin = liste_date_short[nb_qcm_passe - 1]  # derniere date
         if len(qcm_rows) > 1:
@@ -236,7 +235,6 @@ class Plot(PlotTemplate):
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         from .Main import Main
-
         open_form("Main", 99)
 
     def plot_1_click(self, points, **event_args):

@@ -45,7 +45,6 @@ class Main(MainTemplate):
             print(f"Main menu: {self.user['nom']} {self.user['prenom']} connected as {self.user['role']}.")
         else:
             print('AMSDATA on line, user not connected yet')
-        print("========================================================================================================================")
         """
         self.bt_se_deconnecter.visible = False
         self.bt_user_mail.enabled = False
@@ -79,13 +78,13 @@ class Main(MainTemplate):
             h = {}
             h = anvil.get_url_hash() # récup de l'url venant du lien ds le mail envoyé au user
             self.h = h
-            # alert(f"h ds init d'AMS_Data: {h}")
+            
 
             if len(h) != 0:  # a URL has openned this app
                 # handling buttons display before going to module externe 'sign_in_for_AMS_Data'
                 self.display_bt_mail()                 # Bt de connection
                 self.display_admin_or_other_buttons()  # Autres BT
-                
+                print(f"URL détectée ds Main: {h['a']}")
                 # lien actif < à 3 mois ?
                 # url_time_str=""
                 url_time = h["t"]
@@ -240,7 +239,7 @@ class Main(MainTemplate):
             
             if com:
                 self.outlined_card_com.visible = True
-                print("self.outlined_card_com.visible = True")
+                #print("self.outlined_card_com.visible = True")
             else:
                 self.outlined_card_com.visible = False
             
@@ -413,7 +412,7 @@ class Main(MainTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(f"Main menu: Ping: {result}")
+        #print(f"Main menu: Ping: {result}")
 
     #==============================================================
     # Les UTILITAIRES suivants sont à TRANSFERER DS UTILITAIRES POUR alléger module MAIN
