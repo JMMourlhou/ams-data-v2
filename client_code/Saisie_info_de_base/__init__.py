@@ -258,7 +258,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                             code_fi=row['code_fi']
                         if user['temp'] == 1003:       # si tuteur, chercher ds user['temp_for_stage'] pour quel stage travaille le tuteur
                             pour_stage = user['temp_for_stage']
-                            print(f"++++++++++++++++++++++++++ 1003 pour stage: {pour_stage}")
+                            #print(f"++++++++++++++++++++++++++ 1003 pour stage: {pour_stage}")
                         else:
                             pour_stage = 0
                         

@@ -16,7 +16,7 @@ components:
         icon: ''
         icon_align: left
         italic: false
-        role: null
+        role: outlined-button
         spacing:
           padding: [null, '5', null, '10']
         spacing_above: small
@@ -152,6 +152,6 @@ components:
   properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"LEJSQR":8,"CUWCHL":52}', spacing_above: none, wrap_on: never}
   type: ColumnPanel
 container:
-  properties: {align: center, auto_display_data: false, background: 'theme:On Primary', bold: false, border: '', font: '', font_size: null, foreground: '', italic: false, role: null, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
+  properties: {align: left, auto_display_data: false, background: 'theme:On Primary', bold: false, border: '', font: '', font_size: null, foreground: '', italic: false, role: null, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
   type: DataRowPanel
 is_package: true

@@ -22,7 +22,7 @@ class ItemTemplate15(ItemTemplate15Template):
         if r :   # Oui               
             anvil.server.call('del_mails', self.text_area_subject.tag.id) 
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        print("form mère récupérable (delete): ", self.f)   
+        #print("form mère récupérable (delete): ", self.f)   
         # Je lis la liste d'emails, le ref du modèle, lt type de mail displayed, pour réaffichage
         type_mail = self.f.drop_down_type_mails.selected_value
         self.f.drop_down_type_mails_change(type_mail)
@@ -35,7 +35,7 @@ class ItemTemplate15(ItemTemplate15Template):
         """This method is called when the button is clicked"""
         # récupération de la forme mère par  self.f = get_open_form() en init
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
 
         # si pas d'email liste, provenance mail du menu principal, je ne permets pas d'envoi de mail ou attachements
         

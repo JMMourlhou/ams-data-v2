@@ -62,7 +62,7 @@ class Visu_trombi(Visu_trombiTemplate):
             self.label_titre.font_size = 14
         
         nb_stagiaires = len(self.rows)
-        print("nb-stagiaires", nb_stagiaires)
+        #print("nb-stagiaires", nb_stagiaires)
         nb_lignes = nb_stagiaires / nb_img_par_ligne
         hauteur = nb_lignes * (height+100) + 150
         self.xy_panel.height = hauteur
@@ -138,7 +138,7 @@ class Visu_trombi(Visu_trombiTemplate):
                     # IMPORTANT : insérer le PageBreak dans le CONTENEUR parent linéaire qui englobe le xy_panel.
                     #  Ici j'utilise column_panel_all.
                     self.column_panel_all.add_component(PageBreak(margin_top=24))
-                    print("saut de page")
+                    #print("saut de page")
             else:
                 # même ligne, on avance en X
                 xx += larg + inter

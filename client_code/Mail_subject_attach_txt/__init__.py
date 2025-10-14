@@ -28,14 +28,14 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self.list_attach = []          # initialisation de la liste des attachements
     
         self.ref_model = ref_model
-        print('ref_model: ',self.ref_model)   
+        #print('ref_model: ',self.ref_model)   
       
         self.mode_creation = False
 
         self.label_ref_model.text = ref_model # sauve la ref de modèle de mail
         
         self.emails_liste = emails_liste # liste des mails
-        print('emails liste: ', self.emails_liste)
+        #print('emails liste: ', self.emails_liste)
         self.label_emails_liste.text = emails_liste   # sauve la liste de mails à envoyer, (utilisé ds le item repeating panel, del)
 
         
@@ -167,7 +167,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
             
             clef = file         # media object du fichier est la clé du dict 
             valeur = file.name   # valeur est le nom du dict
-            print("clef: ",clef, "     valeur: ", valeur)
+            #print("clef: ",clef, "     valeur: ", valeur)
             self.dico_attachements[clef] = valeur   # je mets à jour le dico des attachements media_file : file_name_txt
 
             for clef, valeur in self.dico_attachements.items():

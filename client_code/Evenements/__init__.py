@@ -30,8 +30,8 @@ class Evenements(EvenementsTemplate):
         
         # Drop down codes lieux
         self.drop_down_lieux.items = [(r['lieu'], r) for r in app_tables.lieux.search(tables.order_by("lieu", ascending=True))]
-        for lieu in self.drop_down_lieux.items:
-            print(lieu, lieu[0], lieu[1])
+        #for lieu in self.drop_down_lieux.items:
+            #print(lieu, lieu[0], lieu[1])
         liste=self.drop_down_lieux.items[0]
         self.drop_down_lieux.selected_value = liste[1]
 
@@ -41,8 +41,8 @@ class Evenements(EvenementsTemplate):
             if r['code'] != 0:                          # on ne prend pas le code 0 qui est le row "nouvel évenement"
                 liste_event.append((r['msg_0'],r))      # on ajoute le msg "nouvel ..."
         self.drop_down_event.items = liste_event
-        for type in self.drop_down_event.items:
-            print(type, type[0], type[1])
+        #for type in self.drop_down_event.items:
+            #print(type, type[0], type[1])
        
 
         self.now = French_zone.french_zone_time()   # now est le jour/h actuelle (datetime object)
@@ -304,7 +304,7 @@ class Evenements(EvenementsTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(f"ping on server to prevent 'session expired' every 5 min, server answer:{result}")
+        print(f"Saisie d'évenements: ping on server to prevent 'session expired' every 5 min, server answer:{result}")
 
     # Pour lancer une sauvegarde automatique toutes les 15 secondes
     def timer_2_tick(self, **event_args):

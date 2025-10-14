@@ -14,7 +14,7 @@ class ItemTemplate16(ItemTemplate16Template):
 
         # Any code you write here will run before the form opens.
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
         
         #self.image_doc.source = self.item[0]        # 1er élément de l'item, le media file choisit pour téléchargement (si pdf, le transfomer en jpg)
         self.label_address_doc.text = self.item[1]  # 2eme élément de l'item, le nom du fichier en txt
@@ -22,7 +22,7 @@ class ItemTemplate16(ItemTemplate16Template):
         # Type de fichier en attachement ?
         path_parent, file_name, file_extension = anvil.server.call('path_info', str(self.item[0].name))
         file_extension = file_extension[0:4].lower() # 4 1ers caract en minuscule   ex;    .XLSX > .xls
-        print(file_extension)
+        #print(file_extension)
         """
         if file_extension == ".pdf":
             liste_images = anvil.server.call('display_pdf', self.item[0]) 

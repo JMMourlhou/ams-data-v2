@@ -58,7 +58,7 @@ class Pre_R_pour_1_stagiaire(Pre_R_pour_1_stagiaireTemplate):
                             self.stagiaire_email,
                             row,
                         )
-        print("ajout: ", result)
+        #print("ajout: ", result)
        
         # réaffichage des pré requis par reinitialisation 
         self.display()                        
@@ -96,7 +96,7 @@ class Pre_R_pour_1_stagiaire(Pre_R_pour_1_stagiaireTemplate):
             clef = pr_st['requis_txt']
             valeur = ""
             dico_pre_requis_stg[clef] = valeur
-            print(dico_pre_requis_stg.keys())
+            #print(dico_pre_requis_stg.keys())
 
         
         for pr in self.liste_tous_pr:

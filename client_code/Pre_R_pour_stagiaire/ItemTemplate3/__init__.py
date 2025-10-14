@@ -52,7 +52,7 @@ class ItemTemplate3(ItemTemplate3Template):
                 self.button_del.visible = True 
                 end = French_zone.french_zone_time()
                 temps = f"Temps de traitement image: {end-start}"
-                print(temps)
+                #print(temps)
             elif file_extension == ".pdf":      
                 MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
@@ -75,7 +75,7 @@ class ItemTemplate3(ItemTemplate3Template):
     
                     end = French_zone.french_zone_time()
                     temps = f"Temps de traitement image: {end-start}"
-                    print(temps)
+                    #print(temps)
             else:  # erreur: le format choisit n'est pas un fichierimage ou pdf
                 alert(f"le type de fichier doit être un de ces types : {list_possible}")
         
@@ -124,7 +124,7 @@ class ItemTemplate3(ItemTemplate3Template):
                 # on sauve par uplink le file media image
                 self.image_1.source = file
                 result = anvil.server.call('pre_requis',self.item, media_object)  # appel uplink fonction pre_requis sur Pi5
-                print(result)
+                #print(result)
             else:
                 alert('timer_2_tick: row stagiaire inscrit non trouvée')
 
@@ -142,7 +142,7 @@ class ItemTemplate3(ItemTemplate3Template):
         # on sauve par uplink le file media image
         self.image_1.source = file
         result = anvil.server.call('pre_requis',self.item, media_object2)  # appel uplink fonction pre_requis sur Pi5
-        print(result)
+        #print(result)
         
         #relecture pour affichage de doc1 rotated
         row = app_tables.pre_requis_stagiaire.get(

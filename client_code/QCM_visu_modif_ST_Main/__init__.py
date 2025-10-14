@@ -154,9 +154,10 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
 
     def timer_1_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        user=anvil.users.get_user()
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(f"ping on server to prevent 'session expired' every 5 min, server answer:{result}")
+        print(f"Module QCM user {user['nom']} {user['prenom']}, ping on server to prevent 'session expired' every 5 min, server answer:{result}")
 
 
 
