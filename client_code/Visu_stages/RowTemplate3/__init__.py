@@ -180,7 +180,9 @@ class RowTemplate3(RowTemplate3Template):
 
     def button_attestations_click(self, **event_args):
         """This method is called when the button is clicked"""
-        liste_stagiaires = app_tables.stagiaires_inscrits.search(numero=self.item['numero'])
+        liste_stagiaires = app_tables.stagiaires_inscrits.search(
+            tables.order_by("name", ascending=True),
+            numero=self.item['numero'])
         if liste_stagiaires:
             result = anvil.server.call("pdf_reading",liste_stagiaires)
             alert(result)
