@@ -25,27 +25,27 @@ class Pre_R_Moulinette(Pre_R_MoulinetteTemplate):
         self.liste = app_tables.pre_requis_stagiaire.search(
                                                             tables.order_by('numero', ascending=False),
                                                            )
-        print(len(self.liste))
+        #print(len(self.liste))
         
         self.cpt = 1
         for row in self.liste:            
-            print(self.cpt)
+            #print(self.cpt)
             #test = str(row['doc1'])
             test = row['doc1']
-            print(test)
+            #print(test)
             if  row['doc1'] is not None:
                 self.cpt += 1
                 file = row['doc1']
                  # Type de fichier ?
                 path_parent, file_name, file_extension = anvil.server.call('path_info', str(file.name))
-                print("file_name1: ",file_name)
-                print("file_extension: ",file_extension)
+                #print("file_name1: ",file_name)
+                #print("file_extension: ",file_extension)
                 
                 # création d'une liste, à partir du séparateur "."
                 liste_nom_fichier = file_name.split('.')
                 suffix = liste_nom_fichier[0]
                 file_name = suffix+".jpg"
-                print("file_name: ",file_name)
+                #print("file_name: ",file_name)
                 
                 
                 self.task_img, self.durée_traitement = anvil.server.call('run_bg_task_resize_jpg', row, file_name)    

@@ -242,22 +242,22 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
         # lecture des formulaires du stage choisi
         cpt_formulaire = 0
         liste_formulaires = app_tables.stage_satisf.search(stage_row=row)
-        print(len(liste_formulaires), 'formulaires à traiter')
+        print(f"{len(liste_formulaires)} formulaires de satisf. à traiter pour Stage n° {str(row['numero'])}, {row['code_txt']} du {str(row['date_debut'])}")
         
         for formulaire in liste_formulaires:
             date = formulaire['date_heure']
             cpt_formulaire += 1
-            print("==========================FORMULAIRE", cpt_formulaire)
+            #print("==========================FORMULAIRE", cpt_formulaire)
 
             # dico questions fermées
             dico_rep_ferm = formulaire["rep_dico_rep_ferm"]  # dico questions fermées du formulaire
             nb_questions_ferm = len(dico_rep_ferm) #nb questions ds formulaire questions fermées 
-            print("nb_q_fermées: ", nb_questions_ferm)
+            #print("nb_q_fermées: ", nb_questions_ferm)
             
             # dico questions ouvertes
             dico_rep_ouv = formulaire["rep_dico_rep_ouv"]   # dico questions ouvertes du formulaire
             nb_questions_ouv = len(dico_rep_ouv)
-            print("nb_q_ouvertes: ", nb_questions_ouv)
+            #print("nb_q_ouvertes: ", nb_questions_ouv)
             
             # Boucle sur le dictionaire fermé du formulaire
             # ex du contenu du dico en table qd lu:   ('1', ["Conditions d'accueil sur les lieux de formation:", 0])
@@ -272,116 +272,45 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
                     question = str(q) # transorme q (int) en question str
                     #print("======= QUESTION N° ", question)
                     if cle == question:  # ex si question 1        
-                        print("cle/question: ",cle)
-                        print("valeur/reponse: ",reponse)
+                        #print("cle/question: ",cle)
+                        #print("valeur/reponse: ",reponse)
                         if reponse == 0:                                  # le stagiaire a répondu 0 à la question 
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep0_cumul[str(question)])
                             temp += 1    # cumul de la reponse 0    à la question 
                             rep0_cumul[str(question)]=temp
-                            print(rep0_cumul[str(question)])
+                            #print(rep0_cumul[str(question)])
                         if reponse == 1:                                  # le stagiaire a répondu 1 à la question 
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep1_cumul[str(question)])
                             temp += 1    # cumul de la reponse 1    à la question 
                             rep1_cumul[str(question)]=temp
-                            print(rep1_cumul[str(question)])     
+                            #print(rep1_cumul[str(question)])     
                         if reponse == 2:                                  # le stagiaire a répondu 2 à la question 
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep2_cumul[str(question)])
                             temp += 1    # cumul de la reponse 2    à la question 
                             rep2_cumul[str(question)]=temp
-                            print(rep2_cumul[str(question)]) 
+                            #print(rep2_cumul[str(question)]) 
                         if reponse == 3:                                  # le stagiaire a répondu 3 à la question 
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep3_cumul[str(question)])
                             temp += 1    # cumul de la reponse 3    à la question 
                             rep3_cumul[str(question)]=temp
-                            print(rep3_cumul[str(question)]) 
+                            #print(rep3_cumul[str(question)]) 
                         if reponse == 4:                                  # le stagiaire a répondu 4 à la question 
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep4_cumul[str(question)])
                             temp += 1    # cumul de la reponse 3    à la question 
                             rep4_cumul[str(question)]=temp
-                            print(rep4_cumul[str(question)]) 
+                            #print(rep4_cumul[str(question)]) 
                         if reponse == 5:                     # le stagiaire a répondu 5 à la question 
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep5_cumul[str(question)])
                             temp += 1    # cumul de la reponse 3    à la question 
                             rep5_cumul[str(question)]=temp
-                            print("cumul5 ", rep5_cumul[str(question)]) 
-        """            
-        print(f"Résultat pour les {len(liste_formulaires)} formulaires:")  
-        print("nb de rep 0/1: ", rep0_cumul["1"])
-        print("nb de rep 1/1: ", rep1_cumul["1"])
-        print("nb de rep 2/1: ", rep2_cumul["1"])
-        print("nb de rep 3/1: ", rep3_cumul["1"])
-        print("nb de rep 4/1: ", rep4_cumul["1"])
-        print("nb de rep 5/1: ", rep5_cumul["1"])
-        print()
-        print("nb de rep 0/2: ", rep0_cumul["2"])
-        print("nb de rep 1/2: ", rep1_cumul["2"])
-        print("nb de rep 2/2: ", rep2_cumul["2"])
-        print("nb de rep 3/2: ", rep3_cumul["2"])
-        print("nb de rep 4/2: ", rep4_cumul["2"])
-        print("nb de rep 5/2: ", rep5_cumul["2"])
-        print()
-        print("nb de rep 0/3: ", rep0_cumul["3"])
-        print("nb de rep 1/3: ", rep1_cumul["3"])
-        print("nb de rep 2/3: ", rep2_cumul["3"])
-        print("nb de rep 3/3: ", rep3_cumul["3"])
-        print("nb de rep 4/3: ", rep4_cumul["3"])
-        print("nb de rep 5/3: ", rep5_cumul["3"])
-        print()
-        print("nb de rep 0/4: ", rep0_cumul["4"])
-        print("nb de rep 1/4: ", rep1_cumul["4"])
-        print("nb de rep 2/4: ", rep2_cumul["4"])
-        print("nb de rep 3/4: ", rep3_cumul["4"])
-        print("nb de rep 4/4: ", rep4_cumul["4"])
-        print("nb de rep 5/4: ", rep5_cumul["4"])
-        print()
-        print("nb de rep 0/5: ", rep0_cumul["5"])
-        print("nb de rep 1/5: ", rep1_cumul["5"])
-        print("nb de rep 2/5: ", rep2_cumul["5"])
-        print("nb de rep 3/5: ", rep3_cumul["5"])
-        print("nb de rep 4/5: ", rep4_cumul["5"])
-        print("nb de rep 5/5: ", rep5_cumul["5"])
-        print()
-        print("nb de rep 0/6: ", rep0_cumul["6"])
-        print("nb de rep 1/6: ", rep1_cumul["6"])
-        print("nb de rep 2/6: ", rep2_cumul["6"])
-        print("nb de rep 3/6: ", rep3_cumul["6"])
-        print("nb de rep 4/6: ", rep4_cumul["6"])
-        print("nb de rep 5/6: ", rep5_cumul["6"])
-        print()
-        print("nb de rep 0/7: ", rep0_cumul["7"])
-        print("nb de rep 1/7: ", rep1_cumul["7"])
-        print("nb de rep 2/7: ", rep2_cumul["7"])
-        print("nb de rep 3/7: ", rep3_cumul["7"])
-        print("nb de rep 4/7: ", rep4_cumul["7"])
-        print("nb de rep 5/7: ", rep5_cumul["7"])
-        print()
-        print("nb de rep 0/8: ", rep0_cumul["8"])
-        print("nb de rep 1/8: ", rep1_cumul["8"])
-        print("nb de rep 2/8: ", rep2_cumul["8"])
-        print("nb de rep 3/8: ", rep3_cumul["8"])
-        print("nb de rep 4/8: ", rep4_cumul["8"])
-        print("nb de rep 5/8: ", rep5_cumul["8"])
-        print()
-        print("nb de rep 0/9: ", rep0_cumul["9"])
-        print("nb de rep 1/9: ", rep1_cumul["9"])
-        print("nb de rep 2/9: ", rep2_cumul["9"])
-        print("nb de rep 3/9: ", rep3_cumul["9"])
-        print("nb de rep 4/9: ", rep4_cumul["9"])
-        print("nb de rep 5/9: ", rep5_cumul["9"])
-        print()
-        print("nb de rep 0/10: ", rep0_cumul["10"])
-        print("nb de rep 1/10: ", rep1_cumul["10"])
-        print("nb de rep 2/10: ", rep2_cumul["10"])
-        print("nb de rep 3/10: ", rep3_cumul["10"])
-        print("nb de rep 4/10: ", rep4_cumul["10"])
-        print("nb de rep 5/10: ", rep5_cumul["10"])
-        """
+                            #print("cumul5 ", rep5_cumul[str(question)]) 
+       
         
         # à partir du dico  j'extrais les questions pour les afficher 
         cpt_questions = 0
@@ -484,29 +413,29 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
         cpt_formulaire = 0
         for formulaire in liste_formulaires:
             cpt_formulaire += 1
-            print("==========================FORMULAIRE", cpt_formulaire)
+            #print("==========================FORMULAIRE", cpt_formulaire)
 
             # lecture dico questions ouvertes du formulaire
             dico_rep_ouv = formulaire["rep_dico_rep_ouv"]  # dico questions ouvertes du formulaire
             nb_questions_ouv = len(dico_rep_ouv) #nb questions ds formulaire questions fermées 
-            print("nb_q_ouvertes: ", nb_questions_ouv)
+            #print("nb_q_ouvertes: ", nb_questions_ouv)
 
             # lecture des 10 réponses de ce formulaire
             for cle_num_question,val in dico_rep_ouv.items():
                 quest = val[0]
                 rep = val[1]
                 liste_rep=[]   # liste cumul des réponses d'1 question
-                print("===========================  question n° ",cle_num_question )
-                print("===========================  question ", quest )
-                print(" ========================== rep ", rep)
-                print()
+                #print("===========================  question n° ",cle_num_question )
+                #print("===========================  question ", quest )
+                #print(" ========================== rep ", rep)
+                #print()
                 
                 #recherche de la clef q_rep déjà constituée
                 liste_rep = q_rep[cle_num_question]
             
                 # si 1er formulaire, je met les questions ds le dict des reponses q_rep
                 if cpt_formulaire == 1:
-                    print("-------------------------------------------------------------------------- Ajout de q°", quest )
+                    #print("-------------------------------------------------------------------------- Ajout de q°", quest )
                     #ajout de la question ds la valeur 
                     liste_rep.append(quest)
                     
@@ -520,9 +449,9 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
                 #réecriture de la question et de ses réponses ds le dictionaires des réponses
                 q_rep[cle_num_question]=liste_rep
 
-        print(q_rep)
-        print()
-        print()
+        #print(q_rep)
+        #print()
+        #print()
         
         # Boucle sur le dictionaire des questions/réponses
         for cle_num_question,val in q_rep.items():
@@ -540,7 +469,7 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
             
         """ ============================================================================================= FIN DE L'AFFICHAGE DU RESULTAT """
         # Génération du pdf si non existant A CHANGER QD L'ENQUETE EST COMPLETE
-        print("génération du pdf possible")
+        #print("génération du pdf possible")
         self.button_downl_pdf1.visible = True
         self.button_downl_pdf0.visible = True
         #if self.test_existence_pdf is not True or self.test_existence_pdf is True:

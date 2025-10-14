@@ -77,7 +77,7 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
                                                            user_email=user_stagiaire,
                                                            #enquete_satisf=False                         # Je permets plusieurs saisie
                                                           )
-            print("nb de stages où le stagiaire est inscrit; ", len(liste0))
+            print(f"Formulaire de satisfaction pour {user_stagiaire['nom']}")
             liste_drop_d = []
             for row in liste0:
                 #lecture fichier père stage
@@ -845,9 +845,9 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
             (self.check_box_10_6.checked is True):
             nb += 1  
             
-        print("test nb questions fermées répondues: ",nb)
+        #print("test nb questions fermées répondues: ",nb)
         global nb_questions_ferm
-        print("test nb questions fermées dico: ",nb_questions_ferm)
+        #print("test nb questions fermées dico: ",nb_questions_ferm)
         if nb != nb_questions_ferm:
             alert("Répondez à toutes les questions bleues svp !")
             return
@@ -900,8 +900,8 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         print("test nb questions ouvertes répondues: ",nb_ouv)
         
         global nb_questions_ouvertes
-        print("test nb questions ouvertes dico: ",nb_questions_ouvertes)
-        print("test nb questions ouvertes dico obligatoires: ",nb_ouv_obligatoires)
+        #print("test nb questions ouvertes dico: ",nb_questions_ouvertes)
+        #print("test nb questions ouvertes dico obligatoires: ",nb_ouv_obligatoires)
         if nb_ouv != nb_ouv_obligatoires :
             alert("Répondez à toutes les questions vertes obligatoires svp !")
             return
@@ -943,9 +943,9 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
                 else: # nb de questions atteint, on sort
                     break
         # vérif de la création du dico rep fermées            
-        print()    
-        print("============== Dict reponses fermées: ")
-        print(dico_rep_q_ferm)
+        #print()    
+        #print("============== Dict reponses fermées: ")
+        #print(dico_rep_q_ferm)
         
         # Création du dict réponses ouvertes
         clef = "1"          # num question ,  la clé doit être str qd j'envoie le dico en server-side
@@ -1000,13 +1000,13 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
             
         # Print pour vérif des 2 dicos    
        
-        print()
-        print("============== Dict reponses ouvertes: ")
-        print(dico_rep_q_ouv)
+        #print()
+        #print("============== Dict reponses ouvertes: ")
+        #print(dico_rep_q_ouv)
         
         date_time = ""
         date_time = French_zone.french_zone_time()  # importé en ht de ce script, 
-        print()
+        #print()
         date_time = str(date_time)[0:19]   # je prends les 19 1ers caract
         print(date_time)
         

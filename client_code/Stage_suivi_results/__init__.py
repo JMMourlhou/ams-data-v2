@@ -299,24 +299,21 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
                                                                 stage_num_txt= str(self.row['numero']),   # -------------------------------------   A MODIFIER
                                                                 user_role = 'T'        # "T" si sélection Tuteurs ds drop down sinon "S"
                                                             )
-        print(len(liste_formulaires), "formulaires de suivi à traiter en 'Stage suivi result, ligne 253'")
-        
+                
         cpt_formulaire = 0
         for formulaire in liste_formulaires:
             date = formulaire["date_heure"]
             cpt_formulaire += 1
-            print("==========================FORMULAIRE", cpt_formulaire)
+            #print("==========================FORMULAIRE", cpt_formulaire)
 
             # dico questions fermées
             dico_rep_ferm = formulaire["rep_dico_rep_ferm"]  # dico questions fermées du formulaire
             nb_questions_ferm = len(dico_rep_ferm)  # nb questions ds formulaire questions fermées
-            print("nb_q_fermées: ", nb_questions_ferm)
+            #print("nb_q_fermées: ", nb_questions_ferm)
 
             # dico questions ouvertes
             dico_rep_ouv = formulaire["rep_dico_rep_ouv"]  # dico questions ouvertes du formulaire
-            nb_questions_ouv = len(dico_rep_ouv)
-            print("nb_q_ouvertes: ", nb_questions_ouv)
-
+            
             # Boucle sur le dictionaire fermé du formulaire
             # ex du contenu du dico en table qd lu:   ('1', ["Conditions d'accueil sur les lieux de formation:", 0])
             #                                          cle   valeur
@@ -329,8 +326,8 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
                     question = str(q)  # transorme q (int) en question str
                     # print("======= QUESTION N° ", question)
                     if cle == question:  # ex si question 1
-                        print("cle/question: ", cle)
-                        print("valeur/reponse: ", reponse)
+                        #print("cle/question: ", cle)
+                        #print("valeur/reponse: ", reponse)
                         if reponse == 0:  # le stagiaire a répondu 0 à la question
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep0_cumul[str(question)])
@@ -342,31 +339,31 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
                             temp = int(rep1_cumul[str(question)])
                             temp += 1  # cumul de la reponse 1    à la question
                             rep1_cumul[str(question)] = temp
-                            print(rep1_cumul[str(question)])
+                            #print(rep1_cumul[str(question)])
                         if reponse == 2:  # le stagiaire a répondu 2 à la question
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep2_cumul[str(question)])
                             temp += 1  # cumul de la reponse 2    à la question
                             rep2_cumul[str(question)] = temp
-                            print(rep2_cumul[str(question)])
+                            #print(rep2_cumul[str(question)])
                         if reponse == 3:  # le stagiaire a répondu 3 à la question
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep3_cumul[str(question)])
                             temp += 1  # cumul de la reponse 3    à la question
                             rep3_cumul[str(question)] = temp
-                            print(rep3_cumul[str(question)])
+                            #print(rep3_cumul[str(question)])
                         if reponse == 4:  # le stagiaire a répondu 4 à la question
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep4_cumul[str(question)])
                             temp += 1  # cumul de la reponse 3    à la question
                             rep4_cumul[str(question)] = temp
-                            print(rep4_cumul[str(question)])
+                            #print(rep4_cumul[str(question)])
                         if reponse == 5:  # le stagiaire a répondu 5 à la question
                             # lecture dico des cumuls pour la question, réponse 0
                             temp = int(rep5_cumul[str(question)])
                             temp += 1  # cumul de la reponse 3    à la question
                             rep5_cumul[str(question)] = temp
-                            print("cumul5 ", rep5_cumul[str(question)])
+                            #print("cumul5 ", rep5_cumul[str(question)])
        
 
         # à partir du dico  j'extrais les questions pour les afficher
@@ -468,13 +465,13 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
                                                         )
         if type_de_suivi == "T":
             # Préparation du column panel des noms des Tuteurs
-            print("tuteur : ", self.row['numero'])
+            print("Formulaire résultats suivi tuteur : ", self.row['numero'])
             self.liste_noms = app_tables.stagiaires_inscrits.search(
                                                             tables.order_by("name", ascending=True),
                                                             pour_stage_num=self.row,                     # CRITERE DIFFERENT, COLONE DIFFERENTE QUE POUR STAGIAIRE
                                                             enquete_suivi=True   # Enquete_suivi ds  table stagiaires_inscrits
                                                         )
-        print("stage suivi result ligne 499, nb de noms: ", len(self.liste_noms))              # TROUVER ERREUR: self.row ?
+        #print("stage suivi result ligne 476, nb de noms: ", len(self.liste_noms))              # TROUVER ERREUR: self.row ?
         self.repeating_panel_noms.items = self.liste_noms
         
          # Initialisation des clefs: valeur du dictionnaire des réponses

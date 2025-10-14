@@ -163,7 +163,7 @@ def modif_stage(row_stage,    # row table stages
               allow_form_com  
              ):
     numero=int(numero)
-    print(f" +++++++++++++++++++++ check_box_allow_com (en début de serveur): {allow_form_com}")
+    #print(f" +++++++++++++++++++++ check_box_allow_com (en début de serveur): {allow_form_com}")
     # lecture fichier père code stages
     code_stage = app_tables.codes_stages.get(code=row_stage['code']['code'])
     if not code_stage:   

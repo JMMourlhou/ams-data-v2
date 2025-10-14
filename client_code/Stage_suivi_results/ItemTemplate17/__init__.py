@@ -35,18 +35,15 @@ class ItemTemplate17(ItemTemplate17Template):
                                                 stage_num_txt=str(self.item['numero']),
                                                 user_role = "S"
                                                 )
-            print("Template 17, nb de formulaires du stagiaire: ",len(list))
+            
             
         if type_suivi == "T":
-            print("Template 17, email: ",self.item['user_email']['email'])
-            print("Template 17, num: ",self.item['numero'])
-            
+                       
             list = app_tables.stage_suivi.search(
                                                 user_email=self.item['user_email']['email'],
                                                 stage_num_txt=str(self.item['pour_stage_num']['numero']),    # 
                                                 user_role = "T"
                                                 )
-            print("Template 17, nb de formulaires du Tuteur: ",len(list))
         nb_formulaires = len(list)
         
         #Boucle sur les formulaires
@@ -68,7 +65,7 @@ class ItemTemplate17(ItemTemplate17Template):
 
             # Affichage des réponses fermées
             rep_ferm = formulaire['rep_dico_rep_ferm']
-            print(rep_ferm)
+            #print(rep_ferm)
             for cle_num_question, val in rep_ferm.items():
                 #Boucle sur chaque rep ouverte
                 qt = cle_num_question
