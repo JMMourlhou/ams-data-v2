@@ -123,5 +123,7 @@ class RowTemplate4(RowTemplate4Template):
         liste_email.append((self.text_box_1.text, self.item['user_email']["prenom"].capitalize(),""))   # mail et prénom, id pas besoin
         open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
 
+   
+
 
         

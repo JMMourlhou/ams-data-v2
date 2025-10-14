@@ -110,6 +110,11 @@ components:
       name: button_trombi
       properties: {foreground: 'theme:Tertiary', icon: 'fa:users', text: Trombi, visible: true}
       type: Button
+    - event_bindings: {click: button_attestations_click}
+      layout_properties: {}
+      name: button_attestations
+      properties: {foreground: 'theme:Tertiary', text: Attest}
+      type: Button
     layout_properties: {grid_position: 'EMGUXL,CUWCHL'}
     name: flow_panel_2
     properties: {align: center, gap: small}

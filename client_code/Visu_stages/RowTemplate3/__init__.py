@@ -178,3 +178,9 @@ class RowTemplate3(RowTemplate3Template):
         from ...Visu_trombi import Visu_trombi
         open_form('Visu_trombi',self.item['numero'], self.item['code_txt'], False, None, False)
 
+    def button_attestations_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        liste_stagiaires = app_tables.stagiaires_inscrits.search(numero=self.item['numero'])
+        if liste_stagiaires:
+            result = anvil.server.call("pdf_reading",liste_stagiaires)
+            alert(result)
