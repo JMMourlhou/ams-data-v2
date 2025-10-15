@@ -154,14 +154,6 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             if self.text_box_c_naissance.text == "":
                 alert("Entrez votre Code Postal de naissance !\n\n Si vous êtes né à l'étranger, entrez 99999")
                 return
-            if len(self.text_box_c_naissance.text) != 5:
-                alert("Le Code Postal de naissance doit être de 5 chiffres,\n\nPas de lettres !\n\n Si vous êtes né à l'étranger, entrez 99999")
-                return
-            try:
-                cp_test = int(self.text_box_c_naissance.text)
-            except:
-                alert("Le Code Postal de naissance ne doit contenir que des chiffres\n\n Si vous êtes né à l'étranger, entrez 99999")
-                return
                 
             
             if self.text_area_rue.text == "":

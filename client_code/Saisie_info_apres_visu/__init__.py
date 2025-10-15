@@ -311,6 +311,8 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             else:
                 return
 
+    
+
    
 
 
