@@ -95,16 +95,17 @@ components:
       - event_bindings: {click: bt_maj_txt_stagiaires_inscrits_click}
         layout_properties: {}
         name: bt_maj_txt_stagiaires_inscrits
-        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:anchor', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Utilitaires, tooltip: '', underline: false, visible: true}
+        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:anchor', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Utilitaires, tooltip: '', underline: false, visible: true}
         type: Button
       - event_bindings: {click: bt_com_1result_click}
+        layout_properties: {}
         name: bt_com_1result
-        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:user-circle', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 1 Résultat Com, tooltip: '', underline: false, visible: true}
+        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:user-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: 1 Résultat Com, tooltip: '', underline: false, visible: true}
         type: Button
       - event_bindings: {click: bt_com_results_click}
         layout_properties: {}
         name: bt_com_results
-        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:user-circle', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Résultats Com, tooltip: '', underline: false, visible: true}
+        properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:user-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Résultats Com, tooltip: '', underline: false, visible: true}
         type: Button
       layout_properties: {grid_position: 'AOZXYS,RPVEJB'}
       name: flow_panel_admin_only
@@ -120,7 +121,7 @@ components:
         - event_bindings: {click: button_mail_histo_click}
           layout_properties: {}
           name: button_mail_histo
-          properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:send-o', text: Publipostage, visible: true}
+          properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:send-o', role: elevated-button, text: Publipostage, visible: true}
           type: Button
         layout_properties: {grid_position: 'INPMXV,IOSLNA'}
         name: flow_panel_bureaux
@@ -178,12 +179,12 @@ components:
     - event_bindings: {click: button_create_recherche_click}
       layout_properties: {grid_position: 'XQPTLK,EGEBGF'}
       name: button_create_recherche
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:user', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: small, text: Rechercher 1 stagiaire / groupe, tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:user', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: small, text: Rechercher 1 stagiaire / groupe, tooltip: '', underline: false, visible: true}
       type: Button
     - event_bindings: {click: bt_gestion_stages_click}
       layout_properties: {grid_position: 'XOIFZD,ZGANVD'}
       name: bt_gestion_stages
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: small, text: '  Stages  ', tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:users', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: small, text: '  Stages  ', tooltip: '', underline: false, visible: true}
       type: Button
     layout_properties: {grid_position: 'OKHWRD,CHXZFJ'}
     name: outlined_card_niv1
