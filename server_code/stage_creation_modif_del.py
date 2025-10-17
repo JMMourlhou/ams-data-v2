@@ -261,9 +261,6 @@ def del_stage(row_id, stage_num):   # row id du stage à annuler, numéro du sta
 def sov_diplomes(stage_row, file):   # stage_row : 1 row table 'stages' 
     try:
         stage_row.update( diplomes = file )
-        result = True
-        e = ""
+        return True, ""
     except Exception as e:
-        result = False
-        e=e
-    return result, e
+        return False, e

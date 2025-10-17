@@ -332,20 +332,10 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         """This method is called when the text in this text box is edited"""
         self.button_validation.visible = True
 
-    def file_loader_diplomes_change(self, file, **event_args):
-        """This method is called when a new file is loaded into this FileLoader"""
-        row = self.drop_down_code_stage.selected_value    # Récupération de la ligne stage sélectionnée
-        if row is None:
-            alert("Entrez le code du stage")
-            return
-        result = anvil.server.call('sov_diplomes',row, file)
-        if result is True :
-            alert("Fichier pdf des diplomes enregisté !")
-        else :
-            alert("Fichier pdf des diplomes non enregisté !")
+    
+        
 
     
-
 
 
 

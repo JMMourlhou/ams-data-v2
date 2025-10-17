@@ -60,7 +60,10 @@ class RowTemplate3(RowTemplate3Template):
                 espace_caractère = espace_caractère + " "
             self.text_box_2.text = self.item['code']['code'] + espace_caractère
             
-            #self.text_box_2.text = self.item['code']['code']
+        # Affichage du bouton d'envoi des attestations s'ils sont sauvés
+        # (si la colonne 'diplomes' n'est pas None)  
+        if self.item['diplomes'] is not None:
+            self.button_attestations.visible = True
 
     # récupération par l'event:
     def text_box_3_click(self, **event_args):   # Click sur date
@@ -186,3 +189,11 @@ class RowTemplate3(RowTemplate3Template):
         if liste_stagiaires:
             result = anvil.server.call("pdf_reading",liste_stagiaires)
             alert(result)
+
+    def file_loader_diplomes_change(self, file, **event_args):
+        """This method is called when a new file is loaded into this FileLoader"""
+        result, erreur = anvil.server.call('sov_diplomes',self.item, file)
+        if result is True :
+            alert("Fichier pdf des diplomes enregisté !")
+        else :
+            alert(erreur)
