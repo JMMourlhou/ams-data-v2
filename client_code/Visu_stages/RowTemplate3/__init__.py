@@ -195,5 +195,6 @@ class RowTemplate3(RowTemplate3Template):
         result, erreur = anvil.server.call('sov_diplomes',self.item, file)
         if result is True :
             alert("Fichier pdf des diplomes enregisté !")
+            self.button_attestations.visible = True
         else :
             alert(erreur)
