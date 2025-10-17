@@ -187,7 +187,7 @@ class RowTemplate3(RowTemplate3Template):
             tables.order_by("name", ascending=True),
             numero=self.item['numero'])
         if liste_stagiaires:
-            result = anvil.server.call("pdf_reading",liste_stagiaires)
+            result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
             alert(result)
 
     def file_loader_diplomes_change(self, file, **event_args):
