@@ -254,3 +254,16 @@ def del_stage(row_id, stage_num):   # row id du stage à annuler, numéro du sta
             cpt=int(cpt_num_stage_row['compteur'])-1 
             cpt_num_stage_row.update(compteur=cpt)
     return result
+
+# Appelé par Stage_visu_modif   
+# Sauve le fichier pdf des diplomes
+@anvil.server.callable
+def sov_diplomes(stage_row, file):   # stage_row : 1 row table 'stages' 
+    try:
+        stage_row.update( diplomes = file )
+        result = True
+        e = ""
+    except Exception as e:
+        result = False
+        e=e
+    return result, e
