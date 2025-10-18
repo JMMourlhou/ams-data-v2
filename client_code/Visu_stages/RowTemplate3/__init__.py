@@ -199,7 +199,8 @@ class RowTemplate3(RowTemplate3Template):
         if liste_stagiaires:
             
             result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
-            if result == "ok":
+            print("result",result)
+            if result == "OK":
                 self.check_box_diplomes_sent.checked = True
                 self.check_box_diplomes_sent_change()
             else:
@@ -220,7 +221,7 @@ class RowTemplate3(RowTemplate3Template):
         # maj col diplom_sent ds table du stage
         result, erreur = anvil.server.call("attestions_sent", self.item, self.check_box_diplomes_sent.checked)    # Stage, stagiaires_rows
         if result is True :
-            alert("MAJ effectuée")
+            alert("Traitement effectué !")
             """
             if self.check_box_diplomes_sent.checked is False:
                 self.button_attestations.visible = False
