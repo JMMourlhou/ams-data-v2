@@ -21,7 +21,7 @@ components:
       border: ''
       enabled: true
       font: ''
-      font_size: null
+      font_size: 19
       foreground: theme:Tertiary
       include_placeholder: true
       italic: false
@@ -29,28 +29,33 @@ components:
       placeholder: Code stage
       role: null
       spacing_above: small
-      spacing_below: small
+      spacing_below: none
       tooltip: ''
       underline: false
       visible: true
     type: DropDown
   - layout_properties: {grid_position: 'YZUQOI,DTMYQF'}
     name: text_box_intitule
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Intitulé, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Intitulé, role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - layout_properties: {grid_position: 'YZUQOI,BALIWG'}
     name: text_box_num_stage
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: num, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: num, role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+    type: TextBox
+  - event_bindings: {change: text_box_pv_change}
+    layout_properties: {grid_position: 'YZUQOI,NCHGDE'}
+    name: text_box_pv
+    properties: {background: 'theme:Primary', foreground: 'theme:On Secondary Container', placeholder: pv, text: pv}
     type: TextBox
   - event_bindings: {change: date_picker_from_change}
     layout_properties: {grid_position: 'NCHHTY,EWWKQU'}
     name: date_picker_from
-    properties: {align: left, background: 'theme:Primary', bold: true, border: '', date: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: '', min_date: '', pick_time: false, placeholder: 'Du ', role: null, spacing_above: small, spacing_below: small, tooltip: '', underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: true, border: '', date: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: '', min_date: '', pick_time: false, placeholder: 'Du ', role: null, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
     type: DatePicker
   - event_bindings: {change: date_picker_to_change}
     layout_properties: {grid_position: 'NCHHTY,HWRLON'}
     name: date_picker_to
-    properties: {align: left, background: 'theme:Primary', bold: true, border: '', date: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: '', min_date: '', pick_time: false, placeholder: Au, role: null, spacing_above: small, spacing_below: small, tooltip: '', underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: true, border: '', date: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: '', min_date: '', pick_time: false, placeholder: Au, role: null, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
     type: DatePicker
   - event_bindings: {change: drop_down_lieux_change}
     layout_properties: {grid_position: 'NCHHTY,BODYND'}
@@ -62,15 +67,15 @@ components:
       border: ''
       enabled: true
       font: ''
-      font_size: null
+      font_size: 19
       foreground: theme:On Primary
       include_placeholder: true
       italic: false
       items: []
       placeholder: Lieu
       role: null
-      spacing_above: small
-      spacing_below: small
+      spacing_above: none
+      spacing_below: none
       tooltip: ''
       underline: false
       visible: true
@@ -78,17 +83,17 @@ components:
   - event_bindings: {change: text_box_nb_stagiaires_deb_change}
     layout_properties: {grid_position: 'PNQOFK,VUQDOO'}
     name: text_box_nb_stagiaires_deb
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nb stagiaires début, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: number, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nb stagiaires début, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: number, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: text_box_nb_stagiaires_fin_change}
     layout_properties: {grid_position: 'PNQOFK,MAKWWD'}
     name: text_box_nb_stagiaires_fin
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nb stagiaires fin, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: number, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nb stagiaires fin, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: number, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: text_box_nb_stagiaires_diplom_change}
     layout_properties: {grid_position: 'PNQOFK,QFPUNN'}
     name: text_box_nb_stagiaires_diplom
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nb stagiaires diplômés, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: number, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Nb stagiaires diplômés, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: number, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: text_area_commentaires_change}
     layout_properties: {grid_position: 'KVEZRN,ZQLFGM'}
@@ -107,7 +112,7 @@ components:
       italic: false
       placeholder: Commentaires
       role: null
-      spacing_above: small
+      spacing_above: none
       spacing_below: small
       text: "XXX  <--- Pour quel stage ?\nAutres commentaires: "
       tooltip: ''
@@ -116,7 +121,7 @@ components:
     type: TextArea
   layout_properties: {grid_position: 'IWAHJZ,GMRZDC'}
   name: column_panel_bloc
-  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  properties: {background: '', border: '', col_spacing: small, col_widths: '{"ZBDZNC":20,"DTMYQF":20,"BALIWG":10,"NCHGDE":10}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
   type: ColumnPanel
 - event_bindings: {click: button_validation_click}
   layout_properties:

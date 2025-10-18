@@ -92,7 +92,8 @@ class Stage_creation(Stage_creationTemplate):
                                                 self.date_picker_to.date,
                                                 self.text_box_nb_stagiaires_fin.text,               # extraction du type de stga de la ligne dropdown    
                                                 self.text_box_nb_stagiaires_diplom.text,
-                                                self.text_area_commentaires.text
+                                                self.text_area_commentaires.text,
+                                                self.
                                                  )
         if result is True :
             alert("Stage enregisté !")
