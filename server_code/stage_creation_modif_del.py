@@ -160,7 +160,8 @@ def modif_stage(row_stage,    # row table stages
               allow_bgt_generation,  # True/False
               allow_form_satisf,     # True/False 
               allow_form_suivi,       # True/False 
-              allow_form_com  
+              allow_form_com,
+              pv  
              ):
     numero=int(numero)
     #print(f" +++++++++++++++++++++ check_box_allow_com (en début de serveur): {allow_form_com}")
@@ -194,7 +195,8 @@ def modif_stage(row_stage,    # row table stages
                     allow_bgt_generation = allow_bgt_generation,
                     saisie_satisf_ok =allow_form_satisf,         # formulaire de satisf autorisé ? T/F
                     saisie_suivi_ok = allow_form_suivi,          # formulaire de suivi autorisé ? T/F
-                    display_com = allow_form_com                 # formulaire de communication autorisé ? T/F
+                    display_com = allow_form_com,                # formulaire de communication autorisé ? T/F
+                    num_pv=pv     
                     )
         valid=True
     except Exception as e:

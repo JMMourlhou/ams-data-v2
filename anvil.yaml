@@ -675,7 +675,7 @@ db_schema:
     - admin_ui: {order: 13.5, width: 111}
       name: diplom_sent
       type: bool
-    - admin_ui: {order: -0.75, width: 200}
+    - admin_ui: {order: -0.75, width: 100}
       name: num_pv
       type: string
     server: full

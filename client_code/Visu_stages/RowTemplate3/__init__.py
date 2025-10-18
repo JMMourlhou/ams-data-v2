@@ -50,6 +50,7 @@ class RowTemplate3(RowTemplate3Template):
             self.text_box_3.text = self.item['date_debut'].strftime("%d/%m/%Y")   # format date française avec fonction Python strftime
         
         self.text_box_1.text = self.item['numero']
+        self.text_box_pv.text = self.item['num_pv']
         stage = self.item['code']['code']
         stage = stage.strip()
         

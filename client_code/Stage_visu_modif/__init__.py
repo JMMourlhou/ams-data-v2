@@ -73,6 +73,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             self.check_box_allow_satisf.checked = self.stage_row['saisie_satisf_ok']
             self.check_box_allow_suivi.checked = self.stage_row['saisie_suivi_ok']
             self.check_box_allow_com.checked = self.stage_row['display_com']
+            self.text_box_pv.text = self.stage_row['num_pv']
             
             
             """ *************************************************************************"""
@@ -116,6 +117,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
     
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
+        
         # Je connais la forme appelante: en init : self.f = get_open_form()
         if str(self.f) != str(self) and self.button_validation.visible is not True:
             open_form(self.f)
@@ -174,11 +176,14 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
                                                 self.check_box_allow_bg_task.checked,
                                                 self.check_box_allow_satisf.checked,
                                                 self.check_box_allow_suivi.checked,
-                                                self.check_box_allow_com.checked
+                                                self.check_box_allow_com.checked,
+                                                self.text_box_pv.text
                                                  )
         if result is True :
             alert("Stage mis à jour !")
-            open_form(self.f)
+            #open_form(self.f)
+            from ..Visu_stages import Visu_stages
+            open_form("Visu_stages")
         else :
             alert("Stage non modifié !")
             self.button_validation.visible = False
@@ -329,6 +334,10 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         open_form('Recherche_stagiaire',num_stage)
 
     def text_box_num_stage_change(self, **event_args):
+        """This method is called when the text in this text box is edited"""
+        self.button_validation.visible = True
+
+    def text_box_pv_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
         self.button_validation.visible = True
 

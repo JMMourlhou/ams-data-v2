@@ -18,13 +18,9 @@ class Visu_stages(Visu_stagesTemplate):
         # Any code you write here will run before the form opens.    
         
         # Initialisation de la liste des stages à afficher
-        
-        # drop_down mode fi pour le repeat_panel de Stage_visu_modif
         self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
         
-        liste_stages = app_tables.stages.search(q.fetch_only("numero", "type_stage", "date_debut"),
-                                                                tables.order_by("date_debut", ascending=False)
-                                                               )   
+        liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False))   
         self.repeating_panel_1.items = liste_stages
             
     def button_annuler_click(self, **event_args):
