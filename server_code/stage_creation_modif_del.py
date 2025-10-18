@@ -264,3 +264,13 @@ def sov_diplomes(stage_row, file):   # stage_row : 1 row table 'stages'
         return True, ""
     except Exception as e:
         return False, e
+
+# Appelé par Stage_visu_modif   
+# En cas de
+@anvil.server.callable
+def attestions_sent(stage_row, sent_checked):   # stage_row : 1 row table 'stages' 
+    try:
+        stage_row.update( diplom_sent = sent_checked )
+        return True, ""
+    except Exception as e:
+        return False, e

@@ -26,29 +26,33 @@ class RowTemplate3(RowTemplate3Template):
         if app_user['role'] == "J":
             self.button_inscription.visible = False
             self.button_del_stage.visible = False
+            
         self.button_qcm.tag.stage = self.item['numero']  #numero de stage en tag du bouton self.button_qcm
         
         # Affichage en fonction largeur écran
         if screen_size < 800:
             self.text_box_2.font_size = 12
-            self.text_box_1.visible = False   # numéro du stage non visible
+            #self.text_box_1.visible = False   # numéro du stage non visible
             self.button_del_stage.visible = False  # BT annulation du stage non visible
+            self.file_loader_diplomes.text = "Dipl."
+            self.check_box_diplomes_sent.text = "Envoi"
+            self.button_attestations.text = ""
             self.button_sending.text = ""
             self.button_trombi.text = ""
             self.button_export_xls.text = ""
-            if self.item['date_debut'] is not None:
-                self.text_box_3.text = self.item['date_debut'].strftime("%m/%Y")   # format date française avec fonction Python strftime
+         
         else:
             self.text_box_1.visible = True
-            self.button_inscription.text = "Inscription"
+            self.button_inscription.text = "Inscript°"
             self.button_pre_requis.text = "Pré-requis"
-            if self.item['date_debut'] is not None:
-                self.text_box_3.text = self.item['date_debut'].strftime("%d/%m/%Y")   # format date française avec fonction Python strftime
-            self.button_qcm.text = "Résultats des QCM"
+            
+        if self.item['date_debut'] is not None:
+            self.text_box_3.text = self.item['date_debut'].strftime("%d/%m/%Y")   # format date française avec fonction Python strftime
         
         self.text_box_1.text = self.item['numero']
         stage = self.item['code']['code']
         stage = stage.strip()
+        
         if len(self.item['commentaires'])>2:
             self.text_box_2.text = self.item['code']['code']+" "+self.item['commentaires'][0:5] # ajout des 5 1eres lettres du commentaire (pour quel stage)
         else:
@@ -64,6 +68,11 @@ class RowTemplate3(RowTemplate3Template):
         # (si la colonne 'diplomes' n'est pas None)  
         if self.item['diplomes'] is not None:
             self.button_attestations.visible = True
+            self.check_box_diplomes_sent.visible = True
+            self.check_box_diplomes_sent.checked = self.item['diplom_sent']
+
+        # Num de PV FPMNS
+        self.text_box_pv.text = self.item['num_pv']
 
     # récupération par l'event:
     def text_box_3_click(self, **event_args):   # Click sur date
@@ -187,8 +196,12 @@ class RowTemplate3(RowTemplate3Template):
             tables.order_by("name", ascending=True),
             numero=self.item['numero'])
         if liste_stagiaires:
+            
             result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
-            alert(result)
+            if result == "ok":
+                self.check_box_diplomes_sent.checked = True
+            else:
+                alert(result)
 
     def file_loader_diplomes_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -196,5 +209,20 @@ class RowTemplate3(RowTemplate3Template):
         if result is True :
             alert("Fichier pdf des diplomes enregisté !")
             self.button_attestations.visible = True
+            self.check_box_diplomes_sent.visible = True
+        else :
+            alert(erreur)
+
+    def check_box_diplomes_sent_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        # maj col diplom_sent ds table du stage
+        result, erreur = anvil.server.call("attestions_sent", self.item, self.check_box_diplomes_sent.checked)    # Stage, stagiaires_rows
+        if result is True :
+            alert("MAJ effectuée")
+            """
+            if self.check_box_diplomes_sent.checked is False:
+                self.button_attestations.visible = False
+                self.check_box_diplomes_sent.visible = False
+            """
         else :
             alert(erreur)

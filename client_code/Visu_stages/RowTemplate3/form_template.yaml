@@ -2,21 +2,21 @@ components:
 - components:
   - components:
     - event_bindings: {click: text_box_2_click}
-      layout_properties: {expand: true, width: 84.38068620605469}
+      layout_properties: {width: 130.60205224609376}
       name: text_box_2
       properties:
         align: full
-        background: ''
+        background: theme:Tertiary
         bold: true
         border: ''
         enabled: true
         font: ''
         font_size: null
-        foreground: theme:Tertiary
+        foreground: theme:On Primary Container
         icon: ''
         icon_align: left
         italic: false
-        role: outlined-button
+        role: elevated-button
         spacing:
           padding: [null, '5', null, '10']
         spacing_above: small
@@ -26,104 +26,172 @@ components:
         underline: false
         visible: true
       type: Button
-    layout_properties: {full_width_row: false, grid_position: 'EMGUXL,LEJSQR'}
+    layout_properties: {grid_position: 'YCOQPM,HSKQJC'}
     name: flow_panel_type
-    properties: {align: left, gap: none}
+    properties: {align: center, gap: none}
     type: FlowPanel
   - components:
-    - event_bindings: {click: text_box_3_click}
-      name: text_box_3
+    - components:
+      - event_bindings: {click: text_box_3_click}
+        layout_properties: {expand: false, width: 20}
+        name: text_box_3
+        properties:
+          align: center
+          background: ''
+          bold: false
+          border: ''
+          enabled: true
+          font: ''
+          font_size: 10
+          foreground: theme:On Primary
+          icon: ''
+          icon_align: left
+          italic: false
+          role: null
+          spacing:
+            padding: ['0', null, null, '5']
+          spacing_above: small
+          spacing_below: small
+          text: 'dates               '
+          tooltip: ''
+          underline: false
+          visible: true
+        type: Button
+      - event_bindings: {click: text_box_1_click}
+        layout_properties: {}
+        name: text_box_1
+        properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'num ', tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_inscription_click}
+        name: button_inscription
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: +, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_pr_requis_click}
+        name: button_pre_requis
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_qcm_click}
+        name: button_qcm
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Qcm, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_trombi_click}
+        layout_properties: {}
+        name: button_trombi
+        properties: {foreground: 'theme:Tertiary', icon: 'fa:users', text: Trombi, visible: true}
+        type: Button
+      - event_bindings: {click: button_sending_click}
+        layout_properties: {}
+        name: button_sending
+        properties:
+          align: center
+          background: ''
+          bold: false
+          border: ''
+          enabled: true
+          font: ''
+          font_size: 15
+          foreground: theme:Tertiary
+          icon: fa:send-o
+          icon_align: left
+          italic: false
+          role: null
+          spacing:
+            padding: [null, '8', null, null]
+          spacing_above: none
+          spacing_below: none
+          text: Mail
+          tooltip: ''
+          underline: false
+          visible: true
+        type: Button
+      - event_bindings: {click: button_del_stage_click}
+        layout_properties: {}
+        name: button_del_stage
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Stage, tooltip: '', underline: false, visible: true}
+        type: Button
+      layout_properties: {grid_position: 'CXNCMM,YEZVNE'}
+      name: flow_panel_2
+      properties: {align: justify, gap: tiny}
+      type: FlowPanel
+    layout_properties: {grid_position: 'YCOQPM,APUGDT'}
+    name: column_panel_4
+    properties:
+      background: theme:Secondary
+      role: elevated-card
+      spacing:
+        margin: [null, '10', null, null]
+        padding: ['3', null, '3', null]
+      wrap_on: never
+    type: ColumnPanel
+  - components:
+    - event_bindings: {click: text_box_2_click}
+      layout_properties: {width: 109.024707421875}
+      name: text_box_pv
       properties:
-        align: center
-        background: ''
-        bold: false
+        align: full
+        background: theme:Primary
+        bold: true
         border: ''
         enabled: true
         font: ''
-        font_size: 10
-        foreground: theme:On Primary
+        font_size: null
+        foreground: theme:On Primary Container
         icon: ''
         icon_align: left
-        italic: false
+        italic: true
         role: null
         spacing:
-          padding: ['0', null, null, '5']
+          padding: [null, '5', null, '10']
         spacing_above: small
         spacing_below: small
-        text: 'dates               '
+        text: 'PV:'
         tooltip: ''
         underline: false
         visible: true
       type: Button
-    - event_bindings: {click: text_box_1_click}
-      name: text_box_1
-      properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: num stage, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_inscription_click}
-      name: button_inscription
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: +, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_pr_requis_click}
-      name: button_pre_requis
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_qcm_click}
-      name: button_qcm
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Qcm, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_del_stage_click}
-      layout_properties: {}
-      name: button_del_stage
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Error', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Annul. stage, tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_sending_click}
-      name: button_sending
-      properties:
-        align: center
-        background: ''
-        bold: false
-        border: ''
-        enabled: true
-        font: ''
-        font_size: 15
-        foreground: theme:Tertiary
-        icon: fa:send
-        icon_align: left
-        italic: false
-        role: null
-        spacing:
-          padding: [null, '8', null, null]
-        spacing_above: none
-        spacing_below: none
-        text: Mail
-        tooltip: ''
-        underline: false
-        visible: true
-      type: Button
+    layout_properties: {grid_position: 'YIELWZ,HNRWXC'}
+    name: flow_panel_pv
+    properties: {align: center}
+    type: FlowPanel
+  - components:
     - event_bindings: {click: button_export_xls_click}
-      layout_properties: {}
+      layout_properties: {grid_position: 'TUNFVY,FBYXHK'}
       name: button_export_xls
-      properties: {font_size: 15, foreground: 'theme:Tertiary', icon: 'fa:file-excel-o', text: Xls}
-      type: Button
-    - event_bindings: {click: button_trombi_click}
-      layout_properties: {}
-      name: button_trombi
-      properties: {foreground: 'theme:Tertiary', icon: 'fa:users', text: Trombi, visible: true}
+      properties: {font_size: 15, foreground: 'theme:Tertiary', icon: 'fa:file-excel-o', text: Stage format Xls}
       type: Button
     - event_bindings: {change: file_loader_diplomes_change}
-      layout_properties: {}
+      layout_properties: {grid_position: 'TUNFVY,YESTYL'}
       name: file_loader_diplomes
-      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', role: elevated-button, text: Diplomes}
+      properties:
+        background: theme:Olive
+        foreground: theme:Tertiary
+        role: elevated-button
+        spacing:
+          margin: ['4', null, null, null]
+          padding: ['6', null, '1', null]
+        text: Diplômes
       type: FileLoader
     - event_bindings: {click: button_attestations_click}
-      layout_properties: {}
+      layout_properties: {grid_position: 'TUNFVY,PLTZPI'}
       name: button_attestations
-      properties: {background: 'theme:Primary', enabled: true, foreground: 'theme:Tertiary', role: elevated-button, text: Envoi Diplômes, visible: false}
+      properties: {background: 'theme:Olive', enabled: true, foreground: 'theme:Tertiary', icon: 'fa:send-o', role: elevated-button, text: Envoi, visible: false}
       type: Button
-    layout_properties: {grid_position: 'EMGUXL,CUWCHL'}
-    name: flow_panel_2
-    properties: {align: center, gap: small}
-    type: FlowPanel
+    - event_bindings: {change: check_box_diplomes_sent_change}
+      layout_properties: {grid_position: 'TUNFVY,QINQEA'}
+      name: check_box_diplomes_sent
+      properties: {foreground: 'theme:Tertiary', text: Envoyés, visible: false}
+      type: CheckBox
+    layout_properties: {grid_position: 'YIELWZ,BIELZE'}
+    name: column_panel_2
+    properties:
+      background: theme:Olive
+      col_widths: '{"FBYXHK":28,"YESTYL":25,"PLTZPI":19,"QINQEA":24}'
+      role: elevated-card
+      spacing:
+        margin: [null, '10', null, '5']
+        padding: ['5', null, '5', '15']
+      wrap_on: never
+    type: ColumnPanel
   - components:
     - layout_properties: {grid_position: 'HZGTVN,RPXHYF'}
       name: spacer_1
@@ -159,9 +227,25 @@ components:
     type: ColumnPanel
   layout_properties: {}
   name: column_panel_1
-  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"LEJSQR":8,"CUWCHL":52}', spacing_above: none, wrap_on: never}
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"BIELZE":85,"APUGDT":69,"HSKQJC":12,"HNRWXC":14}', role: null, spacing_above: none, wrap_on: never}
   type: ColumnPanel
 container:
-  properties: {align: left, auto_display_data: false, background: 'theme:On Primary', bold: false, border: '', font: '', font_size: null, foreground: '', italic: false, role: null, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
+  properties:
+    align: left
+    auto_display_data: false
+    background: theme:On Primary
+    bold: false
+    border: ''
+    font: ''
+    font_size: null
+    foreground: ''
+    italic: false
+    margin: [null, null, null, null]
+    role: null
+    spacing_above: none
+    spacing_below: none
+    tooltip: ''
+    underline: false
+    visible: true
   type: DataRowPanel
 is_package: true

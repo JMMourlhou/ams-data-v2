@@ -630,7 +630,7 @@ db_schema:
     - admin_ui: {width: 200}
       name: allow_bgt_generation
       type: bool
-    - admin_ui: {width: 200}
+    - admin_ui: {order: 13, width: 120}
       name: diplomes
       type: media
     - admin_ui: {width: 200}
@@ -672,6 +672,12 @@ db_schema:
     - admin_ui: {order: 26, width: 200}
       name: display_com
       type: bool
+    - admin_ui: {order: 13.5, width: 111}
+      name: diplom_sent
+      type: bool
+    - admin_ui: {order: -0.75, width: 200}
+      name: num_pv
+      type: string
     server: full
     title: Stages
   stagiaires_histo:
