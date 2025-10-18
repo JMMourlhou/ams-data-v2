@@ -266,7 +266,7 @@ def sov_diplomes(stage_row, file):   # stage_row : 1 row table 'stages'
         return False, e
 
 # Appelé par Stage_visu_modif   
-# En cas de
+# En cas de maj manuelle du check box diplomes sent 
 @anvil.server.callable
 def attestions_sent(stage_row, sent_checked):   # stage_row : 1 row table 'stages' 
     try:

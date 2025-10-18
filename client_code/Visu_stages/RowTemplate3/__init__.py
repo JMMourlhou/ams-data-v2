@@ -200,6 +200,7 @@ class RowTemplate3(RowTemplate3Template):
             result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
             if result == "ok":
                 self.check_box_diplomes_sent.checked = True
+                self.check_box_diplomes_sent_change()
             else:
                 alert(result)
 
