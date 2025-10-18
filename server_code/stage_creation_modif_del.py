@@ -105,7 +105,8 @@ def add_stage(code_stage,     # row codes_stage concernée
               date_fin,
               nb_stagiaires_fin,
               nb_stagiaires_diplomes,
-              commentaires
+              commentaires,
+              pv
              ):
     #print("lieu: ",lieu)         
     numero=int(numero)   
@@ -122,7 +123,8 @@ def add_stage(code_stage,     # row codes_stage concernée
                               nb_stagiaires_diplomes = 0,
                               commentaires = commentaires,
                               allow_bgt_generation = False,
-                              saisie_satisf_ok = False,                                 # Ne pas saisir le form de stisfaction            
+                              saisie_satisf_ok = False,     # Ne pas saisir le form de stisfaction
+                              num_pv = pv,                  # Num de pv 
                               satis_dico1_q_ferm=code_stage["satisf_q_ferm_template"],  # copie du template satisf de la table "code_stages", questions fermées
                               satis_dico2_q_ouv=code_stage["satisf_q_ouv_template"],     # copie du template satisf de la table "code_stages", questions ouvertes
                               suivi_dico1_q_ferm=code_stage["suivi_stage_q_ferm_template"],  # copie du template suivi de la table "code_stages", questions fermées

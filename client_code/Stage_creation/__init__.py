@@ -93,7 +93,7 @@ class Stage_creation(Stage_creationTemplate):
                                                 self.text_box_nb_stagiaires_fin.text,               # extraction du type de stga de la ligne dropdown    
                                                 self.text_box_nb_stagiaires_diplom.text,
                                                 self.text_area_commentaires.text,
-                                                self.
+                                                self.text_box_pv.text
                                                  )
         if result is True :
             alert("Stage enregisté !")
@@ -127,6 +127,10 @@ class Stage_creation(Stage_creationTemplate):
 
     def text_area_commentaires_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
+        self.button_validation.visible = True
+
+    def text_box_pv_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
         self.button_validation.visible = True
 
 
