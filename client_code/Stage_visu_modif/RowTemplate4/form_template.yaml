@@ -1,12 +1,12 @@
 components:
 - components:
   - event_bindings: {focus: text_box_3_focus}
-    layout_properties: {expand: false, width: 256.1668955078125}
+    layout_properties: {expand: false, width: 207.6023544921875}
     name: text_box_3
-    properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 20, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - event_bindings: {focus: text_box_mail_focus}
-    layout_properties: {width: 255.11332080078125}
+    layout_properties: {width: 194.5619248046875}
     name: text_box_mail
     properties:
       align: center
@@ -15,7 +15,7 @@ components:
       border: ''
       enabled: true
       font: ''
-      font_size: 16
+      font_size: 14
       foreground: theme:On Primary
       hide_text: false
       italic: false
@@ -31,7 +31,7 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {focus: text_box_tel_focus}
-    layout_properties: {width: 159.6006357421875}
+    layout_properties: {width: 145.228955078125}
     name: text_box_tel
     properties:
       align: center
@@ -56,7 +56,7 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {change: drop_down_mode_fi_change}
-    layout_properties: {width: 67.22182314453124}
+    layout_properties: {width: 55.0717056640625}
     name: drop_down_mode_fi
     properties:
       background: theme:Primary

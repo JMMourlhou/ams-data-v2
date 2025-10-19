@@ -609,7 +609,7 @@ db_schema:
     - admin_ui: {width: 136.17}
       name: nb_stagiaires_fin
       type: number
-    - admin_ui: {width: 103.12}
+    - admin_ui: {order: 7, width: 200.12}
       name: nb_stagiaires_diplomes
       type: number
     - admin_ui: {width: 200}
