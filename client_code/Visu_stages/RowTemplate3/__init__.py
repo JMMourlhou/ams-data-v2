@@ -35,11 +35,12 @@ class RowTemplate3(RowTemplate3Template):
             #self.text_box_1.visible = False   # numéro du stage non visible
             self.button_del_stage.visible = False  # BT annulation du stage non visible
             self.file_loader_diplomes.text = "Dipl."
-            self.check_box_diplomes_sent.text = "Envoi"
-            self.button_attestations.text = ""
+            self.check_box_diplomes_sent.text = "Dipl. envoyés"
+            self.button_attestations.text = "Envoi Dipl."
             self.button_sending.text = ""
             self.button_trombi.text = ""
             self.button_export_xls.text = ""
+            self.button_qcm.text = "Q"
          
         else:
             self.text_box_1.visible = True
@@ -239,8 +240,14 @@ class RowTemplate3(RowTemplate3Template):
         result, erreur = anvil.server.call("attestions_sent", self.item, self.check_box_diplomes_sent.checked)    # Stage, stagiaires_rows
         if result is True :
             alert("Changement effectué !")
-            if self.check_box_diplomes_sent.checked is False:
+
+            # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
+            if self.item['diplomes'] is None:
+                self.file_loader_diplomes.visibles = True
+                self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
+                self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
+            else:
+                #  sauvés en table : je laisse libre de m'adapter; tous bt dispos
+                self.file_loader_diplomes.visible = True
                 self.button_attestations.visible = True
                 self.check_box_diplomes_sent.visible = True
-        else :
-            alert(erreur)

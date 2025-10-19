@@ -33,7 +33,7 @@ components:
   - components:
     - components:
       - event_bindings: {click: text_box_3_click}
-        layout_properties: {expand: false, width: 20}
+        layout_properties: {expand: false, width: null}
         name: text_box_3
         properties:
           align: center
@@ -71,6 +71,7 @@ components:
         properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
         type: Button
       - event_bindings: {click: button_qcm_click}
+        layout_properties: {}
         name: button_qcm
         properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Qcm, tooltip: '', underline: false, visible: true}
         type: Button
@@ -111,12 +112,13 @@ components:
         type: Button
       layout_properties: {grid_position: 'CXNCMM,YEZVNE'}
       name: flow_panel_2
-      properties: {align: justify, gap: tiny}
+      properties: {align: justify, gap: none}
       type: FlowPanel
     layout_properties: {grid_position: 'YCOQPM,APUGDT'}
     name: column_panel_4
     properties:
       background: theme:Secondary
+      col_spacing: small
       role: elevated-card
       spacing:
         margin: [null, '10', null, null]
@@ -174,7 +176,7 @@ components:
     - event_bindings: {click: button_attestations_click}
       layout_properties: {grid_position: 'TUNFVY,PLTZPI'}
       name: button_attestations
-      properties: {background: 'theme:Olive', enabled: true, foreground: 'theme:Tertiary', icon: 'fa:send-o', role: elevated-button, text: Envoi, visible: false}
+      properties: {background: 'theme:Olive', enabled: true, foreground: 'theme:Tertiary', icon: 'fa:send', role: elevated-button, text: Envoi, visible: false}
       type: Button
     - event_bindings: {change: check_box_diplomes_sent_change}
       layout_properties: {grid_position: 'TUNFVY,QINQEA'}
