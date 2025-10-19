@@ -104,7 +104,7 @@ components:
       font: ''
       font_size: 15
       foreground: theme:Tertiary
-      icon: fa:eye
+      icon: fa:download
       icon_align: left
       italic: false
       role: null

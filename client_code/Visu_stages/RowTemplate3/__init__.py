@@ -65,12 +65,29 @@ class RowTemplate3(RowTemplate3Template):
                 espace_caractère = espace_caractère + " "
             self.text_box_2.text = self.item['code']['code'] + espace_caractère
             
-        # Affichage du bouton d'envoi des attestations s'ils sont sauvés
+        # Affichage des boutons si diplomes sauvés en table et envoyés
         # (si la colonne 'diplomes' n'est pas None)  
-        if self.item['diplomes'] is not None:
+        self.check_box_diplomes_sent.checked = self.item['diplom_sent']
+        if self.item['diplomes'] is not None and self.item['diplom_sent'] is True:
+            self.file_loader_diplomes.visible = False
+            self.button_attestations.visible = False
+            self.check_box_diplomes_sent.visible = True
+
+        # Affichage des boutons si diplomes sauvés en table et NON envoyés
+        if self.item['diplomes'] is not None and self.item['diplom_sent'] is False:
+            self.file_loader_diplomes.visible = False
             self.button_attestations.visible = True
             self.check_box_diplomes_sent.visible = True
-            self.check_box_diplomes_sent.checked = self.item['diplom_sent']
+
+        # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
+        if self.item['diplomes'] is None:
+            self.file_loader_diplomes.visibles = True
+            self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
+            self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
+        
+            
+        
+            
 
         # Num de PV FPMNS
         self.text_box_pv.text = self.item['num_pv']
@@ -221,11 +238,9 @@ class RowTemplate3(RowTemplate3Template):
         # maj col diplom_sent ds table du stage
         result, erreur = anvil.server.call("attestions_sent", self.item, self.check_box_diplomes_sent.checked)    # Stage, stagiaires_rows
         if result is True :
-            alert("Traitement effectué !")
-            """
+            alert("Changement effectué !")
             if self.check_box_diplomes_sent.checked is False:
-                self.button_attestations.visible = False
-                self.check_box_diplomes_sent.visible = False
-            """
+                self.button_attestations.visible = True
+                self.check_box_diplomes_sent.visible = True
         else :
             alert(erreur)
