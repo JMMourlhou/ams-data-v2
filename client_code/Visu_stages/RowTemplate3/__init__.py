@@ -220,6 +220,8 @@ class RowTemplate3(RowTemplate3Template):
             print("result",result)
             if result == "OK":
                 self.check_box_diplomes_sent.checked = True
+                self.file_loader_diplomes.visible = False
+                self.button_attestations.visible = False
                 self.check_box_diplomes_sent_change()
             else:
                 alert(result)
@@ -228,7 +230,7 @@ class RowTemplate3(RowTemplate3Template):
         """This method is called when a new file is loaded into this FileLoader"""
         result, erreur = anvil.server.call('sov_diplomes',self.item, file)
         if result is True :
-            alert("Fichier pdf des diplomes enregisté !")
+            alert("Fichier PDF diplomes enregisté !")
             self.button_attestations.visible = True
             self.check_box_diplomes_sent.visible = True
         else :
@@ -239,15 +241,19 @@ class RowTemplate3(RowTemplate3Template):
         # maj col diplom_sent ds table du stage
         result, erreur = anvil.server.call("attestions_sent", self.item, self.check_box_diplomes_sent.checked)    # Stage, stagiaires_rows
         if result is True :
-            alert("Envois des diplômes effectués !")
-
-            # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
-            if self.item['diplomes'] is None:
-                self.file_loader_diplomes.visibles = True
-                self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
-                self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
-            else:
-                #  sauvés en table : je laisse libre de m'adapter; tous bt dispos
+            if self.check_box_diplomes_sent.checked is False:       # si je remets le check box à False, je réaffiche   
+                #  sauvés en table : 
                 self.file_loader_diplomes.visible = True
                 self.button_attestations.visible = True
                 self.check_box_diplomes_sent.visible = True
+            else:
+                self.file_loader_diplomes.visible = False
+                self.button_attestations.visible = False
+                self.check_box_diplomes_sent.visible = True
+
+        # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
+        if self.item['diplomes'] is None:
+            self.file_loader_diplomes.visibles = True
+            self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
+            self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
+            

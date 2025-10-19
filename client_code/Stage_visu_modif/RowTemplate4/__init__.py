@@ -25,11 +25,14 @@ class RowTemplate4(RowTemplate4Template):
             tel = "Vérifier le tel"
 
         # Affichage reussite au stage et couleur  
+        self.check_box_reussite.checked = self.item['reussite']
         if self.check_box_reussite.checked is False:
             self.button_visu_diplome.visible = False
             self.check_box_reussite.background = "red"
+            self.check_box_reussite.text = "Echec"
         else:
             self.check_box_reussite.background = "green"
+            self.check_box_reussite.text = "Réussite"
         # afficher le visu diplome si le diplome existe    
         if self.item['diplome'] is not None:
             self.button_visu_diplome.visible = True
@@ -157,17 +160,17 @@ class RowTemplate4(RowTemplate4Template):
         if self.check_box_reussite.checked is False:
             self.check_box_reussite.background = "red"
             self.button_visu_diplome.visible = False
+            self.check_box_reussite.text = "Echec"
         else:
             self.check_box_reussite.background = "green"
+            self.check_box_reussite.text = "Réussite"
         # afficher le visu diplome si le diplome existe    
         if self.item['diplome'] is not None:
             self.button_visu_diplome.visible = True   
             
         valid = anvil.server.call("maj_reussite", self.item, self.check_box_reussite.checked) 
-        if valid is True:
+        if valid is False:
             alert("Maj effectuée !")
-        else:
-            alert(valid)
 
         
 
