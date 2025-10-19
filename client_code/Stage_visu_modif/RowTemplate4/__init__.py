@@ -145,6 +145,15 @@ class RowTemplate4(RowTemplate4Template):
         else:
             alert("Diplôme non trouvé")
 
+    def check_box_reussite_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        # envoie en modif
+        valid = anvil.server.call("maj_reussite", self.item, self.check_box_reussite.checked) 
+        if valid is True:
+            alert("Maj effectuée !")
+        else:
+            alert(valid)
+
         
 
 

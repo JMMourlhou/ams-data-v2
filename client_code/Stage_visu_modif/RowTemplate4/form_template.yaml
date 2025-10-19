@@ -92,6 +92,11 @@ components:
     visible: true
   type: FlowPanel
 - components:
+  - event_bindings: {change: check_box_reussite_change}
+    layout_properties: {}
+    name: check_box_reussite
+    properties: {background: 'theme:Error', foreground: 'theme:Tertiary', text: 'Réussite ?'}
+    type: CheckBox
   - event_bindings: {click: button_visu_diplome_click}
     layout_properties: {}
     name: button_visu_diplome

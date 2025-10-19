@@ -53,3 +53,14 @@ def modif_mode_fi_1_stagiaire(stagiaire_row, mode_fi_row):
     valid = True
 
     return valid
+
+# ==========================================================================================
+@anvil.server.callable           # modif de la réussite du stagiaire au stage, pour permettre la gestion des diplomes, si 
+def maj_ressite(stagiaire_row, reussite):               # si réussite = True, son diplome sera envoyé automatiqt en lecture des attestations pdf 
+    valid = False
+    try:
+        stagiaire_row.update(reussite=reussite)
+        valid = True
+    except Exception as e:
+        
+    return valid
