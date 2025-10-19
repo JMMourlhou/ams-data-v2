@@ -239,7 +239,7 @@ class RowTemplate3(RowTemplate3Template):
         # maj col diplom_sent ds table du stage
         result, erreur = anvil.server.call("attestions_sent", self.item, self.check_box_diplomes_sent.checked)    # Stage, stagiaires_rows
         if result is True :
-            alert("Changement effectué !")
+            alert("Envois des diplômes effectués !")
 
             # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
             if self.item['diplomes'] is None:
