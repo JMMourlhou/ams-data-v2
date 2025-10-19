@@ -15,8 +15,19 @@ class RowTemplate4(RowTemplate4Template):
         # Any code you write here will run before the form opens.
         
         self.text_box_3.text = self.item['name'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
-        self.text_box_1.text = self.item['user_email']['email']
-        self.text_box_2.text = self.item['user_email']['tel']
+        self.text_box_mail.text = self.item['user_email']['email']
+        tel = self.item['user_email']['tel']
+        try:
+            if len(tel) == 10 and tel.isdigit():
+                tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
+                self.text_box_tel.text = tel
+        except Exception:
+            tel = "Vérifier le tel"
+            
+        # afficher le visu diplome si le diplome existe    
+        if self.item['diplome'] is not None:
+            self.button_visu_diplome.visible = True
+            
         self.check_box_form_satis.checked = self.item['enquete_satisf']
         self.check_box_form_suivi.checked = self.item['enquete_suivi']
         self.init_drop_down_mode_fi()  
@@ -28,11 +39,11 @@ class RowTemplate4(RowTemplate4Template):
         from ...Saisie_info_apres_visu import Saisie_info_apres_visu
         open_form('Saisie_info_apres_visu', mel, num_stage, intitule="")
 
-    def text_box_1_focus(self, **event_args):
+    def text_box_mail_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
         self.text_box_3_focus()
 
-    def text_box_2_focus(self, **event_args):
+    def text_box_tel_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
         self.text_box_3_focus()
 
@@ -120,10 +131,21 @@ class RowTemplate4(RowTemplate4Template):
     def button_sending_click(self, **event_args):
         """This method is called when the button is clicked"""
         liste_email = []
-        liste_email.append((self.text_box_1.text, self.item['user_email']["prenom"].capitalize(),""))   # mail et prénom, id pas besoin
+        liste_email.append((self.text_box_mail.text, self.item['user_email']["prenom"].capitalize(),""))   # mail et prénom, id pas besoin
         open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
 
-   
+    def button_visu_diplome_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pdf = self.item['diplome']
+        new_file_name = f"Attestation_{self.item['stage_txt']}_{self.item['name']}_{self.item['prenom']}"
+        new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=new_file_name+".pdf")
+        if pdf:
+            anvil.media.download(new_file_named)
+            alert("Diplôme téléchargé !")
+        else:
+            alert("Diplôme non trouvé")
+
+        
 
 
         

@@ -280,8 +280,7 @@ components:
   properties: {visible: false}
   type: DropDown
 - components:
-  - layout_properties: {}
-    name: repeating_panel_1
+  - name: repeating_panel_1
     properties: {background: '', border: '', foreground: '', item_template: Stage_visu_modif.RowTemplate4, items: null, role: outlined-card, spacing_above: none, spacing_below: none, tooltip: '', visible: true}
     type: RepeatingPanel
   layout_properties: {grid_position: 'BVFDTB,ETVGBJ'}
@@ -293,8 +292,8 @@ components:
     columns: []
     foreground: ''
     role: null
-    rows_per_page: 25
-    show_page_controls: true
+    rows_per_page: null
+    show_page_controls: false
     spacing_above: small
     spacing_below: small
     tooltip: ''

@@ -69,11 +69,11 @@ def get_images_from_pdf_file(media: anvil.media) -> List:
         # Le nom du fichier est basé sur le nom du fichier d'origine.
         im_path = os.path.join(tmpdirname, f"{os.path.splitext(media.name)[0]}_page_1.jpg")
 
-        # Sauvegarde seulement la première image   EN UPLINK
+        # Sauvegarde seulement la première image 
         if images:
             images[0].save(im_path, 'JPEG')
             print(f"Première page convertie en JPEG : {im_path}")
-            return [anvil.media.from_file(im_path)]
+            return [anvil.media.from_file(im_path)]      # retour à la fonction process_pdf_background dans ce module
         else:
             return []
 
