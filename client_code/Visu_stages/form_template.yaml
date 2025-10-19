@@ -72,7 +72,7 @@ components:
     columns: []
     foreground: ''
     role: null
-    rows_per_page: 6
+    rows_per_page: 5
     show_page_controls: true
     spacing_above: small
     spacing_below: small
