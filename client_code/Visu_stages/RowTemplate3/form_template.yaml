@@ -172,6 +172,7 @@ components:
       name: file_loader_diplomes
       properties:
         background: theme:Olive
+        file_types: .pdf
         foreground: theme:Tertiary
         role: elevated-button
         spacing:
