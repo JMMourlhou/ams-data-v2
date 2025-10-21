@@ -97,7 +97,7 @@ components:
     - event_bindings: {change: text_box_pv_change}
       layout_properties: {grid_position: 'QEARHU,HOXTNF'}
       name: text_box_pv
-      properties: {background: 'theme:Primary', foreground: 'theme:On Secondary Container', placeholder: pv, text: pv}
+      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', placeholder: pv, text: pv}
       type: TextBox
     layout_properties: {grid_position: 'VEGKNZ,PJBDNW'}
     name: column_panel_6
