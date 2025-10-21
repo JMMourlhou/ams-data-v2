@@ -211,11 +211,19 @@ class RowTemplate3(RowTemplate3Template):
 
     def button_attestations_click(self, **event_args):
         """This method is called when the button is clicked"""
+        liste_test = app_tables.stagiaires_inscrits.search(
+            tables.order_by("name", ascending=True),
+            reussite=True,
+            numero=self.item['numero'])
+
+        If not liste_test:
+            Alert(A)
+        
         liste_stagiaires = app_tables.stagiaires_inscrits.search(
             tables.order_by("name", ascending=True),
             numero=self.item['numero'])
-        if liste_stagiaires:
-            
+        
+        if liste_stagiaires:    # uplink PI5
             result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
             print("result",result)
             if result == "OK":
