@@ -5,9 +5,9 @@ components:
     properties: {height: 32}
     type: Spacer
   - event_bindings: {change: text_box_2_change}
-    layout_properties: {width: 137.98452368164064}
+    layout_properties: {width: 174.8631044921875}
     name: text_box_2
-    properties: {background: 'theme:Primary', foreground: 'theme:On Tertiary', role: outlined}
+    properties: {background: 'theme:Primary', font_size: 16, foreground: 'theme:On Tertiary', role: outlined}
     type: TextBox
   - event_bindings: {change: text_box_1_change}
     layout_properties: {expand: true, width: null}
@@ -15,7 +15,7 @@ components:
     properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   - event_bindings: {change: text_box_3_change}
-    layout_properties: {width: 316.3933515625}
+    layout_properties: {width: 247.0731103515625}
     name: text_box_3
     properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: Commentaire, tooltip: '', type: text, underline: false, visible: true}
     type: TextBox

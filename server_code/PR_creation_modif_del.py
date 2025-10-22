@@ -48,20 +48,23 @@ def modif_pr(pr_row, intitule, code, commentaire, old_code):
         dico = {}
         dico = stage['pre_requis']
         # recherche si clef (old_code) existante, si oui effact ancienne clef puis recréation avec la nouvelle
-        test = dico.get(old_code)
-        if test is not None: # Clé existante 1 on l'efface, 2 on recrée 
-            del dico[old_code]
-            # création du nx pr ds dico pr pour ce stage
-            clef = code
-            valeur = {                                 # AJOUT DE LA nouvelle CLEF DS LE DICO PR table codes stages
-                            "Doc": "",
-                            "Validé": False,
-                            "Commentaires": "new",
-                            "Nom_document": ""
-            }
-            dico[clef]= valeur
-            # réécriture du row stage
-            stage.update(pre_requis=dico)
+        try:
+            test = dico.get(old_code)
+            if test is not None: # Clé existante 1 on l'efface, 2 on recrée 
+                del dico[old_code]
+                # création du nx pr ds dico pr pour ce stage
+                clef = code
+                valeur = {                                 # AJOUT DE LA nouvelle CLEF DS LE DICO PR table codes stages
+                                "Doc": "",
+                                "Validé": False,
+                                "Commentaires": "new",
+                                "Nom_document": ""
+                }
+                dico[clef]= valeur
+                # réécriture du row stage
+                stage.update(pre_requis=dico)
+        except:
+            pass
         valid=True
     return valid, len(liste)
 
