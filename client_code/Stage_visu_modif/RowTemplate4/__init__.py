@@ -184,11 +184,11 @@ class RowTemplate4(RowTemplate4Template):
             user_email=self.item['user_email'])
 
         if not liste_stagiaire:
-            alert("Ce stgiaire n'a pas eu de succès à son examen !")
+            alert("Ce stagiaire n'a pas eu de succès à son examen !")
             return
 
         if liste_stagiaire:    # uplink PI5
-            result = anvil.server.call("pdf_reading", self.item['stage'], liste_stagiaire, 'only-one')    # Stage_row, row du stagiaire, option envoi d'un seul diplome
+            result = anvil.server.call("one_pdf_reading", self.item['stage'], liste_stagiaire)    # Stage_row, row du stagiaire, option envoi d'un seul diplome
             if result == "OK":
                 alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom']} {self.item['name']} !")
             else:
