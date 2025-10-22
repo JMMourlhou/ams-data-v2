@@ -162,13 +162,15 @@ class RowTemplate4(RowTemplate4Template):
         if self.check_box_reussite.checked is False:
             self.check_box_reussite.background = "red"
             self.button_visu_diplome.visible = False
+            self.button_sending_diplome.visible = False
             self.check_box_reussite.text = "Echec"
         else:
             self.check_box_reussite.background = "green"
             self.check_box_reussite.text = "Réussite"
-        # afficher le visu diplome si le diplome existe    
-        if self.item['diplome'] is not None:
-            self.button_visu_diplome.visible = True   
+            # afficher le visu diplome si le diplome existe    
+            if self.item['diplome'] is not None:
+                self.button_visu_diplome.visible = True   
+                self.button_sending_diplome.visible = True
             
         valid = anvil.server.call("maj_reussite", self.item, self.check_box_reussite.checked) 
         if valid is False:
@@ -177,22 +179,24 @@ class RowTemplate4(RowTemplate4Template):
     def button_sending_diplome_click(self, **event_args):
         """This method is called when the button is clicked"""
         # création de la row du stagiaire qui contient le diplome en colonne 'diplome'
-        # get() renvoie directement une row unique ou None, donc j'évite de manipuler les listes.
-        liste_stagiaire = app_tables.stagiaires_inscrits.get(
-            reussite=True,
-            numero=self.item['numero'],
-            user_email=self.item['user_email'])
-
-        if not liste_stagiaire:
-            alert("Ce stagiaire n'a pas eu de succès à son examen !")
-            return
-
-        if liste_stagiaire:    # uplink PI5
-            result = anvil.server.call("one_pdf_reading", self.item['stage'], liste_stagiaire)    # Stage_row, row du stagiaire, option envoi d'un seul diplome
-            if result == "OK":
-                alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom']} {self.item['name']} !")
-            else:
-                alert(result)
+        r=alert(f"Envoi du diplôme à {self.item['prenom']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if r :   # oui
+            # get() renvoie directement une row unique ou None, donc j'évite de manipuler les listes.
+            liste_stagiaire = app_tables.stagiaires_inscrits.get(
+                reussite=True,
+                numero=self.item['numero'],
+                user_email=self.item['user_email'])
+            
+            if not liste_stagiaire:
+                alert("Ce stagiaire n'a pas eu de succès à son examen !")
+                return
+    
+            if liste_stagiaire:    # uplink PI5
+                result = anvil.server.call("one_pdf_reading", self.item['stage'], liste_stagiaire)    # Stage_row, row du stagiaire, option envoi d'un seul diplome
+                if result == "OK":
+                    alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom']} {self.item['name']} !")
+                else:
+                    alert(result)
 
         
 
