@@ -177,16 +177,17 @@ class RowTemplate4(RowTemplate4Template):
     def button_sending_diplome_click(self, **event_args):
         """This method is called when the button is clicked"""
         # création de la row du stagiaire qui contient le diplome en colonne 'diplome'
-        liste_stagiaire = app_tables.stagiaires_inscrits.search(
+        # get() renvoie directement une row unique ou None, donc j'évite de manipuler les listes.
+        liste_stagiaire = app_tables.stagiaires_inscrits.get(
             reussite=True,
             numero=self.item['numero'],
             user_email=self.item['user_email'])
 
-        if len(liste_stagiaire)==0:
+        if not liste_stagiaire:
             alert("Ce stgiaire n'a pas eu de succès à son examen !")
             return
 
-        if len(liste_stagiaire)==1:    # uplink PI5
+        if liste_stagiaire:    # uplink PI5
             result = anvil.server.call("pdf_reading", self.item['stage'], liste_stagiaire, 'only-one')    # Stage_row, row du stagiaire, option envoi d'un seul diplome
             if result == "OK":
                 alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom']} {self.item['name']} !")
