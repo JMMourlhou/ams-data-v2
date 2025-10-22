@@ -177,19 +177,18 @@ class RowTemplate4(RowTemplate4Template):
     def button_sending_diplome_click(self, **event_args):
         """This method is called when the button is clicked"""
         liste_stagiaires = app_tables.stagiaires_inscrits.search(
-            tables.order_by("name", ascending=True),
             reussite=True,
             numero=self.item['numero'],
             user_email=self.item['user_email'])
 
         if len(liste_stagiaires)==0:
-            alert("Aucun stagiaire n'est marqué 'Succès' !")
+            alert("Ce stgiaire n'a pas eu de succès à son examen !")
             return
 
-        if liste_stagiaires:    # uplink PI5
+        if len(liste_stagiaires)==1:    # uplink PI5
             result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
-            print("result",result)
             if result == "OK":
+                alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom']} {self.item['name']} !")
                 self.check_box_diplomes_sent.checked = True
                 self.file_loader_diplomes.visible = False
                 self.button_attestations.visible = False

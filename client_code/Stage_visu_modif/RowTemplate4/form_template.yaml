@@ -172,7 +172,7 @@ components:
         padding: [null, '8', null, null]
       spacing_above: none
       spacing_below: none
-      text: Courier
+      text: Courrier
       tooltip: ''
       underline: false
       visible: true
