@@ -186,13 +186,9 @@ class RowTemplate4(RowTemplate4Template):
             return
 
         if len(liste_stagiaires)==1:    # uplink PI5
-            result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
+            result = anvil.server.call("pdf_reading", self.item['stage'], liste_stagiaires)    # Stage_row, row du stagiaire
             if result == "OK":
                 alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom']} {self.item['name']} !")
-                self.check_box_diplomes_sent.checked = True
-                self.file_loader_diplomes.visible = False
-                self.button_attestations.visible = False
-                self.check_box_diplomes_sent_change()
             else:
                 alert(result)
 

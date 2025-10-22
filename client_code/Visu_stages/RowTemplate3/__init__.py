@@ -224,6 +224,7 @@ class RowTemplate3(RowTemplate3Template):
             result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
             print("result",result)
             if result == "OK":
+                alert(f"Diplômes {self.item['code_txt']} du stage # {self.item['numero']}, bien envoyés !")
                 self.check_box_diplomes_sent.checked = True
                 self.file_loader_diplomes.visible = False
                 self.button_attestations.visible = False
