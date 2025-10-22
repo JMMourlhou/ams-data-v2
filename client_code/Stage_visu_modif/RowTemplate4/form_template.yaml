@@ -122,6 +122,36 @@ components:
       underline: false
       visible: false
     type: Button
+  - event_bindings: {click: button_sending_diplome_click}
+    layout_properties: {}
+    name: button_sending_diplome
+    properties:
+      align: center
+      background: ''
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 15
+      foreground: theme:Tertiary
+      icon: fa:send
+      icon_align: left
+      italic: false
+      role: null
+      spacing:
+        padding: [null, '8', null, null]
+      spacing_above: none
+      spacing_below: none
+      text: diplôme
+      tooltip: ''
+      underline: false
+      visible: false
+    type: Button
+  - event_bindings: {click: bt_delete}
+    layout_properties: {}
+    name: button_delete
+    properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Primary', icon: 'fa:minus-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+    type: Button
   - event_bindings: {click: button_sending_click}
     layout_properties: {}
     name: button_sending
@@ -142,15 +172,10 @@ components:
         padding: [null, '8', null, null]
       spacing_above: none
       spacing_below: none
-      text: Mail
+      text: Courier
       tooltip: ''
       underline: false
       visible: true
-    type: Button
-  - event_bindings: {click: bt_delete}
-    layout_properties: {}
-    name: button_delete
-    properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Primary', icon: 'fa:minus-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
     type: Button
   layout_properties: {column: 'null'}
   name: flow_panel_2

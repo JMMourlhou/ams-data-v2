@@ -28,6 +28,7 @@ class RowTemplate4(RowTemplate4Template):
         self.check_box_reussite.checked = self.item['reussite']
         if self.check_box_reussite.checked is False:
             self.button_visu_diplome.visible = False
+            self.button_sending_diplome.visible = False
             self.check_box_reussite.background = "red"
             self.check_box_reussite.text = "Echec"
         else:
@@ -36,6 +37,7 @@ class RowTemplate4(RowTemplate4Template):
         # afficher le visu diplome si le diplome existe    
         if self.item['diplome'] is not None:
             self.button_visu_diplome.visible = True
+            self.button_sending_diplome.visible = True
             
         self.check_box_form_satis.checked = self.item['enquete_satisf']
         self.check_box_form_suivi.checked = self.item['enquete_suivi']
@@ -171,6 +173,29 @@ class RowTemplate4(RowTemplate4Template):
         valid = anvil.server.call("maj_reussite", self.item, self.check_box_reussite.checked) 
         if valid is False:
             alert("Maj effectuée !")
+
+    def button_sending_diplome_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        liste_stagiaires = app_tables.stagiaires_inscrits.search(
+            tables.order_by("name", ascending=True),
+            reussite=True,
+            numero=self.item['numero'],
+            user_email=self.item['user_email'])
+
+        if len(liste_stagiaires)==0:
+            alert("Aucun stagiaire n'est marqué 'Succès' !")
+            return
+
+        if liste_stagiaires:    # uplink PI5
+            result = anvil.server.call("pdf_reading", self.item, liste_stagiaires)    # Stage, stagiaires_rows
+            print("result",result)
+            if result == "OK":
+                self.check_box_diplomes_sent.checked = True
+                self.file_loader_diplomes.visible = False
+                self.button_attestations.visible = False
+                self.check_box_diplomes_sent_change()
+            else:
+                alert(result)
 
         
 
