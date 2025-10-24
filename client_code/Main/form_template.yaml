@@ -288,6 +288,6 @@ components:
   properties: {col_widths: '{}'}
   type: ColumnPanel
 container:
-  properties: {background: 'theme:On Surface', col_widths: '{}'}
+  properties: {background: '', col_widths: '{}'}
   type: ColumnPanel
 is_package: true
