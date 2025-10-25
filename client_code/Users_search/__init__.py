@@ -40,8 +40,9 @@ class Users_search(Users_searchTemplate):
         self.check_box_enabled.checked = False
         self.text_box_sign_up.text = ""
         self.text_box_connexion.text = ""
-        
-        critere = self.text_box_role.text + "%"            #  wildcard search on date
+
+        # Initialisation de l'affichage par role
+        critere = self.text_box_role.text + "%"            #  wildcard search on role
         liste = app_tables.users.search(tables.order_by("role", ascending=True),
                                         role=q.ilike(critere),
                                                 )
