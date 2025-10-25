@@ -14,7 +14,7 @@ from ... import French_zone # calcul tps traitement
 class RowTemplate1(RowTemplate1Template):
     def __init__(self, **properties):
         self.c = get_open_form()
-        print("form mère en col panel : ", self.c) 
+        #print("form mère en col panel : ", self.c) 
         
         self.content_panel.clear() # Panel qui recevra la forme du choix de type de fi
         
@@ -78,7 +78,7 @@ class RowTemplate1(RowTemplate1Template):
         
         end = French_zone.french_zone_time()
         print("Temps de traitement init drop dwn: ", end-start)
-
+        
     # button_1 : nom du stagiaire
     def button_1_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -257,8 +257,32 @@ class RowTemplate1(RowTemplate1Template):
             self.button_1.foreground = "green"  # Tuteur en vert
         if role == "S":
             self.button_1.foreground = "yellow"  # Stagiaire en jaune
-        
 
+    def button_pr_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.repeating_panel_3.visible = True
+        self.drop_down_code_stage.foreground = "red"
+        self.button_1.foreground = "red"
+
+        # Acquisition des stages où le stagiaire est inscrit
+        try:  # *********************************          Liste à partir table users
+            liste0 = app_tables.stagiaires_inscrits.search( q.fetch_only("stage_txt"),
+                                                            user_email=self.item)
+        except:  # ***********************************  Liste à partir table Stagiaires inscrits
+            liste0 = app_tables.stagiaires_inscrits.search( q.fetch_only("stage_txt"),
+                                                            user_email=self.item['user_email'])
+        if liste0 is None:
+            return
+
+        # pour chaque stage, je lis les pré requis en table pré requis stagiaires
+        for stage in liste0:
+            liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
+                                                              stage_num=stage['numero']
+                                                             )
+            # création du dico des pré-requis 
+            # code pr : (stage_num, email, True / False), ... True le PR existe
+        # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent 
+        
 
 
 
