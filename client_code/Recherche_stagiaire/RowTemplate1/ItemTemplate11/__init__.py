@@ -18,12 +18,11 @@ class ItemTemplate11(ItemTemplate11Template):
         # Any code you write here will run before the form opens.
         self.test_img_just_loaded = False
         
-        self.email = self.item['stagiaire_email']
-        self.item_requis = self.item['item_requis']
+        #self.email = self.item['stagiaire_email']
+        self.stagiaire_row = self.item['stagiaire_email']
         self.stage_num = self.item['stage_num']
-        #txt2 = self.item['item_requis']['code_pre_requis']
-        txt2 = self.item['code_txt']
-        #txt1 = self.item['item_requis']['requis']
+
+        txt2 = self.item['type_stage_txt']
         txt1 = self.item['requis_txt']
         self.label_1.text = txt1 +" / "+ txt2
         
@@ -45,8 +44,8 @@ class ItemTemplate11(ItemTemplate11Template):
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
         # nouveau nom doc
-        new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse
-        open_form('Pre_Visu_img_Pdf', self.item['doc1'], new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
+        new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item['requis_txt'], self.stagiaire_row)   # extension non incluse
+        open_form('Pre_Visu_img_Pdf', self.item['doc1'], new_file_name, self.stage_num, self.stagiaire_row, self.item['doc1'], origine="admin")
     
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
@@ -78,7 +77,6 @@ class ItemTemplate11(ItemTemplate11Template):
                     alert(result)
                 else:
                     # génération du JPG à partir du pdf bg task en bg task
-                    #self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
                     self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    # on extrait la 1ere page
                     self.timer_2.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
                     # gestion des boutons        
@@ -95,7 +93,7 @@ class ItemTemplate11(ItemTemplate11Template):
 
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
-        result = anvil.server.call('pr_stagiaire_del',self.email, self.stage_num, self.item_requis )
+        result = anvil.server.call('pr_stagiaire_del',self.stagiaire_row['email'], self.stage_num, self.item['doc1'] )
         if result:
             self.image_1.source = None
             self.button_visu.visible = False
@@ -140,10 +138,11 @@ class ItemTemplate11(ItemTemplate11Template):
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
         # pour calcul du temps de traitement
+        
         row = app_tables.pre_requis_stagiaire.get(
             stage_num=self.stage_num,
-            item_requis=self.item_requis,
-            stagiaire_email=self.email
+            item_requis=self.item['item_requis'],
+            stagiaire_email=self.stagiaire_row
         )
         file=row["doc1"]
         media_object1 = anvil.URLMedia(file.url)
@@ -157,7 +156,7 @@ class ItemTemplate11(ItemTemplate11Template):
         #relecture pour affichage du thumb rotated
         row = app_tables.pre_requis_stagiaire.get(
             stage_num=self.stage_num,
-            item_requis=self.item_requis,
+            item_requis=self.item['doc1'],
             stagiaire_email=self.email
         )
         self.image_1.source = row['doc1']
@@ -172,13 +171,13 @@ class ItemTemplate11(ItemTemplate11Template):
         if self.item['doc1'] is not None:
             r=alert("Ce pré-requis n'est pas vide, Voulez-vous vraiment le détruire ?",dismissible=False,buttons=[("oui",True),("non",False)])
         else:
-            r=alert(f"Voulez-vous enlever ce pré-requis ({self.item['requis_txt']}) pour {self.item['prenom']} {self.item['nom']}?", dismissible=False ,buttons=[("oui",True),("non",False)])
+            r=alert(f"Voulez-vous enlever ce pré-requis ({self.item['requis_txt']}) pour {self.stagiaire_row['prenom']} {self.stagiaire_row['nom']}?", dismissible=False ,buttons=[("oui",True),("non",False)])
         if r :   # Oui               
             result = anvil.server.call('pr_stagiaire_del',self.item['stagiaire_email'], self.item['stage_num'], self.item['item_requis'], "destruction" )  # mode  destruction de PR pour ce stgiaire
             if not result:
                 alert("Pré Requis non enlevé pour ce stagiaire")
             else:
                 alert("Pré Requis enlevé pour ce stagiaire")
-                open_form('Pre_R_pour_stagiaire_admin', self.item['numero'])
+                open_form('Pre_R_pour_stagiaire_admin', self.stage_num['numero'])
 
                 

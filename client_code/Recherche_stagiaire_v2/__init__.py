@@ -42,8 +42,9 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         ]
         # ---------------------------------------------------------------------------------------------
         # Initialisation de l'affichage par role
-        critere = self.text_box_role.text + "%"            #  wildcard search on role
-        liste = app_tables.users.search(tables.order_by("role", ascending=True),
+        critere = self.text_box_nom.text + "%"            #  wildcard search on role
+        liste = app_tables.users.search(tables.order_by("nom", ascending=True),
+                                        q.fetch_only("role","nom","prenom","tel","email"),
                                         role=q.ilike(critere),
                                        )
         self.repeating_panel_1.items=liste
@@ -373,7 +374,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
     def text_box_nom_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
-        sleep(0.3) # permet le temps de frapper le texte recherché
+        sleep(0.5) # permet le temps de frapper le texte recherché
         self.text_box_role.text = ""
         self.text_box_prenom.text = ""
         self.text_box_email.text = ""
@@ -381,6 +382,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
         critere = self.text_box_nom.text + "%"            #  wildcard search on date
         liste = app_tables.users.search(tables.order_by("nom", ascending=True),
+                                        q.fetch_only("role","nom","prenom","tel","email"),
                                         nom=q.ilike(critere)
                                        )
         self.repeating_panel_1.items=liste
@@ -389,7 +391,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         """This method is called when the TextBox gets focus"""
         def text_box_prenom_focus(self, **event_args):
             """This method is called when the TextBox gets focus"""
-        sleep(0.3) # permet le temps de frapper le texte recherché    
+        sleep(0.5) # permet le temps de frapper le texte recherché    
         self.text_box_role.text = ""
         self.text_box_nom.text = ""
         self.text_box_email.text = ""
@@ -397,6 +399,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
         critere = self.text_box_prenom.text + "%"            #  wildcard search on prenom
         liste = app_tables.users.search(tables.order_by("prenom", ascending=True),
+                                        q.fetch_only("role","nom","prenom","tel","email"),
                                         prenom=q.ilike(critere)
                                        )
         self.repeating_panel_1.items=liste
@@ -411,6 +414,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         # Initialisation de l'affichage par role
         critere = self.text_box_role.text + "%"            #  wildcard search on role
         liste = app_tables.users.search(tables.order_by("role", ascending=True),
+                                        q.fetch_only("role","nom","prenom","tel","email"),
                                         role=q.ilike(critere),
                                        )
         self.repeating_panel_1.items=liste
@@ -439,6 +443,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
         critere = self.text_box_tel.text + "%"            #  wildcard search on tel
         liste = app_tables.users.search(tables.order_by("tel", ascending=True),
+                                        q.fetch_only("role","nom","prenom","tel","email"),
                                         tel=q.ilike(critere)
                                        )
         self.repeating_panel_1.items=liste  

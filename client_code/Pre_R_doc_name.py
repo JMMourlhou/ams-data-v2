@@ -12,7 +12,10 @@ def doc_name_creation(row_stage_num, row_item_requis, row_user):
     stg = str(row_stage_num['numero'])     # Num de stage
 
     # Acquisition de l'item requis
-    item = row_item_requis['code_pre_requis']
+    try:
+        item = row_item_requis['code_pre_requis']
+    except:
+        item = row_item_requis
     
     file_name= stg + "_"+ item +"_"+ name.capitalize() + "-"+ prenom.capitalize()    # l'extension sera ajoutée ds les autres modules
 

@@ -190,7 +190,7 @@ class RowTemplate1(RowTemplate1Template):
         if row_stagiaire_inscrit is not None:
             # lecture fichier père stages
             row_stage = app_tables.stages.get(numero=row_stagiaire_inscrit['stage']['numero'])
-            print(row_stage['numero'])
+            #print(row_stage['numero'])
             # lecture des pré requis pour ce stage et pour ce stagiaire
             stagiaire_email = self.drop_down_code_stage.tag
             try:
@@ -287,13 +287,33 @@ class RowTemplate1(RowTemplate1Template):
             for pr in liste_pr:
                 valeur = None
                 clef = pr['requis_txt']
-                valeur = (stage['numero'], pr['doc1'])
-                self.dico_pre_requis[clef] = valeur
+                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'])
+                # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
+                if clef not in self.dico_pre_requis  or  (self.dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
+                    self.dico_pre_requis[clef] = valeur
         
         # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent        
-        print(self.dico_pre_requis.keys())
-        print()
-        # utilisation du dictionaire pour afficher les 
+        """
+        for clef in self.dico_pre_requis:
+            print (clef,self.dico_pre_requis[clef])
+        """
+        # Transformation en liste
+        # -----------------------------------------------------------
+        # Transformation en liste pour affichage dans le RepeatingPanel
+        liste_affichage = []
+        
+        for clef, (numero, requis_row, type_stage_txt ,email, doc1) in self.dico_pre_requis.items():
+            liste_affichage.append({
+                "requis_txt": clef,
+                "item_requis": requis_row,
+                "type_stage_txt": type_stage_txt,
+                "stagiaire_email": email,
+                "stage_num": numero,
+                "doc1": doc1
+            })
+        
+        # Affectation au RepeatingPanel pour affichage
+        self.repeating_panel_3.items = liste_affichage
         
 
 
