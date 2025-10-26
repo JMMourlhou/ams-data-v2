@@ -137,27 +137,29 @@ class ItemTemplate11(ItemTemplate11Template):
 
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # pour calcul du temps de traitement
         
         row = app_tables.pre_requis_stagiaire.get(
             stage_num=self.stage_num,
             item_requis=self.item['item_requis'],
             stagiaire_email=self.stagiaire_row
         )
-        file=row["doc1"]
-        media_object1 = anvil.URLMedia(file.url)
-        media_object2 = anvil.image.rotate(media_object1,90)
-        # -----------------------------------------------------------------------------------------------------------------------------------------------
-        # on sauve par uplink le file media image
-        self.image_1.source = file
-        result = anvil.server.call('pre_requis',self.item, media_object2)  # appel uplink fonction pre_requis sur Pi5
-        print(result)
-
+        if row:
+            file=row["doc1"]
+            media_object1 = anvil.URLMedia(file.url)
+            media_object2 = anvil.image.rotate(media_object1,90)
+            
+            # -----------------------------------------------------------------------------------------------------------------------------------------------
+            # on sauve par uplink le file media image
+            result = anvil.server.call('pre_requis',row, media_object2)  # appel uplink fonction pre_requis sur Pi5
+            print(result)
+        else:
+            alert("Image non retrouvée !")
+            
         #relecture pour affichage du thumb rotated
         row = app_tables.pre_requis_stagiaire.get(
             stage_num=self.stage_num,
-            item_requis=self.item['doc1'],
-            stagiaire_email=self.email
+            item_requis=self.item['item_requis'],
+            stagiaire_email=self.stagiaire_row
         )
         self.image_1.source = row['doc1']
 
