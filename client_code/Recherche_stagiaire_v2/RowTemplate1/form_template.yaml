@@ -73,12 +73,12 @@ components:
             spacing_below: none
             tooltip: ''
             underline: false
-            visible: true
+            visible: false
           type: DropDown
         - event_bindings: {click: button_pr_click}
           layout_properties: {}
           name: button_pr
-          properties: {background: 'theme:Error', foreground: 'theme:Tertiary', text: PR}
+          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: PR}
           type: Button
         - event_bindings: {click: button_mail_click}
           layout_properties: {}
