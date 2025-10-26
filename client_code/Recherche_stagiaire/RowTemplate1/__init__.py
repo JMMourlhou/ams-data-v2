@@ -65,7 +65,7 @@ class RowTemplate1(RowTemplate1Template):
         user = anvil.users.get_user()
         if user["role"] == "A" or user["role"] == "B":
             self.button_del.visible = True
-            
+        """
         # Drop down stages inscrits du stagiaire pour les pré-requis du stage sélectionnés
         start = French_zone.french_zone_time()  # pour calcul du tps de traitement
         
@@ -78,7 +78,7 @@ class RowTemplate1(RowTemplate1Template):
         
         end = French_zone.french_zone_time()
         print("Temps de traitement init drop dwn: ", end-start)
-        
+        """
     # button_1 : nom du stagiaire
     def button_1_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -275,11 +275,20 @@ class RowTemplate1(RowTemplate1Template):
             return
 
         # pour chaque stage, je lis les pré requis en table pré requis stagiaires
+        # Création du dict des pr du stagiaire
+        self.dico_pre_requis_stg = {}
         for stage in liste0:
             liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
-                                                              stage_num=stage['numero']
+                                                              numero=stage['numero']
                                                              )
             # création du dico des pré-requis 
+            print(liste_pr[0])
+
+            for pr_st in stage:
+                clef = pr_st['requis_txt']
+                valeur = ""
+                dico_pre_requis_stg[clef] = valeur
+                #print(dico_pre_requis_stg.keys())
             # code pr : (stage_num, email, True / False), ... True le PR existe
         # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent 
         

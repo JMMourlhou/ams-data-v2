@@ -97,7 +97,6 @@ class Pre_R_pour_1_stagiaire(Pre_R_pour_1_stagiaireTemplate):
             valeur = ""
             dico_pre_requis_stg[clef] = valeur
             #print(dico_pre_requis_stg.keys())
-
         
         for pr in self.liste_tous_pr:
             clef_search = dico_pre_requis_stg.get(pr['requis'])
