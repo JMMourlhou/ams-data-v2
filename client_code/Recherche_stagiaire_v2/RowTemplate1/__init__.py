@@ -83,7 +83,7 @@ class RowTemplate1(RowTemplate1Template):
     def button_1_click(self, **event_args):
         """This method is called when the button is clicked"""
 
-        # self.c.label_num_stage.text   est en forme mère recherche_stagiaire
+        # self.c.label_num_stage.text   est en forme mère recherche_stagiaire_v2
         print("Mode inscription si stage pas vide: ",self.c.label_origine.text, self.c.label_num_stage.text)
         if self.c.label_origine.text == "<AMS_Data.Main.Main object>" or self.c.label_num_stage.text == "":    # vient du menu / recherche, pas d'inscription // 
             try:
@@ -241,7 +241,7 @@ class RowTemplate1(RowTemplate1Template):
                 if row:
                     txt_msg = anvil.server.call("del_personne",row)
                 alert(txt_msg)
-            open_form("Recherche_stagiaire")
+            open_form("Recherche_stagiaire_v2")
 
     def user_initial_color(self):
         try:

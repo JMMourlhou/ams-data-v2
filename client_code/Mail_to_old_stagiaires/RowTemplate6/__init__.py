@@ -98,5 +98,5 @@ class RowTemplate6(RowTemplate6Template):
                 open_form('User_add_sans_procedures',self.item['nom'], self.item['prenom'], self.item['tel'], self.item['mail'])
         else:
             alert("Cette personne est déjà enregistrée dans cette application !")  # user existant
-            from ...Recherche_stagiaire import Recherche_stagiaire
-            open_form("Recherche_stagiaire")
+            from ...Recherche_stagiaire_v2 import Recherche_stagiaire_v2
+            open_form("Recherche_stagiaire_v2")

@@ -35,6 +35,6 @@ class Box_types_fi(Box_types_fiTemplate):
   
         txt_msg = anvil.server.call("add_stagiaire", self.stagiaire_row, self.stage,  self.code_fi, "bt_recherche", 0)
         alert(txt_msg)
-        open_form('Recherche_stagiaire', self.stage)  # réouvre la forme mère pour mettre à jour l'affichage de l'histo
+        open_form('Recherche_stagiaire_v2', self.stage)  # réouvre la forme mère pour mettre à jour l'affichage de l'histo
 
         

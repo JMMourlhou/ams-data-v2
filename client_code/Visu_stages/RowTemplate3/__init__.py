@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 from .. import Visu_stages
 from anvil import open_form
 from ...Pre_R_pour_stagiaire_admin import Pre_R_pour_stagiaire_admin
-from ...Recherche_stagiaire import Recherche_stagiaire
+from ...Recherche_stagiaire_v2 import Recherche_stagiaire_v2
 from ... import Mail_valideur  # pour button_export_xls_click
 
 #import anvil.js    # pour screen size
@@ -118,7 +118,7 @@ class RowTemplate3(RowTemplate3Template):
         else:
             n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
         n.show()
-        open_form('Recherche_stagiaire',num_stage)
+        open_form('Recherche_stagiaire_v2',num_stage)
 
     def button_pr_requis_click(self, **event_args):
         """This method is called when the button is clicked"""

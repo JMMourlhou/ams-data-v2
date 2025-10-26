@@ -17,7 +17,7 @@ class QrCode_display(QrCode_displayTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens
-        
+        self.f = get_open_form()  # form appelante
         if log_in is True:
             # si log_in =True, appel du qr_code pour que les stagiaires log in ds l'appli, donc pas de num stage
             self.label_titre.text = "Flashez pour vous connecter à l'appli AMSdata "
@@ -61,8 +61,7 @@ class QrCode_display(QrCode_displayTemplate):
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from ..Main import Main
-        open_form('Main',99)
+        open_form(self.f)
 
     # si stage 1003 pour tuteurs 
     def drop_down_num_stages_change(self, **event_args):

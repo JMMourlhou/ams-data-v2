@@ -41,8 +41,8 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
             )
         ]
         # ---------------------------------------------------------------------------------------------
-        # Initialisation de l'affichage par role
-        critere = self.text_box_nom.text + "%"            #  wildcard search on role
+        # Initialisation de l'affichage par nom
+        critere = self.text_box_nom.text + "%"            #  wildcard search on nom
         liste = app_tables.users.search(tables.order_by("nom", ascending=True),
                                         q.fetch_only("role","nom","prenom","tel","email"),
                                         role=q.ilike(critere),
@@ -53,14 +53,15 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         from anvil.js import window  # to gain access to the window objec
         screen_size = window.innerWidth
         print("screen: ", screen_size)
-        if screen_size > 700:
-            self.data_grid_1.rows_per_page = 3
+        
+        if screen_size >= 700:
+            self.data_grid_1.rows_per_page = 5
         else:  # Phone
+            self.data_grid_1.rows_per_page = 3
             self.button_mail_to_all.text = ""  # Affiche les icones uniqt
             self.button_trombi.text = ""
             self.button_pre_requis.text = ""
-        if screen_size > 1800:
-            self.data_grid_1.rows_per_page = 4
+      
     """
     # Focus on nom en ouverture de form
     def form_show(self, **event_args):
@@ -215,7 +216,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
                 open_form,
             )  # j'initialise la forme principale avec le choix du qcm ds la dropdown
 
-            open_form("Recherche_stagiaire")
+            open_form("Recherche_stagiaire_v2")
 
         # Initialisation du Drop down num_stages et dates
         self.drop_down_num_stages.items = [
@@ -304,7 +305,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
     def button_efface_click(self, **event_args):  # # j'efface les critères
         """This method is called when the button is clicked"""
-        open_form("Recherche_stagiaire", self.num_stage)
+        open_form("Recherche_stagiaire_v2", self.num_stage)
 
     def text_box_nom_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
@@ -429,6 +430,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
         critere = self.text_box_email.text + "%"            #  wildcard search on email
         liste = app_tables.users.search(tables.order_by("email", ascending=True),
+                                        q.fetch_only("role","nom","prenom","tel","email"),
                                         email=q.ilike(critere)
                                        )
         self.repeating_panel_1.items=liste   

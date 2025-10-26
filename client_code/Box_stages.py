@@ -39,4 +39,4 @@ class Box_stages(Box_stagesTemplate):
         #                                            row stagiaire        numero     code_fi     origine      stage pour lequel travaille le tuteur       
         txt_msg = anvil.server.call("add_stagiaire", self.stagiaire_row, self.stage,  'NO',   "bt_recherche", self.pour_stage)
         alert(txt_msg)
-        open_form('Recherche_stagiaire', self.stage)  # réouvre la forme mère pour mettre à jour l'affichage de l'histo
+        open_form('Recherche_stagiaire_v2', self.stage)  # réouvre la forme mère pour mettre à jour l'affichage de l'histo
