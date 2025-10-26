@@ -276,21 +276,24 @@ class RowTemplate1(RowTemplate1Template):
 
         # pour chaque stage, je lis les pré requis en table pré requis stagiaires
         # Création du dict des pr du stagiaire
-        self.dico_pre_requis_stg = {}
+        self.dico_pre_requis = {}
         for stage in liste0:
             liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
                                                               numero=stage['numero']
                                                              )
             # création du dico des pré-requis 
-            print(liste_pr[0])
+            # print(liste_pr[0])
 
-            for pr_st in stage:
-                clef = pr_st['requis_txt']
-                valeur = ""
-                dico_pre_requis_stg[clef] = valeur
-                #print(dico_pre_requis_stg.keys())
-            # code pr : (stage_num, email, True / False), ... True le PR existe
-        # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent 
+            for pr in liste_pr:
+                valeur = None
+                clef = pr['requis_txt']
+                valeur = (stage['numero'], pr['doc1'])
+                self.dico_pre_requis[clef] = valeur
+        
+        # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent        
+        print(self.dico_pre_requis.keys())
+        print()
+        # utilisation du dictionaire pour afficher les 
         
 
 
