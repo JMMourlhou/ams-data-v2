@@ -1,185 +1,196 @@
 components:
 - components:
-  - event_bindings: {focus: text_box_3_focus}
-    layout_properties: {expand: false, width: 207.6023544921875}
-    name: text_box_3
-    properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
-    type: TextBox
-  - event_bindings: {focus: text_box_mail_focus}
-    layout_properties: {width: 194.5619248046875}
-    name: text_box_mail
+  - components:
+    - event_bindings: {focus: text_box_3_focus}
+      layout_properties: {expand: false, width: 207.6023544921875}
+      name: text_box_3
+      properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 18, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+      type: TextBox
+    - event_bindings: {focus: text_box_mail_focus}
+      layout_properties: {width: 194.5619248046875}
+      name: text_box_mail
+      properties:
+        align: center
+        background: theme:Primary
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 14
+        foreground: theme:On Primary
+        hide_text: false
+        italic: false
+        margin: ['8', null, null, null]
+        placeholder: ''
+        role: null
+        spacing_above: small
+        spacing_below: none
+        text: ''
+        tooltip: ''
+        type: text
+        underline: false
+        visible: true
+      type: TextBox
+    - event_bindings: {focus: text_box_tel_focus}
+      layout_properties: {width: 145.228955078125}
+      name: text_box_tel
+      properties:
+        align: center
+        background: theme:Primary
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 16
+        foreground: theme:On Primary
+        hide_text: false
+        italic: false
+        margin: ['2', null, null, null]
+        placeholder: ''
+        role: null
+        spacing_above: small
+        spacing_below: none
+        text: ''
+        tooltip: ''
+        type: text
+        underline: false
+        visible: true
+      type: TextBox
+    - event_bindings: {change: drop_down_mode_fi_change}
+      layout_properties: {width: 55.0717056640625}
+      name: drop_down_mode_fi
+      properties:
+        background: theme:Primary
+        font_size: 12
+        foreground: theme:On Primary
+        items: [M.Fi]
+        margin: ['15', null, null, null]
+      type: DropDown
+    - event_bindings: {change: check_box_form_satis_change}
+      layout_properties: {}
+      name: check_box_form_satis
+      properties: {font_size: 11, foreground: 'theme:On Primary', text: F.Satisf.}
+      type: CheckBox
+    - event_bindings: {change: check_box_form_suivi_change}
+      layout_properties: {}
+      name: check_box_form_suivi
+      properties: {font_size: 11, foreground: 'theme:On Primary', text: F.Suivi}
+      type: CheckBox
+    layout_properties: {grid_position: 'WFEVYJ,FDUTKB'}
+    name: flow_panel_1
     properties:
       align: center
       background: theme:Primary
-      bold: false
-      border: ''
-      enabled: true
-      font: ''
-      font_size: 14
-      foreground: theme:On Primary
-      hide_text: false
-      italic: false
-      margin: ['8', null, null, null]
-      placeholder: ''
-      role: null
-      spacing_above: small
-      spacing_below: none
-      text: ''
-      tooltip: ''
-      type: text
-      underline: false
-      visible: true
-    type: TextBox
-  - event_bindings: {focus: text_box_tel_focus}
-    layout_properties: {width: 145.228955078125}
-    name: text_box_tel
-    properties:
-      align: center
-      background: theme:Primary
-      bold: false
-      border: ''
-      enabled: true
-      font: ''
-      font_size: 16
-      foreground: theme:On Primary
-      hide_text: false
-      italic: false
-      margin: ['2', null, null, null]
-      placeholder: ''
-      role: null
-      spacing_above: small
-      spacing_below: none
-      text: ''
-      tooltip: ''
-      type: text
-      underline: false
-      visible: true
-    type: TextBox
-  - event_bindings: {change: drop_down_mode_fi_change}
-    layout_properties: {width: 55.0717056640625}
-    name: drop_down_mode_fi
-    properties:
-      background: theme:Primary
-      font_size: 12
-      foreground: theme:On Primary
-      items: [M.Fi]
-      margin: ['8', null, null, null]
-    type: DropDown
-  - event_bindings: {change: check_box_form_satis_change}
-    layout_properties: {}
-    name: check_box_form_satis
-    properties: {font_size: 11, foreground: 'theme:On Primary', text: F.Satisf.}
-    type: CheckBox
-  - event_bindings: {change: check_box_form_suivi_change}
-    layout_properties: {}
-    name: check_box_form_suivi
-    properties: {font_size: 11, foreground: 'theme:On Primary', text: F.Suivi}
-    type: CheckBox
-  layout_properties: {column: null}
-  name: flow_panel_1
-  properties:
-    align: center
-    background: theme:Primary
-    border: ''
-    foreground: ''
-    role: null
-    spacing:
-      margin: [null, null, '1', null]
-    spacing_above: none
-    spacing_below: small
-    tooltip: ''
-    vertical_align: middle
-    visible: true
-  type: FlowPanel
-- components:
-  - event_bindings: {change: check_box_reussite_change}
-    layout_properties: {}
-    name: check_box_reussite
-    properties: {background: 'theme:Olive', foreground: 'theme:On Primary', text: 'Réussite ?'}
-    type: CheckBox
-  - event_bindings: {click: button_visu_diplome_click}
-    layout_properties: {}
-    name: button_visu_diplome
-    properties:
-      align: center
-      background: ''
-      bold: false
-      border: ''
-      enabled: true
-      font: ''
-      font_size: 15
-      foreground: theme:Tertiary
-      icon: fa:download
-      icon_align: left
-      italic: false
+      border: '1px '
+      foreground: ''
       role: null
       spacing:
-        padding: [null, '8', null, null]
+        margin: [null, null, '1', null]
       spacing_above: none
-      spacing_below: none
-      text: Diplome
+      spacing_below: small
       tooltip: ''
-      underline: false
-      visible: false
-    type: Button
-  - event_bindings: {click: button_sending_diplome_click}
-    layout_properties: {}
-    name: button_sending_diplome
-    properties:
-      align: center
-      background: ''
-      bold: false
-      border: ''
-      enabled: true
-      font: ''
-      font_size: 15
-      foreground: theme:Tertiary
-      icon: fa:send
-      icon_align: left
-      italic: false
-      role: null
-      spacing:
-        padding: [null, '8', null, null]
-      spacing_above: none
-      spacing_below: none
-      text: diplôme
-      tooltip: ''
-      underline: false
-      visible: false
-    type: Button
-  - event_bindings: {click: bt_delete}
-    layout_properties: {}
-    name: button_delete
-    properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Primary', icon: 'fa:minus-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
-    type: Button
-  - event_bindings: {click: button_sending_click}
-    layout_properties: {}
-    name: button_sending
-    properties:
-      align: center
-      background: ''
-      bold: false
-      border: ''
-      enabled: true
-      font: ''
-      font_size: 15
-      foreground: theme:Tertiary
-      icon: fa:send
-      icon_align: left
-      italic: false
-      role: null
-      spacing:
-        padding: [null, '8', null, null]
-      spacing_above: none
-      spacing_below: none
-      text: Courrier
-      tooltip: ''
-      underline: false
+      vertical_align: middle
       visible: true
-    type: Button
+    type: FlowPanel
+  - components:
+    - event_bindings: {change: check_box_reussite_change}
+      layout_properties: {}
+      name: check_box_reussite
+      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', text: 'Réussite ?'}
+      type: CheckBox
+    - event_bindings: {click: button_visu_diplome_click}
+      layout_properties: {}
+      name: button_visu_diplome
+      properties:
+        align: center
+        background: ''
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 15
+        foreground: theme:Tertiary
+        icon: fa:download
+        icon_align: left
+        italic: false
+        role: null
+        spacing:
+          padding: [null, '8', null, null]
+        spacing_above: none
+        spacing_below: none
+        text: Diplome
+        tooltip: ''
+        underline: false
+        visible: false
+      type: Button
+    - event_bindings: {click: button_sending_diplome_click}
+      layout_properties: {}
+      name: button_sending_diplome
+      properties:
+        align: center
+        background: ''
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 15
+        foreground: theme:Tertiary
+        icon: fa:send
+        icon_align: left
+        italic: false
+        role: null
+        spacing:
+          padding: [null, '8', null, null]
+        spacing_above: none
+        spacing_below: none
+        text: diplôme
+        tooltip: ''
+        underline: false
+        visible: false
+      type: Button
+    - event_bindings: {click: bt_delete}
+      layout_properties: {}
+      name: button_delete
+      properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Primary', icon: 'fa:minus-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_sending_click}
+      layout_properties: {}
+      name: button_sending
+      properties:
+        align: center
+        background: ''
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 15
+        foreground: theme:Tertiary
+        icon: fa:send
+        icon_align: left
+        italic: false
+        role: null
+        spacing:
+          padding: [null, '8', null, null]
+        spacing_above: none
+        spacing_below: none
+        text: Courrier
+        tooltip: ''
+        underline: false
+        visible: true
+      type: Button
+    layout_properties: {grid_position: 'TKRZFU,DKNEQR'}
+    name: flow_panel_2
+    properties: {align: center, background: 'theme:Primary', border: '', spacing_above: none, spacing_below: large}
+    type: FlowPanel
   layout_properties: {column: 'null'}
-  name: flow_panel_2
-  properties: {align: center, background: 'theme:Olive', spacing_above: none, spacing_below: large}
-  type: FlowPanel
-container: {type: DataRowPanel}
+  name: column_panel_1
+  properties:
+    col_spacing: none
+    role: tonal-card
+    spacing:
+      margin: [null, null, '4', null]
+  type: ColumnPanel
+container:
+  properties: {border: ''}
+  type: DataRowPanel
 is_package: true

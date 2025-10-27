@@ -24,8 +24,12 @@ class RowTemplate4(RowTemplate4Template):
         except Exception:
             tel = "Vérifier le tel"
 
-        # Affichage reussite au stage et couleur  
-        self.check_box_reussite.checked = self.item['reussite']
+        # Affichage reussite au stage et couleur  SI c'est un stage de type "S"
+        if self.item['stage']['type_stage'] == "S":
+            self.check_box_reussite.checked = self.item['reussite']
+        else:
+            self.check_box_reussite.visible = False
+            
         if self.check_box_reussite.checked is False:
             self.button_visu_diplome.visible = False
             self.button_sending_diplome.visible = False
