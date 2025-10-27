@@ -113,15 +113,24 @@ def del_formulaire_satisf(code_row):
     # remise  enquete_suivi=False, table stagiaire inscrit, stage concerné, stagiaire concerné
     # pour qu'il puisse ré effectuer le formulaire de suivi:
     # lecture du row user
-    row_user = app_tables.users.get(email=code_row['user_email']['email'])
+    try:
+        row_user = app_tables.users.get(email=code_row['user_email']['email'])
+    except Exception as e:
+        return e
+        
     # lecture du row table stagiaire inscrit
-    row_stagiaire_inscrit = app_tables.stagiaires_inscrits.get(stage=code_row['stage_row'],
-                                            user_email=row_user)
-
-    row_stagiaire_inscrit.update(enquete_satisf=False)
-
+    if row_user:
+        row_stagiaire_inscrit = app_tables.stagiaires_inscrits.get(stage=code_row['stage_row'],                                                               
+                                                                 user_email=row_user)
+    if row_stagiaire_inscrit:
+        row_stagiaire_inscrit.update(enquete_satisf=False)
+    else:
+        valid="Impossible de lire le row du stagiaire"
+        
     # Effacement du row du formulaire table Stage_suivi
-    code_row.delete()
-
-    valid = True
+    try:
+        code_row.delete()
+        valid = True
+    except Exception as e:
+        valid = e
     return valid

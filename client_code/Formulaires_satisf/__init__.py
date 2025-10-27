@@ -14,12 +14,11 @@ class Formulaires_satisf(Formulaires_satisfTemplate):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
-        """
+        
         list = app_tables.stage_satisf.search(
             tables.order_by("stage_num_txt", ascending=False)
         )
-        """
-        list = app_tables.stage_satisf.search()
+
         self.repeating_panel_1.items = list
 
     def button_annuler_click(self, **event_args):
