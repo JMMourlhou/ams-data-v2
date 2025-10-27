@@ -219,9 +219,9 @@ def init_formulaire_satis_stagiaire(stagiaire_row, bool):
     stagiaire_row.update(enquete_satisf = bool)
     
     # SI BOOL False, recherche et effacement du formulaire de satisf en table Stage_suivi si existant
-    if bool is False: # si l'utilisateur a modifié l'indicateur du formulaire de satisf à False, et a confrmé annuler le formulaire pour permettre une ressaisie d'un autre formulaire
+    if bool is False: # si l'utilisateur a modifié l'indicateur du formulaire de satisf à False, et a confirmé annuler le formulaire pour permettre une ressaisie d'un autre formulaire
         stage_satis_row = app_tables.stage_satisf.get(stage_row= stagiaire_row['stage'],
-                                        user_email=stagiaire_row['user_email'])
+                                                     user_email=stagiaire_row['user_email'])
         if stage_satis_row is not None: # si le formulaire existe, on l'efface
             # Effacement du row du formulaire table Stage_suivi
             stage_satis_row.delete()

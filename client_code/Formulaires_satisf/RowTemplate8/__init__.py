@@ -13,11 +13,14 @@ class RowTemplate8(RowTemplate8Template):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
-        self.text_box_1.text = self.item['stage_num_txt']
-        self.text_box_2.text = self.item['stage_row']['code_txt']
         try:
-            nom_prenom = self.item['nom']+" "+self.item['prenom']
-            self.text_box_3.text = nom_prenom
+            self.text_box_1.text = self.item['stage_num_txt']
+            self.text_box_2.text = self.item['stage_row']['code_txt']
+            try:
+                nom_prenom = self.item['nom']+" "+self.item['prenom']
+                self.text_box_3.text = nom_prenom
+            except:
+                pass
         except:
             pass
 
