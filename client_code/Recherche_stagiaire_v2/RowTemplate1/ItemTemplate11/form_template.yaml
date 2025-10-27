@@ -57,7 +57,7 @@ components:
       event_bindings: {click: button_del_pour_ce_stagiaire_click}
       layout_properties: {}
       name: button_del_pour_ce_stagiaire
-      properties: {align: left, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:On Primary', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Enlever ce PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
+      properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:Error', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: Enlever ce PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
       type: Button
     - event_bindings: {click: button_visu_click}
       layout_properties: {}

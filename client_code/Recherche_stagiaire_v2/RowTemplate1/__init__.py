@@ -260,9 +260,7 @@ class RowTemplate1(RowTemplate1Template):
 
     def button_pr_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.repeating_panel_3.visible = True
-        self.drop_down_code_stage.foreground = "red"
-        self.button_1.foreground = "red"
+        
 
         # Acquisition des stages où le stagiaire est inscrit
         try:  # *********************************          Liste à partir table users
@@ -273,47 +271,57 @@ class RowTemplate1(RowTemplate1Template):
                                                             user_email=self.item['user_email'])
         if liste0 is None:
             return
-
-        # pour chaque stage, je lis les pré requis en table pré requis stagiaires
-        # Création du dict des pr du stagiaire
-        self.dico_pre_requis = {}
-        for stage in liste0:
-            liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
-                                                              numero=stage['numero']
-                                                             )
-            # création du dico des pré-requis 
-            # print(liste_pr[0])
-
-            for pr in liste_pr:
-                valeur = None
-                clef = pr['requis_txt']
-                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'])
-                # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
-                if clef not in self.dico_pre_requis  or  (self.dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
-                    self.dico_pre_requis[clef] = valeur
-        
-        # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent        
-        """
-        for clef in self.dico_pre_requis:
-            print (clef,self.dico_pre_requis[clef])
-        """
-        # Transformation en liste
-        # -----------------------------------------------------------
-        # Transformation en liste pour affichage dans le RepeatingPanel
-        liste_affichage = []
-        
-        for clef, (numero, requis_row, type_stage_txt ,email, doc1) in self.dico_pre_requis.items():
-            liste_affichage.append({
-                "requis_txt": clef,
-                "item_requis": requis_row,
-                "type_stage_txt": type_stage_txt,
-                "stagiaire_email": email,
-                "stage_num": numero,
-                "doc1": doc1
-            })
-        
-        # Affectation au RepeatingPanel pour affichage
-        self.repeating_panel_3.items = liste_affichage
+        if self.repeating_panel_3.visible == False:
+            self.repeating_panel_3.visible = True
+            self.button_pr.foreground = "red"
+            self.button_1.foreground = "red"
+    
+            # pour chaque stage, je lis les pré requis en table pré requis stagiaires
+            # Création du dict des pr du stagiaire
+            self.dico_pre_requis = {}
+            for stage in liste0:
+                liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
+                                                                numero=stage['numero']
+                                                                )
+                # création du dico des pré-requis 
+                # print(liste_pr[0])
+    
+                for pr in liste_pr:
+                    valeur = None
+                    clef = pr['requis_txt']
+                    valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'])
+                    # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
+                    if clef not in self.dico_pre_requis  or  (self.dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
+                        self.dico_pre_requis[clef] = valeur
+                
+            
+            # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent        
+            """
+            for clef in self.dico_pre_requis:
+                print (clef,self.dico_pre_requis[clef])
+            """
+            # Transformation en liste
+            # -----------------------------------------------------------
+            # Transformation en liste pour affichage dans le RepeatingPanel
+            liste_affichage = []
+            
+            for clef, (numero, requis_row, type_stage_txt ,email, doc1) in self.dico_pre_requis.items():
+                liste_affichage.append({
+                    "requis_txt": clef,
+                    "item_requis": requis_row,
+                    "type_stage_txt": type_stage_txt,
+                    "stagiaire_email": email,
+                    "stage_num": numero,
+                    "doc1": doc1
+                })
+            
+            # Affectation au RepeatingPanel pour affichage
+            if liste_affichage != []:
+                self.repeating_panel_3.items = liste_affichage
+        else:
+            self.repeating_panel_3.visible = False
+            self.button_pr.foreground = "yellow"
+            self.user_initial_color()
         
 
 
