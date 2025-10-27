@@ -20,7 +20,7 @@ class RowTemplate8(RowTemplate8Template):
                 nom_prenom = self.item['nom']+" "+self.item['prenom']
                 self.text_box_3.text = nom_prenom
             except:
-                pass
+                self.text_box_3.text = self.item['nom']
         except:
             pass
 
