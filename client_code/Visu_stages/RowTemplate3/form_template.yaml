@@ -187,7 +187,7 @@ components:
     - event_bindings: {click: button_attestations_click}
       layout_properties: {grid_position: 'TUNFVY,PLTZPI'}
       name: button_attestations
-      properties: {background: 'theme:Primary', bold: false, enabled: true, foreground: 'theme:Error', icon: 'fa:send', role: elevated-button, text: Envoi, visible: false}
+      properties: {background: 'theme:Primary', bold: false, enabled: true, foreground: 'theme:Error', icon: 'fa:send', role: elevated-button, text: Envoi dipl., visible: false}
       type: Button
     - event_bindings: {change: check_box_diplomes_sent_change}
       layout_properties: {grid_position: 'TUNFVY,QINQEA'}

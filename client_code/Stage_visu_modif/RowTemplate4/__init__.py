@@ -13,7 +13,6 @@ class RowTemplate4(RowTemplate4Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-        
         self.text_box_3.text = self.item['name'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
         self.text_box_mail.text = self.item['user_email']['email']
         tel = self.item['user_email']['tel']

@@ -71,18 +71,21 @@ class RowTemplate3(RowTemplate3Template):
         self.check_box_diplomes_sent.checked = self.item['diplom_sent']
         if self.item['diplomes'] is not None and self.item['diplom_sent'] is True:
             self.file_loader_diplomes.visible = False
+            self.file_loader_diplomes.foreground = "green"
             self.button_attestations.visible = False
             self.check_box_diplomes_sent.visible = True
 
         # Affichage des boutons si diplomes sauvés en table et NON envoyés
         if self.item['diplomes'] is not None and self.item['diplom_sent'] is False:
             self.file_loader_diplomes.visible = False
+            self.file_loader_diplomes.foreground = "green"
             self.button_attestations.visible = True
             self.check_box_diplomes_sent.visible = True
 
         # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
         if self.item['diplomes'] is None:
             self.file_loader_diplomes.visibles = True
+            self.file_loader_diplomes.foreground = "red"
             self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
             self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
         
