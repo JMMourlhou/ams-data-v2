@@ -10,9 +10,7 @@ from time import sleep
 
 
 class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
-    def __init__(
-        self, user_row=None, num_stage="", **properties
-    ):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
+    def __init__(self, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
@@ -22,8 +20,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.label_origine.text = str(get_open_form())
         self.num_stage = num_stage
         self.label_num_stage.text = num_stage
-        self.user_row = user_row
 
+        """
         if self.user_row is None:  # Entrée normale
             # ---------------------------------------------------------------------------------------------
             # Initialisation de l'affichage par nom
@@ -43,7 +41,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 nom=self.user_row["nom"],
             )
         self.repeating_panel_1.items = liste
-
+        """
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
         self.drop_down_mode_fi.items = [
@@ -79,146 +77,11 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.button_trombi.text = ""
             self.button_pre_requis.text = ""
 
-    """
+    
     # Focus on nom en ouverture de form
     def form_show(self, **event_args):
         self.text_box_nom.focus()
-    """
-
-    def filtre(self):
-        liste = []
-        # Récupération des critères
-        c_role = self.text_box_role.text + "%"  #  wildcard, critère role
-        c_nom = self.text_box_nom.text + "%"  #            nom
-        c_prenom = self.text_box_prenom.text + "%"  #            prenom
-        c_email = self.text_box_email.text + "%"  #            email
-        c_tel = self.text_box_tel.text + "%"  #            tel
-
-        from .. import French_zone
-
-        start = French_zone.french_zone_time()
-        # Nom
-        if (
-            self.text_box_nom.text != ""
-            and self.text_box_email.text == ""
-            and self.text_box_tel.text == ""
-            and self.text_box_prenom.text == ""
-            and self.text_box_role.text == ""
-        ):
-            # liste = anvil.server.call("search_on_name_only", c_nom)
-
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("nom", ascending=True),
-                nom=q.ilike(c_nom),  # ET
-            )
-
-            end = French_zone.french_zone_time()
-            print(
-                "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ tps écoulé",
-                end - start,
-            )
-        # Prénom
-        if (
-            self.text_box_prenom.text != ""
-            and self.text_box_email.text == ""
-            and self.text_box_tel.text == ""
-            and self.text_box_nom.text == ""
-            and self.text_box_role.text == ""
-        ):
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("nom", ascending=True),
-                prenom=q.ilike(c_prenom),  # ET
-            )
-        # Role
-        if (
-            self.text_box_role.text != ""
-            and self.text_box_nom.text == ""
-            and self.text_box_prenom.text == ""
-        ):
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("nom", ascending=True),
-                role=q.ilike(c_role),
-            )
-        # Role & Nom
-        if (
-            self.text_box_role.text != ""
-            and self.text_box_nom.text != ""
-            and self.text_box_prenom.text == ""
-        ):
-            # liste = anvil.server.call("search_on_role_nom", c_role, c_nom)
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("nom", ascending=True),
-                q.all_of(  # all of queries must match
-                    role=q.ilike(c_role),  # ET
-                    nom=q.ilike(c_nom),
-                ),
-            )
-        # Nom & Prénom
-        if (
-            self.text_box_role.text == ""
-            and self.text_box_nom.text != ""
-            and self.text_box_prenom.text != ""
-        ):
-            # liste = anvil.server.call("search_on_nom_prenom", c_nom, c_prenom)
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("nom", ascending=True),
-                q.all_of(  # all of queries must match
-                    prenom=q.ilike(c_prenom),  # ET
-                    nom=q.ilike(c_nom),
-                ),
-            )
-
-        # Role & Nom & Prénom
-        if (
-            self.text_box_role.text != ""
-            and self.text_box_nom.text != ""
-            and self.text_box_prenom.text != ""
-        ):
-            # liste = anvil.server.call("search_on_role_nom_prenom", c_role, c_nom, c_prenom)
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("nom", ascending=True),
-                q.all_of(  # all of queries must match
-                    role=q.ilike(c_role),  # ET
-                    prenom=q.ilike(c_prenom),  # ET
-                    nom=q.ilike(c_nom),
-                ),
-            )
-        # Tel
-        if (
-            self.text_box_tel.text != ""
-            and self.text_box_email.text == ""
-            and self.text_box_nom.text == ""
-            and self.text_box_prenom.text == ""
-            and self.text_box_role.text == ""
-        ):
-            # liste = anvil.server.call("search_on_tel_only", c_tel)
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("tel", ascending=True),
-                tel=q.ilike(c_tel),
-            )
-        # Mail
-        if (
-            self.text_box_email.text != ""
-            and self.text_box_tel.text == ""
-            and self.text_box_nom.text == ""
-            and self.text_box_prenom.text == ""
-            and self.text_box_role.text == ""
-        ):
-            # liste = anvil.server.call("search_on_email_only", c_email)
-            liste = app_tables.users.search(
-                q.fetch_only("nom", "prenom", "email", "tel", "role"),
-                tables.order_by("email", ascending=True),
-                email=q.ilike(c_email),
-            )
-        self.label_titre.text = str(len(liste)) + " résultats"
-        self.repeating_panel_1.items = liste
+    
 
     def filtre_type_stage(self):
         # Récupération du critère stage
@@ -230,11 +93,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             code=row_type,
         )
         if len(list1) == 0:
-            from anvil import (
-                open_form,
-            )  # j'initialise la forme principale avec le choix du qcm ds la dropdown
-
-            open_form("Recherche_stagiaire_v2")
+            open_form("Recherche_stagiaire_v3")
 
         # Initialisation du Drop down num_stages et dates
         self.drop_down_num_stages.items = [
@@ -254,9 +113,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             temp = app_tables.stagiaires_inscrits.search(
                 q.fetch_only(), tables.order_by("name", ascending=True), stage=st
             )
-            liste_intermediaire1.append(
-                temp
-            )  # ajout de la liste (iterator object)du stage
+            liste_intermediaire1.append(temp)  # ajout de la liste (iterator object)du stage
 
         # print("nb de listes créées: ",len(liste_intermediaire1))
 
@@ -267,6 +124,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.liste_type_stage.append(row)
         self.label_titre.text = str(len(self.liste_type_stage)) + " résultats"
 
+        self.data_grid_users.visible = False
+        self.repeating_panel_1.visible = True
         self.repeating_panel_1.items = self.liste_type_stage
         if len(self.liste_type_stage) > 0:
             self.button_mail_to_all.visible = True
@@ -283,7 +142,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.button_recherche.visible = False
         self.button_efface.visible = True
         self.column_panel_users.visible = False
-
+        self.raz_screen()
         self.filtre_type_stage()
 
     def drop_down_num_stages_change(self, **event_args):
@@ -311,15 +170,6 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # from ..Main import Main
         # open_form('Main',99)
         open_form(self.f)
-
-    def button_recherche_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        self.drop_down_code_stage.selected_value = None
-        self.drop_down_num_stages.visible = False
-        self.button_recherche.visible = False
-        self.button_efface.visible = True
-        self.column_panel_users.visible = False
-        self.filtre()
 
     def button_efface_click(self, **event_args):  # # j'efface les critères
         """This method is called when the button is clicked"""
@@ -404,6 +254,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             nom=q.ilike(critere),
         )
+        self.raz_screen()
         self.repeating_panel_0.items = liste
 
     def text_box_prenom_focus(self, **event_args):
@@ -419,6 +270,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             prenom=q.ilike(critere),
         )
+        self.raz_screen()
         self.repeating_panel_0.items = liste
 
     def text_box_role_focus(self, **event_args):
@@ -435,6 +287,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             role=q.ilike(critere),
         )
+        self.raz_screen()
         self.repeating_panel_0.items = liste
 
     def text_box_email_focus(self, **event_args):
@@ -450,6 +303,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             email=q.ilike(critere),
         )
+        self.raz_screen()
         self.repeating_panel_0.items = liste
 
     def text_box_tel_focus(self, **event_args):
@@ -465,5 +319,142 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             tel=q.ilike(critere),
         )
+        self.raz_screen()
         self.repeating_panel_0.items = liste
+
+    def raz_screen(self):   
+        self.data_grid_users.visible = True
+        self.repeating_panel_histo.visible = False
+        self.repeating_panel_pr.visible = False
+        self.repeating_panel_qcm.visible = False
+        self.repeating_panel_1.visible = False
+        self.button_role.text = ""
+        self.button_1.text = ""
+        self.button_3.text = ""
+        self.button_4.text = ""
+        
+        
+        
+
+    def button_qcm_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        
+        if self.repeating_panel_qcm.visible is False:
+            self.repeating_panel_qcm.visible = True
+            self.button_qcm.foreground = "red"
+            self.button_1.foreground = "red"
+        else:
+            self.repeating_panel_qcm.visible = False
+            self.button_qcm.foreground = "yellow"   
+            
+        # lecture du user sur le mail sauvé en label_user_email
+        try:
+            self.item = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+    
+        qcm_results = app_tables.qcm_result.search( 
+            tables.order_by("time", ascending=False),
+            user_qcm = self.item
+        )
+        if len(qcm_results)>0:      # qcm trouvés pour ce user
+            self.repeating_panel_qcm.items = qcm_results
+            self.data_grid_users.visible = False
+        else:
+            self.repeating_panel_qcm.visible = False
+            self.button_qcm.foreground = "yellow"
+            #self.user_initial_color()    
+
+    def button_histo_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        
+        # lecture du user sur le mail sauvé en label_user_email
+        try:
+            self.item = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+            
+        if self.repeating_panel_histo.visible is False:
+            self.repeating_panel_histo.visible = True
+            self.button_histo.foreground = "red"
+            self.button_1.foreground = "red"
+ 
+            self.repeating_panel_histo.items = app_tables.stagiaires_inscrits.search(user_email = self.item)
+            self.data_grid_users.visible = False
+        else:
+            self.repeating_panel_histo.visible = False
+            self.button_histo.foreground = "yellow"
+            #self.user_initial_color()
+
+    def button_pr_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # lecture du user sur le mail sauvé en label_user_email
+        try:
+            self.item = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+            
+        # Acquisition des stages où le stagiaire est inscrit
+        liste0 = app_tables.stagiaires_inscrits.search( q.fetch_only("stage_txt"),
+                                                            user_email=self.item)
+
+        if liste0 is None:
+            return
+        if self.repeating_panel_pr.visible is False:
+            self.repeating_panel_pr.visible = True
+            self.button_pr.foreground = "red"
+            self.button_1.foreground = "red"
+        else:
+            self.repeating_panel_pr.visible = False
+            self.button_pr.foreground = "yellow"
+
+        # pour chaque stage, je lis les pré requis en table pré requis stagiaires
+        # Création du dict des pr du stagiaire
+        self.dico_pre_requis = {}
+        for stage in liste0:
+            liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
+                                                                numero=stage['numero']
+                                                                )
+            # création du dico des pré-requis 
+            # print(liste_pr[0])
+
+            for pr in liste_pr:
+                valeur = None
+                clef = pr['requis_txt']
+                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'])
+                # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
+                if clef not in self.dico_pre_requis  or  (self.dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
+                    self.dico_pre_requis[clef] = valeur
+
+        # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent        
+        """
+        for clef in self.dico_pre_requis:
+            print (clef,self.dico_pre_requis[clef])
+        """
+        # Transformation en liste
+        # -----------------------------------------------------------
+        # Transformation en liste pour affichage dans le RepeatingPanel
+        liste_affichage = []
+
+        for clef, (numero, requis_row, type_stage_txt ,email, doc1) in self.dico_pre_requis.items():
+            liste_affichage.append({
+                "requis_txt": clef,
+                "item_requis": requis_row,
+                "type_stage_txt": type_stage_txt,
+                "stagiaire_email": email,
+                "stage_num": numero,
+                "doc1": doc1
+            })
+
+        # Affectation au RepeatingPanel pour affichage
+        if liste_affichage != []:
+            self.repeating_panel_pr.items = liste_affichage
+        else:
+            self.repeating_panel_pr.visible = False
+            self.button_pr.foreground = "yellow"
+            #self.user_initial_color()
+
+   
+
+    
         

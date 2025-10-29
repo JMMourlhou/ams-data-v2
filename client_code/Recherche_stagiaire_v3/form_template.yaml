@@ -45,7 +45,11 @@ components:
           name: label_num_stage
           properties: {align: center, visible: false}
           type: Label
-        layout_properties: {grid_position: 'QFBRWM,GTQDWQ'}
+        - layout_properties: {grid_position: 'DFVUJU,OFAOKU'}
+          name: label_user_email
+          properties: {align: center, visible: true}
+          type: Label
+        layout_properties: {grid_position: 'SSKKIE,DDLLCZ'}
         name: column_panel_6
         properties: {background: 'theme:Tertiary', col_widths: '{}', role: outlined-card, spacing_above: none, spacing_below: small, wrap_on: never}
         type: ColumnPanel
@@ -152,6 +156,87 @@ components:
         properties: {col_spacing: tiny, col_widths: '{"GDMMNK":14,"JKUPIX":26,"ICDZRS":10,"GQNNHG":10}', spacing_above: none, spacing_below: none, wrap_on: never}
         type: ColumnPanel
       - components:
+        - event_bindings: {click: button_role_click}
+          layout_properties: {grid_position: 'FRZEYR,NOWEZM'}
+          name: button_role
+          properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
+          type: Button
+        - event_bindings: {click: button_role_click}
+          layout_properties: {grid_position: 'FRZEYR,XMGAVJ'}
+          name: button_1
+          properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
+          type: Button
+        - event_bindings: {click: button_role_click}
+          layout_properties: {grid_position: 'FRZEYR,LULUNY'}
+          name: button_3
+          properties:
+            align: left
+            background: ''
+            bold: true
+            border: ''
+            enabled: true
+            font: ''
+            font_size: 14
+            foreground: theme:On Primary
+            icon: ''
+            icon_align: left
+            italic: false
+            role: null
+            spacing:
+              padding: [null, null, '0', null]
+            spacing_above: none
+            spacing_below: none
+            text: mail
+            tooltip: ''
+            underline: false
+            visible: true
+          type: Button
+        - event_bindings: {click: button_role_click}
+          layout_properties: {grid_position: 'FRZEYR,TAPRQF'}
+          name: button_4
+          properties: {align: right, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
+          type: Button
+        layout_properties: {grid_position: 'ZVZOXB,YWWWIQ'}
+        name: column_panel_stagiaire
+        properties: {background: 'theme:On Primary Container', col_widths: '{"NOWEZM":6,"XMGAVJ":19,"LULUNY":22,"TAPRQF":13}', visible: false}
+        type: ColumnPanel
+      - components:
+        - event_bindings: {click: button_qcm_click}
+          layout_properties: {grid_position: 'ZOUEUI,ACEQAD'}
+          name: button_qcm
+          properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: Qcm}
+          type: Button
+        - event_bindings: {click: button_histo_click}
+          layout_properties: {grid_position: 'ZOUEUI,RMWLRO'}
+          name: button_histo
+          properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: Hist}
+          type: Button
+        - event_bindings: {click: button_pr_click}
+          layout_properties: {grid_position: 'ZOUEUI,JLFGNG'}
+          name: button_pr
+          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: PR}
+          type: Button
+        - event_bindings: {click: button_mail_click}
+          layout_properties: {grid_position: 'ZOUEUI,YCSRRK'}
+          name: button_mail
+          properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:send', spacing_above: none, spacing_below: none, text: ''}
+          type: Button
+        - event_bindings: {click: button_del_click}
+          layout_properties: {grid_position: 'ZOUEUI,DBWTUP'}
+          name: button_del
+          properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:minus', spacing_above: none, spacing_below: none, text: '', visible: false}
+          type: Button
+        layout_properties: {grid_position: 'PRDCOV,REYKIG'}
+        name: column_panel_menu
+        properties:
+          background: theme:Tertiary
+          col_spacing: tiny
+          spacing:
+            margin: ['0', null, null, null]
+          visible: false
+          wrap_on: never
+        type: ColumnPanel
+      - components:
         - name: repeating_panel_0
           properties: {item_template: Recherche_stagiaire_v3.RowTemplate9}
           type: RepeatingPanel
@@ -163,19 +248,27 @@ components:
           - {data_key: column_1, id: JKSDUP, title: Column 1}
           - {data_key: column_2, id: VJQQOR, title: Column 2}
           - {data_key: column_3, id: OJLQEN, title: Column 3}
-          rows_per_page: 1
+          rows_per_page: 5
         type: DataGrid
-      layout_properties: {grid_position: 'VFRGMW,CGVGSJ'}
+      layout_properties: {grid_position: 'TWBHXX,TICWCE'}
       name: column_panel_criteres
       properties: {background: '', border: '', col_spacing: medium, col_widths: '{"GETJRU":26,"CXBXCA":23}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: none, tooltip: '', visible: true, wrap_on: mobile}
       type: ColumnPanel
-    - layout_properties: {grid_position: 'UIMLIO,LNVTOQ'}
+    - layout_properties: {grid_position: 'LLKPDR,VWJOXX'}
       name: drop_down_mode_fi
       properties: {visible: false}
       type: DropDown
+    - layout_properties: {grid_position: 'JLGAXZ,FUQXSL'}
+      name: repeating_panel_histo
+      properties: {item_template: Recherche_stagiaire_v3.ItemTemplate25, role: outlined-card, visible: false}
+      type: RepeatingPanel
+    - layout_properties: {grid_position: 'ENMRBR,GEYBRO'}
+      name: repeating_panel_pr
+      properties: {item_template: Recherche_stagiaire_v3.ItemTemplate32, visible: false}
+      type: RepeatingPanel
     - layout_properties: {grid_position: 'XUUPYB,ADSJNX'}
       name: repeating_panel_qcm
-      properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1.ItemTemplate10, role: outlined-card, spacing_above: small, spacing_below: small}
+      properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1.ItemTemplate10, role: outlined-card, spacing_above: small, spacing_below: small, visible: false}
       type: RepeatingPanel
     - components:
       - components:

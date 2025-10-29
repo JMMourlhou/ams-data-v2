@@ -1,28 +1,25 @@
 from ._anvil_designer import ItemTemplate25Template
 from anvil import *
+import anvil.server
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
 
 class ItemTemplate25(ItemTemplate25Template):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        if self.item['prenom'] is not None:    # si prénom None, erreur
-            self.button_1.text = self.item['nom']+" "+self.item['prenom']
-            self.button_role.text = self.item['role']
+        # Any code you write here will run before the form opens.
+        # Any code you write here will run before the form opens.
+        if self.item['user_email']['role']=="S": 
+            self.button_detail_histo.text = self.item['stage']['code']['code'] +" du " + str(self.item['stage']['date_debut'])
         else:
-            self.button_1.text = self.item['nom']
+            self.button_detail_histo.text = self.item['stage']['code']['code']
 
-        self.button_3.text = self.item['email']
-        self.button_4.text = self.item['tel']
-
-    def button_role_click(self, **event_args):
+    def button_detail_histo_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
-
-    
-        
+        from ...Stage_visu_modif import Stage_visu_modif
+        id=self.item['stage'].get_id()
+        open_form('Stage_visu_modif', int(self.item['numero']), id, False)  # False: ne pas effectuer les BG tasks
