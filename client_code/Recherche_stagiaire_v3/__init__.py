@@ -1,5 +1,6 @@
-from ._anvil_designer import Recherche_stagiaire_v2Template
+from ._anvil_designer import Recherche_stagiaire_v3Template
 from anvil import *
+import stripe.checkout
 import anvil.server
 import anvil.users
 import anvil.tables as tables
@@ -7,8 +8,11 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from time import sleep
 
-class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
-    def __init__(self, user_row=None, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
+
+class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
+    def __init__(
+        self, user_row=None, num_stage="", **properties
+    ):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
@@ -19,26 +23,26 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         self.num_stage = num_stage
         self.label_num_stage.text = num_stage
         self.user_row = user_row
-        
-        if self.user_row is None:    # Entrée normale
+
+        if self.user_row is None:  # Entrée normale
             # ---------------------------------------------------------------------------------------------
             # Initialisation de l'affichage par nom
-            critere = self.text_box_nom.text + "%"            #  wildcard search on nom
-            liste = app_tables.users.search(tables.order_by("nom", ascending=True),
-                                            q.fetch_only("role","nom","prenom","tel","email"),
-                                            nom=q.ilike(critere),
-                                        )
-            self.repeating_panel_1.items=liste
-        else:    
+            critere = self.text_box_nom.text + "%"  #  wildcard search on nom
+            liste = app_tables.users.search(
+                tables.order_by("nom", ascending=True),
+                q.fetch_only("role", "nom", "prenom", "tel", "email"),
+                nom=q.ilike(critere),
+            )
+            self.repeating_panel_1.items = liste
+        else:
             alert("ok")
             # ---------------------------------------------------------------------------------------------
             # Initialisation de l'affichage par le row envoyé
-            liste = app_tables.users.search(q.fetch_only("role","nom","prenom","tel","email"),
-                                           nom=self.user_row['nom'],
-                                       )
-        self.repeating_panel_1.items=liste
-            
-        
+            liste = app_tables.users.search(
+                q.fetch_only("role", "nom", "prenom", "tel", "email"),
+                nom=self.user_row["nom"],
+            )
+        self.repeating_panel_1.items = liste
 
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
@@ -56,17 +60,17 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
                 tables.order_by("code", ascending=True)
             )
         ]
-        
-        
+
         if self.num_stage != "":
             self.drop_down_code_stage.visible = False
             self.drop_down_num_stages.visible = False
         # ----------------------------------------------------------------------------------------------
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec
+
         screen_size = window.innerWidth
         print("screen: ", screen_size)
-        
+
         if screen_size >= 700:
             self.data_grid_1.rows_per_page = 5
         else:  # Phone
@@ -74,13 +78,13 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
             self.button_mail_to_all.text = ""  # Affiche les icones uniqt
             self.button_trombi.text = ""
             self.button_pre_requis.text = ""
-      
+
     """
     # Focus on nom en ouverture de form
     def form_show(self, **event_args):
         self.text_box_nom.focus()
     """
-    
+
     def filtre(self):
         liste = []
         # Récupération des critères
@@ -91,6 +95,7 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         c_tel = self.text_box_tel.text + "%"  #            tel
 
         from .. import French_zone
+
         start = French_zone.french_zone_time()
         # Nom
         if (
@@ -388,35 +393,33 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
 
     def text_box_nom_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
-        sleep(0.5) # permet le temps de frapper le texte recherché
         self.text_box_role.text = ""
         self.text_box_prenom.text = ""
         self.text_box_email.text = ""
         self.text_box_tel.text = ""
 
-        critere = self.text_box_nom.text + "%"            #  wildcard search on date
-        liste = app_tables.users.search(tables.order_by("nom", ascending=True),
-                                        q.fetch_only("role","nom","prenom","tel","email"),
-                                        nom=q.ilike(critere)
-                                       )
-        self.repeating_panel_1.items=liste
+        critere = self.text_box_nom.text + "%"  #  wildcard search on date
+        liste = app_tables.users.search(
+            tables.order_by("nom", ascending=True),
+            q.fetch_only("role", "nom", "prenom", "tel", "email"),
+            nom=q.ilike(critere),
+        )
+        self.repeating_panel_0.items = liste
 
     def text_box_prenom_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
-        def text_box_prenom_focus(self, **event_args):
-            """This method is called when the TextBox gets focus"""
-        sleep(0.5) # permet le temps de frapper le texte recherché    
         self.text_box_role.text = ""
         self.text_box_nom.text = ""
         self.text_box_email.text = ""
         self.text_box_tel.text = ""
 
-        critere = self.text_box_prenom.text + "%"            #  wildcard search on prenom
-        liste = app_tables.users.search(tables.order_by("prenom", ascending=True),
-                                        q.fetch_only("role","nom","prenom","tel","email"),
-                                        prenom=q.ilike(critere)
-                                       )
-        self.repeating_panel_1.items=liste
+        critere = self.text_box_prenom.text + "%"  #  wildcard search on prenom
+        liste = app_tables.users.search(
+            tables.order_by("prenom", ascending=True),
+            q.fetch_only("role", "nom", "prenom", "tel", "email"),
+            prenom=q.ilike(critere),
+        )
+        self.repeating_panel_0.items = liste
 
     def text_box_role_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -426,43 +429,41 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         self.text_box_tel.text = ""
 
         # Initialisation de l'affichage par role
-        critere = self.text_box_role.text + "%"            #  wildcard search on role
-        liste = app_tables.users.search(tables.order_by("role", ascending=True),
-                                        q.fetch_only("role","nom","prenom","tel","email"),
-                                        role=q.ilike(critere),
-                                       )
-        self.repeating_panel_1.items=liste
+        critere = self.text_box_role.text + "%"  #  wildcard search on role
+        liste = app_tables.users.search(
+            tables.order_by("role", ascending=True),
+            q.fetch_only("role", "nom", "prenom", "tel", "email"),
+            role=q.ilike(critere),
+        )
+        self.repeating_panel_0.items = liste
 
     def text_box_email_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
-        sleep(0.5) # permet le temps de frapper le texte recherché
         self.text_box_role.text = ""
         self.text_box_nom.text = ""
         self.text_box_prenom.text = ""
         self.text_box_tel.text = ""
 
-        critere = self.text_box_email.text + "%"            #  wildcard search on email
-        liste = app_tables.users.search(tables.order_by("email", ascending=True),
-                                        q.fetch_only("role","nom","prenom","tel","email"),
-                                        email=q.ilike(critere)
-                                       )
-        self.repeating_panel_1.items=liste   
+        critere = self.text_box_email.text + "%"  #  wildcard search on email
+        liste = app_tables.users.search(
+            tables.order_by("email", ascending=True),
+            q.fetch_only("role", "nom", "prenom", "tel", "email"),
+            email=q.ilike(critere),
+        )
+        self.repeating_panel_0.items = liste
 
     def text_box_tel_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
-        sleep(0.5) # permet le temps de frapper le texte recherché
         self.text_box_role.text = ""
         self.text_box_nom.text = ""
         self.text_box_prenom.text = ""
         self.text_box_email.text = ""
 
-        critere = self.text_box_tel.text + "%"            #  wildcard search on tel
-        liste = app_tables.users.search(tables.order_by("tel", ascending=True),
-                                        q.fetch_only("role","nom","prenom","tel","email"),
-                                        tel=q.ilike(critere)
-                                       )
-        self.repeating_panel_1.items=liste  
-
-    
-
-    
+        critere = self.text_box_tel.text + "%"  #  wildcard search on tel
+        liste = app_tables.users.search(
+            tables.order_by("tel", ascending=True),
+            q.fetch_only("role", "nom", "prenom", "tel", "email"),
+            tel=q.ilike(critere),
+        )
+        self.repeating_panel_0.items = liste
+        

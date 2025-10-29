@@ -46,12 +46,12 @@ components:
         placeholder: R
         role: null
       type: TextBox
-    - event_bindings: {change: text_box_nom_focus, focus: text_box_nom_focus}
+    - event_bindings: {change: text_box_nom_focus, focus: text_box_nom_focus, pressed_enter: text_box_nom_pressed_enter}
       layout_properties: {grid_position: 'IEOFVE,JOXHON'}
       name: text_box_nom
       properties: {background: 'theme:Olive', font_size: 12, foreground: 'theme:On Primary', placeholder: Nom, role: null}
       type: TextBox
-    - event_bindings: {change: text_box_prenom_focus, focus: text_box_prenom_focus}
+    - event_bindings: {change: text_box_prenom_focus, focus: text_box_prenom_focus, pressed_enter: text_box_prenom_pressed_enter}
       layout_properties: {grid_position: 'IEOFVE,IDAWHI'}
       name: text_box_prenom
       properties:

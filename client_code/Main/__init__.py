@@ -343,8 +343,8 @@ class Main(MainTemplate):
     # BT bureaux Recherches
     def button_create_recherche_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from ..Recherche_stagiaire_v2 import Recherche_stagiaire_v2
-        open_form("Recherche_stagiaire_v2")
+        from ..Recherche_stagiaire_v3 import Recherche_stagiaire_v3
+        open_form("Recherche_stagiaire_v3")
 
     # BT stagiaire Doc requis à rentrer 
     def button_pre_requis_click(self, **event_args):

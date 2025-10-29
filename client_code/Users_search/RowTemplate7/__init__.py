@@ -67,8 +67,8 @@ class RowTemplate7(RowTemplate7Template):
 
     def button_role_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from ...Saisie_info_apres_visu import Saisie_info_apres_visu
-        open_form('Saisie_info_apres_visu', self.item['email'])
+        from ...Recherche_stagiaire_v2 import Recherche_stagiaire_v2
+        open_form('Recherche_stagiaire_v2', self.item)
 
     def text_box_nb_pw_failures_change(self, **event_args):
         """This method is called when the text in this text box is edited"""

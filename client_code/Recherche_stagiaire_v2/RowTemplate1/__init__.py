@@ -27,9 +27,7 @@ class RowTemplate1(RowTemplate1Template):
             self.email_pour_del = self.item 
             if self.item['prenom'] is not None:    # si prénom None, erreur
                 self.button_1.text = self.item['nom']+" "+self.item['prenom']
-         
                 self.button_role.text = self.item['role']
-                  
             else:
                 self.button_1.text = self.item['nom']
                 
