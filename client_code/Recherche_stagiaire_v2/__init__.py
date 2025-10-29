@@ -8,9 +8,7 @@ from anvil.tables import app_tables
 from time import sleep
 
 class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
-    def __init__(
-        self, num_stage="", **properties
-    ):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
+    def __init__(self, user_row=None, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
@@ -20,6 +18,12 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
         self.label_origine.text = str(get_open_form())
         self.num_stage = num_stage
         self.label_num_stage.text = num_stage
+        self.user_row = user_row
+        if self.user_row is not None:
+            # ---------------------------------------------------------------------------------------------
+            # Initialisation de l'affichage par le row envoyé
+            self.repeating_panel_1.items=list(row)
+            
         if self.num_stage != "":
             self.drop_down_code_stage.visible = False
             self.drop_down_num_stages.visible = False
