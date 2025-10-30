@@ -454,6 +454,17 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.button_pr.foreground = "yellow"
             #self.user_initial_color()
 
+    def button_mail_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # lecture du user sur le mail sauvé en label_user_email
+        try:
+            self.item = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+        liste_email = []
+        liste_email.append((self.item['email'],self.item['prenom'],""))   # mail et prénom, id pas besoin
+        open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
+
    
 
     
