@@ -1,20 +1,30 @@
 components:
 - components:
+  - components:
+    - event_bindings: {click: button_role_click}
+      layout_properties: {grid_position: 'WWQKRV,AHUIHJ'}
+      name: button_role
+      properties: {align: left, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_role_click}
+      layout_properties: {grid_position: 'WWQKRV,LGBTHJ'}
+      name: button_1
+      properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_role_click}
+      layout_properties: {grid_position: 'WWQKRV,FYMWOM'}
+      name: button_4
+      properties: {align: center, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'XCBPWS,NUARZV'}
+    name: column_panel_2
+    properties: {col_widths: '{"AHUIHJ":9,"LGBTHJ":31,"FYMWOM":20}', wrap_on: never}
+    type: ColumnPanel
   - event_bindings: {click: button_role_click}
-    layout_properties: {grid_position: 'FRZEYR,NOWEZM'}
-    name: button_role
-    properties: {align: left, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
-    type: Button
-  - event_bindings: {click: button_role_click}
-    layout_properties: {grid_position: 'FRZEYR,XMGAVJ'}
-    name: button_1
-    properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
-    type: Button
-  - event_bindings: {click: button_role_click}
-    layout_properties: {grid_position: 'FRZEYR,LULUNY'}
+    layout_properties: {grid_position: 'XCBPWS,LZUIDF'}
     name: button_3
     properties:
-      align: left
+      align: full
       background: ''
       bold: true
       border: ''
@@ -35,14 +45,9 @@ components:
       underline: false
       visible: true
     type: Button
-  - event_bindings: {click: button_role_click}
-    layout_properties: {grid_position: 'FRZEYR,TAPRQF'}
-    name: button_4
-    properties: {align: right, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
-    type: Button
   layout_properties: {column: 'null'}
   name: column_panel_1
-  properties: {background: 'theme:Primary', col_widths: '{"NOWEZM":6,"XMGAVJ":24,"LULUNY":15,"TAPRQF":15}'}
+  properties: {background: 'theme:Primary', col_widths: '{}'}
   type: ColumnPanel
 - components:
   - event_bindings: {click: button_qcm_click}

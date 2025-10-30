@@ -49,6 +49,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         if self.num_stage != "":
             self.drop_down_code_stage.visible = False
             self.drop_down_num_stages.visible = False
+        
         # ----------------------------------------------------------------------------------------------
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec
@@ -57,13 +58,15 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         print("screen: ", screen_size)
 
         if screen_size >= 700:
-            self.data_grid_1.rows_per_page = 5
+            pass
+            #self.data_grid_1.rows_per_page = 5
         else:  # Phone
-            self.data_grid_1.rows_per_page = 3
+            #self.data_grid_1.rows_per_page = 3
+            
             self.button_mail_to_all.text = ""  # Affiche les icones uniqt
             self.button_trombi.text = ""
             self.button_pre_requis.text = ""
-
+    
     
     # Focus on nom en ouverture de form
     def form_show(self, **event_args):
@@ -113,6 +116,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
         self.data_grid_users.visible = False
         self.repeating_panel_1.visible = True
+        self.data_grid_1.visible = True
         self.repeating_panel_1.items = self.liste_type_stage
         if len(self.liste_type_stage) > 0:
             self.button_mail_to_all.visible = True
@@ -126,8 +130,6 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.text_box_email.text = ""  # critere email
         self.text_box_tel.text = ""  # critere tel
         self.drop_down_num_stages.visible = False
-        self.button_recherche.visible = False
-        self.button_efface.visible = True
         self.column_panel_users.visible = False
         self.raz_screen()
         self.filtre_type_stage()
@@ -325,7 +327,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_qcm_click(self, **event_args):
         """This method is called when the button is clicked"""
-        
+        self.repeating_panel_histo.visible = False
+        self.repeating_panel_pr.visible = False
         if self.repeating_panel_qcm.visible is False:
             self.repeating_panel_qcm.visible = True
             self.button_qcm.foreground = "red"
@@ -354,7 +357,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_histo_click(self, **event_args):
         """This method is called when the button is clicked"""
-        
+        self.repeating_panel_qcm.visible = False
+        self.repeating_panel_pr.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -375,6 +379,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_pr_click(self, **event_args):
         """This method is called when the button is clicked"""
+        self.repeating_panel_histo.visible = False
+        self.repeating_panel_qcm.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -485,6 +491,10 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                     txt_msg = anvil.server.call("del_personne",row)
                 alert(txt_msg)
             open_form("Recherche_stagiaire_v3")
+
+    def button_fiche_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
 
    
 

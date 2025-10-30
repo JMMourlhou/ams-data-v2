@@ -121,7 +121,7 @@ class RowTemplate3(RowTemplate3Template):
         else:
             n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
         n.show()
-        open_form('Recherche_stagiaire_v2',num_stage)
+        open_form('Recherche_stagiaire_v3',num_stage)
 
     def button_pr_requis_click(self, **event_args):
         """This method is called when the button is clicked"""

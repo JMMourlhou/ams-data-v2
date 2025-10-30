@@ -38,6 +38,7 @@ class RowTemplate9(RowTemplate9Template):
         self.f.label_user_email.text = self.item['email']
         self.f.column_panel_stagiaire.visible = True
         self.f.column_panel_menu.visible = True
+        self.f.data_grid_users.visible = False
 
 
     def button_qcm_click(self, **event_args):

@@ -30,7 +30,6 @@ class Recherche_stagiaire_v2(Recherche_stagiaire_v2Template):
                                         )
             self.repeating_panel_1.items=liste
         else:    
-            alert("ok")
             # ---------------------------------------------------------------------------------------------
             # Initialisation de l'affichage par le row envoyé
             liste = app_tables.users.search(q.fetch_only("role","nom","prenom","tel","email"),

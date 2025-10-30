@@ -47,7 +47,7 @@ components:
           type: Label
         - layout_properties: {grid_position: 'DFVUJU,OFAOKU'}
           name: label_user_email
-          properties: {align: center, visible: true}
+          properties: {align: center, visible: false}
           type: Label
         layout_properties: {grid_position: 'SSKKIE,DDLLCZ'}
         name: column_panel_6
@@ -154,7 +154,12 @@ components:
         - event_bindings: {click: button_role_click}
           layout_properties: {grid_position: 'FRZEYR,XMGAVJ'}
           name: button_1
-          properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
+          properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
+          type: Button
+        - event_bindings: {click: button_role_click}
+          layout_properties: {grid_position: 'FRZEYR,BLWPBM'}
+          name: button_4
+          properties: {align: center, background: '', bold: true, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
           type: Button
         - event_bindings: {click: button_role_click}
           layout_properties: {grid_position: 'FRZEYR,LULUNY'}
@@ -166,7 +171,7 @@ components:
             border: ''
             enabled: true
             font: ''
-            font_size: 14
+            font_size: 10
             foreground: theme:On Primary
             icon: ''
             icon_align: left
@@ -181,16 +186,16 @@ components:
             underline: false
             visible: true
           type: Button
-        - event_bindings: {click: button_role_click}
-          layout_properties: {grid_position: 'FRZEYR,TAPRQF'}
-          name: button_4
-          properties: {align: right, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
-          type: Button
         layout_properties: {grid_position: 'ZVZOXB,YWWWIQ'}
         name: column_panel_stagiaire
-        properties: {background: 'theme:On Primary Container', col_widths: '{"NOWEZM":6,"XMGAVJ":19,"LULUNY":22,"TAPRQF":13}', visible: false}
+        properties: {background: 'theme:On Primary Container', col_widths: '{"NOWEZM":4,"XMGAVJ":21,"LULUNY":22,"BLWPBM":15}', visible: false, wrap_on: never}
         type: ColumnPanel
       - components:
+        - event_bindings: {click: button_fiche_click}
+          layout_properties: {grid_position: 'ZOUEUI,THJROH'}
+          name: button_fiche
+          properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', icon: 'fa:user-o', spacing_above: none, spacing_below: none, text: ''}
+          type: Button
         - event_bindings: {click: button_qcm_click}
           layout_properties: {grid_position: 'ZOUEUI,ACEQAD'}
           name: button_qcm
@@ -215,6 +220,11 @@ components:
           layout_properties: {grid_position: 'ZOUEUI,DBWTUP'}
           name: button_del
           properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:minus', spacing_above: none, spacing_below: none, text: '', visible: false}
+          type: Button
+        - event_bindings: {}
+          layout_properties: {grid_position: 'ZOUEUI,VCSZJQ'}
+          name: button_add_to_stage
+          properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:plus', spacing_above: none, spacing_below: none, text: '', visible: false}
           type: Button
         layout_properties: {grid_position: 'PRDCOV,REYKIG'}
         name: column_panel_menu
@@ -275,12 +285,12 @@ components:
           columns: []
           foreground: ''
           role: null
-          rows_per_page: 3
-          show_page_controls: true
+          rows_per_page: null
+          show_page_controls: false
           spacing_above: none
           spacing_below: none
           tooltip: ''
-          visible: true
+          visible: false
           wrap_on: mobile
         type: DataGrid
       data_bindings: []
