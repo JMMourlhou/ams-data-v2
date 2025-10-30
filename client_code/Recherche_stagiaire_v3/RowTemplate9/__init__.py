@@ -19,8 +19,14 @@ class RowTemplate9(RowTemplate9Template):
             self.button_1.text = self.item['nom']
 
         self.button_3.text = self.item['email']
-        self.button_4.text = self.item['tel']
-
+        tel = self.item['tel']
+        try:
+            if len(tel) == 10 and tel.isdigit():
+                tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
+                self.button_4.text = tel
+        except Exception:
+            pass
+        
     def button_role_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Affichage des infos sur lequel je travaille 
