@@ -37,12 +37,12 @@ components:
           name: column_panel_8
           properties: {col_widths: '{"EDSRGW":41,"IVZAZR":16}', wrap_on: mobile}
           type: ColumnPanel
-        - layout_properties: {grid_position: 'HRNIDI,CZOWDC'}
-          name: label_origine
-          properties: {align: center, visible: false}
-          type: Label
         - layout_properties: {grid_position: 'DFVUJU,IDGFFB'}
           name: label_num_stage
+          properties: {align: center, visible: false}
+          type: Label
+        - layout_properties: {grid_position: 'DFVUJU,HMLNMK'}
+          name: label_origine
           properties: {align: center, visible: false}
           type: Label
         - layout_properties: {grid_position: 'DFVUJU,OFAOKU'}
@@ -94,16 +94,6 @@ components:
         properties: {col_spacing: small, col_widths: '{"ETASBM":35,"ZUHOMU":25}', wrap_on: mobile}
         type: ColumnPanel
       - components:
-        - event_bindings: {click: button_efface_click}
-          layout_properties: {grid_position: 'SGQLAI,ICDZRS'}
-          name: button_efface
-          properties: {align: center, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: 20, foreground: 'theme:Tertiary', icon: 'fa:recycle', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: '', tooltip: '', underline: false, visible: false}
-          type: Button
-        - event_bindings: {click: button_recherche_click}
-          layout_properties: {grid_position: 'SGQLAI,GQNNHG'}
-          name: button_recherche
-          properties: {align: left, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: ' go !', tooltip: '', underline: false, visible: false}
-          type: Button
         - event_bindings: {change: drop_down_code_stage_change}
           layout_properties: {grid_position: 'SGQLAI,GDMMNK'}
           name: drop_down_code_stage
@@ -153,7 +143,7 @@ components:
           type: DropDown
         layout_properties: {grid_position: 'GAHVSD,CXBXCA'}
         name: column_panel_7
-        properties: {col_spacing: tiny, col_widths: '{"GDMMNK":14,"JKUPIX":26,"ICDZRS":10,"GQNNHG":10}', spacing_above: none, spacing_below: none, wrap_on: never}
+        properties: {col_spacing: tiny, col_widths: '{"GDMMNK":14,"JKUPIX":26,"GQNNHG":10}', spacing_above: none, spacing_below: none, wrap_on: never}
         type: ColumnPanel
       - components:
         - event_bindings: {click: button_role_click}

@@ -15,33 +15,20 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
         self.f = get_open_form()  # form appelante
-
-        # Pour une inscription (self.num_stage != "")
+        
+        
+        
+        # Affichage bouton effacement du stagiaire
+        user = anvil.users.get_user()
+        if user["role"] == "A" or user["role"]=="B": 
+            self.button_del.visible = True
+            
+            # Pour une inscription (self.num_stage != "")
         self.label_origine.text = str(get_open_form())
         self.num_stage = num_stage
         self.label_num_stage.text = num_stage
 
-        """
-        if self.user_row is None:  # Entrée normale
-            # ---------------------------------------------------------------------------------------------
-            # Initialisation de l'affichage par nom
-            critere = self.text_box_nom.text + "%"  #  wildcard search on nom
-            liste = app_tables.users.search(
-                tables.order_by("nom", ascending=True),
-                q.fetch_only("role", "nom", "prenom", "tel", "email"),
-                nom=q.ilike(critere),
-            )
-            self.repeating_panel_1.items = liste
-        else:
-            alert("ok")
-            # ---------------------------------------------------------------------------------------------
-            # Initialisation de l'affichage par le row envoyé
-            liste = app_tables.users.search(
-                q.fetch_only("role", "nom", "prenom", "tel", "email"),
-                nom=self.user_row["nom"],
-            )
-        self.repeating_panel_1.items = liste
-        """
+     
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
         self.drop_down_mode_fi.items = [
@@ -464,6 +451,40 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         liste_email = []
         liste_email.append((self.item['email'],self.item['prenom'],""))   # mail et prénom, id pas besoin
         open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
+
+    def button_del_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # Effacement du stagiaire/formateur si pas ds un stage et si je suis l'administrateur
+        user = anvil.users.get_user()
+        if user["role"] == "A" or user["role"]=="B":   # seul,l'administrateur et bureaux peuvent effacer definitivement un stagiaire ou formateur ou tuteur
+            # Cette personne est-elle inscrite ds un ou plusieurs stages ?
+            # lecture du user sur le mail sauvé en label_user_email
+            try:
+                self.item = app_tables.users.get(email=self.label_user_email.text)
+            except Exception as e:
+                alert(f"Erreur en re-lecture du user: {e}")
+            list = app_tables.stagiaires_inscrits.search(user_email=self.item)
+            detail =""
+            for stage in list:
+                detail=detail+str(stage['numero'])+"  "
+
+            nb_stages = len(list)
+            if nb_stages != 0:
+                txt="stage"
+                if nb_stages > 1:
+                    txt = "stages"
+                alert(f"Effacement impossible:\nCette personne est inscrite dans {nb_stages} {txt}\n\n Détail:\n{txt} N°{detail}")
+                self.button_histo_click()   # visu de l'histo du stagiaire
+                return
+            # Effact de la personne si confirmation
+            r=alert("Voulez-vous vraiment enlever définitivement cette personne ? ",dismissible=False ,buttons=[("oui",True),("non",False)])
+            if r :   # oui
+                # lecture row users
+                row = app_tables.users.get(email=self.item['email'])
+                if row:
+                    txt_msg = anvil.server.call("del_personne",row)
+                alert(txt_msg)
+            open_form("Recherche_stagiaire_v3")
 
    
 
