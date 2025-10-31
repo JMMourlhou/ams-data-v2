@@ -211,23 +211,31 @@ def del_stagiaire(stagiaire_row, stage_num):     # stagiaire_row = table users r
 # =========================================================================================================================================
 @anvil.server.callable           #Réinitilisation Saisie du formulaire de satisfaction d'1 stagiaire du stage
 def init_formulaire_satis_stagiaire(stagiaire_row, bool):
-    valid=False
-    if not stagiaire_row :
-        return valid
+    valid_2 = 1   # valid_2 reste à 1 si bool est True, on autorise la saisiede formulaire en checkant, donc pas d'effacement de formulaires 
+    if stagiaire_row :
+        try:   
+            # modif du row stagiaire_inscrit
+            stagiaire_row.update(enquete_satisf = bool)
+            valid_1 = True
+        except Exception as e:
+            valid_1 = e
     
-    # modif du row stagiaire_inscrit
-    stagiaire_row.update(enquete_satisf = bool)
-    
-    # SI BOOL False, recherche et effacement du formulaire de satisf en table Stage_suivi si existant
+    # SI BOOL False, recherche et effacement du ou des formulaires de satisf en table Stage_suivi si existant
     if bool is False: # si l'utilisateur a modifié l'indicateur du formulaire de satisf à False, et a confirmé annuler le formulaire pour permettre une ressaisie d'un autre formulaire
-        stage_satis_row = app_tables.stage_satisf.get(stage_row= stagiaire_row['stage'],
-                                                     user_email=stagiaire_row['user_email'])
-        if stage_satis_row is not None: # si le formulaire existe, on l'efface
-            # Effacement du row du formulaire table Stage_suivi
-            stage_satis_row.delete()
-        valid=True  
         
-    return valid
+        stage_satis_liste = app_tables.stage_satisf.search(stage_row= stagiaire_row['stage'],
+                                                     user_email=stagiaire_row['user_email'])
+        valid_2 = 0 # si pas de formulairesà effacer valid_2 restera à 0
+        if len(stage_satis_liste) > 0:
+            try:
+                for satis_row in stage_satis_liste:
+                    # Effacement du row du formulaire table Stage_suivi
+                    satis_row.delete()
+                valid_2 = True  
+            except Exception as e:
+                valid_2 = e
+        
+    return valid_1, valid_2
 
     
 #Réinitilisation check box d'indicateur de saisie du formulaire de suivi d'1 stagiaire du stage, appelé par Stage_visu_modif / S.RowTemplate4

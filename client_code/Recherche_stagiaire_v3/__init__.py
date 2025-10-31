@@ -1,13 +1,15 @@
 from ._anvil_designer import Recherche_stagiaire_v3Template
 from anvil import *
-import stripe.checkout
 import anvil.server
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from time import sleep
-
+from ..Box_types_fi import Box_types_fi
+from ..Box_stages import Box_stages
+#import time
+#from .. import French_zone # calcul tps traitement
 
 class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
     def __init__(self, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
@@ -17,18 +19,21 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.f = get_open_form()  # form appelante
         
         
-        
         # Affichage bouton effacement du stagiaire
         user = anvil.users.get_user()
         if user["role"] == "A" or user["role"]=="B": 
             self.button_del.visible = True
-            
-            # Pour une inscription (self.num_stage != "")
+        # ==================================================================================   
+        # Pour une inscription (self.num_stage != "") 
         self.label_origine.text = str(get_open_form())
         self.num_stage = num_stage
-        self.label_num_stage.text = num_stage
+        self.label_num_stage.text = num_stage # sauvegarde du num de stage pour l'inscription
+        if self.num_stage != "":
+            self.drop_down_code_stage.visible = False
+            self.drop_down_num_stages.visible = False
+            self.button_add_to_stage.visible = True    # rend visible le bt + pour l'inscription
 
-     
+        
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
         self.drop_down_mode_fi.items = [
@@ -46,10 +51,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             )
         ]
 
-        if self.num_stage != "":
-            self.drop_down_code_stage.visible = False
-            self.drop_down_num_stages.visible = False
         
+            
         # ----------------------------------------------------------------------------------------------
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec
@@ -494,8 +497,38 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_fiche_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        print("Mode inscription si stage pas vide: ",self.label_origine.text, self.label_num_stage.text)
+        if self.label_origine.text == "<AMS_Data.Main.Main object>" or self.label_num_stage.text == "":    # vient du menu / recherche, pas d'inscription // 
+            # lecture du user sur le mail sauvé en label_user_email
+            try:
+                self.item = app_tables.users.get(email=self.label_user_email.text)
+            except Exception as e:
+                alert(f"Erreur en re-lecture du user: {e}")
 
+            from ..Saisie_info_apres_visu import Saisie_info_apres_visu
+            open_form('Saisie_info_apres_visu', self.item['email'], num_stage=0, intitule="")
+
+    def button_add_to_stage_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        
+        # self.c.label_num_stage.text   est en forme mère recherche_stagiaire
+        try:
+            stagiaire_row = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+        
+        stage = self.label_num_stage.text
+        print(f"stage en inscription: <{stage}>")
+
+        self.content_panel.visible = True
+        if int(stage) != 1003:   # tous stages sauf tuteurs
+            self.content_panel.add_component(Box_types_fi(stagiaire_row, stage), full_width_row=False)
+        else:  # Ajout d'un Tuteur   
+            self.content_panel.add_component(Box_stages(stagiaire_row, stage), full_width_row=False)
+        self.content_panel.scroll_into_view()
+
+
+    
    
 
     
