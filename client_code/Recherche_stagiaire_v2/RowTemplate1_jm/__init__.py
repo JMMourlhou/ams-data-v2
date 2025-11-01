@@ -1,4 +1,4 @@
-from ._anvil_designer import RowTemplate1Template
+from ._anvil_designer import RowTemplate1_jmTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -11,7 +11,7 @@ import time
 from ... import French_zone # calcul tps traitement
 
 
-class RowTemplate1(RowTemplate1Template):
+class RowTemplate1_jm(RowTemplate1_jmTemplate):
     def __init__(self, **properties):
         self.c = get_open_form()
         #print("form mère en col panel : ", self.c) 

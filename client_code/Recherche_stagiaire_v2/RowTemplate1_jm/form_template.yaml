@@ -112,15 +112,15 @@ components:
   type: ColumnPanel
 - layout_properties: {column: 'null'}
   name: repeating_panel_1
-  properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1.ItemTemplate10, role: outlined-card, spacing_above: small, spacing_below: small}
+  properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate10_jm, role: outlined-card, spacing_above: small, spacing_below: small}
   type: RepeatingPanel
 - layout_properties: {column: 'null'}
   name: repeating_panel_2
-  properties: {background: 'theme:Error', foreground: '', item_template: Recherche_stagiaire_v2.RowTemplate1.ItemTemplate9, role: outlined-card, visible: false}
+  properties: {background: 'theme:Error', foreground: '', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate9, role: outlined-card, visible: false}
   type: RepeatingPanel
 - layout_properties: {column: 'null'}
   name: repeating_panel_3
-  properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1.ItemTemplate11, role: outlined-card, spacing_below: large, visible: false}
+  properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate11, role: outlined-card, spacing_below: large, visible: false}
   type: RepeatingPanel
 container:
   properties: {align: center, auto_display_data: false, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', italic: false, role: null, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
