@@ -8,6 +8,21 @@ components:
     name: label_3
     properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Liste des stages, tooltip: '', underline: false, visible: true}
     type: Label
+  - components:
+    - event_bindings: {click: creation_stage_click}
+      layout_properties: {width: 217.2869423828125}
+      name: creation_stage
+      properties: {align: full, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Création d'1 stage, tooltip: '', underline: false, visible: true}
+      type: Button
+    - event_bindings: {click: button_annuler_click}
+      layout_properties: {}
+      name: button_annuler
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+      type: Button
+    layout_properties: {grid_position: 'KLEGTM,VAUFAN'}
+    name: flow_panel_1
+    properties: {align: center, gap: large, vertical_align: middle}
+    type: FlowPanel
   event_bindings: {}
   layout_properties:
     col_widths: {}
@@ -27,32 +42,6 @@ components:
     tooltip: ''
     visible: true
     wrap_on: mobile
-  type: ColumnPanel
-- components:
-  - event_bindings: {click: button_annuler_click}
-    layout_properties:
-      col_widths: {}
-      grid_position: SVCHXN,MYQPJL
-    name: button_annuler
-    properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
-    type: Button
-  - components:
-    - event_bindings: {click: creation_stage_click}
-      layout_properties: {expand: true, grid_position: 'SVCHXN,ROGZCQ', width: null}
-      name: creation_stage
-      properties: {align: full, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Création d'1 stage, tooltip: '', underline: false, visible: true}
-      type: Button
-    layout_properties: {grid_position: 'CZIKBP,MPYWTC'}
-    name: flow_panel_2
-    properties: {align: left, background: '', border: '', foreground: '', role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: full, visible: true}
-    type: FlowPanel
-  layout_properties: {grid_position: 'HIAFAM,CGPGQU'}
-  name: column_panel_2
-  properties:
-    col_widths: '{"MYQPJL":35}'
-    role: outlined-card
-    spacing:
-      padding: ['5', null, '5', null]
   type: ColumnPanel
 - layout_properties: {grid_position: 'JHIUKA,PMJUXX'}
   name: drop_down_mode_fi

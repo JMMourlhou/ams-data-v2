@@ -157,49 +157,54 @@ components:
     properties: {align: center}
     type: FlowPanel
   - components:
-    - event_bindings: {click: button_export_xls_click}
-      layout_properties: {grid_position: 'TUNFVY,FBYXHK'}
-      name: button_export_xls
-      properties:
-        background: theme:Primary
-        bold: false
-        font_size: 15
-        foreground: theme:Tertiary
-        icon: fa:file-excel-o
-        spacing:
-          padding: [null, '5', null, '5']
-        text: Stage format Xls
-      type: Button
-    - event_bindings: {change: file_loader_diplomes_change}
-      layout_properties: {grid_position: 'TUNFVY,YESTYL'}
-      name: file_loader_diplomes
-      properties:
-        background: theme:Secondary
-        bold: false
-        file_types: .pdf
-        foreground: theme:Error
-        role: elevated-button
-        spacing:
-          margin: ['4', null, null, null]
-          padding: ['6', null, '1', '5']
-        text: Diplômes
-      type: FileLoader
-    - event_bindings: {click: button_attestations_click}
-      layout_properties: {grid_position: 'TUNFVY,PLTZPI'}
-      name: button_attestations
-      properties: {background: 'theme:Primary', bold: false, enabled: true, foreground: 'theme:Error', icon: 'fa:send', role: elevated-button, text: Envoi dipl., visible: false}
-      type: Button
-    - event_bindings: {change: check_box_diplomes_sent_change}
-      layout_properties: {grid_position: 'TUNFVY,QINQEA'}
-      name: check_box_diplomes_sent
-      properties: {background: 'theme:Vert Foncé', foreground: 'theme:Vert Tres Clair', text: Diplômes Envoyés, visible: false}
-      type: CheckBox
+    - components:
+      - event_bindings: {click: button_export_xls_click}
+        layout_properties: {}
+        name: button_export_xls
+        properties:
+          background: theme:Primary
+          bold: false
+          font_size: 15
+          foreground: theme:Tertiary
+          icon: fa:file-excel-o
+          spacing:
+            padding: [null, '5', null, '5']
+          text: Stage format Xls
+        type: Button
+      - event_bindings: {change: file_loader_diplomes_change}
+        layout_properties: {}
+        name: file_loader_diplomes
+        properties:
+          background: theme:Secondary
+          bold: false
+          file_types: .pdf
+          foreground: theme:Error
+          role: elevated-button
+          spacing:
+            margin: ['4', null, null, null]
+            padding: ['6', null, '1', '5']
+          text: Diplômes
+        type: FileLoader
+      - event_bindings: {click: button_attestations_click}
+        layout_properties: {}
+        name: button_attestations
+        properties: {background: 'theme:Primary', bold: false, enabled: true, foreground: 'theme:Error', icon: 'fa:send', role: elevated-button, text: Envoi dipl., visible: false}
+        type: Button
+      - event_bindings: {change: check_box_diplomes_sent_change}
+        layout_properties: {}
+        name: check_box_diplomes_sent
+        properties: {background: 'theme:Vert Foncé', foreground: 'theme:Vert Tres Clair', text: Diplômes Envoyés, visible: false}
+        type: CheckBox
+      layout_properties: {grid_position: 'FQJZCM,EAIABA'}
+      name: flow_panel_1
+      properties: {align: center}
+      type: FlowPanel
     layout_properties: {grid_position: 'YIELWZ,BIELZE'}
     name: column_panel_2
     properties:
       background: theme:Secondary
       col_spacing: none
-      col_widths: '{"FBYXHK":28,"YESTYL":25,"PLTZPI":19,"QINQEA":24}'
+      col_widths: '{}'
       role: elevated-card
       spacing:
         margin: [null, '10', null, '5']
