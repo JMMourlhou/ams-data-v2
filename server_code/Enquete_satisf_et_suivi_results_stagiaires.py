@@ -256,7 +256,7 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
   align-items: center;
 
   font-weight: 700; color: #222;
-  background: #f3f6ff;             /* fond bleu clair conservé */
+  background: #f3f6ff;             /* fond bleu clair */
   border-left: 3px solid #0047ab;
   padding: 6px 8px; border-radius: 4px;
   font-size: 10.5pt;
@@ -296,7 +296,7 @@ tr.score-0 { background:#B3261E; }
 tr.score-1 { background:#FF7B22; }
 tr.score-2 { background:#FFD707; }
 tr.score-3 { background:#DDF9A5; }
-tr.score-4 { background:#61D007; }
+tr.score-4 { background:#5B9B35; }
 tr.score-5 { background:#00FF00; }
 
 .small-note { font-size:9pt; color:#666; text-align:right; margin-top:2px; }
