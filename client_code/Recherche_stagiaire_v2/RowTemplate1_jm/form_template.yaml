@@ -112,7 +112,7 @@ components:
   type: ColumnPanel
 - layout_properties: {column: 'null'}
   name: repeating_panel_1
-  properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate10_jm, role: outlined-card, spacing_above: small, spacing_below: small}
+  properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate10, role: outlined-card, spacing_above: small, spacing_below: small}
   type: RepeatingPanel
 - layout_properties: {column: 'null'}
   name: repeating_panel_2

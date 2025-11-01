@@ -267,7 +267,7 @@ components:
       type: RepeatingPanel
     - layout_properties: {grid_position: 'XUUPYB,ADSJNX'}
       name: repeating_panel_qcm
-      properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate10_jm, role: outlined-card, spacing_above: small, spacing_below: small, visible: false}
+      properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v2.RowTemplate1_jm.ItemTemplate10, role: outlined-card, spacing_above: small, spacing_below: small, visible: false}
       type: RepeatingPanel
     - components:
       - components:
