@@ -265,7 +265,7 @@ components:
           foreground: theme:On Primary
           spacing:
             padding: ['4', null, '4', null]
-          text: 'Permettre les formulaires :'
+          text: 'Initialisation / Permission des formulaires :'
         type: Label
       - components:
         - event_bindings: {change: check_box_allow_com_change}

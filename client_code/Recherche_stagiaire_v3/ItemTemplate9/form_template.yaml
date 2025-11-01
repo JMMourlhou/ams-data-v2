@@ -1,0 +1,13 @@
+components:
+- layout_properties: {grid_position: 'GWWYLA,JLPJWU'}
+  name: button_num_stage
+  properties: {foreground: 'theme:On Primary', text: num_stage}
+  type: Button
+- layout_properties: {grid_position: 'GWWYLA,JWTOLY'}
+  name: button_type_stage
+  properties: {foreground: 'theme:On Primary', text: type_stage}
+  type: Button
+container:
+  properties: {background: 'theme:Olive'}
+  type: ColumnPanel
+is_package: true

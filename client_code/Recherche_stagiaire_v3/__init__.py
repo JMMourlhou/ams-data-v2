@@ -526,6 +526,28 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.content_panel.add_component(Box_stages(stagiaire_row, stage), full_width_row=False)
         self.content_panel.scroll_into_view()
 
+    def button_visu_formulaires_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # lecture du user sur le mail sauvé en label_user_email
+        try:
+            self.item = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+        
+
+        if self.repeating_panel_formulaires.visible is False:
+            self.repeating_panel_formulaires.visible = True
+            self.button_visu_formulaires.foreground = "red"
+            self.button_1.foreground = "red"
+
+            list = app_tables.stage_satisf.search(user_email=self.item)
+            self.repeating_panel_formulaires.items = list
+            self.data_grid_users.visible = False
+        else:
+            self.repeating_panel_formulaires.visible  = False
+            self.button_visu_formulaires.foreground = "yellow"
+        
+
 
     
    
