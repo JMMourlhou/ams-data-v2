@@ -118,9 +118,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.label_titre.text = str(len(self.liste_type_stage)) + " résultats"
 
         self.data_grid_users.visible = False
-        self.repeating_panel_1.visible = True
-        self.data_grid_1.visible = True
-        self.repeating_panel_1.items = self.liste_type_stage
+        self.repeating_panel_0.visible = True
+        self.data_grid_users.visible = True
+        self.repeating_panel_0.items = self.liste_type_stage
         if len(self.liste_type_stage) > 0:
             self.button_mail_to_all.visible = True
             self.drop_down_num_stages.visible = True
@@ -146,7 +146,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         )
         self.label_titre.text = str(len(self.liste_date)) + " résultats"
         self.button_insc_par_qr.visible = True  # Affiche BT inscription par QR
-        self.repeating_panel_1.items = self.liste_date
+        self.repeating_panel_0.items = self.liste_date
         if len(self.liste_date) > 0:  # Stagiaires inscrits
             self.button_mail_to_all.visible = True
             self.button_trombi.visible = True
@@ -319,7 +319,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
         self.repeating_panel_qcm.visible = False
-        self.repeating_panel_1.visible = False
+        #self.repeating_panel_1.visible = False
         self.button_role.text = ""
         self.button_1.text = ""
         self.button_3.text = ""

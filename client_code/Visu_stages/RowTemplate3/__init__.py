@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 from .. import Visu_stages
 from anvil import open_form
 from ...Pre_R_pour_stagiaire_admin import Pre_R_pour_stagiaire_admin
-from ...Recherche_stagiaire_v2 import Recherche_stagiaire_v2
+from ...Recherche_stagiaire_v3 import Recherche_stagiaire_v3
 from ... import Mail_valideur  # pour button_export_xls_click
 
 #import anvil.js    # pour screen size

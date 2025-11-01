@@ -13,13 +13,24 @@ class RowTemplate9(RowTemplate9Template):
         self.init_components(**properties)
         self.f = get_open_form()
         if self.item['prenom'] is not None:    # si prénom None, erreur
-            self.button_1.text = self.item['nom']+" "+self.item['prenom']
-            self.button_role.text = self.item['role']
+            try:
+                self.button_1.text = self.item['nom']+" "+self.item['prenom']
+                self.button_role.text = self.item['role']
+            except:
+                self.button_1.text = self.item['name']+" "+self.item['prenom']
+                self.button_role.text = self.item['user_email']['role']
         else:
-            self.button_1.text = self.item['nom']
-
-        self.button_3.text = self.item['email']
-        tel = self.item['tel']
+            try:
+                self.button_1.text = self.item['nom']
+            except:
+                self.button_1.text = self.item['name']
+        try:        
+            self.button_3.text = self.item['email']
+            tel = self.item['tel']
+        except:
+            self.button_3.text = self.item['user_email']['email']
+            tel = self.item['user_email']['tel']
+            
         try:
             if len(tel) == 10 and tel.isdigit():
                 tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
@@ -35,7 +46,11 @@ class RowTemplate9(RowTemplate9Template):
         self.f.button_3.text = self.button_3.text
         self.f.button_4.text = self.button_4.text
         # Sov le user_email
-        self.f.label_user_email.text = self.item['email']
+        try:
+            self.f.label_user_email.text = self.item['email']
+        except:
+            self.f.label_user_email.text = self.item['user_email']['email']
+            
         self.f.column_panel_stagiaire.visible = True
         self.f.column_panel_menu.visible = True
         self.f.data_grid_users.visible = False
