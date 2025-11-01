@@ -5,14 +5,14 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+import time
+from ... import French_zone # calcul tps traitement
+from ... import Pre_R_doc_name
 
 class ItemTemplate32(ItemTemplate32Template):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-
-        
 
         # Any code you write here will run before the form opens.
         self.test_img_just_loaded = False
@@ -77,7 +77,7 @@ class ItemTemplate32(ItemTemplate32Template):
                 else:
                     # génération du JPG à partir du pdf bg task en bg task
                     self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    # on extrait la 1ere page
-                    self.timer_2.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
+                    self.timer_1.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
                     # gestion des boutons        
                     self.file_loader_1.visible = False
                     self.button_rotation.visible = True
@@ -107,7 +107,7 @@ class ItemTemplate32(ItemTemplate32Template):
             alert("Pré Requis non enlevé")
 
 
-    def timer_2_tick(self, **event_args):
+    def timer_1_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         if self.task_pdf.is_completed(): # lecture de l'image sauvée en BG task
             # lecture de la liste sauvée par bg task ds row du stagiaire_inscrit

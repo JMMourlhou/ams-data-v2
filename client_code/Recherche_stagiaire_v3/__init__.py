@@ -8,8 +8,7 @@ from anvil.tables import app_tables
 from time import sleep
 from ..Box_types_fi import Box_types_fi
 from ..Box_stages import Box_stages
-#import time
-#from .. import French_zone # calcul tps traitement
+
 
 class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
     def __init__(self, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
