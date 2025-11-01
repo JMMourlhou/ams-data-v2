@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from ....Plot import Plot
+from ...Plot import Plot
 
 class ItemTemplate10(ItemTemplate10Template):   # Bt QCM results
     def __init__(self, **properties):
