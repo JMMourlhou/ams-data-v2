@@ -256,7 +256,7 @@ html, body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; col
   align-items: center;
 
   font-weight: 700; color: #222;
-  background: #f3f6ff;             /* fond bleu clair conservé */
+  background: #f3f6ff;             /* fond bleu clair */
   border-left: 3px solid #0047ab;
   padding: 6px 8px; border-radius: 4px;
   font-size: 10.5pt;
@@ -296,8 +296,8 @@ tr.score-0 { background:#B3261E; }
 tr.score-1 { background:#FF7B22; }
 tr.score-2 { background:#FFD707; }
 tr.score-3 { background:#DDF9A5; }
-tr.score-4 { background:#61D007; }
-tr.score-5 { background:#00FF00; }
+tr.score-4 { background:#61D007; }   /* Vérifier les couleurs des notes score 4 et 5
+tr.score-5 { background:#00FF00; }   /* 
 
 .small-note { font-size:9pt; color:#666; text-align:right; margin-top:2px; }
 """
@@ -316,15 +316,20 @@ def enquete_suivi_pdf_gen(stage_row, role="S", type="suivi"):
     # Métadonnées stage
     stage_num = str(stage_row.get('numero') if hasattr(stage_row, 'get') else stage_row['numero'])
     stage_code = (stage_row.get('code') or {}).get('code') if hasattr(stage_row, 'get') else stage_row['code']['code']
-    date_txt = stage_row.get('date_debut').strftime("%Y-%m-%d")  # ton PDF montre AAAA-MM-JJ
-    if role=="S":
+    date_txt = stage_row.get('date_debut').strftime("%d-%m-%Y")  
+    if role=="S":   # ===================================================== Formulaires des  STAGIAIRES
+        sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
         if type=="suivi":
             titre_haut = "Formulaires de suivi des Stagiaires"
         else:
-            titre_haut = "Formulaires de satisfaction des Stagiaires"
-    else:
-        titre_haut = "Formulaires de suivi des Tuteurs"
-    sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
+            titre_haut = "Formulaires de FIN de stage des Stagiaires"
+    else:     # ===================================================== Formulaires des TUTEURS
+        sous_titre = f"Stage {stage_code} ({stage_num})"
+        if type == "suivi":
+            titre_haut = "Formulaires de suivi des Tuteurs"
+        else:
+            titre_haut = "Formulaires de FIN de stage des Tuteurs"
+        
 
     # Récupération des formulaires de ce stage + rôle
     if type == "suivi":

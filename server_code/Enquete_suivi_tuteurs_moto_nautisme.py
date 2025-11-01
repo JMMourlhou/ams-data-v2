@@ -294,9 +294,19 @@ def enquete_suivi_tuteurs_pdf_gen(stage_row, role="T", type="suivi"):
     # Métadonnées stage
     stage_num = str(stage_row.get('numero') if hasattr(stage_row, 'get') else stage_row['numero'])
     stage_code = (stage_row.get('code') or {}).get('code') if hasattr(stage_row, 'get') else stage_row['code']['code']
-    date_txt = stage_row.get('date_debut').strftime("%Y-%m-%d")  # ton PDF montre AAAA-MM-JJ
-    titre_haut = "Formulaires de suivi des Tuteurs"
-    sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
+    date_txt = stage_row.get('date_debut').strftime("%d-%m-%Y")  
+    if role=="S":   # ===================================================== Formulaires des  STAGIAIRES
+        sous_titre = f"Stage {stage_code} ({stage_num}) du {date_txt}"
+        if type=="suivi":
+            titre_haut = "Formulaires de suivi des Stagiaires"
+        else:
+            titre_haut = "Formulaires de FIN de stage des Stagiaires"
+    else:     # ===================================================== Formulaires des TUTEURS
+        sous_titre = f"Stage {stage_code} ({stage_num})"
+        if type == "suivi":
+            titre_haut = "Formulaires de suivi des Tuteurs"
+        else:
+            titre_haut = "Formulaires de FIN de stage des Tuteurs"
 
     # Récupération des formulaires de ce stage + rôle
     if type=="suivi":                                                                      # Formulaires de suivi
@@ -318,7 +328,7 @@ def enquete_suivi_tuteurs_pdf_gen(stage_row, role="T", type="suivi"):
                 nom = tuteur_user_row['nom']
                 prenom = tuteur_user_row['prenom']
             except Exception as e:
-                print("Formulaire anonyme")
+                print(f"Formulaire anonyme, {e}")
                 nom = "Anonyme"
                 prenom = ""
 
