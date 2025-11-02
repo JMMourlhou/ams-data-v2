@@ -1,4 +1,4 @@
-from ._anvil_designer import ItemTemplate32Template
+from ._anvil_designer import ItemTemplate32_prTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -9,7 +9,7 @@ import time
 from ... import French_zone # calcul tps traitement
 from ... import Pre_R_doc_name
 
-class ItemTemplate32(ItemTemplate32Template):
+class ItemTemplate32_pr(ItemTemplate32_prTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)

@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from ...Plot import Plot
 
-class ItemTemplate10_essai(ItemTemplate10_qcmTemplate):   # Bt QCM results
+class ItemTemplate10_qcm(ItemTemplate10_qcmTemplate):   # Bt QCM results
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)

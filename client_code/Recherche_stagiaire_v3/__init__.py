@@ -544,6 +544,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         else:
             self.repeating_panel_formulaires.visible  = False
             self.button_visu_formulaires.foreground = "yellow"
+
+    
         
 
 
