@@ -16,8 +16,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
         self.f = get_open_form()  # form appelante
-        
-        
+        self.user_now = anvil.users.get_user()
         # Affichage bouton effacement du stagiaire
         user = anvil.users.get_user()
         if user["role"] == "A" or user["role"]=="B": 
@@ -32,7 +31,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.drop_down_num_stages.visible = False
             self.button_add_to_stage.visible = True    # rend visible le bt + pour l'inscription
 
-        
+        """
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
         self.drop_down_mode_fi.items = [
@@ -41,7 +40,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 tables.order_by("code_fi", ascending=True)
             )
         ]
-
+        """
         # Drop down codes stages
         self.drop_down_code_stage.items = [
             (r["code"], r)
@@ -61,21 +60,17 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             #self.data_grid_1.rows_per_page = 5
         else:  # Phone
             #self.data_grid_1.rows_per_page = 3
-            
             self.button_mail_to_all.text = ""  # Affiche les icones uniqt
             self.button_trombi.text = ""
             self.button_pre_requis.text = ""
-    
     
     # Focus on nom en ouverture de form
     def form_show(self, **event_args):
         self.text_box_nom.focus()
     
-
     def filtre_type_stage(self):
         # Récupération du critère stage
         row_type = self.drop_down_code_stage.selected_value
-
         # lecture du fichier stages et sélection des stages correspond au type de stage choisit
         list1 = app_tables.stages.search(
             q.fetch_only("date_debut", "numero"),  # recherche ds les stages
@@ -244,6 +239,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             nom=q.ilike(critere),
         )
         self.raz_screen()
+        self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
 
     def text_box_prenom_focus(self, **event_args):
@@ -260,6 +256,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             prenom=q.ilike(critere),
         )
         self.raz_screen()
+        self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
 
     def text_box_role_focus(self, **event_args):
@@ -277,6 +274,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             role=q.ilike(critere),
         )
         self.raz_screen()
+        self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
 
     def text_box_email_focus(self, **event_args):
@@ -293,6 +291,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             email=q.ilike(critere),
         )
         self.raz_screen()
+        self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
 
     def text_box_tel_focus(self, **event_args):
@@ -309,6 +308,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             tel=q.ilike(critere),
         )
         self.raz_screen()
+        self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
 
     def raz_screen(self):   
@@ -329,6 +329,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
+        self.repeating_panel_formulaires.visible = False
         if self.repeating_panel_qcm.visible is False:
             self.repeating_panel_qcm.visible = True
             self.button_qcm.foreground = "red"
@@ -359,6 +360,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_qcm.visible = False
         self.repeating_panel_pr.visible = False
+        self.repeating_panel_formulaires.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -381,6 +383,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_qcm.visible = False
+        self.repeating_panel_formulaires.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -491,7 +494,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                     txt_msg = anvil.server.call("del_personne",row)
                 alert(txt_msg)
             open_form("Recherche_stagiaire_v3")
-
+            
     def button_fiche_click(self, **event_args):
         """This method is called when the button is clicked"""
         print("Mode inscription si stage pas vide: ",self.label_origine.text, self.label_num_stage.text)
@@ -501,9 +504,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.item = app_tables.users.get(email=self.label_user_email.text)
             except Exception as e:
                 alert(f"Erreur en re-lecture du user: {e}")
-
-            from ..Saisie_info_apres_visu import Saisie_info_apres_visu
-            open_form('Saisie_info_apres_visu', self.item['email'], num_stage=0, intitule="")
+                
+            from ..Saisie_info_apres_visu import Saisie_info_apres_visu    
+            if self.item['role'] == "A" and  self.user_now['role'] == "A": # Seul l'admin voit la fiche de l'admin
+                open_form('Saisie_info_apres_visu', self.item['email'], num_stage=0, intitule="")
+            if self.item['role'] != "A":
+                open_form('Saisie_info_apres_visu', self.item['email'], num_stage=0, intitule="")
 
     def button_add_to_stage_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -526,13 +532,16 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_visu_formulaires_click(self, **event_args):
         """This method is called when the button is clicked"""
+        self.repeating_panel_histo.visible = False
+        self.repeating_panel_qcm.visible = False
+        self.repeating_panel_pr.visible = False
+        
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
         
-
         if self.repeating_panel_formulaires.visible is False:
             self.repeating_panel_formulaires.visible = True
             self.button_visu_formulaires.foreground = "red"

@@ -1,13 +1,17 @@
 components:
-- layout_properties: {grid_position: 'GWWYLA,JLPJWU'}
+- layout_properties: {grid_position: 'GWWYLA,ZRQAFY'}
+  name: button_type_stage
+  properties: {align: center, foreground: 'theme:On Primary', text: type_stage}
+  type: Button
+- layout_properties: {grid_position: 'GWWYLA,KLQLTY'}
   name: button_num_stage
   properties: {foreground: 'theme:On Primary', text: num_stage}
   type: Button
-- layout_properties: {grid_position: 'GWWYLA,JWTOLY'}
-  name: button_type_stage
-  properties: {foreground: 'theme:On Primary', text: type_stage}
+- layout_properties: {grid_position: 'GWWYLA,RGZZKY'}
+  name: button_date_heure
+  properties: {foreground: 'theme:On Primary', text: date_heure}
   type: Button
 container:
-  properties: {background: 'theme:Olive'}
+  properties: {background: 'theme:Olive', visible: true}
   type: ColumnPanel
 is_package: true

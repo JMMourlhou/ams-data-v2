@@ -2,12 +2,12 @@ components:
 - components:
   - components:
     - event_bindings: {focus: text_box_3_focus}
-      layout_properties: {expand: true, width: 99.96503876953125}
+      layout_properties: {expand: true, width: 161.711474609375}
       name: text_box_3
       properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
       type: TextBox
     - event_bindings: {focus: text_box_mail_focus}
-      layout_properties: {expand: true, width: 200.990525390625}
+      layout_properties: {expand: true, width: 142.86102612304688}
       name: text_box_mail
       properties:
         align: center

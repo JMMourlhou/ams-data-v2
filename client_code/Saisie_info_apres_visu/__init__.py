@@ -163,9 +163,9 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                                                     self.text_box_role.text
                                                     )
             if result is True :
-                # self.button_validation_copy.visible = False
-                # self.button_validation.visible = False
-                n=Notification("Modifications enregistées !",timeout=0.5)
+                self.button_validation_copy.visible = False
+                self.button_validation.visible = False
+                n=Notification("Modifications enregistées !",timeout=1)
                 n.show()
             else :
                 alert("Renseignements non sauvés !", title="Erreur")

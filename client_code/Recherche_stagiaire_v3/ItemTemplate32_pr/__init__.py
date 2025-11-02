@@ -114,7 +114,20 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
-        result = anvil.server.call('pr_stagiaire_del',self.stagiaire_row['email'], self.stage_num, self.item['doc1'] )
+
+        # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
+        try:
+            row = app_tables.pre_requis_stagiaire.get(
+                stage_num=self.item['stage_num'],
+                stagiaire_email=self.item['stagiaire_email'],
+                item_requis=self.item['item_requis']
+            )
+            #alert(f"ok: {row['requis_txt']} pour {row['nom']} {row['prenom']}")
+        except Exception as e:
+            alert(f"Erreur de relecture du row pre_requis_stagiaire: {e}")
+            return
+
+        result = anvil.server.call('pr_stagiaire_del',row['stagiaire_email'], row['stage_num'], self.item['item_requis'] )
         if result:
             self.image_1.source = None
             self.button_visu.visible = False
@@ -201,7 +214,6 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 alert("Pré Requis non enlevé pour ce stagiaire")
             else:
                 alert("Pré Requis enlevé pour ce stagiaire")
-                open_form('Pre_R_pour_stagiaire_admin', self.stage_num['numero'])
-
+                self.remove_from_parent()
                 
 # Any code you write here will run before the form opens.

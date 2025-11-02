@@ -73,7 +73,7 @@ components:
           - event_bindings: {change: text_box_tel_focus, focus: text_box_tel_focus, pressed_enter: text_box_tel_focus}
             layout_properties: {grid_position: 'UJSBSH,ZLYKEA'}
             name: text_box_tel
-            properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Tel, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: number, underline: false, visible: true}
+            properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: Tel, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
             type: TextBox
           - event_bindings: {change: text_box_email_focus, focus: text_box_email_focus, pressed_enter: text_box_email_focus}
             layout_properties: {grid_position: 'UJSBSH,RAUSAS'}
@@ -236,6 +236,10 @@ components:
           visible: false
           wrap_on: never
         type: ColumnPanel
+      - layout_properties: {grid_position: 'OSJJOJ,EDHZIP'}
+        name: drop_down_mode_fi
+        properties: {visible: false}
+        type: DropDown
       - layout_properties: {grid_position: 'UQAKSD,MKDDBG'}
         name: content_panel
         properties: {col_widths: '{}', visible: false}
@@ -259,10 +263,6 @@ components:
       name: column_panel_criteres
       properties: {background: '', border: '', col_spacing: medium, col_widths: '{"GETJRU":25,"CXBXCA":32}', foreground: '', role: outlined-card, spacing_above: none, spacing_below: none, tooltip: '', visible: true, wrap_on: mobile}
       type: ColumnPanel
-    - layout_properties: {grid_position: 'LLKPDR,VWJOXX'}
-      name: drop_down_mode_fi
-      properties: {visible: false}
-      type: DropDown
     - layout_properties: {grid_position: 'JLGAXZ,FUQXSL'}
       name: repeating_panel_histo
       properties: {item_template: Recherche_stagiaire_v3.ItemTemplate25_histo, role: outlined-card, visible: false}
@@ -277,7 +277,7 @@ components:
       type: RepeatingPanel
     - layout_properties: {grid_position: 'GBJTEC,MVGISM'}
       name: repeating_panel_formulaires
-      properties: {item_template: Recherche_stagiaire_v3.ItemTemplate9_formul}
+      properties: {item_template: Recherche_stagiaire_v3.ItemTemplate9_formul, visible: false}
       type: RepeatingPanel
     layout_properties:
       col_widths: {}
@@ -290,7 +290,7 @@ components:
   properties: {col_widths: '{}'}
   type: ColumnPanel
 container:
-  event_bindings: {}
+  event_bindings: {show: form_show}
   properties: {col_spacing: none, col_widths: '{}', wrap_on: mobile}
   type: ColumnPanel
 is_package: true

@@ -14,6 +14,6 @@ class ItemTemplate9_formul(ItemTemplate9_formulTemplate):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
-        self.button_num_stage.text = self.item['stage_num_txt']
-        self.button_type_stage.text = self.item['stage_type_txt']
-        
+        self.button_num_stage.text = f"Num {self.item['stage_num_txt']}"
+        self.button_type_stage.text = f"Fin de stage {self.item['stage_type_txt']}"
+        self.button_date_heure.text = f"Saisi le {self.item['date_heure'][0:16]}"

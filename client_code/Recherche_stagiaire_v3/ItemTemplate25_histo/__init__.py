@@ -10,8 +10,6 @@ class ItemTemplate25_histo(ItemTemplate25_histoTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-
-        # Any code you write here will run before the form opens.
         # Any code you write here will run before the form opens.
         if self.item['user_email']['role']=="S": 
             self.button_detail_histo.text = self.item['stage']['code']['code'] +" du " + str(self.item['stage']['date_debut'])

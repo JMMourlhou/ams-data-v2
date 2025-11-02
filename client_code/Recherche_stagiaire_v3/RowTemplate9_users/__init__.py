@@ -37,14 +37,36 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
                 self.button_4.text = tel
         except Exception:
             pass
-        
+        if self.button_role.text == "A" or self.item['role'] == "B" or self.item['role'] == "J":          # Admin en rouge
+            self.button_role.foreground = "red"
+            self.button_role.background = "yellow"
+        if self.button_role.text == "F":
+            self.button_role.foreground = "blue"  # Formateur en bleu
+            self.button_role.background = "yellow"
+        if self.button_role.text == "T":
+            self.button_role.foreground = "green"  # Tuteur en vert 
+            self.button_role.background = "yellow"
+            
     def button_role_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Affichage des infos sur lequel je travaille 
+        if self.button_role.text == "A" or self.item['role'] == "B" or self.item['role'] == "J":          # Admin en rouge
+            self.f.button_role.foreground = "red"
+            self.f.button_role.background = "yellow"
+        if self.button_role.text == "F":
+            self.f.button_role.foreground = "blue"  # Formateur en bleu
+            self.f.button_role.background = "yellow"
+        if self.button_role.text == "T":
+            self.f.button_role.foreground = "green"  # Tuteur en vert 
+            self.f.button_role.background = "yellow"
+        if self.button_role.text == "S":
+            self.f.button_role.foreground = "yellow"  # Tuteur en vert 
+            
         self.f.button_role.text = self.button_role.text
         self.f.button_1.text = self.button_1.text
         self.f.button_3.text = self.button_3.text
         self.f.button_4.text = self.button_4.text
+        
         # Sov le user_email
         try:
             self.f.label_user_email.text = self.item['email']
@@ -69,22 +91,14 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
                     tables.order_by("time", ascending=False),
                     user_qcm = stagiaire
                 )
-                if self.item['role'] == "A" or self.item['role'] == "B" or self.item['role'] == "J":          # Admin en rouge
-                    self.button_1.foreground = "red"
-                if self.item['role'] == "F":
-                    self.button_1.foreground = "blue"  # Formateur en bleu
-                if self.item['role'] == "T":
-                    self.button_1.foreground = "green"  # Formateur en bleu    
+                
             except: # si recherche sur la table stagiaire_inscrit
                 stagiaire = app_tables.users.get(email=self.item['user_email']['email'])
                 qcm_results = app_tables.qcm_result.search(
                     tables.order_by("time", ascending=False),
                     user_qcm = stagiaire
                 )
-                if stagiaire['role'] == "A":          # Admin en rouge
-                    self.button_1.foreground = "red"
-                if stagiaire['role'] == "F":
-                    self.button_1.foreground = "blue"  # Formateur en bleu
+                
             if len(qcm_results)>0:      # qcm trouvés pour ce user
                 self.f.repeating_panel_qcm.items = qcm_results
                 
@@ -102,21 +116,13 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
 
             try:  # si recherche sur la table users
                 stagiaire = app_tables.users.get(email=self.item['email'])
-                if self.item['role'] == "A":          # Admin en rouge
-                    self.button_1.foreground = "red"
-                if self.item['role'] == "F":
-                    self.button_1.foreground = "blue"  # Formateur en bleu
             except:
                 stagiaire = app_tables.users.get(email=self.item['user_email']['email'])
-                if stagiaire['role'] == "A":          # Admin en rouge
-                    self.button_1.foreground = "red"
-                if stagiaire['role'] == "F":
-                    self.button_1.foreground = "blue"  # Formateur en bleu
+                
             self.f.repeating_panel_histo.items = app_tables.stagiaires_inscrits.search(user_email = stagiaire)
         else:
             self.f.repeating_panel_histo.visible = False
             self.button_histo.foreground = "yellow"
-            #self.user_initial_color()
 
     def button_pr_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -181,10 +187,8 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
                 self.button_pr.foreground = "yellow"
                 #self.user_initial_color()
 
-    def button_mail_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        pass
-
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
         pass
+
+    
