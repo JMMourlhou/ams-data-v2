@@ -50,8 +50,6 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             )
         ]
 
-        
-            
         # ----------------------------------------------------------------------------------------------
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec

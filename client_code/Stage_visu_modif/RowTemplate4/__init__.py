@@ -13,6 +13,22 @@ class RowTemplate4(RowTemplate4Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        # ----------------------------------------------------------------------------------------------
+        # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
+        from anvil.js import window  # to gain access to the window objec
+
+        screen_size = window.innerWidth
+        print("screen: ", screen_size)
+
+        if screen_size >= 700:
+            self.text_box_3.font_size = 18
+            self.text_box_tel.font_size = 14
+            self.text_box_mail.font_size = 18
+        else:
+            self.text_box_3.font_size = 10
+            self.text_box_tel.font_size = 10
+            self.text_box_mail.font_size = 8
+            
         self.text_box_3.text = self.item['name'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
         self.text_box_mail.text = self.item['user_email']['email']
         tel = self.item['user_email']['tel']
