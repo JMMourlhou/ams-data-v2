@@ -1,4 +1,4 @@
-from ._anvil_designer import ItemTemplate25Template
+from ._anvil_designer import ItemTemplate25_histoTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -6,7 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-class ItemTemplate25(ItemTemplate25Template):
+class ItemTemplate25_histo(ItemTemplate25_histoTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
