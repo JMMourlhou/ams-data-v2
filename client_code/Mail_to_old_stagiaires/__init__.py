@@ -16,7 +16,7 @@ class Mail_to_old_stagiaires(Mail_to_old_stagiairesTemplate):
         from anvil.js import window # to gain access to the window object
         global screen_size
         screen_size = window.innerWidth
-        print("screen: ", screen_size)
+        #print("screen: ", screen_size)
         if screen_size > 800:
             self.data_grid_1.rows_per_page = 7
             

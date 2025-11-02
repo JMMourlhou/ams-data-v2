@@ -53,9 +53,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # ----------------------------------------------------------------------------------------------
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec
-
         screen_size = window.innerWidth
-        print("screen: ", screen_size)
+        #print("screen: ", screen_size)
 
         if screen_size >= 700:
             pass
@@ -80,6 +79,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # lecture du fichier stages et sélection des stages correspond au type de stage choisit
         list1 = app_tables.stages.search(
             q.fetch_only("date_debut", "numero"),  # recherche ds les stages
+            tables.order_by("date_debut", ascending=False),
             code=row_type,
         )
         if len(list1) == 0:

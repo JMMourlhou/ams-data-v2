@@ -37,12 +37,12 @@ components:
       properties:
         align: center
         background: theme:Primary
-        bold: false
+        bold: true
         border: ''
         enabled: true
         font: ''
         font_size: 11
-        foreground: theme:On Primary
+        foreground: theme:Tertiary
         hide_text: false
         italic: false
         margin: ['2', null, null, null]

@@ -37,6 +37,11 @@ class Main(MainTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        # ----------------------------------------------------------------------------------------------
+        # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
+        from anvil.js import window  # to gain access to the window objec
+        screen_size = window.innerWidth
+        print("screen: ", screen_size)
         
         # renseignements user 
         self.user = anvil.users.get_user(q.fetch_only("nom","prenom","role","email","enabled"))
