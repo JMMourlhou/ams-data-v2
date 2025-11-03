@@ -15,6 +15,8 @@ class ItemTemplate25_histo(ItemTemplate25_histoTemplate):
             self.button_detail_histo.text = self.item['stage']['code']['code'] +" du " + str(self.item['stage']['date_debut'])
         else:
             self.button_detail_histo.text = self.item['stage']['code']['code']
+            if self.item['numero']<1000:
+                self.button_detail_histo.text = self.item['stage']['code']['code'] +" du " + str(self.item['stage']['date_debut'])
 
     def button_detail_histo_click(self, **event_args):
         """This method is called when the button is clicked"""

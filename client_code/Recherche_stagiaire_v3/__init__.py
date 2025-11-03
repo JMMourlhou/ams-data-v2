@@ -249,6 +249,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.raz_screen()
         self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
+        self.drop_down_code_stage.selected_value = None
+        self.drop_down_num_stages.selected_value = None
 
     def text_box_prenom_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -266,6 +268,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.raz_screen()
         self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
+        self.drop_down_code_stage.selected_value = None
+        self.drop_down_num_stages.selected_value = None
 
     def text_box_role_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -284,6 +288,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.raz_screen()
         self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
+        self.drop_down_code_stage.selected_value = None
+        self.drop_down_num_stages.selected_value = None
 
     def text_box_email_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -301,6 +307,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.raz_screen()
         self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
+        self.drop_down_code_stage.selected_value = None
+        self.drop_down_num_stages.selected_value = None
 
     def text_box_tel_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -318,6 +326,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.raz_screen()
         self.label_titre.text = str(len(liste)) + " résultats"
         self.repeating_panel_0.items = liste
+        self.drop_down_code_stage.selected_value = None
+        self.drop_down_num_stages.selected_value = None
 
     def raz_screen(self):   
         self.data_grid_users.visible = True
@@ -326,6 +336,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_qcm.visible = False
         self.column_panel_stagiaire.visible = False
         self.column_panel_menu.visible = False
+        
+        self.button_mail_to_all.visible = False
+        self.button_trombi.visible = False
+        self.button_pre_requis.visible = False
+        self.button_insc_par_qr.visible = False
+        
         self.button_role.text = ""
         self.button_1.text = ""
         self.button_3.text = ""
@@ -400,7 +416,10 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         else:
             self.repeating_panel_histo.visible = False
             self.button_histo.foreground = "yellow"
-        list =  app_tables.stagiaires_inscrits.search(user_email = self.item)
+        list =  app_tables.stagiaires_inscrits.search(
+                                                        tables.order_by("numero", ascending=False),
+                                                        user_email = self.item
+                                                    )
         if len(list) > 0:
             self.repeating_panel_histo.visible = True
             self.repeating_panel_histo.items = list 
