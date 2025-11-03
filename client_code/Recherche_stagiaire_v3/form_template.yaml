@@ -81,7 +81,7 @@ components:
           type: TextBox
         layout_properties: {grid_position: 'GAHVSD,GETJRU'}
         name: column_panel_search
-        properties: {col_spacing: small, col_widths: '{}', wrap_on: mobile}
+        properties: {col_spacing: small, col_widths: '{}', wrap_on: never}
         type: ColumnPanel
       - components:
         - event_bindings: {change: drop_down_code_stage_change}
@@ -155,7 +155,7 @@ components:
           layout_properties: {grid_position: 'FRZEYR,LULUNY'}
           name: button_3
           properties:
-            align: left
+            align: center
             background: ''
             bold: true
             border: ''
