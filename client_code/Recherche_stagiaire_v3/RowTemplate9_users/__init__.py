@@ -67,9 +67,20 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
             self.f.label_user_email.text = self.item['user_email']['email']
             
         self.f.column_panel_stagiaire.visible = True
+        
+        # test si le stgiaire a rempli des formulaires
+        list=[]
+        try:
+            list = app_tables.stage_satisf.search(user_email=self.item)
+        except:
+            list = app_tables.stage_satisf.search(user_email=self.item['user_email'])
+        if len(list)>0:
+            self.f.button_visu_formulaires.visible = True
+        else:
+            self.f.button_visu_formulaires.visible = False
         self.f.column_panel_menu.visible = True
         self.f.data_grid_users.visible = False
-
+        
 
     def button_qcm_click(self, **event_args):
         """This method is called when the button is clicked"""

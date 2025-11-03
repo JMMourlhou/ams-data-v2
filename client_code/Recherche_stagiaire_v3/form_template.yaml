@@ -187,46 +187,51 @@ components:
           wrap_on: never
         type: ColumnPanel
       - components:
-        - event_bindings: {click: button_fiche_click}
-          layout_properties: {grid_position: 'ZOUEUI,THJROH'}
-          name: button_fiche
-          properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', icon: 'fa:user-o', spacing_above: none, spacing_below: none, text: ''}
-          type: Button
-        - event_bindings: {click: button_qcm_click}
-          layout_properties: {grid_position: 'ZOUEUI,ACEQAD'}
-          name: button_qcm
-          properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: Qcm}
-          type: Button
-        - event_bindings: {click: button_histo_click}
-          layout_properties: {grid_position: 'ZOUEUI,RMWLRO'}
-          name: button_histo
-          properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: Hist}
-          type: Button
-        - event_bindings: {click: button_pr_click}
-          layout_properties: {grid_position: 'ZOUEUI,JLFGNG'}
-          name: button_pr
-          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: PR}
-          type: Button
-        - event_bindings: {click: button_visu_formulaires_click}
-          layout_properties: {grid_position: 'ZOUEUI,LJAKQP'}
-          name: button_visu_formulaires
-          properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:list', spacing_above: none, spacing_below: none, text: Formulaires}
-          type: Button
-        - event_bindings: {click: button_mail_click}
-          layout_properties: {grid_position: 'ZOUEUI,YCSRRK'}
-          name: button_mail
-          properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:send', spacing_above: none, spacing_below: none, text: ''}
-          type: Button
-        - event_bindings: {click: button_del_click}
-          layout_properties: {grid_position: 'ZOUEUI,DBWTUP'}
-          name: button_del
-          properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:minus', spacing_above: none, spacing_below: none, text: '', visible: false}
-          type: Button
-        - event_bindings: {click: button_add_to_stage_click}
-          layout_properties: {grid_position: 'ZOUEUI,VCSZJQ'}
-          name: button_add_to_stage
-          properties: {align: center, background: 'theme:Error', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:plus', spacing_above: none, spacing_below: none, text: '', visible: false}
-          type: Button
+        - components:
+          - event_bindings: {click: button_fiche_click}
+            layout_properties: {}
+            name: button_fiche
+            properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', icon: 'fa:user-o', spacing_above: none, spacing_below: none, text: ''}
+            type: Button
+          - event_bindings: {click: button_qcm_click}
+            layout_properties: {}
+            name: button_qcm
+            properties: {align: full, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: Qcm}
+            type: Button
+          - event_bindings: {click: button_histo_click}
+            layout_properties: {}
+            name: button_histo
+            properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: Hist}
+            type: Button
+          - event_bindings: {click: button_pr_click}
+            layout_properties: {}
+            name: button_pr
+            properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: PR}
+            type: Button
+          - event_bindings: {click: button_visu_formulaires_click}
+            layout_properties: {}
+            name: button_visu_formulaires
+            properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:list', spacing_above: none, spacing_below: none, text: Formulaires, visible: false}
+            type: Button
+          - event_bindings: {click: button_mail_click}
+            layout_properties: {}
+            name: button_mail
+            properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:send', spacing_above: none, spacing_below: none, text: ''}
+            type: Button
+          - event_bindings: {click: button_del_click}
+            layout_properties: {}
+            name: button_del
+            properties: {align: center, background: 'theme:On Primary Container', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:minus', spacing_above: none, spacing_below: none, text: '', visible: false}
+            type: Button
+          - event_bindings: {click: button_add_to_stage_click}
+            layout_properties: {}
+            name: button_add_to_stage
+            properties: {align: center, background: 'theme:Error', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:plus', spacing_above: none, spacing_below: none, text: '', visible: false}
+            type: Button
+          layout_properties: {grid_position: 'YYRMXU,HNXCHR'}
+          name: flow_panel_2
+          properties: {align: justify}
+          type: FlowPanel
         layout_properties: {grid_position: 'PRDCOV,REYKIG'}
         name: column_panel_menu
         properties:

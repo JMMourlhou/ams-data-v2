@@ -363,6 +363,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_pr.visible = False
         self.repeating_panel_qcm.visible = False
         self.column_panel_formulaires.visible = False # formulares
+        self.repeating_panel_formulaires.items = []
+        self.repeating_panel_formul_questions_fermees.items = []
+        self.repeating_panel_formul_questions_ouvertes.items = []
         
         self.column_panel_stagiaire.visible = False
         self.column_panel_menu.visible = False
@@ -658,25 +661,32 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.item = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
-        
-        if self.column_panel_formulaires.visible is False:
-            list = app_tables.stage_satisf.search(user_email=self.item)
-            if len(list)>0:
-                self.repeating_panel_formulaires.items = list
-                self.data_grid_users.visible = False
-                
-                self.column_panel_formulaires.visible = True
-                # couleurs bt:
-                self.button_visu_formulaires.foreground = "red"
-                self.button_1.foreground = "red"
-                self.button_fiche.foreground = "yellow"
-                self.button_qcm.foreground = "yellow"
-                self.button_pr.foreground = "yellow"
-
             
+        list=[]
+        list = app_tables.stage_satisf.search(user_email=self.item)
+        if len(list)>0:
+            self.repeating_panel_formulaires.items = list
+            self.column_panel_formulaires.visible  = True
+            self.data_grid_users.visible = False
         else:
             self.column_panel_formulaires.visible  = False
-            self.button_visu_formulaires.foreground = "yellow"
+            #self.repeating_panel_formul_questions_fermees.visible = False
+            #self.repeating_panel_formul_questions_ouvertes.visible = False
+            #self.repeating_panel_formulaires.items = []
+            #self.repeating_panel_formul_questions_fermees.items = []
+            #self.repeating_panel_formul_questions_ouvertes.items = []
+
+            
+            if self.column_panel_formulaires.visible is False:
+                    self.column_panel_formulaires.visible = True
+                    # couleurs bt:
+                    self.button_visu_formulaires.foreground = "red"
+                    self.button_1.foreground = "red"
+                    self.button_fiche.foreground = "yellow"
+                    self.button_qcm.foreground = "yellow"
+                    self.button_pr.foreground = "yellow"
+            else:
+                self.button_visu_formulaires.foreground = "yellow"
 
     
 
