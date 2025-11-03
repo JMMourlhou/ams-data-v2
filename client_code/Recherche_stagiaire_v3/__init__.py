@@ -30,7 +30,15 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.drop_down_code_stage.visible = False
             self.drop_down_num_stages.visible = False
             self.button_add_to_stage.visible = True    # rend visible le bt + pour l'inscription
-
+            # couleurs bt:
+            self.button_add_to_stage.foreground = "red"
+            self.button_fiche.foreground = "yellow"
+            self.button_qcm.foreground = "yellow"
+            self.button_histo.foreground = "yellow"
+            self.button_pr.foreground = "yellow"
+            self.button_visu_formulaires.foreground = "yellow"
+            self.button_mail.foreground = "yellow"
+            self.button_del.foreground = "yellow"
         """
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
@@ -125,7 +133,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.text_box_email.text = ""  # critere email
         self.text_box_tel.text = ""  # critere tel
         self.drop_down_num_stages.visible = False
-        self.column_panel_users.visible = False
+        #self.column_panel_search.visible = False
         self.raz_screen()
         self.filtre_type_stage()
 
@@ -316,24 +324,30 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
         self.repeating_panel_qcm.visible = False
-        #self.repeating_panel_1.visible = False
+        self.column_panel_stagiaire.visible = False
+        self.column_panel_menu.visible = False
         self.button_role.text = ""
         self.button_1.text = ""
         self.button_3.text = ""
         self.button_4.text = ""
         
-        
-        
-
     def button_qcm_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
         self.repeating_panel_formulaires.visible = False
         if self.repeating_panel_qcm.visible is False:
-            self.repeating_panel_qcm.visible = True
+            #self.repeating_panel_qcm.visible = True
+            # couleurs bt:
             self.button_qcm.foreground = "red"
             self.button_1.foreground = "red"
+            self.button_fiche.foreground = "yellow"
+            self.button_histo.foreground = "yellow"
+            self.button_pr.foreground = "yellow"
+            self.button_visu_formulaires.foreground = "yellow"
+            self.button_mail.foreground = "yellow"
+            self.button_del.foreground = "yellow"
+            self.button_add_to_stage.foreground = "yellow"
         else:
             self.repeating_panel_qcm.visible = False
             self.button_qcm.foreground = "yellow"   
@@ -349,6 +363,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             user_qcm = self.item
         )
         if len(qcm_results)>0:      # qcm trouvés pour ce user
+            self.repeating_panel_qcm.visible = True
             self.repeating_panel_qcm.items = qcm_results
             self.data_grid_users.visible = False
         else:
@@ -368,16 +383,30 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             alert(f"Erreur en re-lecture du user: {e}")
             
         if self.repeating_panel_histo.visible is False:
-            self.repeating_panel_histo.visible = True
+            #self.repeating_panel_histo.visible = True
+            # couleurs bt:
             self.button_histo.foreground = "red"
             self.button_1.foreground = "red"
- 
-            self.repeating_panel_histo.items = app_tables.stagiaires_inscrits.search(user_email = self.item)
+            self.button_fiche.foreground = "yellow"
+            self.button_qcm.foreground = "yellow"
+            self.button_pr.foreground = "yellow"
+            self.button_visu_formulaires.foreground = "yellow"
+            self.button_mail.foreground = "yellow"
+            self.button_del.foreground = "yellow"
+            self.button_add_to_stage.foreground = "yellow"
+            
+           
             self.data_grid_users.visible = False
         else:
             self.repeating_panel_histo.visible = False
             self.button_histo.foreground = "yellow"
-            #self.user_initial_color()
+        list =  app_tables.stagiaires_inscrits.search(user_email = self.item)
+        if len(list) > 0:
+            self.repeating_panel_histo.visible = True
+            self.repeating_panel_histo.items = list 
+        else:
+            self.button_histo.foreground = "yellow"
+            self.repeating_panel_histo.visible = False
 
     def button_pr_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -398,8 +427,16 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             return
         if self.repeating_panel_pr.visible is False:
             self.repeating_panel_pr.visible = True
+            # couleurs bt:
             self.button_pr.foreground = "red"
             self.button_1.foreground = "red"
+            self.button_fiche.foreground = "yellow"
+            self.button_qcm.foreground = "yellow"
+            self.button_histo.foreground = "yellow"
+            self.button_visu_formulaires.foreground = "yellow"
+            self.button_mail.foreground = "yellow"
+            self.button_del.foreground = "yellow"
+            self.button_add_to_stage.foreground = "yellow"
         else:
             self.repeating_panel_pr.visible = False
             self.button_pr.foreground = "yellow"
@@ -457,6 +494,17 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.item = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
+            
+        # couleurs bt:
+        self.button_mail.foreground = "red"
+        self.button_1.foreground = "red"
+        self.button_fiche.foreground = "yellow"
+        self.button_qcm.foreground = "yellow"
+        self.button_histo.foreground = "yellow"    
+        self.button_visu_formulaires.foreground = "yellow"   
+        self.button_del.foreground = "yellow"
+        self.button_add_to_stage.foreground = "yellow"
+        
         liste_email = []
         liste_email.append((self.item['email'],self.item['prenom'],""))   # mail et prénom, id pas besoin
         open_form('Mail_subject_attach_txt',liste_email,"stagiaire_1")
@@ -486,6 +534,16 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.button_histo_click()   # visu de l'histo du stagiaire
                 return
             # Effact de la personne si confirmation
+            # couleurs bt:
+            self.button_del.foreground = "red"
+            self.button_1.foreground = "red"
+            self.button_fiche.foreground = "yellow"
+            self.button_qcm.foreground = "yellow"
+            self.button_histo.foreground = "yellow"
+            self.button_pr.foreground = "yellow"
+            self.button_visu_formulaires.foreground = "yellow"
+            self.button_mail.foreground = "yellow"
+            self.button_add_to_stage.foreground = "yellow"
             r=alert("Voulez-vous vraiment enlever définitivement cette personne ? ",dismissible=False ,buttons=[("oui",True),("non",False)])
             if r :   # oui
                 # lecture row users
@@ -504,7 +562,17 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.item = app_tables.users.get(email=self.label_user_email.text)
             except Exception as e:
                 alert(f"Erreur en re-lecture du user: {e}")
-                
+            # couleurs bt:
+            self.button_fiche.foreground="red"
+            self.button_qcm.foreground = "yellow"
+            self.button_histo.foreground = "yellow"
+            self.button_pr.foreground = "yellow"
+            self.button_visu_formulaires.foreground = "yellow"
+            self.button_mail.foreground = "yellow"
+            self.button_del.foreground = "yellow"
+            self.button_add_to_stage.foreground = "yellow"
+            
+            
             from ..Saisie_info_apres_visu import Saisie_info_apres_visu    
             if self.item['role'] == "A" and  self.user_now['role'] == "A": # Seul l'admin voit la fiche de l'admin
                 open_form('Saisie_info_apres_visu', self.item['email'], num_stage=0, intitule="")
@@ -544,8 +612,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         
         if self.repeating_panel_formulaires.visible is False:
             self.repeating_panel_formulaires.visible = True
+            # couleurs bt:
             self.button_visu_formulaires.foreground = "red"
             self.button_1.foreground = "red"
+            self.button_fiche.foreground = "yellow"
+            self.button_qcm.foreground = "yellow"
+            self.button_pr.foreground = "yellow"
 
             list = app_tables.stage_satisf.search(user_email=self.item)
             self.repeating_panel_formulaires.items = list
@@ -553,6 +625,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         else:
             self.repeating_panel_formulaires.visible  = False
             self.button_visu_formulaires.foreground = "yellow"
+
+
 
     
         

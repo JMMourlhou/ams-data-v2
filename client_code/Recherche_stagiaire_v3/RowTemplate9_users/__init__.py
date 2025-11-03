@@ -31,13 +31,14 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
             self.button_3.text = self.item['user_email']['email']
             tel = self.item['user_email']['tel']
             
+            
         try:
             if len(tel) == 10 and tel.isdigit():
                 tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
                 self.button_4.text = tel
         except Exception:
             pass
-        if self.button_role.text == "A" or self.item['role'] == "B" or self.item['role'] == "J":          # Admin en rouge
+        if self.button_role.text == "A" or self.button_role.text == "B" or self.button_role.text == "J":          # Admin en rouge
             self.button_role.foreground = "red"
             self.button_role.background = "yellow"
         if self.button_role.text == "F":
@@ -50,17 +51,8 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
     def button_role_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Affichage des infos sur lequel je travaille 
-        if self.button_role.text == "A" or self.item['role'] == "B" or self.item['role'] == "J":          # Admin en rouge
-            self.f.button_role.foreground = "red"
-            self.f.button_role.background = "yellow"
-        if self.button_role.text == "F":
-            self.f.button_role.foreground = "blue"  # Formateur en bleu
-            self.f.button_role.background = "yellow"
-        if self.button_role.text == "T":
-            self.f.button_role.foreground = "green"  # Tuteur en vert 
-            self.f.button_role.background = "yellow"
-        if self.button_role.text == "S":
-            self.f.button_role.foreground = "yellow"  # Tuteur en vert 
+     
+        self.f.button_role.foreground = "yellow" 
             
         self.f.button_role.text = self.button_role.text
         self.f.button_1.text = self.button_1.text
