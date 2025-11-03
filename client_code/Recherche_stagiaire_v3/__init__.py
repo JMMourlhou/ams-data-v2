@@ -251,7 +251,11 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_0.items = liste
         self.drop_down_code_stage.selected_value = None
         self.drop_down_num_stages.selected_value = None
-
+        """
+        self.repeating_panel_formulaires.visible = False
+        self.repeating_panel_formul_questions_fermees.visible = False
+        self.repeating_panel_formul_questions_ouvertes.visible = False
+        """
     def text_box_prenom_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
         self.text_box_role.text = ""
@@ -270,6 +274,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_0.items = liste
         self.drop_down_code_stage.selected_value = None
         self.drop_down_num_stages.selected_value = None
+
+        """
+        self.repeating_panel_formulaires.visible = False
+        self.repeating_panel_formul_questions_fermees.visible = False
+        self.repeating_panel_formul_questions_ouvertes.visible = False
+        """
 
     def text_box_role_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -290,6 +300,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_0.items = liste
         self.drop_down_code_stage.selected_value = None
         self.drop_down_num_stages.selected_value = None
+        
+        """
+        self.repeating_panel_formulaires.visible = False
+        self.repeating_panel_formul_questions_fermees.visible = False
+        self.repeating_panel_formul_questions_ouvertes.visible = False
+        """
 
     def text_box_email_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
@@ -310,6 +326,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.drop_down_code_stage.selected_value = None
         self.drop_down_num_stages.selected_value = None
 
+        """
+        self.repeating_panel_formulaires.visible = False
+        self.repeating_panel_formul_questions_fermees.visible = False
+        self.repeating_panel_formul_questions_ouvertes.visible = False
+        """
+
     def text_box_tel_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
         self.text_box_role.text = ""
@@ -329,11 +351,19 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.drop_down_code_stage.selected_value = None
         self.drop_down_num_stages.selected_value = None
 
+        """
+        self.repeating_panel_formulaires.visible = False
+        self.repeating_panel_formul_questions_fermees.visible = False
+        self.repeating_panel_formul_questions_ouvertes.visible = False
+        """
+
     def raz_screen(self):   
         self.data_grid_users.visible = True
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
         self.repeating_panel_qcm.visible = False
+        self.column_panel_formulaires.visible = False # formulares
+        
         self.column_panel_stagiaire.visible = False
         self.column_panel_menu.visible = False
         
@@ -351,7 +381,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
-        self.repeating_panel_formulaires.visible = False
+        self.column_panel_formulaires.visible = False
         if self.repeating_panel_qcm.visible is False:
             #self.repeating_panel_qcm.visible = True
             # couleurs bt:
@@ -391,7 +421,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_qcm.visible = False
         self.repeating_panel_pr.visible = False
-        self.repeating_panel_formulaires.visible = False
+        self.column_panel_formulaires.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -431,7 +461,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_qcm.visible = False
-        self.repeating_panel_formulaires.visible = False
+        self.column_panel_formulaires.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -591,7 +621,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.button_del.foreground = "yellow"
             self.button_add_to_stage.foreground = "yellow"
             
-            
+            self.text_box_nom.text = self.item['nom']
             from ..Saisie_info_apres_visu import Saisie_info_apres_visu    
             if self.item['role'] == "A" and  self.user_now['role'] == "A": # Seul l'admin voit la fiche de l'admin
                 open_form('Saisie_info_apres_visu', self.item['email'], num_stage=0, intitule="")
@@ -629,21 +659,27 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
         
-        if self.repeating_panel_formulaires.visible is False:
-            self.repeating_panel_formulaires.visible = True
-            # couleurs bt:
-            self.button_visu_formulaires.foreground = "red"
-            self.button_1.foreground = "red"
-            self.button_fiche.foreground = "yellow"
-            self.button_qcm.foreground = "yellow"
-            self.button_pr.foreground = "yellow"
-
+        if self.column_panel_formulaires.visible is False:
             list = app_tables.stage_satisf.search(user_email=self.item)
-            self.repeating_panel_formulaires.items = list
-            self.data_grid_users.visible = False
+            if len(list)>0:
+                self.repeating_panel_formulaires.items = list
+                self.data_grid_users.visible = False
+                
+                self.column_panel_formulaires.visible = True
+                # couleurs bt:
+                self.button_visu_formulaires.foreground = "red"
+                self.button_1.foreground = "red"
+                self.button_fiche.foreground = "yellow"
+                self.button_qcm.foreground = "yellow"
+                self.button_pr.foreground = "yellow"
+
+            
         else:
-            self.repeating_panel_formulaires.visible  = False
+            self.column_panel_formulaires.visible  = False
             self.button_visu_formulaires.foreground = "yellow"
+
+    
+
 
 
 

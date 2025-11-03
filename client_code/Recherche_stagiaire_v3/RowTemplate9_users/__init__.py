@@ -52,7 +52,8 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         """This method is called when the button is clicked"""
         # Affichage des infos sur lequel je travaille 
      
-        self.f.button_role.foreground = "yellow" 
+        self.f.button_role.foreground = "red" 
+        self.f.button_1.foreground = "red"    # nom en rouge 
             
         self.f.button_role.text = self.button_role.text
         self.f.button_1.text = self.button_1.text

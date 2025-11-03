@@ -1,0 +1,25 @@
+components:
+- event_bindings: {click: button_type_stage_click}
+  layout_properties: {grid_position: 'GWWYLA,ZRQAFY'}
+  name: button_type_stage
+  properties: {align: center, foreground: 'theme:On Primary', text: type_stage}
+  type: Button
+- event_bindings: {click: button_type_stage_click}
+  layout_properties: {grid_position: 'GWWYLA,UPZYGF'}
+  name: button_date_heure
+  properties: {foreground: 'theme:On Primary', text: date_heure}
+  type: Button
+- event_bindings: {click: button_type_stage_click}
+  layout_properties: {grid_position: 'GWWYLA,KLQLTY'}
+  name: button_num_stage
+  properties: {foreground: 'theme:On Primary', text: num_stage}
+  type: Button
+- event_bindings: {click: button_download_click}
+  layout_properties: {grid_position: 'GWWYLA,TAJSEH'}
+  name: button_download
+  properties: {background: 'theme:Tertiary', foreground: 'theme:On Primary Container', icon: 'fa:download', text: '', visible: false}
+  type: Button
+container:
+  properties: {background: 'theme:Olive', col_widths: '{"ZRQAFY":15,"UPZYGF":15,"KLQLTY":20,"TAJSEH":10}', visible: true}
+  type: ColumnPanel
+is_package: true

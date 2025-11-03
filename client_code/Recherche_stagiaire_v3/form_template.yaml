@@ -136,20 +136,20 @@ components:
         properties: {col_spacing: tiny, col_widths: '{"GDMMNK":14,"JKUPIX":26,"GQNNHG":10}', spacing_above: none, spacing_below: none, wrap_on: never}
         type: ColumnPanel
       - components:
-        - event_bindings: {click: button_role_click}
+        - event_bindings: {}
           layout_properties: {grid_position: 'FRZEYR,NOWEZM'}
           name: button_role
-          properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
+          properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
           type: Button
-        - event_bindings: {}
+        - event_bindings: {click: button_1_click}
           layout_properties: {grid_position: 'FRZEYR,XMGAVJ'}
           name: button_1
-          properties: {align: left, background: '', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
+          properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
           type: Button
         - event_bindings: {}
           layout_properties: {grid_position: 'FRZEYR,BLWPBM'}
           name: button_4
-          properties: {align: center, background: '', bold: true, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
+          properties: {align: center, background: '', bold: true, border: '', enabled: false, font: '', font_size: 12, foreground: 'theme:On Primary Container', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
           type: Button
         - event_bindings: {}
           layout_properties: {grid_position: 'FRZEYR,LULUNY'}
@@ -159,10 +159,10 @@ components:
             background: ''
             bold: true
             border: ''
-            enabled: true
+            enabled: false
             font: ''
             font_size: 10
-            foreground: theme:On Primary
+            foreground: theme:On Primary Container
             icon: ''
             icon_align: left
             italic: false
@@ -178,7 +178,13 @@ components:
           type: Button
         layout_properties: {grid_position: 'ZVZOXB,YWWWIQ'}
         name: column_panel_stagiaire
-        properties: {background: 'theme:On Primary Container', col_widths: '{"NOWEZM":4,"XMGAVJ":21,"LULUNY":22,"BLWPBM":15}', visible: false, wrap_on: never}
+        properties:
+          background: theme:Tertiary
+          col_widths: '{"NOWEZM":4,"XMGAVJ":21,"LULUNY":22,"BLWPBM":15}'
+          spacing:
+            margin: [null, null, '1', null]
+          visible: false
+          wrap_on: never
         type: ColumnPanel
       - components:
         - event_bindings: {click: button_fiche_click}
@@ -270,10 +276,23 @@ components:
       name: repeating_panel_qcm
       properties: {background: 'theme:Error', item_template: Recherche_stagiaire_v3.ItemTemplate10_qcm, role: outlined-card, spacing_above: small, spacing_below: small, visible: false}
       type: RepeatingPanel
-    - layout_properties: {grid_position: 'GBJTEC,MVGISM'}
-      name: repeating_panel_formulaires
-      properties: {item_template: Recherche_stagiaire_v3.ItemTemplate9_formul, visible: false}
-      type: RepeatingPanel
+    - components:
+      - layout_properties: {grid_position: 'IDUUKA,KVCOMR PKGAFJ,ZUZBJL'}
+        name: repeating_panel_formulaires
+        properties: {item_template: Recherche_stagiaire_v3.Item_formulaires_liste, visible: true}
+        type: RepeatingPanel
+      - layout_properties: {grid_position: 'IDUUKA,KVCOMR IOWYBB,UKCYKI'}
+        name: repeating_panel_formul_questions_ouvertes
+        properties: {item_template: Recherche_stagiaire_v3.Item_formul_ouv, visible: false}
+        type: RepeatingPanel
+      - layout_properties: {grid_position: 'IDUUKA,KVCOMR AKQJLO,CMGLLV'}
+        name: repeating_panel_formul_questions_fermees
+        properties: {item_template: Recherche_stagiaire_v3.Item_formul_ferm, visible: false}
+        type: RepeatingPanel
+      layout_properties: {grid_position: 'GLPFPJ,HZODBG'}
+      name: column_panel_formulaires
+      properties: {role: outlined-card, visible: false, wrap_on: never}
+      type: ColumnPanel
     layout_properties:
       col_widths: {}
       grid_position: GXKYQU,JIABHP
