@@ -18,7 +18,7 @@ class RowTemplate4(RowTemplate4Template):
         from anvil.js import window  # to gain access to the window objec
 
         screen_size = window.innerWidth
-        print("screen: ", screen_size)
+        #print("screen: ", screen_size)
 
         if screen_size >= 700:
             self.text_box_3.font_size = 18
