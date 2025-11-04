@@ -39,7 +39,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.button_visu_formulaires.foreground = "yellow"
             self.button_mail.foreground = "yellow"
             self.button_del.foreground = "yellow"
-        """
+        
         # drop_down mode fi pour le repeat_panel de Stage_visu_modif (si je clique sur l'historique, je vais visualiser le stage)
         # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
         self.drop_down_mode_fi.items = [
@@ -48,7 +48,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 tables.order_by("code_fi", ascending=True)
             )
         ]
-        """
+        
         # Drop down codes stages
         self.drop_down_code_stage.items = [
             (r["code"], r)
@@ -165,7 +165,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_efface_click(self, **event_args):  # # j'efface les critères
         """This method is called when the button is clicked"""
-        open_form("Recherche_stagiaire_v2", self.num_stage)
+        open_form("Recherche_stagiaire_v3", self.num_stage)
 
     def text_box_nom_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

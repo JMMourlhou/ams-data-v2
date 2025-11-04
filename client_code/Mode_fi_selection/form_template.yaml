@@ -13,7 +13,7 @@ components:
     - event_bindings: {click: button_validation_click}
       layout_properties: {grid_position: ',UHJJNI'}
       name: button_validation
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: raised, spacing_above: none, spacing_below: small, text: '   OK    ', tooltip: '', underline: false, visible: true}
+      properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: raised, spacing_above: none, spacing_below: small, text: '   OK    ', tooltip: '', underline: false, visible: true}
       type: Button
     layout_properties: {grid_position: 'XMXSXV,EQFWFY'}
     name: column_panel_1

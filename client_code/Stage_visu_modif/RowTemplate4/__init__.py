@@ -138,7 +138,7 @@ class RowTemplate4(RowTemplate4Template):
                 alert("Réinitialisation effectuée au niveau du Tuteur, Le ou les formulaires n'ont pas été effacé(s).")
         
     def init_drop_down_mode_fi(self):
-        self.f = get_open_form()   # récupération de la forme mère (Stage_visu_modif) ou (Recherche_stagiaire_v2) pour revenir ds la forme appelante
+        self.f = get_open_form()   # récupération de la forme mère (Stage_visu_modif) ou (Recherche_stagiaire_v3) pour revenir ds la forme appelante
         liste =[]
         for x in self.f.drop_down_mode_fi.items:
             liste.append((x[0],x[1])) 

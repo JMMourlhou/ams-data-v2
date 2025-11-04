@@ -41,10 +41,10 @@ class RowTemplate3(RowTemplate3Template):
             self.button_trombi.text = ""
             self.button_export_xls.text = ""
             self.button_qcm.text = "Q"
-         
+            self.button_inscription.text = "+Exist"
+            self.button_inscription_par_QR.text = "+QR"
         else:
             self.text_box_1.visible = True
-            self.button_inscription.text = "Inscript°"
             self.button_pre_requis.text = "Pré-requis"
             
         if self.item['date_debut'] is not None:
@@ -265,4 +265,10 @@ class RowTemplate3(RowTemplate3Template):
             self.file_loader_diplomes.visibles = True
             self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
             self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
+
+    def button_inscription_par_QR_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # False indique que ce n'est pas une invitation à log in normal
+        # mais une invitation à s'inscrire au stage
+        open_form('QrCode_display', False, self.item['numero'])
             

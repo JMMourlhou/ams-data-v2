@@ -331,7 +331,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         else:
             n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
         n.show()
-        open_form('Recherche_stagiaire_v2',num_stage)
+        open_form('Recherche_stagiaire_v3',num_stage)
 
     def text_box_num_stage_change(self, **event_args):
         """This method is called when the text in this text box is edited"""

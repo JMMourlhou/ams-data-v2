@@ -27,7 +27,7 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
     # lecture fichier père user (lecture différente si vient de création 1ere entrée ou bt_modif en recherche)
     if type_add == "":               # 1ere entrée par flash Qr_code: le user est le stagiaire
         user = anvil.users.get_user()
-    if type_add == "bt_recherche":   # le stagiaire a été choisit ds recherche (Recherche_stagiaire_v2 / RowTemplate1)
+    if type_add == "bt_recherche":   # le stagiaire a été choisit ds recherche (Recherche_stagiaire_v3 / RowTemplate1)
         user = app_tables.users.get(email=stagiaire_row['email'])
     if user:
         if user != stagiaire_row :

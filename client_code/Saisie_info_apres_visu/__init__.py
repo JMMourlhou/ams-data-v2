@@ -307,7 +307,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                 if self.stagiaire:
                     txt_msg = anvil.server.call("del_personne",self.stagiaire)
                 alert(txt_msg)
-                open_form("Recherche_stagiaire_v2")
+                open_form("Recherche_stagiaire_v3")
             else:
                 return
 

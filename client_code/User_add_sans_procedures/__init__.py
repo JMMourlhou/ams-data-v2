@@ -69,8 +69,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                                   )
         if result is not None:
             alert(result)  # user existant
-            from ..Recherche_stagiaire_v2 import Recherche_stagiaire_v2
-            open_form("Recherche_stagiaire_v2")
+            from ..Recherche_stagiaire_v3 import Recherche_stagiaire_v3
+            open_form("Recherche_stagiaire_v3")
         else:
             alert("Création effectuée !")
         open_form('User_add_sans_procedures')
