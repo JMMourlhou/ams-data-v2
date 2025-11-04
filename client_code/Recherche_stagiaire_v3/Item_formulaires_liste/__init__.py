@@ -19,7 +19,7 @@ class Item_formulaires_liste(Item_formulaires_listeTemplate):
 
     def button_type_stage_click(self, **event_args):
         """This method is called when the button is clicked"""
-        if self.f.repeating_panel_formul_questions_ouvertes.visible is False:
+        if self.f.repeating_panel_formul_fin_questions_ouvertes.visible is False:
             # génération de la liste à afficher
             # QUESIONS OUVERTES
             liste_questions_ouv=[]
@@ -32,10 +32,10 @@ class Item_formulaires_liste(Item_formulaires_listeTemplate):
                 reponse = val[1]
                 liste_questions_ouv.append((num_question,question,reponse))
             if len(liste_questions_ouv) > 0:    
-                self.f.repeating_panel_formul_questions_ouvertes.visible = True
-                self.f.repeating_panel_formul_questions_ouvertes.items = liste_questions_ouv
+                self.f.repeating_panel_formul_fin_questions_ouvertes.visible = True
+                self.f.repeating_panel_formul_fin_questions_ouvertes.items = liste_questions_ouv
         else:
-            self.f.repeating_panel_formul_questions_ouvertes.visible = False
+            self.f.repeating_panel_formul_fin_questions_ouvertes.visible = False
 
         # QUESIONS FERMEES
         if self.f.repeating_panel_formul_questions_fermees.visible is False:
