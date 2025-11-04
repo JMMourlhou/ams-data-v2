@@ -31,7 +31,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.drop_down_num_stages.visible = False
             self.button_add_to_stage.visible = True    # rend visible le bt + pour l'inscription
             # couleurs bt:
-            self.button_add_to_stage.foreground = "red"
+            #self.button_add_to_stage.foreground = "red"
             self.button_fiche.foreground = "yellow"
             self.button_qcm.foreground = "yellow"
             self.button_histo.foreground = "yellow"
