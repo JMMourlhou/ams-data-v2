@@ -1,4 +1,4 @@
-from ._anvil_designer import Item_formulaires_listeTemplate
+from ._anvil_designer import Item_formulaires_ouv_listeTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
-class Item_formulaires_liste(Item_formulaires_listeTemplate):
+class Item_formulaires_ouv_liste(Item_formulaires_ouv_listeTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -38,7 +38,7 @@ class Item_formulaires_liste(Item_formulaires_listeTemplate):
             self.f.repeating_panel_formul_fin_questions_ouvertes.visible = False
 
         # QUESIONS FERMEES
-        if self.f.repeating_panel_formul_questions_fermees.visible is False:
+        if self.f.repeating_panel_formul_fin_questions_fermees.visible is False:
             liste_questions_ferm=[]
             # dico questions ouvertes
             dico_rep_ferm = self.item["rep_dico_rep_ferm"]  # dico questions ouvertes du formulaire
@@ -49,11 +49,11 @@ class Item_formulaires_liste(Item_formulaires_listeTemplate):
                 reponse = val[1]
                 liste_questions_ferm.append((num_question,question,reponse))
             if len(liste_questions_ferm) > 0:    
-                self.f.repeating_panel_formul_questions_fermees.visible = True
-                self.f.repeating_panel_formul_questions_fermees.items = liste_questions_ferm
+                self.f.repeating_panel_formul_fin_questions_fermees.visible = True
+                self.f.repeating_panel_formul_fin_questions_fermees.items = liste_questions_ferm
             self.button_download.visible = True
         else:
-            self.f.repeating_panel_formul_questions_fermees.visible = False
+            self.f.repeating_panel_formul_fin_questions_fermees.visible = False
 
     def button_download_click(self, **event_args):
         """This method is called when the button is clicked"""

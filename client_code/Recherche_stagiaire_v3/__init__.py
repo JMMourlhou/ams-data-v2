@@ -364,22 +364,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
-        self.column_panel_formulaires.visible = False
-        if self.repeating_panel_qcm.visible is False:
-            #self.repeating_panel_qcm.visible = True
-            # couleurs bt:
-            self.button_qcm.foreground = "red"
-            self.button_1.foreground = "red"
-            self.button_fiche.foreground = "yellow"
-            self.button_histo.foreground = "yellow"
-            self.button_pr.foreground = "yellow"
-            self.button_visu_formulaires.foreground = "yellow"
-            self.button_mail.foreground = "yellow"
-            self.button_del.foreground = "yellow"
-            self.button_add_to_stage.foreground = "yellow"
-        else:
-            self.repeating_panel_qcm.visible = False
-            self.button_qcm.foreground = "yellow"   
+        self.column_panel_formulaires_fin.visible = False
+        
             
         # lecture du user sur le mail sauvé en label_user_email
         try:
@@ -392,59 +378,79 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             user_qcm = self.item
         )
         if len(qcm_results)>0:      # qcm trouvés pour ce user
-            self.repeating_panel_qcm.visible = True
+            # self.repeating_panel_qcm.visible = True
             self.repeating_panel_qcm.items = qcm_results
             self.data_grid_users.visible = False
+            
+            # j'affiche si les résultats n'étaient pas déjà visible
+            if self.repeating_panel_qcm.visible is False:
+                self.repeating_panel_qcm.visible = True
+                # couleurs bt:
+                self.button_qcm.foreground = "red"
+                self.button_1.foreground = "red"
+                self.button_fiche.foreground = "yellow"
+                self.button_histo.foreground = "yellow"
+                self.button_pr.foreground = "yellow"
+                self.button_visu_formulaires.foreground = "yellow"
+                self.button_mail.foreground = "yellow"
+                self.button_del.foreground = "yellow"
+                self.button_add_to_stage.foreground = "yellow"
+            else:
+                self.repeating_panel_qcm.visible = False
+                self.button_qcm.foreground = "yellow"
         else:
             self.repeating_panel_qcm.visible = False
             self.button_qcm.foreground = "yellow"
-            #self.user_initial_color()    
+
 
     def button_histo_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.repeating_panel_qcm.visible = False
         self.repeating_panel_pr.visible = False
-        self.column_panel_formulaires.visible = False
+        self.column_panel_formulaires_fin.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
-            
-        if self.repeating_panel_histo.visible is False:
-            #self.repeating_panel_histo.visible = True
-            # couleurs bt:
-            self.button_histo.foreground = "red"
-            self.button_1.foreground = "red"
-            self.button_fiche.foreground = "yellow"
-            self.button_qcm.foreground = "yellow"
-            self.button_pr.foreground = "yellow"
-            self.button_visu_formulaires.foreground = "yellow"
-            self.button_mail.foreground = "yellow"
-            self.button_del.foreground = "yellow"
-            self.button_add_to_stage.foreground = "yellow"
-            
-           
-            self.data_grid_users.visible = False
-        else:
-            self.repeating_panel_histo.visible = False
-            self.button_histo.foreground = "yellow"
+
+        # lecture de l'historique en table stgiaire inscrit
         list =  app_tables.stagiaires_inscrits.search(
-                                                        tables.order_by("numero", ascending=False),
-                                                        user_email = self.item
-                                                    )
-        if len(list) > 0:
-            self.repeating_panel_histo.visible = True
-            self.repeating_panel_histo.items = list 
-        else:
+            tables.order_by("numero", ascending=False),
+            user_email = self.item
+        )
+        if len(list) == 0:
             self.button_histo.foreground = "yellow"
             self.repeating_panel_histo.visible = False
+        else:                      
+            #self.repeating_panel_histo.visible = True
+            self.repeating_panel_histo.items = list 
+            
+            # j'affiche si les résultats n'étaient pas déjà visible
+            if self.repeating_panel_histo.visible is False:
+                self.repeating_panel_histo.visible = True
+                # couleurs bt:
+                self.button_histo.foreground = "red"
+                self.button_1.foreground = "red"
+                self.button_fiche.foreground = "yellow"
+                self.button_qcm.foreground = "yellow"
+                self.button_pr.foreground = "yellow"
+                self.button_visu_formulaires.foreground = "yellow"
+                self.button_mail.foreground = "yellow"
+                self.button_del.foreground = "yellow"
+                self.button_add_to_stage.foreground = "yellow"
+                self.data_grid_users.visible = False
+            else:
+                self.repeating_panel_histo.visible = False
+                self.button_histo.foreground = "yellow"
+            
+        
 
     def button_pr_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.repeating_panel_histo.visible = False
         self.repeating_panel_qcm.visible = False
-        self.column_panel_formulaires.visible = False
+        self.column_panel_formulaires_fin.visible = False
         # lecture du user sur le mail sauvé en label_user_email
         try:
             self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -662,6 +668,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             else:
                 self.button_visu_formulaires.foreground = "yellow"
 
+   
     
 
 
