@@ -647,7 +647,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.item = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
-            
+
+        # ==================================  Formulaires de FIN de stage
         list_formulaires_fin=[]
         list_formulaires_fin = app_tables.stage_satisf.search(user_email=self.item)
         if len(list_formulaires_fin)>0:
@@ -667,9 +668,11 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                     self.button_pr.foreground = "yellow"
             else:
                 self.button_visu_formulaires.foreground = "yellow"
-
+                
+        # ==================================  Formulaires de SUIVIS de stage
         list_formulaires_suivis=[]
         list_formulaires_suivis = app_tables.stage_suivi.search(user_email=self.item['email'])
+        alert(len(list_formulaires_suivis))
         if len(list_formulaires_suivis)>0:
             self.repeating_panel_formulaires_suivis.items =list_formulaires_suivis
             self.column_panel_formulaires_suivis.visible  = True

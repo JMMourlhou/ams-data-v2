@@ -68,13 +68,19 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
             
         self.f.column_panel_stagiaire.visible = True
         
-        # test si le stgiaire a rempli des formulaires
-        list=[]
-        try:
-            list = app_tables.stage_satisf.search(user_email=self.item)
+        # test si le stagiaire a rempli des formulaires de FIN ou de SUIVIs
+        try:  # si recherche sur la table users
+            stagiaire = app_tables.users.get(email=self.item['email'])
         except:
-            list = app_tables.stage_satisf.search(user_email=self.item['user_email'])
-        if len(list)>0:
+            stagiaire = app_tables.users.get(email=self.item['user_email']['email'])
+            
+        list_fin=[]
+        list_suivis=[]
+
+        list_fin = app_tables.stage_satisf.search(user_email=stagiaire)
+        list_suivis = app_tables.stage_suivi.search(user_email=stagiaire['email'])
+    
+        if len(list_fin)>0 or len(list_suivis)>0:
             self.f.button_visu_formulaires.visible = True
         else:
             self.f.button_visu_formulaires.visible = False
