@@ -651,15 +651,15 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # ==================================  Formulaires de FIN de stage
         list_formulaires_fin=[]
         list_formulaires_fin = app_tables.stage_satisf.search(user_email=self.item)
-        if len(list_formulaires_fin)>0:
-            self.repeating_panel_formulaires_fin.items =  list_formulaires_fin
-            self.column_panel_formulaires_fin.visible  = True
-            self.data_grid_users.visible = False
-        else:
+        if len(list_formulaires_fin)==0:
             self.column_panel_formulaires_fin.visible  = False
-        
+            self.button_visu_formulaires.foreground = "yellow"
+        else:
+            self.repeating_panel_formulaires_fin.items = list_formulaires_fin
+            # affichage si pas déjà affiché
             if self.column_panel_formulaires_fin.visible is False:
                     self.column_panel_formulaires_fin.visible = True
+                    self.data_grid_users.visible = False
                     # couleurs bt:
                     self.button_visu_formulaires.foreground = "red"
                     self.button_1.foreground = "red"
@@ -668,20 +668,20 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                     self.button_pr.foreground = "yellow"
             else:
                 self.button_visu_formulaires.foreground = "yellow"
+                self.column_panel_formulaires_fin.visible = False
                 
         # ==================================  Formulaires de SUIVIS de stage
         list_formulaires_suivis=[]
         list_formulaires_suivis = app_tables.stage_suivi.search(user_email=self.item['email'])
-        alert(len(list_formulaires_suivis))
-        if len(list_formulaires_suivis)>0:
-            self.repeating_panel_formulaires_suivis.items =list_formulaires_suivis
-            self.column_panel_formulaires_suivis.visible  = True
-            self.data_grid_users.visible = False
-        else:
+        if len(list_formulaires_suivis)==0:
             self.column_panel_formulaires_suivis.visible  = False
-
+            self.button_visu_formulaires.foreground = "yellow"
+        else:
+            self.repeating_panel_formulaires_suivis.items = list_formulaires_suivis
+            # affichage si pas déjà affiché
             if self.column_panel_formulaires_suivis.visible is False:
                 self.column_panel_formulaires_suivis.visible = True
+                self.data_grid_users.visible = False
                 # couleurs bt:
                 self.button_visu_formulaires.foreground = "red"
                 self.button_1.foreground = "red"
@@ -690,6 +690,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.button_pr.foreground = "yellow"
             else:
                 self.button_visu_formulaires.foreground = "yellow"
+                self.column_panel_formulaires_suivis.visible = False
 
    
     
