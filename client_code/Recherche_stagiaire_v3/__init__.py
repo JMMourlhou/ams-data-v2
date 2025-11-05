@@ -342,10 +342,13 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.repeating_panel_histo.visible = False
         self.repeating_panel_pr.visible = False
         self.repeating_panel_qcm.visible = False
-        self.column_panel_formulaires_fin.visible = False # formulares
+        self.column_panel_formulaires_fin.visible = False # formulares de fin
+        self.column_panel_formulaires_suivis.visible = False # Formulaires de suivi
         self.repeating_panel_formulaires_fin.items = []
+        self.repeating_panel_formulaires_suivis.items = []
         self.repeating_panel_formul_fin_questions_fermees.items = []
         self.repeating_panel_formul_fin_questions_ouvertes.items = []
+        self.repeating_panel_formul_suivi_questions_ouvertes.items = []
         
         self.column_panel_stagiaire.visible = False
         self.column_panel_menu.visible = False
