@@ -100,7 +100,7 @@ components:
 - components:
   - layout_properties: {grid_position: 'ZSJQNI,JXRXRH'}
     name: label_1
-    properties: {foreground: 'theme:On Primary', text: '       Mot clef pour faciliter la recherche:'}
+    properties: {foreground: 'theme:On Primary', text: 'Mot clef pour faciliter la recherche:'}
     type: Label
   - event_bindings: {change: text_area_commentaires_change}
     layout_properties: {grid_position: 'ZSJQNI,GBJTFR'}
