@@ -1,4 +1,4 @@
-from ._anvil_designer import ItemTemplate9Template
+from ._anvil_designer import Item_formul_suivi_ouvTemplate
 from anvil import *
 import anvil.server
 import stripe.checkout
@@ -8,7 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
-class ItemTemplate9(ItemTemplate9Template):
+class Item_formul_suivi_ouv(Item_formul_suivi_ouvTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
