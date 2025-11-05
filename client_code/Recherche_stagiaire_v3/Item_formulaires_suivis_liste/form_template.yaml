@@ -20,6 +20,6 @@ components:
   properties: {background: 'theme:Tertiary', foreground: 'theme:On Primary Container', icon: 'fa:download', text: '', visible: false}
   type: Button
 container:
-  properties: {background: 'theme:Green'}
+  properties: {background: 'theme:Olive'}
   type: ColumnPanel
 is_package: true

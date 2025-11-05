@@ -308,8 +308,8 @@ components:
         properties: {item_template: Recherche_stagiaire_v3.Item_formul_suivi_ouv, visible: false}
         type: RepeatingPanel
       - layout_properties: {grid_position: 'ONDHKG,MQFRXY'}
-        name: repeating_panel_formul_suivi_questions_ferme
-        properties: {item_template: Recherche_stagiaire_v3.Item_formul_suivi_ferm}
+        name: repeating_panel_formul_suivi_questions_fermees
+        properties: {item_template: Recherche_stagiaire_v3.Item_formul_suivi_ferm, visible: false}
         type: RepeatingPanel
       layout_properties: {grid_position: 'FARTIN,BGMQWR'}
       name: column_panel_formulaires_suivis

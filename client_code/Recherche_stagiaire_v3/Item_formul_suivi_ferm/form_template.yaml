@@ -1,3 +1,36 @@
-components: []
-container: {type: ColumnPanel}
+components:
+- components:
+  - layout_properties: {grid_position: 'BMMQHB,KBXDSK'}
+    name: label_question
+    properties:
+      align: left
+      bold: true
+      font: ''
+      font_size: 16
+      foreground: theme:On Surface
+      spacing:
+        margin: ['6', null, '1', null]
+        padding: ['1', null, '1', null]
+      text: Question
+    type: Label
+  - layout_properties: {grid_position: 'BMMQHB,LIDGEH'}
+    name: label_reponse
+    properties:
+      align: center
+      background: theme:On Primary Container
+      bold: true
+      font_size: 16
+      foreground: theme:On Primary
+      spacing:
+        margin: [null, null, '1', null]
+        padding: ['4', null, '4', null]
+      text: Reponse
+    type: Label
+  layout_properties: {grid_position: 'GDABFA,CQPAZG'}
+  name: column_panel_1
+  properties: {background: 'theme:Olive', col_widths: '{"KBXDSK":51,"LIDGEH":9}', foreground: 'theme:On Primary', role: elevated-card, spacing_above: none, wrap_on: never}
+  type: ColumnPanel
+container:
+  properties: {visible: true}
+  type: ColumnPanel
 is_package: true
