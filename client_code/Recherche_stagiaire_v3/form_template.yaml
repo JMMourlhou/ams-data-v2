@@ -304,7 +304,7 @@ components:
         properties: {item_template: Recherche_stagiaire_v3.Item_formulaires_suivis_liste}
         type: RepeatingPanel
       - layout_properties: {grid_position: 'VRBVJL,DZNYEV'}
-        name: repeating_panel_suivi_questions_ouvertes
+        name: repeating_panel_formul_suivi_questions_ouvertes
         properties: {item_template: Recherche_stagiaire_v3.Item_formul_suivi_ouv}
         type: RepeatingPanel
       layout_properties: {grid_position: 'FARTIN,BGMQWR'}

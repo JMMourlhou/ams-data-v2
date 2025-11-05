@@ -14,3 +14,5 @@ class Item_formul_suivi_ouv(Item_formul_suivi_ouvTemplate):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
+        self.label_question.text=f"{self.item[0]} - {self.item[1]}"
+        self.label_reponse.text=self.item[2]
