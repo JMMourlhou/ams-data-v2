@@ -17,6 +17,17 @@ class Item_formulaires_suivis_liste(Item_formulaires_suivis_listeTemplate):
         self.button_num_stage.text = f"Num {self.item['stage_num_txt']}"
         self.button_type_stage.text = f"Suivi de stage {self.item['stage_type_txt']}"
         self.button_date_heure.text = f"Saisi le {self.item['date_heure'][0:16]}"
+        if self.item['user_role']=="T":
+            #lecture du nom prénom du stagiaire du Tuteur
+            try:
+                auteur_row = app_tables.users.get(email=self.item['stagiaire_du_tuteur'])
+                nom = auteur_row['nom']
+                prenom = auteur_row['prenom']
+                self.button_suivi_pour.text = f"pour {nom} {prenom}"
+                self.button_suivi_pour.visible = True
+            except:
+                pass # colonne vide
+            
 
     def button_type_stage_click(self, **event_args):
         """This method is called when the button is clicked"""

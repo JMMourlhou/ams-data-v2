@@ -10,6 +10,11 @@ components:
   properties: {foreground: 'theme:On Primary', text: date_heure}
   type: Button
 - event_bindings: {click: button_type_stage_click}
+  layout_properties: {grid_position: 'NRWPPS,FDSIIF'}
+  name: button_suivi_pour
+  properties: {foreground: 'theme:On Primary', text: pour, visible: false}
+  type: Button
+- event_bindings: {click: button_type_stage_click}
   layout_properties: {grid_position: 'NRWPPS,EOWYZT'}
   name: button_num_stage
   properties: {foreground: 'theme:On Primary', text: num_stage}
