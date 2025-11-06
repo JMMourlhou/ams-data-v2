@@ -72,13 +72,17 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
         pour_stage_n = app_tables.stages.get(numero=pour_stage)
     else:  # ce n'est pas un stage tuteur
         pour_stage_n = None
-        
+
+    try:
+        prenom = user['prenom'].lower()
+    except: # prénom vide
+        prenom = ""
     
     new_row=app_tables.stagiaires_inscrits.add_row(
                               stage = code_stage,  
                               user_email = user,
                               name = user['nom'].lower(),    # nom pour permettre le tri sur le nom
-                              prenom = user['prenom'].lower(),
+                              prenom = prenom,
                               financement = mode_fin,
                               droits_stagiaire_qcms = dico_droits_qcm,
                               stage_txt = code_stage['code_txt'],
