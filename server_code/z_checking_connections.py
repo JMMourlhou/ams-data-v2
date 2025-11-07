@@ -1,9 +1,9 @@
 import anvil.server
 from datetime import datetime
-
+"""
 # Dictionnaire en mémoire des sessions actives
 sessions_actives = {}
-"""
+
 @anvil.server.session_lifecycle("connect")
 def on_connect(session_id):
     sessions_actives[session_id] = datetime.now()
