@@ -35,6 +35,11 @@ components:
       name: button_files
       properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Table Files, visible: true}
       type: Button
+    - event_bindings: {click: button_connections_actives_click}
+      layout_properties: {grid_position: 'BQMDKT,IAGKBV'}
+      name: button_connections_actives
+      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Connections actives, visible: true}
+      type: Button
     layout_properties: {grid_position: 'VYQSJN,XLNVEZ'}
     name: column_panel_4
     properties: {background: 'theme:On Primary', role: outlined-card}
