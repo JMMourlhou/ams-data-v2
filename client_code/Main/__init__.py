@@ -490,6 +490,13 @@ class Main(MainTemplate):
         """This method is called when the button is clicked"""
         from ..User_add_sans_procedures import User_add_sans_procedures
         open_form('User_add_sans_procedures')
+
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        import uuid
+    
+        sid = str(uuid.uuid4())
+        anvil.server.call('register_session', sid)
    
             
 
