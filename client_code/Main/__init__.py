@@ -211,10 +211,10 @@ class Main(MainTemplate):
                 self.column_panel_others.visible = True
 
                 self.outlined_card_niv1.visible = True          # ds le panneau priv niveau 1 ...
-                self.flow_panel_formulaires.visible = True       # Voir les résultats des formulaires de suivi et de stisfaction     
+                self.column_panel_formulaires.visible = True       # Voir les résultats des formulaires de suivi et de stisfaction     
                 self.button_create_qcm.visible = True
                 self.button_create_recherche.visible = True        # faire une recherche
-                self.column_panel_events.visible = True            # Saisir et voir les évenemnts
+                self.button_events.visible = True            # Saisir et voir les évenemnts
 
             if self.user["role"] == "J":                    #  JC:   
                 self.flow_panel_connect.visible = True        # se déconnecter
@@ -225,10 +225,10 @@ class Main(MainTemplate):
                 self.outlined_card_com.visible = False           
 
                 self.outlined_card_niv1.visible = True          # ds le panneau priv niveau 1 ...
-                self.flow_panel_formulaires.visible = False      
+                self.column_panel_formulaires.visible = False      
                 self.button_create_qcm.visible = False
                 self.button_create_recherche.visible = True     # faire une recherche
-                self.column_panel_events.visible = True         # Saisir et voir les évenemnts
+                self.button_events.visible = True         # Saisir et voir les évenemnts
 
                 
             if self.user["role"] == "T":                    # Tuteurs MotoN ou AAN:   Juste Saisie Formulaire de suivi et pré requis
@@ -335,7 +335,7 @@ class Main(MainTemplate):
         
         
     # BT admin, Visu, maj, modif, del Saisie évenements
-    def button_event_visu_click(self, **event_args):
+    def button_events_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Evenements_visu_modif_del import Evenements_visu_modif_del
         open_form('Evenements_visu_modif_del')
