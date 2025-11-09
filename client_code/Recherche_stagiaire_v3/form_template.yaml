@@ -128,7 +128,7 @@ components:
                 underline: false
                 visible: false
               type: DropDown
-            layout_properties: {grid_position: 'NCNRDS,SWTSYD'}
+            layout_properties: {grid_position: 'KRQWWU,FKOXVL'}
             name: column_panel_7
             properties: {col_spacing: tiny, col_widths: '{"GDMMNK":21,"JKUPIX":23}', spacing_above: none, spacing_below: none, wrap_on: never}
             type: ColumnPanel
