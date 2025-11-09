@@ -7,17 +7,12 @@ components:
   - event_bindings: {change: text_box_2_change}
     layout_properties: {width: 174.8631044921875}
     name: text_box_2
-    properties: {background: 'theme:Primary', font_size: 16, foreground: 'theme:On Tertiary', role: outlined}
+    properties: {background: 'theme:Primary', font_size: 16, foreground: 'theme:On Primary Container', role: outlined, text: code pr}
     type: TextBox
-  - event_bindings: {change: text_box_1_change}
-    layout_properties: {expand: true, width: null}
-    name: text_box_1
-    properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-    type: TextBox
-  - event_bindings: {change: text_box_3_change}
-    layout_properties: {width: 247.0731103515625}
-    name: text_box_3
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: Commentaire, tooltip: '', type: text, underline: false, visible: true}
+  - event_bindings: {change: text_box_4_change}
+    layout_properties: {width: 141.41675869140624}
+    name: text_box_4
+    properties: {align: left, background: 'theme:Primary', foreground: 'theme:On Primary Container', placeholder: 1/1 ou 1/2 ..., text: ''}
     type: TextBox
   - event_bindings: {click: button_modif_click}
     layout_properties: {}
@@ -35,7 +30,19 @@ components:
     type: Spacer
   layout_properties: {grid_position: 'DBGZSS,UVXXZG'}
   name: flow_panel_1
-  properties: {align: center, background: 'theme:Primary', border: '', foreground: '', role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: middle, visible: true}
+  properties: {align: justify, background: 'theme:Primary', border: '', foreground: '', role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: middle, visible: true}
   type: FlowPanel
-container: {type: ColumnPanel}
+- event_bindings: {change: text_box_1_change}
+  layout_properties: {grid_position: 'SKRXWR,KBXVLI'}
+  name: text_box_1
+  properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: none, text: libellé, tooltip: '', type: text, underline: false, visible: true}
+  type: TextBox
+- event_bindings: {change: text_box_3_change}
+  layout_properties: {grid_position: 'YXUHXZ,DYFPJL'}
+  name: text_box_3
+  properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: none, spacing_below: large, text: Commentaire, tooltip: '', type: text, underline: false, visible: true}
+  type: TextBox
+container:
+  properties: {background: '', col_spacing: large}
+  type: ColumnPanel
 is_package: true

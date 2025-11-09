@@ -29,12 +29,17 @@ components:
       properties: {align: center, bold: true, font_size: 16, italic: true, text: Ajout d'un Pré-Requis}
       type: Label
     - event_bindings: {change: text_box_1_change}
-      layout_properties: {grid_position: 'RDYUBQ,QHGNCR'}
+      layout_properties: {grid_position: 'ZBQIEE,WCNPQV'}
       name: text_box_1
       properties: {foreground: 'theme:On Primary Container', hide_text: false}
       type: TextBox
+    - event_bindings: {change: text_box_1_change}
+      layout_properties: {grid_position: 'ZBQIEE,PFFZFI'}
+      name: text_box_4
+      properties: {foreground: 'theme:On Primary Container', hide_text: false}
+      type: TextBox
     - event_bindings: {change: text_box_2_change}
-      layout_properties: {grid_position: 'RDYUBQ,NABRMO'}
+      layout_properties: {grid_position: 'VSPJWW,BUICEO'}
       name: text_box_2
       properties: {foreground: 'theme:On Primary Container'}
       type: TextBox

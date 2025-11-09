@@ -15,6 +15,8 @@ class Pre_R_MAJ_table(Pre_R_MAJ_tableTemplate):
         self.text_box_1.placeholder = "Code ex: DIP-F-PSE"
         self.text_box_2.placeholder = "Intitulé"
         self.text_box_3.placeholder = "Commentaires"
+        self.text_box_4.placeholder = "ordre ex: 1/2"
+        
         
         # search de tous les pré-requis existants et affichage
         liste_tous_pr = app_tables.pre_requis.search(q.fetch_only("requis", "code_pre_requis"),
@@ -48,7 +50,12 @@ class Pre_R_MAJ_table(Pre_R_MAJ_tableTemplate):
             alert("Entrez un intitulé supérieur à 5 caractères !")
             self.text_box_2.focus()
             return
-        
+            
+        # Text_box_4 (order) non vide
+        if self.text_box_4.text == "" :
+            alert("Entrez le num de page / nb de pages    ex: 1/2")
+            self.text_box_4.focus()
+            return
         # Code existant ?
         row = app_tables.pre_requis.get(code_pre_requis=self.text_box_1.text) 
         if row:
@@ -57,7 +64,8 @@ class Pre_R_MAJ_table(Pre_R_MAJ_tableTemplate):
             return
         r=alert("Voulez-vous vraiment ajouter ce Pré-Requis ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if r :   # oui
-            result = anvil.server.call("add_pr", self.text_box_1.text, self.text_box_2.text, self.text_box_3.text )
+            code = self.text_box_1.text.upper() # mettre en majuscule le code
+            result = anvil.server.call("add_pr", code, self.text_box_4.text, self.text_box_2.text, self.text_box_3.text )
             if result is not True:
                 alert("ERREUR, Ajout non effectué !")
                 return

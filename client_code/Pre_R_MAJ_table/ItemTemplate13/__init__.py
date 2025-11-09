@@ -16,6 +16,7 @@ class ItemTemplate13(ItemTemplate13Template):
         self.text_box_2.text = self.item['code_pre_requis']
         self.text_box_1.text = self.item['requis']
         self.text_box_3.text = self.item['commentaires']
+        self.text_box_4.text = self.item['order']
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -40,24 +41,31 @@ class ItemTemplate13(ItemTemplate13Template):
         """This method is called when the user presses Enter in this text box"""
         self.button_modif.visible = True
 
-
+    def text_box_4_change(self, **event_args):  # order change
+        """This method is called when the text in this text box is edited"""
+        self.button_modif.visible = True
     def button_modif_click(self, **event_args):
         """This method is called when the button is clicked"""
+        if self.text_box_4.text == "":   # order vide ?
+            alert("le champ order ne peut pas être vide ex : 1/1")
+            return
+            
         r=alert("Voulez-vous vraiment modifier ce Pré-requis ?",buttons=[("oui",True),("non",False)])
         sov_old_pr = self.item['requis']
         sov_old_code = self.item['code_pre_requis']
         if r :   # oui
-            # 1 modif ds les pre-requis stagiaires 
-            result, nb = anvil.server.call("modif_pr", self.item, self.text_box_1.text, self.text_box_2.text,  self.text_box_3.text, sov_old_code)
+            # 1 modif ds les pre-requis stagiaires     pr_row,    intitule,             code,                 order,                commentaire,           old_code    
+            result, nb = anvil.server.call("modif_pr", self.item, self.text_box_1.text, self.text_box_2.text, self.text_box_4.text, self.text_box_3.text,  sov_old_code)
             if result is not True:
                 alert("ERREUR, Modification non effectuée !")
                 return
             alert(f"Modification effectuée sur {nb} pré-requis des Stagiaires!")
-            
         else:   # non
             self.text_box_1.text = sov_old_pr
             self.text_box_2.text = sov_old_code
         self.button_modif.visible = False
+
+    
 
    
 

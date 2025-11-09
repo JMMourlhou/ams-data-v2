@@ -4,7 +4,7 @@ db_schema:
   codes_stages:
     client: search
     columns:
-    - admin_ui: {width: 89.96}
+    - admin_ui: {order: 0, width: 110.96}
       name: code
       type: string
     - admin_ui: {width: 196.49}
@@ -355,6 +355,9 @@ db_schema:
     - admin_ui: {width: 200}
       name: doc
       type: bool
+    - admin_ui: {order: 3, width: 200}
+      name: order
+      type: string
     server: full
     title: Pre_Requis
   pre_requis_stagiaire:
