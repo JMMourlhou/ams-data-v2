@@ -111,4 +111,4 @@ def del_pr(pr_row, code):
             
     if valid1 is True and valid2 is True:
         valid=True
-    return valid, len(liste1)
+    return valid, len(liste)
