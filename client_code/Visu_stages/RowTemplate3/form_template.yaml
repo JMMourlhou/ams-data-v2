@@ -61,7 +61,7 @@ components:
       - event_bindings: {click: text_box_1_click}
         layout_properties: {}
         name: text_box_1
-        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'num ', tooltip: '', underline: false, visible: true}
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: 'num ', tooltip: '', underline: false, visible: true}
         type: Button
       - event_bindings: {click: button_inscription_par_QR_click}
         layout_properties: {}
@@ -85,7 +85,7 @@ components:
       - event_bindings: {click: button_trombi_click}
         layout_properties: {}
         name: button_trombi
-        properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', icon: 'fa:users', text: Trombi, visible: true}
+        properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', icon: 'fa:users', role: elevated-button, text: Trombi, visible: true}
         type: Button
       - event_bindings: {click: button_sending_click}
         layout_properties: {}
@@ -102,7 +102,7 @@ components:
           icon: fa:send-o
           icon_align: left
           italic: false
-          role: null
+          role: elevated-button
           spacing:
             padding: [null, '8', null, null]
           spacing_above: none
@@ -173,6 +173,7 @@ components:
           font_size: 15
           foreground: theme:Tertiary
           icon: fa:file-excel-o
+          role: elevated-button
           spacing:
             padding: [null, '5', null, '5']
           text: Stage format Xls
