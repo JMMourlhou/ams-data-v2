@@ -367,9 +367,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         self.button_insc_par_qr.visible = False
         
         self.button_role.text = ""
-        self.button_1.text = ""
-        self.button_3.text = ""
-        self.button_4.text = ""
+        self.button_nom_p.text = ""
+        #self.button_3.text = ""
+        self.button_tel.text = ""
         
     def button_qcm_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -398,7 +398,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.repeating_panel_qcm.visible = True
                 # couleurs bt:
                 self.button_qcm.foreground = "red"
-                self.button_1.foreground = "red"
+                self.button_nom_p.foreground = "red"
                 self.button_fiche.foreground = "yellow"
                 self.button_histo.foreground = "yellow"
                 self.button_pr.foreground = "yellow"
@@ -442,7 +442,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.repeating_panel_histo.visible = True
                 # couleurs bt:
                 self.button_histo.foreground = "red"
-                self.button_1.foreground = "red"
+                self.button_nom_p.foreground = "red"
                 self.button_fiche.foreground = "yellow"
                 self.button_qcm.foreground = "yellow"
                 self.button_pr.foreground = "yellow"
@@ -478,7 +478,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             self.repeating_panel_pr.visible = True
             # couleurs bt:
             self.button_pr.foreground = "red"
-            self.button_1.foreground = "red"
+            self.button_nom_p.foreground = "red"
             self.button_fiche.foreground = "yellow"
             self.button_qcm.foreground = "yellow"
             self.button_histo.foreground = "yellow"
@@ -546,7 +546,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             
         # couleurs bt:
         self.button_mail.foreground = "red"
-        self.button_1.foreground = "red"
+        self.button_nom_p.foreground = "red"
         self.button_fiche.foreground = "yellow"
         self.button_qcm.foreground = "yellow"
         self.button_histo.foreground = "yellow"    
@@ -585,7 +585,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             # Effact de la personne si confirmation
             # couleurs bt:
             self.button_del.foreground = "red"
-            self.button_1.foreground = "red"
+            self.button_nom_p.foreground = "red"
             self.button_fiche.foreground = "yellow"
             self.button_qcm.foreground = "yellow"
             self.button_histo.foreground = "yellow"
@@ -673,7 +673,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                     self.data_grid_users.visible = False
                     # couleurs bt:
                     self.button_visu_formulaires.foreground = "red"
-                    self.button_1.foreground = "red"
+                    self.button_nom_p.foreground = "red"
                     self.button_fiche.foreground = "yellow"
                     self.button_qcm.foreground = "yellow"
                     self.button_pr.foreground = "yellow"
@@ -695,7 +695,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.data_grid_users.visible = False
                 # couleurs bt:
                 self.button_visu_formulaires.foreground = "red"
-                self.button_1.foreground = "red"
+                self.button_nom_p.foreground = "red"
                 self.button_fiche.foreground = "yellow"
                 self.button_qcm.foreground = "yellow"
                 self.button_pr.foreground = "yellow"

@@ -130,7 +130,7 @@ components:
       - event_bindings: {click: button_pdf_click}
         layout_properties: {grid_position: 'NGVUKJ,IRXCTB'}
         name: button_pdf
-        properties: {text: Test du page break, visible: true}
+        properties: {text: Test du page break, visible: false}
         type: Button
       layout_properties: {grid_position: 'YROLRC,HBDKLU'}
       name: column_panel_bureaux

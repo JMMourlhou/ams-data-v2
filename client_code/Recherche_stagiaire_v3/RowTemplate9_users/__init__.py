@@ -14,16 +14,16 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         self.f = get_open_form()
         if self.item['prenom'] is not None:    # si prénom None, erreur
             try:
-                self.button_1.text = self.item['nom']+" "+self.item['prenom']
+                self.button_nom_prenom.text = self.item['nom']+" "+self.item['prenom']
                 self.button_role.text = self.item['role']
             except:
-                self.button_1.text = self.item['name']+" "+self.item['prenom']
+                self.button_nom_prenom.text = self.item['name']+" "+self.item['prenom']
                 self.button_role.text = self.item['user_email']['role']
         else:
             try:
-                self.button_1.text = self.item['nom']
+                self.button_nom_prenom.text = self.item['nom']
             except:
-                self.button_1.text = self.item['name']
+                self.button_nom_prenom.text = self.item['name']
         try:        
             self.button_3.text = self.item['email']
             tel = self.item['tel']
@@ -35,7 +35,7 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         try:
             if len(tel) == 10 and tel.isdigit():
                 tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
-                self.button_4.text = tel
+                self.button_telephone.text = tel
         except Exception:
             pass
         if self.button_role.text == "A" or self.button_role.text == "B" or self.button_role.text == "J":          # Admin en rouge
@@ -53,12 +53,11 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         # Affichage des infos sur lequel je travaille 
      
         self.f.button_role.foreground = "red" 
-        self.f.button_1.foreground = "red"    # nom en rouge 
-            
+        self.f.button_nom_p.foreground = "red"    # nom en rouge 
+        self.f.button_tel.foreground = "red"    
         self.f.button_role.text = self.button_role.text
-        self.f.button_1.text = self.button_1.text
-        self.f.button_3.text = self.button_3.text
-        self.f.button_4.text = self.button_4.text
+        self.f.button_nom_p.text = self.button_nom_prenom.text
+        self.f.button_tel.text = self.button_telephone.text
         
         # Sov le user_email
         try:
@@ -94,7 +93,7 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         if self.f.repeating_panel_qcm.visible is False:
             self.f.repeating_panel_qcm.visible = True
             self.button_qcm.foreground = "red"
-            self.button_1.foreground = "red"
+            self.button_nom_prenom.foreground = "red"
             try:  # si recherche sur la table users
                 stagiaire = app_tables.users.get(email=self.item['email'])
                 qcm_results = app_tables.qcm_result.search( 
@@ -122,7 +121,7 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         if self.f.repeating_panel_histo.visible is False:
             self.f.repeating_panel_histo.visible = True
             self.button_histo.foreground = "red"
-            self.button_1.foreground = "red"
+            self.button_nom_prenom.foreground = "red"
 
             try:  # si recherche sur la table users
                 stagiaire = app_tables.users.get(email=self.item['email'])
@@ -148,7 +147,7 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         if self.repeating_panel_pr.visible is False:
             self.repeating_panel_pr.visible = True
             self.button_pr.foreground = "red"
-            self.button_1.foreground = "red"
+            self.button_nom_prenom.foreground = "red"
 
             # pour chaque stage, je lis les pré requis en table pré requis stagiaires
             # Création du dict des pr du stagiaire
