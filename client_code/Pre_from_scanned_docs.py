@@ -1,4 +1,4 @@
-from ._anvil_designer import PR_from_scanned_docsTemplate
+from ._anvil_designer import Pre_from_scanned_docsTemplate
 from anvil import *
 import anvil.users
 import anvil.tables as tables
@@ -7,7 +7,7 @@ from anvil.tables import app_tables
 import anvil.server
 
 
-class PR_from_scanned_docs(PR_from_scanned_docsTemplate):
+class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def __init__(self, stage_row, **properties):
         # Set Form properties and Data Bindings.
 
@@ -36,7 +36,8 @@ class PR_from_scanned_docs(PR_from_scanned_docsTemplate):
     def drop_down_pr_change(self, **event_args):
         """This method is called when an item is selected"""
         self.pr_row = self.drop_down_pr.selected_value
-        self.button_ok.visible = True
+        #self.button_ok.visible = True
+        self.file_loader_docs_pr.visible = True
         
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""

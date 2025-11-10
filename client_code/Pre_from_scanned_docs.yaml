@@ -15,12 +15,12 @@ components:
   - event_bindings: {change: drop_down_pr_change}
     layout_properties: {full_width_row: false, grid_position: 'MCALAP,AAVDBV'}
     name: drop_down_pr
-    properties: {align: full, background: 'theme:On Primary Container', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Sélectionner le Pré-requis}
+    properties: {align: center, background: 'theme:On Primary Container', foreground: 'theme:On Primary', include_placeholder: true, placeholder: 1- Sélectionner le Pré-requis, role: outlined}
     type: DropDown
   - event_bindings: {change: file_loader_docs_pr_change}
     layout_properties: {grid_position: 'GVUXOE,EBFNBQ'}
     name: file_loader_docs_pr
-    properties: {align: left, file_types: .pdf, text: Charger les docs scannés (format PDF)}
+    properties: {align: center, background: 'theme:On Primary Container', file_types: .pdf, foreground: 'theme:On Primary', text: 2- Charger les docs scannés (format PDF), visible: false}
     type: FileLoader
   - components:
     - event_bindings: {click: button_annuler_click}
@@ -30,7 +30,7 @@ components:
     - event_bindings: {click: button_ok_click}
       layout_properties: {}
       name: button_ok
-      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Ok, tooltip: '', underline: false, visible: false}
+      properties: {align: center, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Ok, tooltip: '', underline: false, visible: false}
       type: Button
     layout_properties: {grid_position: 'DSFRYF,QYHRWE'}
     name: flow_panel_1
