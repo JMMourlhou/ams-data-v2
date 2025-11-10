@@ -272,5 +272,5 @@ class RowTemplate3(RowTemplate3Template):
     def button_pre_requis_multi_pdfs_click(self, **event_args):
         """This method is called when the button is clicked"""
         #                                      stage_row      
-        open_form('PR_from_scanned_docs',self.item)
+        open_form('Pre_from_scanned_docs',self.item)
             

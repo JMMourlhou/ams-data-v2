@@ -30,7 +30,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             tables.order_by("name", ascending=True),
             stage=self.stage_row
         ))    
-        self.nb_stagiaires = len(self.liste)
+        self.text_box_nb_stagiaires_marked.text = len(self.liste)
         self.repeating_panel_stagiaire_inscrits.items = self.liste
         
     def drop_down_pr_change(self, **event_args):

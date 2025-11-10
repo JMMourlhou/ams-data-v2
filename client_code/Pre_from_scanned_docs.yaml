@@ -24,18 +24,19 @@ components:
     type: FileLoader
   - components:
     - event_bindings: {click: button_annuler_click}
+      layout_properties: {grid_position: 'RLCAXX,TUHQYP'}
       name: button_annuler
       properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
       type: Button
     - event_bindings: {click: button_ok_click}
-      layout_properties: {}
+      layout_properties: {grid_position: 'RLCAXX,RYZVCD'}
       name: button_ok
       properties: {align: center, background: 'theme:Error', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Ok, tooltip: '', underline: false, visible: false}
       type: Button
-    layout_properties: {grid_position: 'DSFRYF,QYHRWE'}
-    name: flow_panel_1
-    properties: {align: center, spacing: huge}
-    type: FlowPanel
+    layout_properties: {grid_position: 'LXCNIC,OEVMSQ'}
+    name: column_panel_1
+    properties: {wrap_on: never}
+    type: ColumnPanel
   layout_properties: {grid_position: 'YSNEZT,NOTIAX'}
   name: outlined_card_1
   properties: {role: outlined-card}
@@ -43,6 +44,10 @@ components:
 - layout_properties: {grid_position: 'CPTZDR,EITHYD'}
   name: repeating_panel_stagiaire_inscrits
   properties: {item_template: ItemTemplate9}
+  type: RepeatingPanel
+- layout_properties: {grid_position: 'KTJXHM,YYMMGC'}
+  name: repeating_panel_1
+  properties: {item_template: ItemTemplate10}
   type: RepeatingPanel
 container:
   properties: {foreground: 'theme:On Primary Container'}
