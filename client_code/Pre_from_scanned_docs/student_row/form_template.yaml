@@ -1,0 +1,47 @@
+components:
+- components:
+  - data_bindings:
+    - {code: 'self.item['''']', property: tag, writeback: false}
+    layout_properties: {grid_position: 'JZPSJJ,IXPGEC'}
+    name: label_nom_prenom
+    properties:
+      bold: true
+      font_size: 16
+      foreground: theme:On Primary
+      spacing:
+        margin: ['1', null, '1', null]
+      text: Nom prénom
+    type: Label
+  - event_bindings: {change: check_box_doc_ok_change}
+    layout_properties: {grid_position: 'JZPSJJ,UNXNRN'}
+    name: check_box_doc_ok
+    properties:
+      foreground: theme:On Primary
+      spacing:
+        margin: ['1', null, '1', null]
+      text: doc ok ?
+    type: CheckBox
+  layout_properties: {grid_position: 'VUGGTQ,GDUBAO'}
+  name: cp_row
+  properties:
+    background: theme:Primary
+    col_widths: '{"IXPGEC":47,"UNXNRN":13}'
+    role: outlined-card
+    spacing:
+      padding: ['1', null, '1', null]
+    spacing_above: none
+    spacing_below: none
+    wrap_on: never
+  type: ColumnPanel
+container: {type: ColumnPanel}
+custom_component: true
+events:
+- default_event: true
+  description: 'when check box has changed in form '
+  name: change
+  parameters: []
+is_package: true
+properties:
+- {default_binding_prop: true, description: name of the row, important: true, name: row_stagiaire_inscrit, type: object}
+- {default_value: false, description: 'state of the check box ', important: true, name: check_box_state, type: boolean}
+toolbox_item: {hidden: true}

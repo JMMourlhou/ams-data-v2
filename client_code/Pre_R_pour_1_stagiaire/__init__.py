@@ -90,7 +90,7 @@ class Pre_R_pour_1_stagiaire(Pre_R_pour_1_stagiaireTemplate):
                                                                         stagiaire_email=self.stagiaire_inscrit_row["user_email"]
                                                                          )
         # Création du dict des pr du stagiaire
-        global dico_pre_requis_stg  # dico des pr pour ce stgiaire
+        global dico_pre_requis_stg  # dico des pr pour ce stagiaire
         dico_pre_requis_stg = {}
         for pr_st in self.liste_pr_stagiaire:
             clef = pr_st['requis_txt']
