@@ -1,23 +1,24 @@
-from ._anvil_designer import Pre_from_scanned_docsTemplate
+from ._anvil_designer import Form1Template
 from anvil import *
+import anvil.server
+import stripe.checkout
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-import anvil.server
 
 
-class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
+class Form1(Form1Template):
     def __init__(self, stage_row, **properties):
         # Set Form properties and Data Bindings.
+        self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
-        self.init_components(**properties)
         self.file = None
         self.f = get_open_form()
         self.stage_row = stage_row
         self.text_box_stage.text = f"{self.stage_row['code_txt']} du {str(self.stage_row['date_debut'])} {str(self.stage_row['numero'])}"
-        
+
         # INITIALISATION Drop down pré-requis
         dico_pre_requis = stage_row["code"]['pre_requis']
         self.drop_down_pr.items = [(r["requis"], r) for r in app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis.get(r["code_pre_requis"])]
@@ -32,13 +33,13 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         ))    
         self.text_box_nb_stagiaires_marked.text = len(self.liste)
         self.repeating_panel_stagiaire_inscrits.items = self.liste
-        
+
     def drop_down_pr_change(self, **event_args):
         """This method is called when an item is selected"""
         self.pr_row = self.drop_down_pr.selected_value
         #self.button_ok.visible = True
         self.file_loader_docs_pr.visible = True
-        
+
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         open_form(self.f)
@@ -66,4 +67,3 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         """This method is called when a new file is loaded into this FileLoader"""
         self.file = file
         self.button_ok.visible = True
-        

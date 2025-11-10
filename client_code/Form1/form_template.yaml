@@ -37,19 +37,13 @@ components:
     name: column_panel_1
     properties: {wrap_on: never}
     type: ColumnPanel
-  layout_properties: {grid_position: 'YSNEZT,NOTIAX'}
+  layout_properties: {grid_position: 'CJMXUJ,IWYMQC'}
   name: outlined_card_1
   properties: {role: outlined-card}
   type: ColumnPanel
-- layout_properties: {grid_position: 'CPTZDR,EITHYD'}
-  name: repeating_panel_stagiaire_inscrits
-  properties: {item_template: ItemTemplate9}
-  type: RepeatingPanel
-- layout_properties: {grid_position: 'KTJXHM,YYMMGC'}
+- layout_properties: {grid_position: 'YPWKPB,ZIPZNK'}
   name: repeating_panel_1
-  properties: {item_template: ItemTemplate10}
+  properties: {item_template: Form1.ItemTemplate11}
   type: RepeatingPanel
-container:
-  properties: {foreground: 'theme:On Primary Container'}
-  type: ColumnPanel
-is_package: false
+container: {type: ColumnPanel}
+is_package: true
