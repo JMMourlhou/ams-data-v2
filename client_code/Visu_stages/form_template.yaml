@@ -48,8 +48,7 @@ components:
   properties: {visible: false}
   type: DropDown
 - components:
-  - layout_properties: {pinned: false}
-    name: repeating_panel_1
+  - name: repeating_panel_1
     properties: {background: '', border: '', foreground: '', item_template: Visu_stages.RowTemplate3, items: null, role: null, spacing_above: none, spacing_below: none, tooltip: '', visible: true}
     type: RepeatingPanel
   layout_properties: {grid_position: 'DDRVAU,RHIHMA'}

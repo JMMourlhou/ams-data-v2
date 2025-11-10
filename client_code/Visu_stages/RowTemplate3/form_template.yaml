@@ -73,10 +73,6 @@ components:
         name: button_inscription
         properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: + Existant, tooltip: '', underline: false, visible: true}
         type: Button
-      - event_bindings: {click: button_pr_requis_click}
-        name: button_pre_requis
-        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
-        type: Button
       - event_bindings: {click: button_qcm_click}
         layout_properties: {}
         name: button_qcm
@@ -164,6 +160,16 @@ components:
     type: FlowPanel
   - components:
     - components:
+      - event_bindings: {click: button_pr_requis_click}
+        layout_properties: {}
+        name: button_pre_requis
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:user-circle-o', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_pre_requis_multi_pdfs_click}
+        layout_properties: {}
+        name: button_pre_requis_multi_pdfs
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: 'fa:users', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR à partir docs scannés, tooltip: '', underline: false, visible: true}
+        type: Button
       - event_bindings: {click: button_export_xls_click}
         layout_properties: {}
         name: button_export_xls

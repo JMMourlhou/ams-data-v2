@@ -88,11 +88,6 @@ class RowTemplate3(RowTemplate3Template):
             self.file_loader_diplomes.foreground = "red"
             self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
             self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
-        
-            
-        
-            
-
         # Num de PV FPMNS
         self.text_box_pv.text = self.item['num_pv']
 
@@ -144,9 +139,11 @@ class RowTemplate3(RowTemplate3Template):
         # Stagiaires ds le stage ?
         liste_test = app_tables.stagiaires_inscrits.search(numero=self.item['numero'])
         if len(liste_test) == 0:
-            # acquistion durow id pour éviter les erreurs 
-            row_id = self.item.get_id()
-            result = anvil.server.call('del_stage',row_id, self.item['numero'] )
+            r=alert("Voulez-vous vraiment effacer ce stage ?",dismissible=False,buttons=[("oui",True),("non",False)])
+            if r :   # oui
+                # acquistion du row id pour éviter les erreurs 
+                row_id = self.item.get_id()
+                result = anvil.server.call('del_stage',row_id, self.item['numero'] )
             if result is True:
                 alert("Stage annulé !")
                 open_form('Visu_stages')
@@ -271,4 +268,9 @@ class RowTemplate3(RowTemplate3Template):
         # False indique que ce n'est pas une invitation à log in normal
         # mais une invitation à s'inscrire au stage
         open_form('QrCode_display', False, self.item['numero'])
+
+    def button_pre_requis_multi_pdfs_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        #                                      stage_row      
+        open_form('PR_from_scanned_docs',self.item)
             
