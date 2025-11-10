@@ -1,4 +1,4 @@
-from ._anvil_designer import Form1Template
+from ._anvil_designer import Pre_from_scanned_docsTemplate
 from anvil import *
 import anvil.server
 import stripe.checkout
@@ -8,7 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
-class Form1(Form1Template):
+class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def __init__(self, stage_row, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)

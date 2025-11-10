@@ -43,7 +43,7 @@ components:
   type: ColumnPanel
 - layout_properties: {grid_position: 'YPWKPB,ZIPZNK'}
   name: repeating_panel_1
-  properties: {item_template: Form1.ItemTemplate11}
+  properties: {item_template: Pre_from_scanned_docs.ItemTemplate11}
   type: RepeatingPanel
 container: {type: ColumnPanel}
 is_package: true
