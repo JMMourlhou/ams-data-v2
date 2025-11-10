@@ -1,0 +1,14 @@
+components:
+- layout_properties: {grid_position: 'HZALPG,VOMATP'}
+  name: label_nom_prenom
+  properties: {font_size: 10, foreground: 'theme:On Primary', text: nom_prenom}
+  type: Label
+- event_bindings: {change: check_box_doc_ok_change}
+  layout_properties: {grid_position: 'HZALPG,TAMSPU'}
+  name: check_box_doc_ok
+  properties: {font_size: 10, foreground: 'theme:On Primary', text: doc_ok}
+  type: CheckBox
+container:
+  properties: {background: 'theme:Primary', col_widths: '{"VOMATP":49,"TAMSPU":11}', spacing_below: none}
+  type: ColumnPanel
+is_package: true

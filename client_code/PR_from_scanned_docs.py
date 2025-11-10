@@ -24,6 +24,14 @@ class PR_from_scanned_docs(PR_from_scanned_docsTemplate):
         if len(self.drop_down_pr.items)==0:  # si le dictionaire n'existe pas encore (pas de pré requis encore introduit pour ce type de stage)
             alert("Pas de PR pour ce stage en table codes_stages !")
             return
+
+        # initialisation liste des stagiaires du stage
+        self.liste = list(app_tables.stagiaires_inscrits.search(
+            tables.order_by("name", ascending=True),
+            stage=self.stage_row
+        ))    
+        self.nb_stagiaires = len(self.liste)
+        self.repeating_panel_stagiaire_inscrits.items = self.liste
         
     def drop_down_pr_change(self, **event_args):
         """This method is called when an item is selected"""
@@ -42,6 +50,12 @@ class PR_from_scanned_docs(PR_from_scanned_docsTemplate):
         if self.drop_down_pr.selected_value is None:
             alert("Sélectionner le pré-requis !")
             return
+        r=alert(f"Les documents scannés sont-ils bien pour {self.nb_stagiaires}stagiaires ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if not r :   # non
+            return
+        r=alert(f"Avez-vous décochés les stagiaires qui n'ont pas leurs documents dans le fichier pdf des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if not r :   # non
+            return   
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
         alert(txt_msg)
