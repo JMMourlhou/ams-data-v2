@@ -109,21 +109,21 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def button_ok_click(self, **event_args):
         """This method is called when the button is clicked"""
         global dico_pre_requis_selected
+        
         if self.file is None:
             alert("Sélectionner le fichier pdf !")
             return
-        if self.drop_down_pr.selected_value is None:
-            alert("Sélectionner le pré-requis !")
-            return
+            
         r=alert(f"Les documents scannés sont-ils bien pour {self.text_box_nb_stagiaires_marked.text} stagiaires ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return
-        r=alert(f"Avez-vous décochés les stagiaires qui n'ont pas leurs documents dans le fichier pdf des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
+            
+        r=alert("Avez-vous décochés les stagiaires qui n'ont pas leurs documents dans le fichier pdf ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return   
         # Création du dico
         
-        # ajout ds le dico par boucle sur les composents 'student_row', avec test si 
+        # ajout ds le dico par boucle sur les composents 'student_row', avec test si checked = True
         dico_st = {}
         cpt = 0
         for ligne in self.content_panel.get_components():
@@ -137,16 +137,42 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
                             valeur = (ligne.row_stagiaire_inscrit['stage'], ligne.row_stagiaire_inscrit['user_email'])
                             dico_st[cle] = valeur
                             
-        r=alert(f"Traitement pour les {len(dico[cle])} stagiaires sélectionnés / PDF des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        r=alert(f"Traitement pour les {len(dico_st[cle])} stagiaires sélectionnés / PDF des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return                       
+
+        #tri du dictionaire pre requis sélectionnés sur les clefs 
+        liste_des_clefs = dico_pre_requis_selected.keys()   #création de la liste des clefs du dictionaires prérequis
+        liste_triée_des_clefs = sorted(liste_des_clefs)  # création de la liste triée des clefs du dictionaires prérequis
+        dico_pre_requis_trié = {}
+        for key in liste_triée_des_clefs:
+            dico_pre_requis_trié[key] = dico_pre_requis_selected[key]
+        
         # Unification des 2 dicos: PR & stagiaires en un seul dico result
         # boucle sur le dico des stagiaires
-        result = {}
-        for clef_student in dico_st :
-            for clef_pr in dico_pre_requis_selected:
-                
-
+        try:
+            result = {}
+            page = 1
+            student_cpt = 1
+            for clef_student in dico_st :                 # boucle sur le dico des stagiaires
+                for clef_pr in dico_pre_requis_trié:      # boucle sur le dico des pré-requis
+                    key = str(page)
+                    student_valeur = clef_student[student_cpt]
+                    value = ( 
+                            student_valeur[0],   # stage row
+                            student_valeur[1],   # student row
+                            clef_pr              # pr_row
+                            )
+                    result[key]=value
+                    page += 1
+                student_cpt += 1                
+        except Exception as e:
+            alert(e)
+            return
+        # vérification : nb de pages du pdf = nb de clés du dico result
+        for clef,val in result.items():
+            print(f"{cle}: {val}")
+        #print(len(result))
         
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
