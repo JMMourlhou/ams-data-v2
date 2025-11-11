@@ -75,13 +75,14 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             print(list_keys)
             self.repeating_panel_1.items = list(list_keys)   # liste des clefs (pré requis)
             self.button_valid_pr_list.visible = True
-
             
             self.pr_row = self.drop_down_pr.selected_value
             self.file_loader_docs_pr.visible = True
             self.drop_down_pr.selected_value = None
-            #self.drop_down_pr.background = "blue"
-
+            
+            #réinitialisation dropdown pré requis sans le pré requis sélectionné
+            self.drop_down_pr.items = [(r["requis"], r) for r in app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if not dico_pre_requis.get(r["code_pre_requis"])]
+    
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         open_form(self.f)
