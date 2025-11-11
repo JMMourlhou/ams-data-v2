@@ -1,7 +1,6 @@
 from ._anvil_designer import ItemTemplate22Template
 from anvil import *
 import anvil.server
-import stripe.checkout
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q

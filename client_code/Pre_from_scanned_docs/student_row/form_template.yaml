@@ -1,7 +1,6 @@
 components:
 - components:
-  - data_bindings:
-    - {code: 'self.item['''']', property: tag, writeback: false}
+  - data_bindings: []
     layout_properties: {grid_position: 'JZPSJJ,IXPGEC'}
     name: label_nom_prenom
     properties:

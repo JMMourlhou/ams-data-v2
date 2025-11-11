@@ -32,7 +32,6 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         ))    
         
         self.text_box_nb_stagiaires_marked.text = len(self.liste)
-        #self.repeating_panel_stagiaire_inscrits.items = self.liste
         cpt = 1
         for row_stagiaire_inscrit in self.liste: 
             new_row = student_row(cpt, row_stagiaire_inscrit)
