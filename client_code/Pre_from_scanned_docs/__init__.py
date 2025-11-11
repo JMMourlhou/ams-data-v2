@@ -7,6 +7,9 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .student_row import student_row
 
+global dico_pre_requis
+dico_pre_requis = {}
+
 class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def __init__(self, stage_row, **properties):
         # Set Form properties and Data Bindings.
@@ -50,16 +53,34 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         else:
             nb_de_stagiaires += 1
         self.text_box_nb_stagiaires_marked.text = nb_de_stagiaires
-            
-
-        
         
     def drop_down_pr_change(self, **event_args):
         """This method is called when an item is selected"""
-        self.pr_row = self.drop_down_pr.selected_value
-        #self.button_ok.visible = True
-        self.file_loader_docs_pr.visible = True
-        self.drop_down_pr.background = "blue"
+       
+        row = self.drop_down_pr.selected_value       # row du pre_requis 
+        if row is None:
+            alert("Vous devez sélectionner un pré-requis !")
+            self.drop_down_pr.focus()
+            return
+        else:
+            global dico_pre_requis
+            clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
+            valeur = (row["requis"], row["order"])
+            dico_pre_requis[clef] = valeur
+
+            # affichage du repeating panel des PR sélectionnés
+            #réaffichage des pré requis
+            list_keys = dico_pre_requis.keys()
+            list_keys = sorted(list_keys)  # création de la liste triée des clefs du dictionaires prérequis
+            print(list_keys)
+            self.repeating_panel_1.items = list(list_keys)   # liste des clefs (pré requis)
+            self.button_valid_pr_list.visible = True
+
+            
+            self.pr_row = self.drop_down_pr.selected_value
+            self.file_loader_docs_pr.visible = True
+            self.drop_down_pr.selected_value = None
+            #self.drop_down_pr.background = "blue"
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -105,4 +126,13 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def file_loader_docs_pr_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
         self.file = file
+        self.column_panel_pr_requis.visible = True
+        self.file_loader_docs_pr.background = "green"
+
+    def button_valid_pr_list_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.content_panel.visible = True
         self.button_ok.visible = True
+        self.label_stagiaires.visible = True
+        self.drop_down_pr.background = "green"
+        self.button_valid_pr_list.background = "green"

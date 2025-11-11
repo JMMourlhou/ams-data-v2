@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {grid_position: 'ZCKYBW,WCWLJO'}
     name: label_titre
-    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: 'Ajous des PR à partir des docs scannés pour :', tooltip: '', underline: false, visible: true}
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: 'Ajouts des PR à partir des docs scannés pour :', tooltip: '', underline: false, visible: true}
     type: Label
   - layout_properties: {grid_position: 'OXYENY,ANGICK'}
     name: text_box_stage
@@ -12,24 +12,47 @@ components:
     name: text_box_nb_stagiaires_marked
     properties: {align: center, background: 'theme:Tertiary', spacing_above: none, visible: true}
     type: TextBox
-  - event_bindings: {change: drop_down_pr_change}
-    layout_properties: {full_width_row: false, grid_position: 'MCALAP,AAVDBV'}
-    name: drop_down_pr
-    properties:
-      align: center
-      background: theme:Error
-      bold: true
-      foreground: theme:On Primary
-      include_placeholder: true
-      margin: [null, null, '8', null]
-      placeholder: 1- Sélectionner le Pré-requis
-      role: outlined
-    type: DropDown
   - event_bindings: {change: file_loader_docs_pr_change}
-    layout_properties: {grid_position: 'GVUXOE,EBFNBQ'}
+    layout_properties: {grid_position: 'VNJIKN,HUFJCV'}
     name: file_loader_docs_pr
-    properties: {align: center, background: 'theme:Error', file_types: .pdf, foreground: 'theme:On Primary', text: 2- Charger les docs scannés (format PDF), visible: false}
+    properties: {align: center, background: 'theme:Error', file_types: .pdf, foreground: 'theme:On Primary', text: 1- Charger le fichier PDF des Docs scannés, visible: true}
     type: FileLoader
+  - components:
+    - event_bindings: {change: drop_down_pr_change}
+      layout_properties: {grid_position: 'BDWDFE,SZDHYT'}
+      name: drop_down_pr
+      properties:
+        align: center
+        background: theme:Error
+        bold: true
+        font_size: 14
+        foreground: theme:On Primary
+        include_placeholder: true
+        margin: [null, null, '8', null]
+        placeholder: '2- Cliquer ici pour décrire la séquence des pré-requis du fichier PDF '
+        role: outlined
+      type: DropDown
+    - layout_properties: {grid_position: 'XXSFQU,KTUVES'}
+      name: repeating_panel_1
+      properties: {item_template: Pre_from_scanned_docs.pr_selected_list}
+      type: RepeatingPanel
+    - event_bindings: {click: button_valid_pr_list_click}
+      layout_properties: {grid_position: 'QOZTGE,EMOIVC'}
+      name: button_valid_pr_list
+      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', text: Validation de la séquence des PR dans le fichier PDF, visible: false}
+      type: Button
+    layout_properties: {grid_position: 'LAUPIR,ZIROWA'}
+    name: column_panel_pr_requis
+    properties: {role: outlined-card, visible: false}
+    type: ColumnPanel
+  - layout_properties: {grid_position: 'LNLGZL,PPSION'}
+    name: label_stagiaires
+    properties: {align: center, background: 'theme:Error', font_size: 14, foreground: 'theme:On Primary', text: 'Liste des stagiaires, le pdf doit être dans le même ordre:', visible: false}
+    type: Label
+  - layout_properties: {grid_position: 'ZYNFRE,LRKRDA'}
+    name: content_panel
+    properties: {role: outlined-card, visible: false}
+    type: ColumnPanel
   - components:
     - event_bindings: {click: button_annuler_click}
       layout_properties: {}
@@ -48,10 +71,6 @@ components:
   layout_properties: {grid_position: 'CJMXUJ,IWYMQC'}
   name: outlined_card_1
   properties: {role: outlined-card}
-  type: ColumnPanel
-- layout_properties: {grid_position: 'EYSYTW,OBATBU'}
-  name: content_panel
-  properties: {}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true
