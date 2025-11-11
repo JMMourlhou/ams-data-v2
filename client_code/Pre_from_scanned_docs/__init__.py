@@ -86,17 +86,17 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         dico = {}
         cpt = 0
         for ligne in self.content_panel.get_components():
-            alert("ligne")
-            for component in ligne.get_components():
-                alert("component")
-                if component.tag == "check_box":
-                    alert("check_box")
-                    if component.checked is True:
-                        cpt += 1
-                        cle = cpt
-                        valeur = (ligne.row_stagiaire_inscrit['stage'], ligne.row_stagiaire_inscrit['user_email'])
-                        dico[cle] = valeur
-
+            for cp in ligne.get_components():
+                for component in cp.get_components():
+                    if isinstance(component, anvil.CheckBox):
+                        alert("CheckBox ")
+                        
+                        if component.checked is True:
+                            cpt += 1
+                            cle = cpt
+                            valeur = (ligne.row_stagiaire_inscrit['stage'], ligne.row_stagiaire_inscrit['user_email'])
+                            dico[cle] = valeur
+                            
         alert(len(dico[cle]))
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
