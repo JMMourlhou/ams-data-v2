@@ -16,6 +16,9 @@ class pr_selected_list(pr_selected_listTemplate):
         row=app_tables.pre_requis.get(code_pre_requis=self.item)
         try:
             self.text_box_1.text = "  " + row['requis']
-            self.button_annuler.tag = row['code_pre_requis']
         except:
             alert("Un code pré-requis n'existe plus en table pre_requis")
+
+    def button_annuler_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass

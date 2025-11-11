@@ -8,11 +8,6 @@ components:
     name: text_box_1
     properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
-  - event_bindings: {click: button_annuler_click}
-    layout_properties: {grid_position: 'PJIZXA,HIXLGT'}
-    name: button_annuler
-    properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 21, foreground: 'theme:Tertiary', icon: 'fa:minus-square', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', underline: false, visible: true}
-    type: Button
   - layout_properties: {grid_position: 'ZTYXXQ,WCMWOO'}
     name: spacer_4
     properties: {height: 32}
@@ -24,4 +19,9 @@ components:
 container:
   properties: {col_widths: '{"BSBGOZ":6}'}
   type: ColumnPanel
+custom_component: true
+events:
+- {default_event: true, description: le bouton del est cliqué, name: remove_pr}
 is_package: true
+properties:
+- {default_binding_prop: true, default_value: '', important: true, name: pr_code_to_be_deleted, type: string}

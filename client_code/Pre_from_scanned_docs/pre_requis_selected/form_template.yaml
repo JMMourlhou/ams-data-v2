@@ -1,0 +1,40 @@
+components:
+- components:
+  - data_bindings: []
+    layout_properties: {grid_position: 'JZPSJJ,IXPGEC'}
+    name: label_pr
+    properties:
+      bold: true
+      font_size: 16
+      foreground: theme:On Primary
+      spacing:
+        margin: ['1', null, '1', null]
+      text: Pré-requis
+    type: Label
+  - event_bindings: {click: button_del_click}
+    layout_properties: {grid_position: 'JZPSJJ,OQCRMI'}
+    name: button_del
+    properties: {foreground: 'theme:Error', icon: 'fa:minus', role: outlined-button, text: ''}
+    type: Button
+  layout_properties: {grid_position: 'VUGGTQ,GDUBAO'}
+  name: cp_row
+  properties:
+    background: theme:Primary
+    col_widths: '{"IXPGEC":55,"OQCRMI":12}'
+    role: outlined-card
+    spacing:
+      padding: ['1', null, '1', null]
+    spacing_above: none
+    spacing_below: none
+    wrap_on: never
+  type: ColumnPanel
+container:
+  properties: {background: 'theme:Primary', foreground: 'theme:Error'}
+  type: ColumnPanel
+custom_component: true
+events:
+- {default_event: true, description: bouton del a été clické, name: del}
+is_package: true
+properties:
+- {default_binding_prop: true, default_value: '', description: le code du pré requis à enlever de la liste des pr selectionnés, important: true, name: pr_code_to_be_deleted, type: string}
+toolbox_item: {hidden: true}
