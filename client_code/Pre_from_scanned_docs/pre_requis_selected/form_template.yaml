@@ -36,5 +36,5 @@ events:
 - {default_event: true, description: bouton del a été clické, name: del}
 is_package: true
 properties:
-- {default_binding_prop: true, default_value: '', description: le code du pré requis à enlever de la liste des pr selectionnés, important: true, name: pr_code_to_be_deleted, type: string}
+- {default_binding_prop: true, description: le code du pré requis à enlever de la liste des pr selectionnés, important: true, name: pr_row_to_be_deleted, type: object}
 toolbox_item: {hidden: true}

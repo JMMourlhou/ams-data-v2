@@ -6,7 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .student_row import student_row
-from .pr_selected_list import pr_selected_list
+from .pre_requis_selected import pre_requis_selected
 
 global dico_pre_requis_selected   # le dictionaire des PR sélectionnés par drop down pour travailler sur le PDF 
 dico_pre_requis_selected = {}
@@ -51,8 +51,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             cpt += 1
                         
     def handle_change_check_box(self, sender, **event_args):
-        #alert(sender.check_box_state)
-        alert(sender.row_stagiaire_inscrit['name'])
+        #alert(sender.row_stagiaire_inscrit['name'])
         nb_de_stagiaires = int(self.text_box_nb_stagiaires_marked.text)
         if sender.check_box_state is False:
             nb_de_stagiaires -= 1
@@ -69,45 +68,39 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             alert("Vous devez sélectionner un pré-requis !")
             self.drop_down_pr.focus()
             return
-        else:
-            clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
-            valeur = (row["requis"], row["order"])
-            dico_pre_requis_selected[clef] = valeur
-        
-            # Ajout du PR ds les la liste des PR sélectionnés PR sélectionnés
-            list_keys = dico_pre_requis_selected.keys()
-            list_keys = sorted(list_keys)  # création de la liste triée des clefs du dictionaires prérequis
-            print(f"liste des clefs/dico_pre_requis_selected: {list_keys}")
-            
-            #self.repeating_panel_1.items = list(list_keys)   # liste des clefs (pré requis)
-            for pr_key in list_keys:
-                new_row = student_row(pr_selected_list)
-                new_row.pr_code_to_be_deleted = pr_key  # row_stagiaire_inscrit: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
-                new_row.set_event_handler('x-del', self.handle_del_pr)  # si event: bouton del est cliqué
-                self.content_panel_pr.add_component(new_row)
 
-            self.button_valid_pr_list.visible = True
-            
-            self.pr_row = self.drop_down_pr.selected_value
-            self.file_loader_docs_pr.visible = True
-            self.drop_down_pr.selected_value = None
-            
-            # j'enlève la clef sélectionnée du dico des pr initial pour ré-initialiser la dropdown
-            print(f"clef à enlever: {clef}")
-            print("dico_pre_requis_initial:")
-            for key in dico_pre_requis_initial:
-                print(f"dico initial en modif du drop down: {key}")
-            
-            del dico_pre_requis_initial[clef]
-            #réinitialisation dropdown pré requis sans le pré requis sélectionné
-            #self.drop_down_pr.items = [(r["requis"], r) for r in app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if not dico_pre_requis.get(r["code_pre_requis"])]
-            self.drop_down_pr.items = [(r["requis"], r) for r in  app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
+        # Ajout du PR ds le dico des clés des PR sélectionnés
+        clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
+        valeur = (row["requis"], row["order"])
+        dico_pre_requis_selected[clef] = valeur
+        
+        # Affichage Du pr SELECTIONNE par ajout de la form pre_requis_selected, 
+        new_row = pre_requis_selected(row)
+        new_row.pr_code_to_be_deleted = row  # row_stagiaire_inscrit: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        new_row.set_event_handler('x-del', self.handle_del_pr)  # si event: bouton del est cliqué
+        self.content_panel_pr.add_component(new_row)
+        self.content_panel_pr.visible = True
+
+        # j'enlève la clef sélectionnée du dico des pr initial pour ré-initialiser la dropdown
+        del dico_pre_requis_initial[clef]
+        self.drop_down_pr.items = [(r["requis"], r) for r in  app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
+
+        self.button_valid_pr_list.visible = True
+        self.file_loader_docs_pr.visible = True
+        self.drop_down_pr.selected_value = None
             
     def handle_del_pr(self, sender, **event_args):
-        pass
+        global dico_pre_requis_initial
+        global dico_pre_requis_selected
+        pr = sender.pr_row_to_be_deleted
+        #alert(pr['requis'])
         # ajouter le pr_code du dico dico_pre_requis_initial 
-
-        # enlever le pr_code du dico 
+        clef = pr["code_pre_requis"]
+        valeur = (pr['requis'], pr["order"])
+        dico_pre_requis_initial[clef] = valeur
+        self.drop_down_pr.items = [(r["requis"], r) for r in app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
+        # enlever le pr_code du dico_pre_requis_selected
+        del dico_pre_requis_selected[clef]
         
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -115,6 +108,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
 
     def button_ok_click(self, **event_args):
         """This method is called when the button is clicked"""
+        global dico_pre_requis_selected
         if self.file is None:
             alert("Sélectionner le fichier pdf !")
             return
@@ -130,21 +124,30 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # Création du dico
         
         # ajout ds le dico par boucle sur les composents 'student_row', avec test si 
-        dico = {}
+        dico_st = {}
         cpt = 0
         for ligne in self.content_panel.get_components():
             for cp in ligne.get_components():
                 for component in cp.get_components():
                     if isinstance(component, anvil.CheckBox):
-                        alert("CheckBox ")
-                        
+                        #alert("CheckBox ")
                         if component.checked is True:
                             cpt += 1
                             cle = cpt
                             valeur = (ligne.row_stagiaire_inscrit['stage'], ligne.row_stagiaire_inscrit['user_email'])
-                            dico[cle] = valeur
+                            dico_st[cle] = valeur
                             
-        alert(len(dico[cle]))
+        r=alert(f"Traitement pour les {len(dico[cle])} stagiaires sélectionnés / PDF des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if not r :   # non
+            return                       
+        # Unification des 2 dicos: PR & stagiaires en un seul dico result
+        # boucle sur le dico des stagiaires
+        result = {}
+        for clef_student in dico_st :
+            for clef_pr in dico_pre_requis_selected:
+                
+
+        
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
         alert(txt_msg)
