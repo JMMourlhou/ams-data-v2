@@ -26,6 +26,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.text_box_stage.text = f"{self.stage_row['code_txt']} du {str(self.stage_row['date_debut'])} {str(self.stage_row['numero'])}"
 
         # INITIALISATION Drop down pré-requis
+        dico_pre_requis_initial = {}
         dico_pre_requis_initial = stage_row["code"]['pre_requis']
         for key in dico_pre_requis_initial:
             print(f"dico initial en init: {key}")
@@ -34,12 +35,11 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             alert("Pas de PR pour ce stage en table codes_stages !")
             return
 
-        # initialisation liste des stagiaires du stage
+        # initialisation liste des stagiaires du stage en créant 1 form student_row dans content_panel
         self.liste = list(app_tables.stagiaires_inscrits.search(
             tables.order_by("name", ascending=True),
             stage=self.stage_row
         ))    
-        
         self.text_box_nb_stagiaires_marked.text = len(self.liste)
         cpt = 1
         for row_stagiaire_inscrit in self.liste: 
@@ -47,9 +47,9 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             new_row.row_stagiaire_inscrit = row_stagiaire_inscrit  # row_stagiaire_inscrit: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
             new_row.set_event_handler('x-change', self.handle_change_check_box)
             self.content_panel.add_component(new_row)
-            
             cpt += 1
-                        
+
+    # Event raised: Changement du check box du stagiaire
     def handle_change_check_box(self, sender, **event_args):
         #alert(sender.row_stagiaire_inscrit['name'])
         nb_de_stagiaires = int(self.text_box_nb_stagiaires_marked.text)
@@ -71,7 +71,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
 
         # Ajout du PR ds le dico des clés des PR sélectionnés
         clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
-        valeur = (row["requis"], row["order"])
+        valeur = (row)
         dico_pre_requis_selected[clef] = valeur
         
         # Affichage Du pr SELECTIONNE par ajout de la form pre_requis_selected, 
@@ -134,50 +134,54 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
                             cpt += 1
                             cle = cpt
                             row_stagiaire_inscrit = component.tag
-                            print(row_stagiaire_inscrit)
                             row_stage = row_stagiaire_inscrit['stage']
                             row_stagiaire = row_stagiaire_inscrit['user_email']
                             valeur = (row_stage, row_stagiaire)
                             dico_st[cle] = valeur
                             print(cle)
-                            print(valeur[0]['code_txt'])
                             
-        r=alert(f"Traitement pour les {len(dico_st[cle])} stagiaires sélectionnés / PDF des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        r=alert(f"Traitement pour les {self.text_box_nb_stagiaires_marked.text} stagiaires sélectionnés ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return                       
-        """
-        #tri du dictionaire pre requis sélectionnés sur les clefs 
+        
+        #tri du dictionaire pre requis sélectionnés sur les clefs (l'utilisateur peut les avoir rentré ds n'importe quel sens)
         liste_des_clefs = dico_pre_requis_selected.keys()   #création de la liste des clefs du dictionaires prérequis
         liste_triée_des_clefs = sorted(liste_des_clefs)  # création de la liste triée des clefs du dictionaires prérequis
+        
         dico_pre_requis_trié = {}
         for key in liste_triée_des_clefs:
             dico_pre_requis_trié[key] = dico_pre_requis_selected[key]
-        
+        print(f"dico des pr sélectionnés triés: {dico_pre_requis_trié}")
         # Unification des 2 dicos: PR & stagiaires en un seul dico result
         # boucle sur le dico des stagiaires
         
         result = {}
         page = 1
         student_cpt = 1
-        for clef_student in dico_st :                 # boucle sur le dico des stagiaires
-            for clef_pr in dico_pre_requis_trié:      # boucle sur le dico des pré-requis
-                key = str(page)
-                student_valeur = clef_student[student_cpt]
+        for clef_student, valeur_student in dico_st.items() :                 # boucle sur le dico des stagiaires
+            for clef_pr, valeur_pr in dico_pre_requis_trié.items():      # boucle sur le dico des pré-requis
+                print(f"boucle sur clé pr: {clef_pr}")
+                #key = str(page)
                 value = ( 
-                        student_valeur[0],   # stage row
-                        student_valeur[1],   # student row
-                        clef_pr              # pr_row
+                        valeur_student[0],   # stage row
+                        valeur_student[1],   # student row
+                        valeur_pr        # pr_row
                         )
-                result[key]=value
+                print(f"page {page}")
+                result[page]=value
                 page += 1
             student_cpt += 1                
         
             
         # vérification : nb de pages du pdf = nb de clés du dico result
         for clef,val in result.items():
-            print(f"{cle}: {val}")
+            print(f"{clef}")
+            print(f"stage row: {val[0]}")
+            print(f"student row: {val[1]}")
+            print(f"pr_row: {val[2]}")
+            print()
         #print(len(result))
-        """
+
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
         alert(txt_msg)
