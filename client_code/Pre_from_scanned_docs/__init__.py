@@ -18,7 +18,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def __init__(self, stage_row, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        global dico_pre_requis_initial   # le dictionaire des PRpour ce stage
+        
+        
         # Any code you write here will run before the form opens.
         self.file = None
         self.f = get_open_form()
@@ -26,7 +27,11 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.text_box_stage.text = f"{self.stage_row['code_txt']} du {str(self.stage_row['date_debut'])} {str(self.stage_row['numero'])}"
 
         # INITIALISATION Drop down pré-requis
+        global dico_pre_requis_initial   # le dictionaire des PRpour ce stage
         dico_pre_requis_initial = {}
+        global dico_pre_requis_selected   # le dictionaire des PR sélectionnés par drop down pour travailler sur le PDF 
+        dico_pre_requis_selected = {}
+        
         dico_pre_requis_initial = stage_row["code"]['pre_requis']
         for key in dico_pre_requis_initial:
             print(f"dico initial en init: {key}")
@@ -73,6 +78,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
         valeur = (row)
         dico_pre_requis_selected[clef] = valeur
+        print(f"Nb de clés sélectionnées: {len(dico_pre_requis_selected)}")
         
         # Affichage Du pr SELECTIONNE par ajout de la form pre_requis_selected, 
         new_row = pre_requis_selected(row)
@@ -84,7 +90,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # j'enlève la clef sélectionnée du dico des pr initial pour ré-initialiser la dropdown
         del dico_pre_requis_initial[clef]
         self.drop_down_pr.items = [(r["requis"], r) for r in  app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
-
+        print(f"Nb de clés restantes à sélectionner: {len(dico_pre_requis_initial)}")
+        
         self.button_valid_pr_list.visible = True
         self.file_loader_docs_pr.visible = True
         self.drop_down_pr.selected_value = None
@@ -109,20 +116,19 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def button_ok_click(self, **event_args):
         """This method is called when the button is clicked"""
         global dico_pre_requis_selected
-        
         if self.file is None:
             alert("Sélectionner le fichier pdf !")
             return
+        r=alert(f"Si un Stagiaire n'a pas donné son document, désélectionnez-le !\nTraitement pour {self.text_box_nb_stagiaires_marked.text} stagiaire(s) ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if not r :   # non
+            return    
             
-        r=alert(f"Les documents scannés sont-ils bien pour {self.text_box_nb_stagiaires_marked.text} stagiaires ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        nb_pages = int(self.text_box_nb_stagiaires_marked.text) * len(dico_pre_requis_selected)
+        r=alert(f"Le nb de pages du PDF doit être de: {nb_pages}, \n\n ET... \n\n classé par ordre alphabétique !",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return
             
-        r=alert("Avez-vous décochés les stagiaires qui n'ont pas leurs documents dans le fichier pdf ?",dismissible=False,buttons=[("oui",True),("non",False)])
-        if not r :   # non
-            return   
         # Création du dico
-        
         # ajout ds le dico par boucle sur les composents 'student_row', avec test si checked = True
         dico_st = {}
         cpt = 0
@@ -138,11 +144,9 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
                             row_stagiaire = row_stagiaire_inscrit['user_email']
                             valeur = (row_stage, row_stagiaire)
                             dico_st[cle] = valeur
-                            print(cle)
+                        print(f"nb students checkTrue : {len(dico_st)}")
                             
-        r=alert(f"Traitement pour les {self.text_box_nb_stagiaires_marked.text} stagiaires sélectionnés ?",dismissible=False,buttons=[("oui",True),("non",False)])
-        if not r :   # non
-            return                       
+                           
         
         #tri du dictionaire pre requis sélectionnés sur les clefs (l'utilisateur peut les avoir rentré ds n'importe quel sens)
         liste_des_clefs = dico_pre_requis_selected.keys()   #création de la liste des clefs du dictionaires prérequis
@@ -152,9 +156,10 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         for key in liste_triée_des_clefs:
             dico_pre_requis_trié[key] = dico_pre_requis_selected[key]
         print(f"dico des pr sélectionnés triés: {dico_pre_requis_trié}")
+        print(f"nb de pr sélectionnés: {len(liste_triée_des_clefs)} ")
+        print()
         # Unification des 2 dicos: PR & stagiaires en un seul dico result
         # boucle sur le dico des stagiaires
-        
         result = {}
         page = 1
         student_cpt = 1
@@ -185,7 +190,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
         alert(txt_msg)
-        open_form(self.f)
+        self.button_annuler_click()
         
     def file_loader_docs_pr_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
