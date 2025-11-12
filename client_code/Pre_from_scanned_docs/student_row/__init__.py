@@ -14,8 +14,7 @@ class student_row(student_rowTemplate):
         self.f = get_open_form()
         self.label_nom_prenom.text = f"{cpt} - {row_stagiaire_inscrit['user_email']['nom'].upper()} {row_stagiaire_inscrit['user_email']['prenom'].capitalize()}"
         self.check_box_doc_ok.checked = True
-        self.label_nom_prenom.tag = "label"
-        self.check_box_doc_ok.tag = "check_box"
+        self.check_box_doc_ok.tag = row_stagiaire_inscrit
         
     def check_box_doc_ok_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""

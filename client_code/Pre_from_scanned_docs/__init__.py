@@ -130,17 +130,22 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             for cp in ligne.get_components():
                 for component in cp.get_components():
                     if isinstance(component, anvil.CheckBox):
-                        #alert("CheckBox ")
                         if component.checked is True:
                             cpt += 1
                             cle = cpt
-                            valeur = (ligne.row_stagiaire_inscrit['stage'], ligne.row_stagiaire_inscrit['user_email'])
+                            row_stagiaire_inscrit = component.tag
+                            print(row_stagiaire_inscrit)
+                            row_stage = row_stagiaire_inscrit['stage']
+                            row_stagiaire = row_stagiaire_inscrit['user_email']
+                            valeur = (row_stage, row_stagiaire)
                             dico_st[cle] = valeur
+                            print(cle)
+                            print(valeur[0]['code_txt'])
                             
         r=alert(f"Traitement pour les {len(dico_st[cle])} stagiaires sélectionnés / PDF des {self.drop_down_pr.selected_value['requis']} ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return                       
-
+        """
         #tri du dictionaire pre requis sélectionnés sur les clefs 
         liste_des_clefs = dico_pre_requis_selected.keys()   #création de la liste des clefs du dictionaires prérequis
         liste_triée_des_clefs = sorted(liste_des_clefs)  # création de la liste triée des clefs du dictionaires prérequis
@@ -150,35 +155,34 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         
         # Unification des 2 dicos: PR & stagiaires en un seul dico result
         # boucle sur le dico des stagiaires
-        try:
-            result = {}
-            page = 1
-            student_cpt = 1
-            for clef_student in dico_st :                 # boucle sur le dico des stagiaires
-                for clef_pr in dico_pre_requis_trié:      # boucle sur le dico des pré-requis
-                    key = str(page)
-                    student_valeur = clef_student[student_cpt]
-                    value = ( 
-                            student_valeur[0],   # stage row
-                            student_valeur[1],   # student row
-                            clef_pr              # pr_row
-                            )
-                    result[key]=value
-                    page += 1
-                student_cpt += 1                
-        except Exception as e:
-            alert(e)
-            return
+        
+        result = {}
+        page = 1
+        student_cpt = 1
+        for clef_student in dico_st :                 # boucle sur le dico des stagiaires
+            for clef_pr in dico_pre_requis_trié:      # boucle sur le dico des pré-requis
+                key = str(page)
+                student_valeur = clef_student[student_cpt]
+                value = ( 
+                        student_valeur[0],   # stage row
+                        student_valeur[1],   # student row
+                        clef_pr              # pr_row
+                        )
+                result[key]=value
+                page += 1
+            student_cpt += 1                
+        
+            
         # vérification : nb de pages du pdf = nb de clés du dico result
         for clef,val in result.items():
             print(f"{cle}: {val}")
         #print(len(result))
-        
+        """
         #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
         alert(txt_msg)
         open_form(self.f)
-
+        
     def file_loader_docs_pr_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
         self.file = file
