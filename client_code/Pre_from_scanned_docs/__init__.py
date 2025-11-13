@@ -173,7 +173,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
                         valeur_pr        # pr_row
                         )
                 print(f"page {page}")
-                result[page]=value
+                result[str(page)]=value    # clé doit être type str qd on envoi en server side
                 page += 1
             student_cpt += 1                
         
