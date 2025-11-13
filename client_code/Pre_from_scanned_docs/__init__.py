@@ -187,7 +187,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             print()
         #print(len(result))
 
-        #txt_msg = anvil.server.call("", self.file, self.stage_row, self.pr_row)
+        #txt_msg = anvil.server.call("pre_requis_from_pdf", self.file, self.stage_row, self.pr_row)
         txt_msg = "ok"
         alert(txt_msg)
         self.button_annuler_click()
