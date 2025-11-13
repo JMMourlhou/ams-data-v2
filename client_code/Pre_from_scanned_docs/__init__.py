@@ -190,7 +190,6 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # ====================================================================
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
         txt_msg = anvil.server.call("pre_requis_from_pdf", self.file, result)
-        txt_msg = "ok"
         alert(txt_msg)
         self.button_annuler_click()
         
