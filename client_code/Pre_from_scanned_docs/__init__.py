@@ -166,7 +166,6 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         for clef_student, valeur_student in dico_st.items() :                 # boucle sur le dico des stagiaires
             for clef_pr, valeur_pr in dico_pre_requis_trié.items():      # boucle sur le dico des pré-requis
                 print(f"boucle sur clé pr: {clef_pr}")
-                #key = str(page)
                 value = ( 
                         valeur_student[0],   # stage row
                         valeur_student[1],   # student row
