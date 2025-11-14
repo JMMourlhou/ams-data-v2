@@ -39,7 +39,7 @@ components:
     - event_bindings: {click: button_valid_pr_list_click}
       layout_properties: {grid_position: 'QOZTGE,EMOIVC'}
       name: button_valid_pr_list
-      properties: {background: 'theme:Error', foreground: 'theme:On Primary', text: Validation de la séquence des PR dans le fichier PDF, visible: false}
+      properties: {background: 'theme:Error', foreground: 'theme:On Primary', text: Ok, visible: false}
       type: Button
     layout_properties: {grid_position: 'LAUPIR,ZIROWA'}
     name: column_panel_pr_requis

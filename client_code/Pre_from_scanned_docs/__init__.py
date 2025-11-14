@@ -123,7 +123,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         if not r :   # non
             return    
             
-        r=alert("Le PDF est-il bien classé:\n\n - Stagiaire 1 \n .    Doc page 1 \n .    Doc page 2 \n .    Doc page 3 \n .    etc ... \n\n - Stagiaire 2 \n .    Doc page 1 \n .    Doc page 2 \n .    Doc page 3 \n .    etc ... \n\n - Stagiaire 3 \n .    etc ...",dismissible=False,buttons=[("oui",True),("non",False)])
+        r=alert("Le PDF est-il bien classé sur les noms des stagiaires, suivant ce modèle:\n\n - Stagiaire A \n .    Doc page 1 \n .    Doc page 2 \n .    Doc page 3 \n .    etc ... \n\n - Stagiaire B \n .    Doc page 1 \n .    Doc page 2 \n .    Doc page 3 \n .    etc ... \n\n - Stagiaire C \n .    etc ...",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return
             
@@ -185,11 +185,11 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             print(f"pr_row: {val[2]}")
             print()
         #print(len(result))
-
+        
         # ====================================================================
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
-        txt_msg = anvil.server.call("pre_requis_from_pdf", self.file, result)
-        alert(txt_msg)
+        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result)
+        alert(f"{nb_pages} pages sauvées...\n pour les {self.text_box_nb_stagiaires_marked.text} stagiaires !")
         self.button_annuler_click()
         
     def file_loader_docs_pr_change(self, file, **event_args):
