@@ -119,12 +119,11 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         if self.file is None:
             alert("Sélectionner le fichier pdf !")
             return
-        r=alert(f"Si un Stagiaire n'a pas donné son document, désélectionnez-le !\nTraitement pour {self.text_box_nb_stagiaires_marked.text} stagiaire(s) ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        r=alert(f"Si un Stagiaire n'a pas donné son document, désélectionnez-le !\n\nValidez le Traitement pour:\n    {self.text_box_nb_stagiaires_marked.text} stagiaire(s)",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return    
             
-        nb_pages = int(self.text_box_nb_stagiaires_marked.text) * len(dico_pre_requis_selected)
-        r=alert(f"Le nb de pages du PDF doit être de: {nb_pages}, \n\n ET... \n\n classé par ordre alphabétique !",dismissible=False,buttons=[("oui",True),("non",False)])
+        r=alert("Le PDF est-il bien classé:\n\n - Stagiaire 1 \n .    Doc page 1 \n .    Doc page 2 \n .    Doc page 3 \n .    etc ... \n\n - Stagiaire 2 \n .    Doc page 1 \n .    Doc page 2 \n .    Doc page 3 \n .    etc ... \n\n - Stagiaire 3 \n .    etc ...",dismissible=False,buttons=[("oui",True),("non",False)])
         if not r :   # non
             return
             
@@ -147,7 +146,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
                         print(f"nb students checkTrue : {len(dico_st)}")
                             
                            
-        
+        """
         #tri du dictionaire pre requis sélectionnés sur les clefs (l'utilisateur peut les avoir rentré ds n'importe quel sens)
         liste_des_clefs = dico_pre_requis_selected.keys()   #création de la liste des clefs du dictionaires prérequis
         liste_triée_des_clefs = sorted(liste_des_clefs)  # création de la liste triée des clefs du dictionaires prérequis
@@ -158,13 +157,14 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         print(f"dico des pr sélectionnés triés: {dico_pre_requis_trié}")
         print(f"nb de pr sélectionnés: {len(liste_triée_des_clefs)} ")
         print()
+        """
         # Unification des 2 dicos: PR & stagiaires en un seul dico result
         # boucle sur le dico des stagiaires
         result = {}
         page = 1
         student_cpt = 1
         for clef_student, valeur_student in dico_st.items() :                 # boucle sur le dico des stagiaires
-            for clef_pr, valeur_pr in dico_pre_requis_trié.items():      # boucle sur le dico des pré-requis
+            for clef_pr, valeur_pr in dico_pre_requis_selected.items():      # boucle sur le dico des pré-requis
                 print(f"boucle sur clé pr: {clef_pr}")
                 value = ( 
                         valeur_student[0],   # stage row
