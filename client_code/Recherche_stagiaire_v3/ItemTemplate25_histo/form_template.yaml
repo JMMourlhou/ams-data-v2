@@ -3,7 +3,7 @@ components:
   - event_bindings: {click: button_detail_histo_click}
     layout_properties: {grid_position: 'GXLFKV,OKMGFV'}
     name: button_detail_histo
-    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', text: button_detail_histo}
+    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: button_detail_histo}
     type: Button
   layout_properties: {grid_position: 'RXUFJP,HJGHLE'}
   name: column_panel_1

@@ -66,6 +66,7 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
             self.f.label_user_email.text = self.item['user_email']['email']
             
         self.f.column_panel_stagiaire.visible = True
+        self.f.column_panel_stagiaires_menu.visible = True
         
         # test si le stagiaire a rempli des formulaires de FIN ou de SUIVIs
         try:  # si recherche sur la table users

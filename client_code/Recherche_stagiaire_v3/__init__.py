@@ -360,6 +360,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         
         self.column_panel_stagiaire.visible = False
         self.column_panel_menu.visible = False
+        self.column_panel_stagiaires_menu.visible = False
         
         self.button_mail_to_all.visible = False
         self.button_trombi.visible = False

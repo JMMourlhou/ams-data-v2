@@ -2,14 +2,14 @@ components:
 - components:
   - components:
     - event_bindings: {click: text_box_2_click}
-      layout_properties: {width: 130.60205224609376}
+      layout_properties: {width: 110.86486938476563}
       name: text_box_2
       properties:
         align: full
         background: theme:Tertiary
         bold: true
         border: ''
-        enabled: true
+        enabled: false
         font: ''
         font_size: null
         foreground: theme:On Primary Container
@@ -33,31 +33,6 @@ components:
     type: FlowPanel
   - components:
     - components:
-      - event_bindings: {click: text_box_3_click}
-        layout_properties: {expand: false, width: null}
-        name: text_box_3
-        properties:
-          align: center
-          background: theme:Tertiary
-          bold: true
-          border: ''
-          enabled: true
-          font: ''
-          font_size: 12
-          foreground: theme:On Primary Container
-          icon: ''
-          icon_align: left
-          italic: false
-          role: null
-          spacing:
-            padding: ['0', null, null, '5']
-          spacing_above: small
-          spacing_below: small
-          text: 'dates               '
-          tooltip: ''
-          underline: false
-          visible: true
-        type: Button
       - event_bindings: {click: text_box_1_click}
         layout_properties: {}
         name: text_box_1
@@ -120,7 +95,7 @@ components:
     layout_properties: {grid_position: 'YCOQPM,APUGDT'}
     name: column_panel_4
     properties:
-      background: theme:Secondary
+      background: theme:Primary
       col_spacing: none
       role: elevated-card
       spacing:
@@ -128,6 +103,36 @@ components:
         padding: ['3', null, '3', null]
       wrap_on: never
     type: ColumnPanel
+  - components:
+    - event_bindings: {click: text_box_3_click}
+      layout_properties: {width: 115.90080219726562}
+      name: text_box_3
+      properties:
+        align: full
+        background: theme:Tertiary
+        bold: true
+        border: ''
+        enabled: false
+        font: ''
+        font_size: 12
+        foreground: theme:On Primary Container
+        icon: ''
+        icon_align: left
+        italic: false
+        role: elevated-button
+        spacing:
+          padding: ['0', null, null, '5']
+        spacing_above: small
+        spacing_below: small
+        text: 'dates               '
+        tooltip: ''
+        underline: false
+        visible: true
+      type: Button
+    layout_properties: {grid_position: 'YIELWZ,HNRWXC OXDROV,JGJSRY'}
+    name: flow_panel_3
+    properties: {align: center}
+    type: FlowPanel
   - components:
     - event_bindings: {click: text_box_2_click}
       layout_properties: {width: 109.024707421875}
@@ -137,7 +142,7 @@ components:
         background: theme:Primary
         bold: true
         border: ''
-        enabled: true
+        enabled: false
         font: ''
         font_size: null
         foreground: theme:On Primary Container
@@ -154,7 +159,7 @@ components:
         underline: false
         visible: true
       type: Button
-    layout_properties: {grid_position: 'YIELWZ,HNRWXC'}
+    layout_properties: {grid_position: 'YIELWZ,HNRWXC PHDNFI,OKSBBQ'}
     name: flow_panel_pv
     properties: {align: center}
     type: FlowPanel
@@ -210,17 +215,17 @@ components:
         type: CheckBox
       layout_properties: {grid_position: 'FQJZCM,EAIABA'}
       name: flow_panel_1
-      properties: {align: center}
+      properties: {align: center, gap: tiny}
       type: FlowPanel
     layout_properties: {grid_position: 'YIELWZ,BIELZE'}
     name: column_panel_2
     properties:
-      background: theme:Secondary
+      background: theme:Primary
       col_spacing: none
       col_widths: '{}'
       role: elevated-card
       spacing:
-        margin: [null, '10', null, '5']
+        margin: [null, '10', null, '0']
         padding: ['5', null, '5', '15']
       wrap_on: never
     type: ColumnPanel
@@ -259,7 +264,7 @@ components:
     type: ColumnPanel
   layout_properties: {}
   name: column_panel_1
-  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"BIELZE":85,"APUGDT":69,"HSKQJC":12,"HNRWXC":14}', role: null, spacing_above: none, wrap_on: never}
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"BIELZE":83,"APUGDT":68,"HSKQJC":13,"HNRWXC":16}', role: null, spacing_above: none, wrap_on: never}
   type: ColumnPanel
 container:
   properties:
