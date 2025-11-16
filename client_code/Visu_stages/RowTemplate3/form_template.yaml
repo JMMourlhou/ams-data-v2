@@ -9,7 +9,7 @@ components:
         background: theme:Tertiary
         bold: true
         border: ''
-        enabled: false
+        enabled: true
         font: ''
         font_size: null
         foreground: theme:On Primary Container
@@ -112,7 +112,7 @@ components:
         background: theme:Tertiary
         bold: true
         border: ''
-        enabled: false
+        enabled: true
         font: ''
         font_size: 12
         foreground: theme:On Primary Container
@@ -142,7 +142,7 @@ components:
         background: theme:Primary
         bold: true
         border: ''
-        enabled: false
+        enabled: true
         font: ''
         font_size: null
         foreground: theme:On Primary Container

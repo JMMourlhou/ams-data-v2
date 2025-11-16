@@ -528,13 +528,13 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # Transformation en liste pour affichage dans le RepeatingPanel
         liste_affichage = []
         #         n° stage   pr_row        PSC / PSE1 ..    user_row   objet_img   date du stage   intitul du PR
-        for clef, (numero,   requis_row,   type_stage_txt,  email,     doc1,       date_stage,     requis_txt ) in dico_pre_requis_trié.items():
+        for clef, (stage_row,   requis_row,   type_stage_txt,  email,     doc1,       date_stage,     requis_txt ) in dico_pre_requis_trié.items():
             liste_affichage.append({
                 "clef": clef,
                 "item_requis": requis_row,
                 "type_stage_txt": type_stage_txt,
                 "stagiaire_email": email,
-                "stage_num": numero,
+                "stage_row": stage_row,
                 "doc1": doc1,
                 "date_stage": date_stage,
                 "requis_txt": requis_txt

@@ -13,13 +13,23 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-
+        """
+        items:
+                "clef":                 (requis_txt + numero de stage)
+                "item_requis":       code du PR
+                "type_stage_txt":    PSC, PSE1, ... 
+                "stagiaire_email":   stagiaire user_row
+                "stage_row":         row du stage 
+                "doc1":              img 
+                "date_stage":        date du stage
+                "requis_txt":        intitulé en clair
+        """
         # Any code you write here will run before the form opens.
         self.test_img_just_loaded = False
 
         #self.email = self.item['stagiaire_email']
         self.stagiaire_row = self.item['stagiaire_email']
-        self.stage_num = self.item['stage_num']
+        self.stage_num = self.item['stage_row']                # =================================
 
         txt2 = self.item['type_stage_txt']
         txt1 = self.item['requis_txt']
@@ -45,7 +55,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
         try:
             row = app_tables.pre_requis_stagiaire.get(
-                stage_num=self.item['stage_num'],
+                stage_num=self.item['stage_row'],
                 stagiaire_email=self.item['stagiaire_email'],
                 item_requis=self.item['item_requis']
             )
@@ -72,7 +82,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
                 try:
                     row = app_tables.pre_requis_stagiaire.get(
-                        stage_num=self.item['stage_num'],
+                        stage_num=self.item['stage_row'],
                         stagiaire_email=self.item['stagiaire_email'],
                         item_requis=self.item['item_requis']
                     )
@@ -91,14 +101,14 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
                 result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages du pdf ou msg d'erreur
-                # alert(result)
+                #alert(f"nb de pages du pdf: {result}")
                 if isinstance(result, int) and result > MAX_PAGES:
                     alert("Le PDF est trop grand.")
                 elif result == "Le fichier n'est pas un PDF valide.":
                     alert(result)
                 else:
                     # génération du JPG à partir du pdf bg task en bg task
-                    self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    # on extrait la 1ere page
+                    self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
                     self.timer_1.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
                     # gestion des boutons        
                     self.file_loader_1.visible = False
@@ -118,7 +128,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
         try:
             row = app_tables.pre_requis_stagiaire.get(
-                stage_num=self.item['stage_num'],
+                stage_num=self.item['stage_row'],
                 stagiaire_email=self.item['stagiaire_email'],
                 item_requis=self.item['item_requis']
             )
@@ -150,7 +160,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             anvil.server.call('task_killer',self.task_pdf)
 
             row = app_tables.stagiaires_inscrits.get(q.fetch_only("temp_pr_pdf_img"),
-                                                     stage=self.item['stage_num'],
+                                                     stage=self.item['stage_row'],
                                                      user_email=self.item['stagiaire_email']
                                                     )
             if row:
@@ -209,7 +219,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         else:
             r=alert(f"Voulez-vous enlever ce pré-requis ({self.item['requis_txt']}) pour {self.stagiaire_row['prenom']} {self.stagiaire_row['nom']}?", dismissible=False ,buttons=[("oui",True),("non",False)])
         if r :   # Oui               
-            result = anvil.server.call('pr_stagiaire_del',self.item['stagiaire_email'], self.item['stage_num'], self.item['item_requis'], "destruction" )  # mode  destruction de PR pour ce stgiaire
+            result = anvil.server.call('pr_stagiaire_del',self.item['stagiaire_email'], self.item['stage_row'], self.item['item_requis'], "destruction" )  # mode  destruction de PR pour ce stgiaire
             if not result:
                 alert("Pré Requis non enlevé pour ce stagiaire")
             else:
@@ -217,3 +227,45 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 self.remove_from_parent()
                 
 # Any code you write here will run before the form opens.
+
+    def button_search_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # recherche si stage "BNSSA" existe bien
+        try:
+            row_type_stage = app_tables.codes_stages.get(code="BNSSA")
+        except Exception as e:
+            alert(f"Pas de stage de type 'BNSSA': {e}")
+            return
+            
+        # Recherche d'un diplome éventuel
+        try:
+            row = app_tables.stagiaires_inscrits.get(stage_txt=row_type_stage['code'],
+                                                    user_email=self.item['stagiaire_email'])
+            alert(row['numero'])
+            alert(row['name'])
+           
+            if row['diplome'] is not None:
+                file = row['diplome']  # ACQUUISITION DU LAZY MEDIA
+            else:
+                alert("Pas de document trouvé")
+                return
+        except Exception as e:
+            alert(f"Erreur en recherche de diplôme: {e}")
+            
+        """
+        Une colonne de type Media dans une table Anvil stocke souvent un LazyMedia, qui n’est pas un vrai fichier,
+        c’est un pointeur vers un blob stocké sur le serveur Anvil,
+        il n’est téléchargé que sur demande, quand j'appelle .get_bytes() ou que tu le transmets au client.
+        Si je passes ce LazyMedia à une fonction Python qui attend un vrai fichier, PyPDF2, Pillow, pdf2image, etc., Anvil ne sait pas rendre le contenu → erreur Invalid (Lazy) Media object.
+        Je dois donc le transformer:
+        """
+        # Materialiser le LazyMedia
+        pdf_bytes = file.get_bytes()
+        
+        new_file = anvil.BlobMedia(
+            "application/pdf",
+            pdf_bytes,
+            name=file.name or "diplome.pdf"
+        )
+        # Je peux maintenant l'envoyer pour transformation en jpg
+        self.file_loader_1_change(new_file)

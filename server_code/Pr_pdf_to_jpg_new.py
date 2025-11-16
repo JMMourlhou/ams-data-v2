@@ -44,6 +44,7 @@ def process_pdf_background(pdf_file, stage_row, email_row):
                 user_email=email_row
             )
             if row_stagiaire_inscrit:
+                print(f"Ecriture du PDF en JPG de {row_stagiaire_inscrit}")
                 row_stagiaire_inscrit.update(temp_pr_pdf_img=first_image)
                 print("Première image du PDF enregistrée avec succès.")
         else:
