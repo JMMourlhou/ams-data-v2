@@ -493,44 +493,51 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
         # pour chaque stage, je lis les pré requis en table pré requis stagiaires
         # Création du dict des pr du stagiaire
-        self.dico_pre_requis = {}
+        dico_pre_requis = {}
         for stage in liste0:
-            liste_pr = app_tables.pre_requis_stagiaire.search(stagiaire_email=stage['user_email'],
+            liste_pr = app_tables.pre_requis_stagiaire.search(  tables.order_by("numero", ascending=False),
+                                                                stagiaire_email=stage['user_email'],
                                                                 numero=stage['numero']
                                                                 )
             # création du dico des pré-requis 
             # print(liste_pr[0])
 
             for pr in liste_pr:
-                # acquisition de la date du stage concerné par ce pr (pour prendre le plus récent)
-                date_stage = pr['stage_num']['date_debut']
-                
                 valeur = None
-                clef = f"{date_stage}_{pr['requis_txt']}"
-                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'], date_stage)
+                clef = f"{pr['requis_txt']}_{str(pr['numero'])}"
+                
+                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'], pr['stage_num']['date_debut'], pr['requis_txt'])
                 # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
-                if clef not in self.dico_pre_requis  or  (self.dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
-                    self.dico_pre_requis[clef] = valeur
+                if clef not in dico_pre_requis  or  (dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
+                    dico_pre_requis[clef] = valeur
 
-        # Fin de boucle le dico contient le résumé de tous les pr du stagiare et True si présent        
+        # Fin de boucle le dico dico_pre_requis  contient le résumé de tous les pr du stagiare
+        
+        #tri du dictionaire pre requis sur les clefs 
+        liste_des_clefs = dico_pre_requis.keys()   #création de la liste des clefs du dictionaires prérequis
+        liste_triée_des_clefs = sorted(liste_des_clefs, reverse=False)  # création de la liste triée ORDRE croissant
+        dico_pre_requis_trié = {}
+        for key in liste_triée_des_clefs:
+            dico_pre_requis_trié[key] = dico_pre_requis[key]
         """
-        for clef in self.dico_pre_requis:
-            print (clef,self.dico_pre_requis[clef])
+        for clef in dico_pre_requis_trié:
+            print (clef,dico_pre_requis_trié[clef])
         """
         # Transformation en liste
         # -----------------------------------------------------------
         # Transformation en liste pour affichage dans le RepeatingPanel
         liste_affichage = []
-
-        for clef, (numero, requis_row, type_stage_txt ,email, doc1, date_stage) in self.dico_pre_requis.items():
+        #         n° stage   pr_row        PSC / PSE1 ..    user_row   objet_img   date du stage   intitul du PR
+        for clef, (numero,   requis_row,   type_stage_txt,  email,     doc1,       date_stage,     requis_txt ) in dico_pre_requis_trié.items():
             liste_affichage.append({
-                "requis_txt": clef,
+                "clef": clef,
                 "item_requis": requis_row,
                 "type_stage_txt": type_stage_txt,
                 "stagiaire_email": email,
                 "stage_num": numero,
                 "doc1": doc1,
-                "date_stage": date_stage
+                "date_stage": date_stage,
+                "requis_txt": requis_txt
             })
 
         # Affectation au RepeatingPanel pour affichage

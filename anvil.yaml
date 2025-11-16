@@ -370,7 +370,7 @@ db_schema:
     - admin_ui: {width: 76}
       name: code_txt
       type: string
-    - admin_ui: {width: 68}
+    - admin_ui: {order: 0.5, width: 75}
       name: numero
       type: number
     - admin_ui: {order: 1, width: 179}
