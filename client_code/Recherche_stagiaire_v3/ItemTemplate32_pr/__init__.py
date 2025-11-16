@@ -101,14 +101,15 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
                 result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages du pdf ou msg d'erreur
-                #alert(f"nb de pages du pdf: {result}")
+                alert(f"nb de pages du pdf: {result}")
                 if isinstance(result, int) and result > MAX_PAGES:
                     alert("Le PDF est trop grand.")
                 elif result == "Le fichier n'est pas un PDF valide.":
                     alert(result)
                 else:
-                    # génération du JPG à partir du pdf bg task en bg task
+                    # génération du JPG à partir du pdf bg task en bg task           stage
                     self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
+                    #self.task_pdf = anvil.server.call('process_pdf_background', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
                     self.timer_1.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
                     # gestion des boutons        
                     self.file_loader_1.visible = False
@@ -156,7 +157,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         if self.task_pdf.is_completed(): # lecture de l'image sauvée en BG task
             # lecture de la liste sauvée par bg task ds row du stagiaire_inscrit
-            self.timer_2.interval=0
+            self.timer_1.interval=0
             anvil.server.call('task_killer',self.task_pdf)
 
             row = app_tables.stagiaires_inscrits.get(q.fetch_only("temp_pr_pdf_img"),
@@ -166,18 +167,24 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             if row:
                 # Venant d'une table et non d'un file loader, file est un lazy BlobMedia
                 file=row['temp_pr_pdf_img']
-
-                """  ---------------------------------------------------------------------------------------------------------------------------------------------
-                TRANSFORMATION D'UN LAZY MEDIA (img qui vient d'une table) EN BLOB MEDIA (En sortie du file loader et transformable en SERVER side pour resize...)
-                """
-                media_object = anvil.URLMedia(file.url)
-                # -----------------------------------------------------------------------------------------------------------------------------------------------
+                alert("Fichier temp lu de la table stagiaire inscrit")
+                file = row['temp_pr_pdf_img']   # LazyMedia
+                file = anvil.BlobMedia("image/jpeg", file.get_bytes(), name=file.name)
                 # on sauve par uplink le file media image
+                try:
+                    row_pr = app_tables.pre_requis_stagiaire.get(
+                        stage_num=self.item['stage_row'],
+                        stagiaire_email=self.item['stagiaire_email'],
+                        item_requis=self.item['item_requis']
+                    )
+                except Exception as e:
+                    alert(f"Erreur en relecture du row_pr :{e}")
+                    return
                 self.image_1.source = file
-                result = anvil.server.call('pre_requis',self.item, media_object)  # appel uplink fonction pre_requis sur Pi5
+                result = anvil.server.call('pre_requis',row_pr, file)  # appel uplink fonction pre_requis sur Pi5
                 print(result)
             else:
-                alert('timer_2_tick: row stagiaire inscrit non trouvée')
+                alert('timer_1_tick: row stagiaire inscrit non trouvé')
 
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -236,14 +243,14 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         except Exception as e:
             alert(f"Pas de stage de type 'BNSSA': {e}")
             return
-            
+
         # Recherche d'un diplome éventuel
         try:
             row = app_tables.stagiaires_inscrits.get(stage_txt=row_type_stage['code'],
-                                                    user_email=self.item['stagiaire_email'])
+                                                     user_email=self.item['stagiaire_email'])
             alert(row['numero'])
             alert(row['name'])
-           
+        
             if row['diplome'] is not None:
                 file = row['diplome']  # ACQUUISITION DU LAZY MEDIA
             else:
@@ -251,7 +258,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 return
         except Exception as e:
             alert(f"Erreur en recherche de diplôme: {e}")
-            
+        
         """
         Une colonne de type Media dans une table Anvil stocke souvent un LazyMedia, qui n’est pas un vrai fichier,
         c’est un pointeur vers un blob stocké sur le serveur Anvil,
@@ -267,5 +274,6 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             pdf_bytes,
             name=file.name or "diplome.pdf"
         )
+
         # Je peux maintenant l'envoyer pour transformation en jpg
         self.file_loader_1_change(new_file)
