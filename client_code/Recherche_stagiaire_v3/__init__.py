@@ -502,9 +502,12 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             # print(liste_pr[0])
 
             for pr in liste_pr:
+                # acquisition de la date du stage concerné par ce pr (pour prendre le plus récent)
+                date_stage = pr['stage_num']['date_debut']
+                
                 valeur = None
-                clef = pr['requis_txt']
-                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'])
+                clef = f"{date_stage}_{pr['requis_txt']}"
+                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'], date_stage)
                 # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
                 if clef not in self.dico_pre_requis  or  (self.dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
                     self.dico_pre_requis[clef] = valeur
@@ -519,14 +522,15 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # Transformation en liste pour affichage dans le RepeatingPanel
         liste_affichage = []
 
-        for clef, (numero, requis_row, type_stage_txt ,email, doc1) in self.dico_pre_requis.items():
+        for clef, (numero, requis_row, type_stage_txt ,email, doc1, date_stage) in self.dico_pre_requis.items():
             liste_affichage.append({
                 "requis_txt": clef,
                 "item_requis": requis_row,
                 "type_stage_txt": type_stage_txt,
                 "stagiaire_email": email,
                 "stage_num": numero,
-                "doc1": doc1
+                "doc1": doc1,
+                "date_stage": date_stage
             })
 
         # Affectation au RepeatingPanel pour affichage
