@@ -1,9 +1,5 @@
 components:
-- layout_properties: {grid_position: 'AHUCIQ,GZOZAK'}
-  name: timer_1
-  properties: {}
-  type: Timer
-- layout_properties: {grid_position: 'KCYFXT,ETUAWC'}
+- layout_properties: {grid_position: ''}
   name: label_1
   properties: {align: center, background: 'theme:Primary', bold: true, font_size: 15, foreground: 'theme:Tertiary', icon: '', spacing_above: none, spacing_below: none}
   type: Label
@@ -77,7 +73,7 @@ components:
     name: flow_panel_2_copy
     properties: {align: center, background: 'theme:Primary'}
     type: FlowPanel
-  layout_properties: {grid_position: 'KCYFXT,ETUAWC'}
+  layout_properties: {grid_position: ''}
   name: flow_panel_2
   properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}
   type: FlowPanel
