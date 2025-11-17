@@ -249,7 +249,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def button_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        #alert(self.item['item_requis']['code_pre_requis'])  # est le code du PR recherché ds le stage qui lui coorespond
+        alert(self.item['item_requis']['code_pre_requis'])  # est le code du PR recherché ds le stage qui lui coorespond
         if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC"):
             # j'extrais le type de stage après 'DIP-' (après le 4eme caract, jusquà la fin)
             stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
@@ -259,18 +259,18 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
             
         alert(f"stage recherché: {stage}")  
-        # Recherche d'un diplome éventuel
-        
-        row = app_tables.stagiaires_inscrits.get(stage_txt=stage,
-                                                user_email=self.item['stagiaire_email'])
-        if row:
-            alert(row['numero'])
-            alert(row['name'])
-            
-            if row['diplome'] is not None:
-                file = row['diplome']  # ACQUUISITION DU LAZY MEDIA
-                # envoi en traitement PDF
-                self.traitement_pdf(file)
+        # Recherche d'un diplome éventuel dans table stagiaires_inscrits
+        rows = app_tables.stagiaires_inscrits.search(tables.order_by("numero", ascending=False),    # le plus récent d'abord
+                                                    stage_txt=stage,
+                                                    user_email=self.item['stagiaire_email'])
+        alert(f"nb de rows: {len(rows)}")
+        if len(rows)>=1:  # il peut y avoir plusieurs stages ex: plusieurs inscriptions au BNSSA avec le rattrapage, plusieurs FC 
+            for row in rows:
+                if row['diplome'] is not None:
+                    file = row['diplome']  # ACQUISITION DU LAZY MEDIA
+                    # envoi en traitement PDF
+                    self.traitement_pdf(file)
+                    continue
         else:
             alert(f"Pas de doc '{self.item['item_requis']['code_pre_requis'].strip()}' trouvé dans les stages AMS précédents")
         
