@@ -319,7 +319,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         # =========================================================================================================================================
         
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
-        nb_pages = anvil.server.call("pre_requis_from_pdf", new_file, result)
+        nb_pages = anvil.server.call("pre_requis_from_pdf", new_file, result, 'unik')  # unik indique qu'il n'y aura que la 1er page à prendre même s'ily a plusieurs pages
         print(f"{nb_pages} document sauvé !")
 
         # on affiche le doc:
