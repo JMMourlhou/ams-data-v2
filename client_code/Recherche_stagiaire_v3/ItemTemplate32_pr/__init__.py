@@ -53,7 +53,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         #print(f"<{self.item['item_requis']['code_pre_requis'][0:6].strip()}>")
         #print(f"<{self.item['item_requis']['code_pre_requis'].strip()}>")
         # si on recherche un diplome ou une attestation
-        if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC") or self.item['item_requis']['code_pre_requis'][0:6].startswith("ATT-FC"): 
+        if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC") or self.item['item_requis']['code_pre_requis'].strip().startswith("ATT-FC"): 
             self.button_search.visible = True
         else:
             self.button_search.visible = False
@@ -249,26 +249,31 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def button_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        alert(self.item['type_stage_txt'])  # est le code du stgae concerné par ce PR
-
+        #alert(self.item['item_requis']['code_pre_requis'])  # est le code du PR recherché ds le stage qui lui coorespond
+        if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC"):
+            # j'extrais le type de stage après 'DIP-' (après le 4eme caract, jusquà la fin)
+            stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
+            
+        if self.item['item_requis']['code_pre_requis'].strip().startswith("ATT-"):
+            # j'extrais le type de stage après 'ATT-'
+            stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
+            
+        alert(f"stage recherché: {stage}")  
         # Recherche d'un diplome éventuel
-        try:
-            row = app_tables.stagiaires_inscrits.get(stage_txt=self.item['type_stage_txt'],
-                                                     user_email=self.item['stagiaire_email'])
+        
+        row = app_tables.stagiaires_inscrits.get(stage_txt=stage,
+                                                user_email=self.item['stagiaire_email'])
+        if row:
             alert(row['numero'])
             alert(row['name'])
-        
+            
             if row['diplome'] is not None:
                 file = row['diplome']  # ACQUUISITION DU LAZY MEDIA
-            else:
-                alert("Pas de document trouvé")
-                return
-        except Exception as e:
-            alert(f"Erreur en recherche de diplôme: {e}")
-        # envoi en traitement PDF
-        self.traitement_pdf(file)
-
-            
+                # envoi en traitement PDF
+                self.traitement_pdf(file)
+        else:
+            alert(f"Pas de doc '{self.item['item_requis']['code_pre_requis'].strip()}' trouvé dans les stages AMS précédents")
+        
     def traitement_pdf(self, lazy_media, **event_args):   
         start = French_zone.french_zone_time()
         """
@@ -312,7 +317,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             print(f"student row: {val[1]}")
             print(f"pr_row: {val[2]}")
             print()
-
+        #                                                                          Fin de Création du dico
         # =========================================================================================================================================
         
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
