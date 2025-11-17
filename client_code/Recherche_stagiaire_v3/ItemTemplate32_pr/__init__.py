@@ -22,7 +22,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 "stage_row":         row du stage 
                 "doc1":              img 
                 "date_stage":        date du stage
-                "requis_txt":        intitulé en clair
+                "requis_txt":        intitulé en clair du PR
         """
         # Any code you write here will run before the form opens.
         self.test_img_just_loaded = False
@@ -49,9 +49,16 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             self.file_loader_1.visible = True
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
+            
+        #print(f"<{self.item['item_requis']['code_pre_requis'][0:6].strip()}>")
+        #print(f"<{self.item['item_requis']['code_pre_requis'].strip()}>")
+        # si on recherche un diplome ou une attestation
+        if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC") or self.item['item_requis']['code_pre_requis'][0:6].startswith("ATT-FC"): 
+            self.button_search.visible = True
+        else:
+            self.button_search.visible = False
 
-        #if self.item['item_requis']['code_pre_requis'] == "BNSSA" 
-
+            
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
@@ -242,19 +249,14 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def button_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # recherche si stage "BNSSA" existe bien
-        try:
-            row_type_stage = app_tables.codes_stages.get(code="BNSSA")
-        except Exception as e:
-            alert(f"Pas de stage de type 'BNSSA': {e}")
-            return
+        alert(self.item['type_stage_txt'])  # est le code du stgae concerné par ce PR
 
         # Recherche d'un diplome éventuel
         try:
-            row = app_tables.stagiaires_inscrits.get(stage_txt=row_type_stage['code'],
+            row = app_tables.stagiaires_inscrits.get(stage_txt=self.item['type_stage_txt'],
                                                      user_email=self.item['stagiaire_email'])
-            #alert(row['numero'])
-            #alert(row['name'])
+            alert(row['numero'])
+            alert(row['name'])
         
             if row['diplome'] is not None:
                 file = row['diplome']  # ACQUUISITION DU LAZY MEDIA
