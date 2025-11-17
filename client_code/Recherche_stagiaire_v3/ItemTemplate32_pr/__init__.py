@@ -50,6 +50,8 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
 
+        #if self.item['item_requis']['code_pre_requis'] == "BNSSA" 
+
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
