@@ -16,7 +16,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         """
         items:
                 "clef":                 (requis_txt + numero de stage)
-                "item_requis":       code du PR
+                "item_requis":       row du PR
                 "type_stage_txt":    PSC, PSE1, ... 
                 "stagiaire_email":   stagiaire user_row
                 "stage_row":         row du stage 
@@ -98,15 +98,17 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 self.button_visu.visible = True  
                 self.button_del.visible = True 
             elif file_extension == ".pdf":      
-                MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
+                MAX_PAGES = 50  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
                 # Appelle la fonction serveur pour vérifier le nombre de pages
                 result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages du pdf ou msg d'erreur
-                alert(f"nb de pages du pdf: {result}")
+                #alert(f"nb de pages du pdf: {result}")
                 if isinstance(result, int) and result > MAX_PAGES:
                     alert("Le PDF est trop grand.")
                 elif result == "Le fichier n'est pas un PDF valide.":
                     alert(result)
                 else:
+                    
+                    
                     # génération du JPG à partir du pdf bg task en bg task           stage
                     self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
                     #self.task_pdf = anvil.server.call('process_pdf_background', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
@@ -120,6 +122,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                     end = French_zone.french_zone_time()
                     temps = f"Temps de traitement image: {end-start}"
                     print(temps)
+                    
             else:  # erreur: le format choisit n'est pas un fichierimage ou pdf
                 alert(f"le type de fichier doit être un de ces types : {list_possible}")
 
@@ -248,8 +251,8 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         try:
             row = app_tables.stagiaires_inscrits.get(stage_txt=row_type_stage['code'],
                                                      user_email=self.item['stagiaire_email'])
-            alert(row['numero'])
-            alert(row['name'])
+            #alert(row['numero'])
+            #alert(row['name'])
         
             if row['diplome'] is not None:
                 file = row['diplome']  # ACQUUISITION DU LAZY MEDIA
@@ -258,7 +261,12 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 return
         except Exception as e:
             alert(f"Erreur en recherche de diplôme: {e}")
-        
+        # envoi en traitement PDF
+        self.traitement_pdf(file)
+
+            
+    def traitement_pdf(self, lazy_media, **event_args):   
+        start = French_zone.french_zone_time()
         """
         Une colonne de type Media dans une table Anvil stocke souvent un LazyMedia, qui n’est pas un vrai fichier,
         c’est un pointeur vers un blob stocké sur le serveur Anvil,
@@ -267,13 +275,65 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         Je dois donc le transformer:
         """
         # Materialiser le LazyMedia
-        pdf_bytes = file.get_bytes()
+        pdf_bytes = lazy_media.get_bytes()
         
         new_file = anvil.BlobMedia(
             "application/pdf",
             pdf_bytes,
-            name=file.name or "diplome.pdf"
+            name=lazy_media.name or "diplome.pdf"
         )
 
-        # Je peux maintenant l'envoyer pour transformation en jpg
-        self.file_loader_1_change(new_file)
+        # Je peux maintenant l'envoyer pour traitement en UPLINK:
+        # ======================================================================================================== CREATION DU DICO
+        # acquisition du PR_row
+        try:
+            pr_row = app_tables.pre_requis.get(code_pre_requis=self.item['item_requis']['code_pre_requis'])
+        except Exception as e:
+            alert(f"PR_row non trouvé en table 'pre_requis': {e}")
+            return
+            
+        result={}        
+        cle = 1
+        value = ( 
+            self.item['stage_row'] ,        # stage row
+            self.item['stagiaire_email'],   # student row
+            pr_row                          # pr_row
+        )
+        result[str(cle)]=value    # clé doit être type str qd on envoi en server side
+        
+        # vérification : nb de pages du pdf = nb de clés du dico result
+        for clef,val in result.items():
+            print(f"{clef}")
+            print(f"stage row: {val[0]}")
+            print(f"student row: {val[1]}")
+            print(f"pr_row: {val[2]}")
+            print()
+
+        # =========================================================================================================================================
+        
+        # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
+        nb_pages = anvil.server.call("pre_requis_from_pdf", new_file, result)
+        print(f"{nb_pages} document sauvé !")
+
+        # on affiche le doc:
+        try:
+            row_pr = app_tables.pre_requis_stagiaire.get(
+                stage_num=self.item['stage_row'],
+                stagiaire_email=self.item['stagiaire_email'],
+                item_requis=self.item['item_requis']
+            )
+        except Exception as e:
+            alert(f"Erreur en relecture du row_pr :{e}")
+            return
+        self.image_1.source = row_pr['doc1']
+        
+        # gestion des boutons        
+        self.file_loader_1.visible = False
+        self.button_rotation.visible = True
+        self.button_visu.visible = True  
+        self.button_del.visible = True 
+
+        end = French_zone.french_zone_time()
+        temps = f"Temps de traitement image: {end-start}"
+        print(temps)
+        
