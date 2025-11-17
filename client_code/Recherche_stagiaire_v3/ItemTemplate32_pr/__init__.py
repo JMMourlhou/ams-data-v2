@@ -116,8 +116,6 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 elif result == "Le fichier n'est pas un PDF valide.":
                     alert(result)
                 else:
-                    
-                    
                     # génération du JPG à partir du pdf bg task en bg task           stage
                     self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
                     #self.task_pdf = anvil.server.call('process_pdf_background', file, self.item['stage_row'], self.item['stagiaire_email'])    # on extrait la 1ere page
@@ -249,7 +247,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def button_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        alert(self.item['item_requis']['code_pre_requis'])  # est le code du PR recherché ds le stage qui lui coorespond
+        #alert(self.item['item_requis']['code_pre_requis'])  # est le code du PR recherché ds le stage qui lui coorespond
         if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC"):
             # j'extrais le type de stage après 'DIP-' (après le 4eme caract, jusquà la fin)
             stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
@@ -258,13 +256,13 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             # j'extrais le type de stage après 'ATT-'
             stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
             
-        alert(f"stage recherché: {stage}")  
+        #alert(f"stage recherché: {stage}")  
         # Recherche d'un diplome éventuel dans table stagiaires_inscrits
         rows = app_tables.stagiaires_inscrits.search(tables.order_by("numero", ascending=False),    # le plus récent d'abord
                                                     stage_txt=stage,
                                                     user_email=self.item['stagiaire_email'])
-        alert(f"nb de rows: {len(rows)}")
-        if len(rows)>=1:  # il peut y avoir plusieurs stages ex: plusieurs inscriptions au BNSSA avec le rattrapage, plusieurs FC 
+        #alert(f"nb de rows: {len(rows)}")
+        if len(rows)>=1:  # il peut y avoir plusieurs stages ex: plusieurs inscriptions au BNSSA avec le rattrapage, plusieurs FC PSE ...
             for row in rows:
                 if row['diplome'] is not None:
                     file = row['diplome']  # ACQUISITION DU LAZY MEDIA
@@ -335,7 +333,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             alert(f"Erreur en relecture du row_pr :{e}")
             return
         self.image_1.source = row_pr['doc1']
-        
+        self.button_search.visible = False
         # gestion des boutons        
         self.file_loader_1.visible = False
         self.button_rotation.visible = True
