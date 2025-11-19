@@ -189,8 +189,18 @@ class RowTemplate3(RowTemplate3Template):
             return
         # envoi vers pi5 par uplink du num_stage et de la liste des stagiaires
         # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/export-excel/export_uplink.py
-        message = anvil.server.call('export_xls', self.item['numero'], self.item['code_txt'], self.item['date_debut'], self.liste_stagiaires, self.mail)
-        alert(message)
+        result = anvil.server.call('export_xls', self.item['numero'], self.item['code_txt'], self.item['date_debut'], self.liste_stagiaires, self.mail)
+        alert(result[2])
+        
+        r=alert("Voulez-vous le télécharger  ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        if r:
+            media = result[0]
+            media_name = result[1]
+            file_named = anvil.BlobMedia("application/pdf", media.get_bytes(), name=media_name)
+            anvil.media.download(file_named)
+            alert("Trombinoscope html téléchargé")
+        else:
+            alert("Pdf du trombi html non trouvé")
 
     def text_box_mail_change(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
