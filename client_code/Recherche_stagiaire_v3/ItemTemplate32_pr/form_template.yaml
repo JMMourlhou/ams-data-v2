@@ -1,81 +1,89 @@
 components:
-- layout_properties: {grid_position: ''}
-  name: label_1
-  properties: {align: center, background: 'theme:Primary', bold: true, font_size: 15, foreground: 'theme:Tertiary', icon: '', spacing_above: none, spacing_below: none}
-  type: Label
 - components:
+  - layout_properties: {grid_position: 'YWTYHD,ZUQPBF'}
+    name: label_en_tete_pr
+    properties: {align: center, background: 'theme:On Primary Container', bold: true, font_size: 18, foreground: 'theme:On Primary', icon: '', spacing_above: none, spacing_below: none}
+    type: Label
   - components:
-    - data_bindings: []
-      event_bindings: {mouse_down: image_1_mouse_down}
-      layout_properties: {full_width_row: true, grid_position: 'LSIOOU,UOWYNL'}
-      name: image_1
-      properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium}
-      type: Image
-    - event_bindings: {click: button_rotation_click}
-      layout_properties: {grid_position: 'OHXNCT,MMXWJX'}
-      name: button_rotation
-      properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
-      type: Button
-    layout_properties: {expand: false, width: 210.978}
-    name: column_panel_2
-    properties: {background: 'theme:On Primary Container', role: tonal-card}
-    type: ColumnPanel
-  - components:
-    - event_bindings: {change: file_loader_1_change}
-      name: file_loader_1
-      properties:
-        align: center
-        background: theme:Primary
-        bold: false
-        border: ''
-        enabled: true
-        file: null
-        file_types: ''
-        files: []
-        font: ''
-        font_size: 14
-        foreground: theme:On Primary
-        icon: fa:upload
-        icon_align: left
-        italic: false
-        multiple: false
-        role: outlined-button
-        show_state: true
-        spacing_above: small
-        spacing_below: small
-        text: Choisir
-        tooltip: ''
-        underline: false
-        visible: false
-      type: FileLoader
-    - data_bindings: []
-      event_bindings: {click: button_del_pour_ce_stagiaire_click}
-      layout_properties: {}
-      name: button_del_pour_ce_stagiaire
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:Tertiary', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
-      type: Button
-    - event_bindings: {click: button_visu_click}
-      layout_properties: {}
-      name: button_visu
-      properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:binoculars', icon_align: left, role: filled-button, text: '   Voir / PDF', visible: false}
-      type: Button
-    - data_bindings: []
-      event_bindings: {click: button_del_click}
-      layout_properties: {}
-      name: button_del
-      properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
-      type: Button
-    - event_bindings: {click: button_search_click}
-      layout_properties: {}
-      name: button_search
-      properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:search-plus', text: ''}
-      type: Button
-    name: flow_panel_2_copy
-    properties: {align: center, background: 'theme:Primary'}
+    - components:
+      - data_bindings: []
+        event_bindings: {mouse_down: image_1_mouse_down}
+        layout_properties: {full_width_row: true, grid_position: 'LSIOOU,UOWYNL'}
+        name: image_1
+        properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium}
+        type: Image
+      - event_bindings: {click: button_rotation_click}
+        layout_properties: {grid_position: 'OHXNCT,MMXWJX'}
+        name: button_rotation
+        properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
+        type: Button
+      layout_properties: {expand: false, width: 210.978}
+      name: column_panel_2
+      properties: {background: 'theme:On Primary Container', role: tonal-card, spacing_above: medium}
+      type: ColumnPanel
+    - components:
+      - event_bindings: {change: file_loader_1_change}
+        name: file_loader_1
+        properties:
+          align: center
+          background: theme:Primary
+          bold: false
+          border: ''
+          enabled: true
+          file: null
+          file_types: ''
+          files: []
+          font: ''
+          font_size: 14
+          foreground: theme:On Primary
+          icon: fa:upload
+          icon_align: left
+          italic: false
+          multiple: false
+          role: outlined-button
+          show_state: true
+          spacing_above: small
+          spacing_below: small
+          text: Choisir
+          tooltip: ''
+          underline: false
+          visible: false
+        type: FileLoader
+      - data_bindings: []
+        event_bindings: {click: button_del_pour_ce_stagiaire_click}
+        layout_properties: {}
+        name: button_del_pour_ce_stagiaire
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:Tertiary', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
+        type: Button
+      - event_bindings: {click: button_visu_click}
+        layout_properties: {}
+        name: button_visu
+        properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:binoculars', icon_align: left, role: filled-button, text: '   Voir / PDF', visible: false}
+        type: Button
+      - data_bindings: []
+        event_bindings: {click: button_del_click}
+        layout_properties: {}
+        name: button_del
+        properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
+        type: Button
+      - event_bindings: {click: button_search_click}
+        layout_properties: {}
+        name: button_search
+        properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:search-plus', text: ''}
+        type: Button
+      name: flow_panel_2_copy
+      properties: {align: center, background: 'theme:Primary'}
+      type: FlowPanel
+    layout_properties: {grid_position: 'CMSCBX,VQAHRE'}
+    name: flow_panel_2
+    properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}
     type: FlowPanel
-  layout_properties: {grid_position: ''}
-  name: flow_panel_2
-  properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}
-  type: FlowPanel
+  layout_properties: {grid_position: 'FWEMXE,YDBKIW'}
+  name: column_panel_1
+  properties:
+    role: outlined-card
+    spacing:
+      padding: ['10', '5', '10', '5']
+  type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

@@ -31,9 +31,10 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         self.stagiaire_row = self.item['stagiaire_email']
         self.stage_num = self.item['stage_row']                # =================================
 
-        txt2 = self.item['type_stage_txt']
-        txt1 = self.item['requis_txt']
-        self.label_1.text = txt1 +" / "+ txt2
+        txt0 = self.item['stage_row']['code_txt']+" / "  # le stage
+        txt1 = self.item['stagiaire_email']['nom']+"."+self.item['stagiaire_email']['prenom'][0]+"   /   "
+        txt2 = self.item['requis_txt']  # l'intitulé
+        self.label_en_tete_pr.text = txt0 +txt1 + txt2
 
         if self.item['doc1'] is not None:
             self.image_1.source = self.item['doc1']           

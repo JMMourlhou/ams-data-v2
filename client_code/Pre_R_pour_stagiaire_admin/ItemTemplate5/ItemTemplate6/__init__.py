@@ -18,8 +18,8 @@ class ItemTemplate6(ItemTemplate6Template):
         self.row_id = self.item.get_id()  # pour sauver l'image traitée
         self.test_img_just_loaded = False  # pour savoir si l'image vient d'être chargée (voir visu image)
 
-        txt0 = "Pour le " + self.item['code_txt']+" de "  # le stage
-        txt1 = self.item['nom']+"."+self.item['prenom'][0]+" : "
+        txt0 = self.item['code_txt']+" / "  # le stage
+        txt1 = self.item['nom']+"."+self.item['prenom'][0]+"   /   "
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
 
@@ -39,6 +39,11 @@ class ItemTemplate6(ItemTemplate6Template):
         self.stage_num =   self.item['stage_num'] 
         self.item_requis = self.item['item_requis']
         self.email =       self.item['stagiaire_email']
+
+        if (self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC") or self.item['item_requis']['code_pre_requis'].strip().startswith("ATT-FC")) and self.image_1.source is None: 
+            self.button_search.visible = True
+        else:
+            self.button_search.visible = False
 
     def file_loader_1_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -64,28 +69,7 @@ class ItemTemplate6(ItemTemplate6Template):
                 temps = f"Temps de traitement image: {end-start}"
                 print(temps)
             elif file_extension == ".pdf":      
-                MAX_PAGES = 10  # limite maximale de pages, pour empêcher un pdf trop gros, ce qui planterait la mémoire du Pi5
-                # Appelle la fonction serveur pour vérifier le nombre de pages
-                result = anvil.server.call('get_pdf_page_count', file)   # result est nb pages du pdf ou msg d'erreur
-                # alert(result)
-                if isinstance(result, int) and result > MAX_PAGES:
-                    alert("Le PDF est trop grand.")
-                elif result == "Le fichier n'est pas un PDF valide.":
-                    alert(result)
-                else:
-                    # génération du JPG à partir du pdf bg task en bg task
-                    #self.task_pdf = anvil.server.call('pdf_into_jpg_bgtasked', file, self.item['stage_num'], self.item['stagiaire_email'])    
-                    self.task_pdf = anvil.server.call('process_pdf', file, self.item['stage_num'], self.item['stagiaire_email'])    # on extrait la 1ere page
-                    self.timer_2.interval=0.05   # le fichier jpg généré est extrait de la colonne temporaire de table stagiaire inscrit en fin de bg task (voir timer_2_tick)
-                    # gestion des boutons        
-                    self.file_loader_1.visible = False
-                    self.button_rotation.visible = True
-                    self.button_visu.visible = True  
-                    self.button_del.visible = True 
-
-                    end = French_zone.french_zone_time()
-                    temps = f"Temps de traitement image: {end-start}"
-                    print(temps)
+                self.traitement_pdf(file)
             else:  # erreur: le format choisit n'est pas un fichierimage ou pdf
                 alert(f"le type de fichier doit être un de ces types : {list_possible}")
 
@@ -115,9 +99,9 @@ class ItemTemplate6(ItemTemplate6Template):
             self.button_rotation.visible = False
         else:
             alert("Pré Requis non enlevé")
-
+    """
     def timer_2_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        
         if self.task_pdf.is_completed(): # lecture de l'image sauvée en BG task
             # lecture de la liste sauvée par bg task ds row du stagiaire_inscrit
             self.timer_2.interval=0
@@ -131,9 +115,9 @@ class ItemTemplate6(ItemTemplate6Template):
                 # Venant d'une table et non d'un file loader, file est un lazy BlobMedia
                 file=row['temp_pr_pdf_img']
 
-                """  ---------------------------------------------------------------------------------------------------------------------------------------------
+                " ---------------------------------------------------------------------------------------------------------------------------------------------
                 TRANSFORMATION D'UN LAZY MEDIA (img qui vient d'une table) EN BLOB MEDIA (En sortie du file loader et transformable en SERVER side pour resize...)
-                """
+                "
                 media_object = anvil.URLMedia(file.url)
                 # -----------------------------------------------------------------------------------------------------------------------------------------------
                 # on sauve par uplink le file media image
@@ -142,7 +126,7 @@ class ItemTemplate6(ItemTemplate6Template):
                 print(result)
             else:
                 alert('timer_2_tick: row stagiaire inscrit non trouvée')
-
+    """
     def button_rotation_click(self, **event_args):
         """This method is called when the button is clicked"""
         row = app_tables.pre_requis_stagiaire.get(
@@ -195,6 +179,106 @@ class ItemTemplate6(ItemTemplate6Template):
             else:
                 alert("Pré Requis enlevé pour ce stagiaire")
                 open_form('Pre_R_pour_stagiaire_admin', self.item['numero'])
+
+    def traitement_pdf(self, lazy_media, **event_args):   
+        start = French_zone.french_zone_time()
+        """
+        Une colonne de type Media dans une table Anvil stocke souvent un LazyMedia, qui n’est pas un vrai fichier,
+        c’est un pointeur vers un blob stocké sur le serveur Anvil,
+        il n’est téléchargé que sur demande, quand j'appelle .get_bytes() ou que tu le transmets au client.
+        Si je passes ce LazyMedia à une fonction Python qui attend un vrai fichier, PyPDF2, Pillow, pdf2image, etc., Anvil ne sait pas rendre le contenu → erreur Invalid (Lazy) Media object.
+        Je dois donc le transformer:
+        """
+        # Materialiser le LazyMedia
+        pdf_bytes = lazy_media.get_bytes()
+
+        new_file = anvil.BlobMedia(
+            "application/pdf",
+            pdf_bytes,
+            name=lazy_media.name or "diplome.pdf"
+        )
+
+        # Je peux maintenant l'envoyer pour traitement en UPLINK:
+        # ======================================================================================================== CREATION DU DICO
+        # acquisition du PR_row
+        try:
+            pr_row = app_tables.pre_requis.get(code_pre_requis=self.item['item_requis']['code_pre_requis'])
+        except Exception as e:
+            alert(f"PR_row non trouvé en table 'pre_requis': {e}")
+            return
+
+        result={}        
+        cle = 1
+        value = ( 
+            self.item['stage_num'] ,        # stage row
+            self.item['stagiaire_email'],   # student row
+            pr_row                          # pr_row
+        )
+        result[str(cle)]=value    # clé doit être type str qd on envoi en server side
+
+        # vérification : nb de pages du pdf = nb de clés du dico result
+        for clef,val in result.items():
+            print(f"{clef}")
+            print(f"stage row: {val[0]}")
+            print(f"student row: {val[1]}")
+            print(f"pr_row: {val[2]}")
+            print()
+        #                                                                          Fin de Création du dico
+        # =========================================================================================================================================
+
+        # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
+        nb_pages = anvil.server.call("pre_requis_from_pdf", new_file, result, 'unik')  # unik indique qu'il n'y aura que la 1er page à prendre même s'ily a plusieurs pages
+        print(f"{nb_pages} document sauvé !")
+
+        # on affiche le doc:
+        try:
+            row_pr = app_tables.pre_requis_stagiaire.get(
+                stage_num=self.item['stage_num'],
+                stagiaire_email=self.item['stagiaire_email'],
+                item_requis=self.item['item_requis']
+            )
+        except Exception as e:
+            alert(f"Erreur en relecture du row_pr :{e}")
+            return
+        self.image_1.source = row_pr['doc1']
+        # gestion des boutons        
+        self.file_loader_1.visible = False
+        self.button_search.visible = False
+        self.button_rotation.visible = True
+        self.button_visu.visible = True  
+        self.button_del.visible = True 
+
+        end = French_zone.french_zone_time()
+        temps = f"Temps de traitement image: {end-start}"
+        print(temps)
+
+    def button_search_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        #alert(self.item['item_requis']['code_pre_requis'])  # est le code du PR recherché ds le stage qui lui coorespond
+        if self.item['item_requis']['code_pre_requis'].strip() in ("DIP-BNSSA", "DIP-PSE1", "DIP-PSE2", "DIP-PSC"):
+            # j'extrais le type de stage après 'DIP-' (après le 4eme caract, jusquà la fin)
+            stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
+
+        if self.item['item_requis']['code_pre_requis'].strip().startswith("ATT-"):
+            # j'extrais le type de stage après 'ATT-'
+            stage = self.item['item_requis']['code_pre_requis'].strip()[4:]
+
+        #alert(f"stage recherché: {stage}")  
+        # Recherche d'un diplome éventuel dans table stagiaires_inscrits
+        rows = app_tables.stagiaires_inscrits.search(tables.order_by("numero", ascending=False),    # le plus récent d'abord
+                                                     stage_txt=stage,
+                                                     user_email=self.item['stagiaire_email'])
+        #alert(f"nb de rows: {len(rows)}")
+        if len(rows)>=1:  # il peut y avoir plusieurs stages ex: plusieurs inscriptions au BNSSA avec le rattrapage, plusieurs FC PSE ...
+            for row in rows:
+                if row['diplome'] is not None:
+                    file = row['diplome']  # ACQUISITION DU LAZY MEDIA
+                    # envoi en traitement PDF
+                    self.traitement_pdf(file)
+                    continue
+        else:
+            alert(f"Pas de doc '{self.item['item_requis']['code_pre_requis'].strip()}' trouvé dans les stages AMS précédents")
+
 
 
             
