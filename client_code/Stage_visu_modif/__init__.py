@@ -17,7 +17,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         self.bg_task = bg_task
         
         self.f = get_open_form()   # récupération de la forme mère pour revenir ds la forme appelante
-        print("form mère atteingnable (en modif): ", self.f)
+        #print("form mère atteingnable (en modif): ", self.f)
       
         # Any code you write here will run before the form opens.
         if num_stage == 0:

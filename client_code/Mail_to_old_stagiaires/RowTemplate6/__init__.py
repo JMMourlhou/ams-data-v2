@@ -69,7 +69,7 @@ class RowTemplate6(RowTemplate6Template):
         # récupération de la forme mère par  self.f = get_open_form() en init
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
         nb = int(self.f.label_nb_select.text)
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
         
         # Récup de l'id pour MAJ de l'item
         result, nb = anvil.server.call("maj_selection",self.item,self.check_box_selection.checked, nb)

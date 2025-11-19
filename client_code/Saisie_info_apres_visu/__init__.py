@@ -19,7 +19,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         
         # Any code you write here will run before the form opens.
         self.f = get_open_form()   # récupération de la forme mère pour revenir ds la forme appelante
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
         
         # Drop down mode de financemnt
         self.drop_down_fi.items = [(r['intitule_fi'], r) for r in app_tables.mode_financement.search()]

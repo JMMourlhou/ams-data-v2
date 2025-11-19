@@ -13,7 +13,7 @@ class ItemTemplate1(ItemTemplate1Template):
         self.init_components(**properties)
         # récupération de la forme mère par  self.f = get_open_form() en init
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
         
         # Any code you write here will run before the form opens.
         row=app_tables.pre_requis.get(code_pre_requis=self.item)

@@ -189,7 +189,7 @@ class RowTemplate3(RowTemplate3Template):
             return
         # envoi vers pi5 par uplink du num_stage et de la liste des stagiaires
         # module python sur Pi5, répertoire /mnt/ssd-prog/home/jmm/AMS_data/uplinks/export-excel/export_uplink.py
-        message = anvil.server.call('export_xls', self.item['numero'], self.item['code_txt'], self.item['date_debut'] , self.liste_stagiaires, self.mail)
+        message = anvil.server.call('export_xls', self.item['numero'], self.item['code_txt'], self.item['date_debut'], self.liste_stagiaires, self.mail)
         alert(message)
 
     def text_box_mail_change(self, **event_args):

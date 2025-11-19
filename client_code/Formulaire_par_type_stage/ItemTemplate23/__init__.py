@@ -15,7 +15,7 @@ class ItemTemplate23(ItemTemplate23Template):
         # Any code you write here will run before the form opens.
         # récupération de la forme mère par  self.f = get_open_form() en init
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
         
         # Any code you write here will run before the form opens.
         self.text_box_1.text = "  " + self.item[0]

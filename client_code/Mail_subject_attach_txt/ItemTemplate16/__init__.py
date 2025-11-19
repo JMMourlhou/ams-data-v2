@@ -58,7 +58,7 @@ class ItemTemplate16(ItemTemplate16Template):
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        print("form mère atteingnable (en modif): ", self.f) 
+        #print("form mère atteingnable (en modif): ", self.f) 
         
         self.f.list_attach = [] # réinitialisation de la liste pour le repeating panel
         del  self.f.dico_attachements[self.item[0]]
