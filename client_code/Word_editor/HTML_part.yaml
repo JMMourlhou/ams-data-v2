@@ -1,0 +1,13 @@
+components: []
+container:
+  properties:
+    html: |-
+      <div id="editor" contenteditable="true"
+          style="border:1px solid #999; min-height:250px; padding:10px;">
+          <p>Texte:</p>
+      </div>
+  type: HtmlTemplate
+custom_component: true
+custom_component_container: false
+is_package: false
+toolbox_item: {hidden: false, title: Zone Texte HTML}
