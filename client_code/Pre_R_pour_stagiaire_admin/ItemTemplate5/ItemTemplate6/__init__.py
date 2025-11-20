@@ -17,9 +17,14 @@ class ItemTemplate6(ItemTemplate6Template):
         self.f = get_open_form()
         self.row_id = self.item.get_id()  # pour sauver l'image traitée
         self.test_img_just_loaded = False  # pour savoir si l'image vient d'être chargée (voir visu image)
-
         txt0 = self.item['code_txt']+" / "  # le stage
-        txt1 = self.item['nom']+"."+self.item['prenom'][0]+"   /   "
+        try:
+            txt1 = self.item['nom']+"."+self.item['prenom'][0]+"   /   "    
+        except:
+            txt1 = self.item['nom']      # si il y a eu un pb en inscription le prénom peut être vide en table Pre_Requis_Stagiaire
+            print()
+            print(f"Erreur non blocante: le prénom de {self.item['nom']} est 'None' ds la table Pre_Requis_Stagiaire")
+            print()
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
 

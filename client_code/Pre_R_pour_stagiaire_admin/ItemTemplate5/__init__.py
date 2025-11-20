@@ -21,13 +21,10 @@ class ItemTemplate5(ItemTemplate5Template):
 
         if self.button_nom.background == "theme:Tertiary":
             self.button_nom.background = "red"
-            #self.button_nom.foreground = "black"
-        else:
-            self.button_nom.background = "theme:Tertiary"
-            #self.button_nom.foreground = "black"
+        
         liste_pr = app_tables.pre_requis_stagiaire.search(
             tables.order_by("requis_txt", ascending=True),
-            q.fetch_only("item_requis", "thumb", "stagiaire_email"),
+            q.fetch_only("item_requis", "doc1", "stagiaire_email"),
             stagiaire_email = self.item['user_email'],        # user_email row
             stage_num = self.item['stage']                    # stage      row
         )

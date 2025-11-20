@@ -17,7 +17,6 @@ class Pre_R_pour_stagiaire_admin(Pre_R_pour_stagiaire_adminTemplate):
         # Any code you write here will run before the form opens.
         #lecture du stage  
         row_stage = app_tables.stages.get(numero=num_stage)
-
         self.label_1.text = "Gestion des pré-Requis, stage " + row_stage['code']['code'] + " du " + str(row_stage['date_debut'].strftime("%d/%m/%Y"))
 
         # search des stagiaires de ce stage en SERVEUR
