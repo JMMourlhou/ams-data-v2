@@ -7,15 +7,19 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.js
 
+# On force execCommand à utiliser des styles CSS inline
 anvil.js.window.document.execCommand("styleWithCSS", False, True)
+
 
 class Word_editor(Word_editorTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-
         # Any code you write here will run before the form opens.
 
+    # ------------------------
+    # BOLD / ITALIC / UNDERLINE
+    # ------------------------
     def button_bold_click(self, **event_args):
         """This method is called when the button is clicked"""
         anvil.js.window.document.execCommand("bold")
@@ -28,15 +32,15 @@ class Word_editor(Word_editorTemplate):
         """This method is called when the button is clicked"""
         anvil.js.window.document.execCommand("underline")
 
-
-    
+    # ------------------------
+    # FONT SIZE
+    # ------------------------
     def drop_down_font_size_change(self, **event_args):
         size_px = self.drop_down_font_size.selected_value
         if not size_px:
             return
-    
+
         # 1. Applique la taille interne : valeurs 1 à 7 (temporaire)
-        # On mappe nos tailles px vers ces niveaux
         mapping = {
             "10": "1",
             "12": "2",
@@ -44,14 +48,14 @@ class Word_editor(Word_editorTemplate):
             "18": "4",
             "24": "5",
             "32": "6",
-            "48": "7"
+            "48": "7",
         }
-    
+
         level = mapping.get(size_px, "3")
-    
+
         anvil.js.window.document.execCommand("fontSize", False, level)
-    
-        # 2. Chrome ajoute un span avec style font-size: xxpx
+
+        # 2. Chrome ajoute un span avec font-size
         # On remplace le font-size par notre valeur exacte
         self._fix_font_size(size_px)
 
@@ -65,14 +69,16 @@ class Word_editor(Word_editorTemplate):
         range = selection.getRangeAt(0)
         node = range.commonAncestorContainer
 
-        # On remonte jusqu'à trouver un span avec font-size
+        # On remonte jusqu'à trouver un élément HTML
         while node and node.nodeType != 1:
             node = node.parentNode
 
-        if node and node.style and node.style.fontSize:
+        if node and hasattr(node, "style") and node.style and node.style.fontSize:
             node.style.fontSize = f"{size_px}px"
 
-    
+    # ------------------------
+    # ERASE FORMATTING (texte "normal")
+    # ------------------------
     def button_erase_click(self, **event_args):
         """This method is called when the button is clicked"""
         sel = anvil.js.window.getSelection()
@@ -86,81 +92,115 @@ class Word_editor(Word_editorTemplate):
 
         # Supprime tout le style : remplace par un texte propre
         html = selected_text  # sans balises
-    
+
         anvil.js.window.document.execCommand("insertHTML", False, html)
 
-
-    
-    # --------------------------------------------------------------
-    # 1) Changement de couleur depuis le DropDown
-    # --------------------------------------------------------------
+    # ------------------------
+    # Color Treatment
+    # ------------------------
     def drop_down_color_change(self, **event_args):
         color = self.drop_down_color.selected_value
         if not color:
             return
     
         js = anvil.js.window
-        sel = js.getSelection()
+        editor = js.document.getElementById("editor")
     
-        # Vérifie qu'il y a du texte sélectionné
+        sel = js.getSelection()
         if sel.rangeCount == 0 or sel.toString() == "":
             alert("Sélectionne du texte d'abord.")
             return
     
-        # Applique la couleur interne (chrome crée <font> ou <span>)
-        js.document.execCommand("foreColor", False, color)
+        # 1) Sauvegarde la sélection
+        self._save_selection()
     
-        # Transforme ce que Chrome a créé en <span style="color:xxx">
-        self._fix_color(color)
+        try:
+            # 2) Applique la couleur via surroundContents
+            range = sel.getRangeAt(0)
+            span = js.document.createElement("span")
+            span.style.color = color
+            range.surroundContents(span)
+        except:
+            # fallback multi-nœuds
+            fragment = range.cloneContents()
+            temp = js.document.createElement("div")
+            temp.appendChild(fragment)
+            html = temp.innerHTML
+            js.document.execCommand("insertHTML", False, f"<span style='color:{color}'>{html}</span>")
     
-        # Force Chrome/Anvil à re-render immédiatement (clé !)
-        self._force_render()
+        # 3) Re-focus pour réveiller Anvil
+        editor.focus()
     
+        # 4) Restore la sélection (Chrome + Anvil re-render immédiatement)
+        self._restore_selection()
     
-    # --------------------------------------------------------------
-    # 2) Corrige les nœuds créés par execCommand("foreColor")
-    #    pour garantir un <span style="color:xxx">
-    # --------------------------------------------------------------
-    def _fix_color(self, color):
+        # 5) Petit trick : toucher l'attribut style pour forcer refresh
+        editor.style.borderColor = editor.style.borderColor
+
+    
+
+
+    # ------------------------
+    # ALIGNEMENTS
+    # ------------------------
+    def button_align_left_click(self, **event_args):
+        self._apply_alignment("justifyLeft")
+    
+    def button_align_center_click(self, **event_args):
+        self._apply_alignment("justifyCenter")
+    
+    def button_align_right_click(self, **event_args):
+        self._apply_alignment("justifyRight")
+    
+    def button_align_justify_click(self, **event_args):
+        self._apply_alignment("justifyFull")
+
+    
+    def _apply_alignment(self, command):
         js = anvil.js.window
-        selection = js.getSelection()
-        if selection.rangeCount == 0:
-            return
+        editor = js.document.getElementById("editor")
     
-        range = selection.getRangeAt(0)
-        node = range.commonAncestorContainer
-    
-        # remonte jusqu’à trouver un élément HTML
-        while node and node.nodeType != 1:
-            node = node.parentNode
-    
-        if not node:
-            return
-    
-        # 1. Cas où Chrome a créé un <font color="red">
-        if node.tagName and node.tagName.lower() == "font":
-            new_span = js.document.createElement("span")
-            new_span.style.color = color
-            new_span.innerHTML = node.innerHTML
-            node.parentNode.replaceChild(new_span, node)
-            return
-    
-        # 2. Cas normal : Chrome a créé un <span>
-        if hasattr(node, "style"):
-            node.style.color = color
-    
-    
-    # --------------------------------------------------------------
-    # 3) Force un re-rendu visuel immédiat du DOM
-    #    (sinon Chrome n'affiche parfois la couleur qu'après un clic)
-    # --------------------------------------------------------------
-    def _force_render(self):
-        js = anvil.js.window
         sel = js.getSelection()
         if sel.rangeCount == 0:
+            alert("Sélectionne un paragraphe ou place le curseur dedans.")
             return
     
-        # reprends la sélection → force Chrome à re-rendre
-        range = sel.getRangeAt(0)
+        # Sauvegarder la sélection pour la restaurer après
+        self._save_selection()
+    
+        # Appliquer l'alignement
+        js.document.execCommand(command, False, None)
+    
+        # Refocus pour réveiller Anvil
+        editor.focus()
+    
+        # Restaurer la sélection
+        self._restore_selection()
+    
+        
+    # Comon treatment for Color & Align treatments
+    def _save_selection(self):
+        js = anvil.js.window
+        sel = js.getSelection()
+        if sel.rangeCount > 0:
+            self._saved_range = sel.getRangeAt(0).cloneRange()
+
+    def _restore_selection(self):
+        js = anvil.js.window
+        if not hasattr(self, "_saved_range"):
+            return
+
+        sel = js.getSelection()
         sel.removeAllRanges()
-        sel.addRange(range)
+        sel.addRange(self._saved_range)
+
+    def button_validation_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # 1. Récupérer le HTML du contenteditable
+        editor = anvil.js.window.document.getElementById("editor")
+        self.text = editor.innerHTML  # texte is the  property of the form 
+        self.raise_event('x-fin_saisie')
+
+            
+
+   

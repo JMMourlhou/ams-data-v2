@@ -9,7 +9,7 @@ from anvil.tables import app_tables
 
 from .. import French_zone  # pour afficher la date du jour
 from datetime import datetime
-
+from ..Word_editor import Word_editor
 # Change les bt 'apply' en 'Valider' si je veux saisir l'heure en même tps que la date (picktime set à True)
 # VOIR DATE PICKER, SHOW EVENT
 
@@ -25,7 +25,6 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-        self.rich_text_1.content = "<p>Écris ici ton texte...</p>"
         self.f = get_open_form()
         # origine n'est pas vide si cette forme a été appelée en modification (click sur une row en Evenements_visu_modif_del)
         #    permet de tester l'origine si BT annuler est cliqué
@@ -181,6 +180,12 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.text_area_mot_clef.text = ""
         if self.type_row["mot_clef_setup"] is True:
             self.text_area_mot_clef.text = f"Réunion du {date}"
+
+        # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
+        text_editor = Word_editor()
+        text_editor.row_stagiaire_inscrit = ""   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)
+        self.content_panel.add_component(text_editor)
 
         """
         if type == "reunion":
@@ -433,20 +438,9 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.button_validation.visible = True
 
     """
-    WORD PROCESSOR
+    LE BOUTON VALIDATION/FIN de saisie a été clicker
     """
-    def _wrap_selection_with(self, start_tag, end_tag):
-        """Entoure le texte sélectionné par les balises HTML données"""
-        import anvil.js
-        window = anvil.js.window
-        sel = window.getSelection()
-        if sel.rangeCount > 0:
-            range = sel.getRangeAt(0)
-            new_node = window.document.createElement("span")
-            new_node.innerHTML = start_tag + range.toString() + end_tag
-            range.deleteContents()
-            range.insertNode(new_node)
-
-    def button_gras_click(self, **event_args):
-        """Met le texte sélectionné en gras"""
-        self._wrap_selection_with("<b>", "</b>")
+    # Event raised: Changement du check box du stagiaire
+    def handle_click_fin_saisie(self, sender, **event_args):
+        #alert(sender.row_stagiaire_inscrit['name'])
+        alert(sender.text)

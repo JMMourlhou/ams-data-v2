@@ -107,32 +107,10 @@ components:
     name: text_area_mot_clef
     properties: {background: 'theme:Tertiary', font_size: 13, foreground: 'theme:On Primary Container', height: 40.5771484375, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: Nom de la personne ou un mot qui rappelle facilement l'évenement}
     type: TextArea
-  - components:
-    - event_bindings: {click: button_gras_click}
-      layout_properties: {}
-      name: button_gras
-      properties: {foreground: 'theme:On Primary', icon: 'fa:bold', icon_align: left, text: Gras}
-      type: Button
-    - layout_properties: {}
-      name: button_1_copy
-      properties: {text: button_1}
-      type: Button
-    - layout_properties: {}
-      name: button_1_copy_2
-      properties: {text: button_1}
-      type: Button
-    - layout_properties: {}
-      name: button_1_copy_3
-      properties: {text: button_1}
-      type: Button
-    - layout_properties: {}
-      name: button_1_copy_4
-      properties: {text: button_1}
-      type: Button
-    layout_properties: {grid_position: 'HSOUQX,JURQCL'}
-    name: flow_panel_menu
+  - layout_properties: {grid_position: 'MZQDLM,MPCNKU'}
+    name: content_panel
     properties: {}
-    type: FlowPanel
+    type: ColumnPanel
   - event_bindings: {change: text_area_commentaires_change}
     layout_properties: {grid_position: 'WDICAX,CCVFLY'}
     name: text_area_notes
@@ -324,4 +302,5 @@ components:
 container:
   properties: {visible: true}
   type: ColumnPanel
+custom_component: false
 is_package: true
