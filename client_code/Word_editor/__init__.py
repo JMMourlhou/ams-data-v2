@@ -1,10 +1,6 @@
 from ._anvil_designer import Word_editorTemplate
 from anvil import *
-import anvil.server
-import anvil.users
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
+
 import anvil.js
 
 # On force execCommand à utiliser des styles CSS inline
@@ -13,13 +9,16 @@ anvil.js.window.document.execCommand("styleWithCSS", False, True)
 
 class Word_editor(Word_editorTemplate):
     def __init__(self, **properties):
+ 
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        # Any code you write here will run before the form opens.
-        #editor = anvil.js.window.document.getElementById("editor")
-        #editor.innerHTML = f"<p>{self.text}</p>"
+        
 
-
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        # text is the property declared for the form in the "Edit properties and events left menu"
+        editor = anvil.js.window.document.getElementById("editor")
+        editor.innerHTML = f"<p>{self.text}</p>"  
     
     # ------------------------
     # BOLD / ITALIC / UNDERLINE
@@ -62,6 +61,9 @@ class Word_editor(Word_editorTemplate):
         # 2. Chrome ajoute un span avec font-size
         # On remplace le font-size par notre valeur exacte
         self._fix_font_size(size_px)
+
+        # On ré-initialise la drop down
+        self.drop_down_font_size.selected_value = self.drop_down_font_size.items[0]
 
     def _fix_font_size(self, size_px):
         js = anvil.js.window
@@ -141,6 +143,9 @@ class Word_editor(Word_editorTemplate):
         # 5) Petit trick : toucher l'attribut style pour forcer refresh
         editor.style.borderColor = editor.style.borderColor
 
+        # je réaffiche la drop down en haut
+        self.drop_down_color.selected_value = self.drop_down_color.items[0]
+
     
 
 
@@ -204,6 +209,8 @@ class Word_editor(Word_editorTemplate):
         editor = anvil.js.window.document.getElementById("editor")
         self.text = editor.innerHTML  # texte is the  property of the form 
         self.raise_event('x-fin_saisie')
+
+    
 
             
 
