@@ -9,7 +9,8 @@ from anvil.tables import app_tables
 
 from .. import French_zone  # pour afficher la date du jour
 from datetime import datetime
-from ..Word_editor import Word_editor
+from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
+
 # Change les bt 'apply' en 'Valider' si je veux saisir l'heure en même tps que la date (picktime set à True)
 # VOIR DATE PICKER, SHOW EVENT
 
@@ -53,12 +54,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         # for type in self.drop_down_event.items:
         # print(type, type[0], type[1])
 
-        self.now = (
-            French_zone.french_zone_time()
-        )  # now est le jour/h actuelle (datetime object)
-        self.date_sov = self.now.strftime(
-            "%Y_%m_%d %H_%M"
-        )  # exraction de la AAAA_MM_JJ hh_mm pour nom fichier image
+        self.now = (French_zone.french_zone_time())  # now est le jour/h actuelle (datetime object)
+        self.date_sov = self.now.strftime("%Y_%m_%d %H_%M")  # exraction de la AAAA_MM_JJ hh_mm pour nom fichier image
 
         # Test si ouverture en mode Création ou modif (self.to_be_modified_row = None si création)  Initialisé en init
         self.to_be_modified_row = to_be_modified_row
@@ -87,9 +84,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             hh = t[11:13]
             mi = t[14:16]
             # Création de la variable de type date
-            self.date1 = datetime(
-                int(yy), int(mm), int(dd), int(hh), int(mi)
-            )  # réutilisée pour le nom des images
+            self.date1 = datetime(int(yy), int(mm), int(dd), int(hh), int(mi))  # réutilisée pour le nom des images
             self.date_picker_1.pick_time = True
             self.date_picker_1.date = self.date1
         else:
@@ -174,16 +169,16 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         heure = heure.strftime("%H:%M")
         date0 = self.now.date()
         date = date0.strftime("%d/%m/%Y")
-        self.text_area_notes.text = self.type_row[
-            "text_initial"
-        ]  # col text_initial table Event_types
+        
+        self.text_area_notes.text = self.type_row["text_initial"]  # col text_initial table Event_types
+        
         self.text_area_mot_clef.text = ""
         if self.type_row["mot_clef_setup"] is True:
             self.text_area_mot_clef.text = f"Réunion du {date}"
 
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
         text_editor = Word_editor()
-        text_editor.row_stagiaire_inscrit = ""   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        text_editor.text = self.type_row["text_initial"]   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
         text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)
         self.content_panel.add_component(text_editor)
 

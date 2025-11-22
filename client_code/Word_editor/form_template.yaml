@@ -83,7 +83,7 @@ components:
           spacing:
             padding: ['5', '10', '5', '10']
         type: ColumnPanel
-      layout_properties: {width: 424.96626416015624}
+      layout_properties: {width: 373.2582104492187}
       name: flow_panel_1
       properties: {align: left, gap: tiny}
       type: FlowPanel
@@ -147,4 +147,5 @@ events:
 is_package: true
 properties:
 - {default_value: '', description: text qui a été saisi, important: true, name: text, type: string}
+- {default_value: '', important: true, name: table_row_id, type: string}
 toolbox_item: {hidden: false, title: Word-editor}
