@@ -16,7 +16,11 @@ class Word_editor(Word_editorTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        #editor = anvil.js.window.document.getElementById("editor")
+        #editor.innerHTML = f"<p>{self.text}</p>"
 
+
+    
     # ------------------------
     # BOLD / ITALIC / UNDERLINE
     # ------------------------

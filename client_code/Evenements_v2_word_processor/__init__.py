@@ -178,7 +178,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
 
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
         text_editor = Word_editor()
-        text_editor.text = self.type_row["text_initial"]   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        #text_editor.text = self.type_row["text_initial"]   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        text_editor.text = ""   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
         text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)
         self.content_panel.add_component(text_editor)
 
