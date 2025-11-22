@@ -1,6 +1,7 @@
 components: []
 container:
   properties:
+    background: theme:On Secondary Container
     html: |-
       <div id="editor" contenteditable="true"
           style="border:1px solid #999; min-height:250px; padding:10px;">
@@ -10,4 +11,6 @@ container:
 custom_component: true
 custom_component_container: false
 is_package: false
+properties:
+- {default_binding_prop: true, default_value: '', important: true, name: text, type: string}
 toolbox_item: {hidden: false, title: Zone Texte HTML}
