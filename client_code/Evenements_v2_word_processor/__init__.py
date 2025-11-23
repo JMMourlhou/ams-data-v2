@@ -201,7 +201,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.button_validation_2.visible = True
 
     # validation:   auto_sov True si sauvegarde auto tte les 15", appelé par timer_2_tick
-    def button_validation_click(self, auto_sov=False, id=None, **event_args):
+    def button_validation_click(self, auto_sov=False, id=None, html_text="", **event_args):
         """This method is called when the button is clicked"""
         test_mk = self.text_area_mot_clef.text
         if (
@@ -241,7 +241,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             date_sov,  # date
             row_lieu,  # lieu row
             lieu_txt,  # lieu en clair
-            self.text_area_notes.text,  # notes
+            #self.text_area_notes.text,  # --------------- notes
+            html_text,  # ----------------------------------------------------- notes HTML
             self.image_1.source,  # image 1
             self.image_2.source,
             self.image_3.source,
@@ -256,7 +257,6 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             # sortie normale
             # renvoyer le type d'évenemnt actuel: row event_types
             from ..Evenements_visu_modif_del import Evenements_visu_modif_del
-
             open_form("Evenements_visu_modif_del", row)
 
     # Une sauvegarde a déjà été effectuée, j'efface cette sauvegarde temporaire SI JE VIENS DE CREER CET EVNT (origine="")
@@ -432,10 +432,12 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         """This method is called when the selected date changes"""
         self.button_validation.visible = True
 
-    """
-    LE BOUTON VALIDATION/FIN de saisie a été clicker
-    """
-    # Event raised: Changement du check box du stagiaire
+    
+   
+    # Event raised: BOUTON VALIDATION / Fin has was clicked
     def handle_click_fin_saisie(self, sender, **event_args):
-        #alert(sender.row_stagiaire_inscrit['name'])
+        # sender.text contains the 'Word_editor'form's HTML text
         alert(sender.text)
+        self.button_validation_click(False, self.id, sender.text)
+
+   

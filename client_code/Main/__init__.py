@@ -337,12 +337,11 @@ class Main(MainTemplate):
     # BT admin, Visu, maj, modif, del Saisie évenements
     def button_events_click(self, **event_args):
         """This method is called when the button is clicked"""
-        """
+        
         from ..Evenements_visu_modif_del import Evenements_visu_modif_del
         open_form('Evenements_visu_modif_del')
-        """
-        from ..Evenements_v2_word_processor import Evenements_v2_word_processor
-        open_form('Evenements_v2_word_processor')
+       
+        
         
     # BT stagiaire QCM
     def button_qcm_click(self, **event_args):

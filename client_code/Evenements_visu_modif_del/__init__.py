@@ -56,8 +56,8 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
             
         # CREATION D'UN NOUVEL EVENEMNT "Nouvel évenemnt"
         if self.type_row['code'] == 0:                        
-            from ..Evenements import Evenements
-            open_form("Evenements")
+            from ..Evenements_v2_word_processor import Evenements_v2_word_processor
+            open_form('Evenements_v2_word_processor')
             
         # VOIR UN EVENEMNT    
         type_evenement = self.type_row['type']

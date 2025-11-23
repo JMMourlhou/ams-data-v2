@@ -12,7 +12,9 @@ class Word_editor(Word_editorTemplate):
  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        list_colors = [("Red", "#FA0000"),("Green","#60FA00"),("Blue","")]
+        # drop_down_color init
+        list_colors = [("Colors",""),("Red", "#FA0000"),("Green","#60FA00"),("Blue","#00C0FA"),("Orange","#FAA300"),("Yellow","#F2FA00")]
+        self.drop_down_color.items = [(r[0],r[1]) for r in list_colors]
         
 
     def form_show(self, **event_args):
@@ -144,8 +146,8 @@ class Word_editor(Word_editorTemplate):
         # 5) Petit trick : toucher l'attribut style pour forcer refresh
         editor.style.borderColor = editor.style.borderColor
 
-        # je réaffiche la drop down en haut
-        self.drop_down_color.selected_value = self.drop_down_color.items[0]
+        # drop down init, 1st row, 2d color
+        self.drop_down_color.selected_value = self.drop_down_color.items[0][1]
 
     
 
@@ -210,6 +212,8 @@ class Word_editor(Word_editorTemplate):
         editor = anvil.js.window.document.getElementById("editor")
         self.text = editor.innerHTML  # texte is the  property of the form 
         self.raise_event('x-fin_saisie')
+
+    
 
     
 
