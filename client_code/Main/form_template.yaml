@@ -132,11 +132,6 @@ components:
         name: button_pdf
         properties: {text: Test du page break, visible: false}
         type: Button
-      - event_bindings: {click: button_pdf_copy_click}
-        layout_properties: {grid_position: 'BXCZXN,LLCWWC'}
-        name: button_pdf_copy
-        properties: {foreground: 'theme:Secondary Container', text: Test word processor, visible: true}
-        type: Button
       layout_properties: {grid_position: 'YROLRC,HBDKLU'}
       name: column_panel_bureaux
       properties: {col_spacing: none, spacing_above: none, wrap_on: never}

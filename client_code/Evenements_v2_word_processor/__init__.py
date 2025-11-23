@@ -29,15 +29,10 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.f = get_open_form()
         # origine n'est pas vide si cette forme a été appelée en modification (click sur une row en Evenements_visu_modif_del)
         #    permet de tester l'origine si BT annuler est cliqué
-        self.origine = (
-            origine  # origine = "modif" si viens de Evenements_visu_modif_del
-        )
+        self.origine = (origine)  # origine = "modif" si viens de Evenements_visu_modif_del
 
         # Drop down codes lieux
-        self.drop_down_lieux.items = [
-            (r["lieu"], r)
-            for r in app_tables.lieux.search(tables.order_by("lieu", ascending=True))
-        ]
+        self.drop_down_lieux.items = [(r["lieu"], r) for r in app_tables.lieux.search(tables.order_by("lieu", ascending=True))]
         # for lieu in self.drop_down_lieux.items:
         # print(lieu, lieu[0], lieu[1])
         liste = self.drop_down_lieux.items[0]
@@ -46,9 +41,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         # Drop down codes type évenements
         liste_event = []
         for r in app_tables.event_types.search(tables.order_by("code", ascending=True)):
-            if (
-                r["code"] != 0
-            ):  # on ne prend pas le code 0 qui est le row "nouvel évenement"
+            if (r["code"] != 0):  # on ne prend pas le code 0 qui est le row "nouvel évenement"
                 liste_event.append((r["msg_0"], r))  # on ajoute le msg "nouvel ..."
         self.drop_down_event.items = liste_event
         # for type in self.drop_down_event.items:
@@ -92,9 +85,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.mode = "modif"
             # Test si ce row n'avait pas été validé
             if self.to_be_modified_row["auto_sov"] is True:
-                alert(
-                    "Cet évenement n'avait pas été validé.\n Vous pouvez maintenant achever sa saisie ou le valider directement."
-                )
+                alert("Cet évenement n'avait pas été validé.\n Vous pouvez maintenant achever sa saisie ou le valider directement.")
                 self.button_validation.visible = True
                 self.button_validation_2.visible = True
 
@@ -122,6 +113,10 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.drop_down_lieux.selected_value = self.to_be_modified_row["lieu"]
             self.text_area_mot_clef.text = self.to_be_modified_row["mot_clef"]
             self.text_area_notes.text = self.to_be_modified_row["note"]
+            
+            self.call_word_editor(self.to_be_modified_row["note"]) # Appel du Word Editor par fonction utilisé aussi pour la création d'un event
+
+            
 
             if self.to_be_modified_row["img1"] is not None:
                 self.image_1.source = self.to_be_modified_row["img1"]
@@ -175,24 +170,21 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.text_area_mot_clef.text = ""
         if self.type_row["mot_clef_setup"] is True:
             self.text_area_mot_clef.text = f"Réunion du {date}"
+            self.call_word_editor(self.type_row["text_initial"]) # Appel du Word Editor avec texte initial (fonction utilisée aussi pour 'modif')
 
+    """
+    =============================================================================================================================================      CALL FOR THE WORD EDITOR
+    """
+    def call_word_editor(self, content_text_html):
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
         text_editor = Word_editor()
-        text_editor.text = self.type_row["text_initial"]   # text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
-        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)
+        text_editor.text = content_text_html   # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
         self.content_panel.add_component(text_editor)
-
-        """
-        if type == "reunion":
-            self.text_area_mot_clef.text = f"Réunion du {date}"
-            self.text_area_notes.text = (f"Participants : A.C / A.JC / G.J / M.JM / L.C \nObjet : Réunion d'équipe du {date} à {heure}\n\nNotes :\n ")
-        if type == "incident":
-            self.text_area_mot_clef.text = ""
-            self.text_area_notes.text = ("Incident,    notes prises par : \nDate de l'incident : \nHeure de l'incident : \nPersonne(s) impliquée(s) : \nTémoins : \nNotes : ")
-        if type == "entretien":
-            self.text_area_mot_clef.text = ""
-            self.text_area_notes.text = (f"Entretien individuel,    notes prises par : A.C / A.JC \nDate de l'entretien : {date} à {heure} \n\nPoints positifs du stagiaire : \n\nPoints à améliorer : \n\nPoint de vue du stagiaire sur le contenu de la formation : \n\nPoint de vue du stagiaire sur son stage en structure : \n\nParcours individuel proposé afin de l'amener vers la réussite : \n\nDivers :")
-        """
+    """
+    =================================================================================================================================================================================
+    """
 
     def text_area_commentaires_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
@@ -204,16 +196,12 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     def button_validation_click(self, auto_sov=False, id=None, html_text="", **event_args):
         """This method is called when the button is clicked"""
         test_mk = self.text_area_mot_clef.text
-        if (
-            len(test_mk) == 0 and auto_sov is False
-        ):  # Vraie validation, test si mot clef vide
+        if (len(test_mk) == 0 and auto_sov is False):  # Vraie validation, test si mot clef vide
             msg = "Rentrez un mot clef qui vous permettra de retrouver facilement cet évenemnt !\n\nPar ex:\nNom de la personne\nType particulier d'évenement"
             alert(msg)
             return
 
-        writing_date_time = (
-            French_zone.french_zone_time()
-        )  # now est le jour/h actuelle (datetime object)
+        writing_date_time = (French_zone.french_zone_time())  # now est le jour/h actuelle (datetime object)
         row_lieu = self.drop_down_lieux.selected_value
         lieu_txt = row_lieu["lieu"]
 
@@ -337,25 +325,9 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         for btn in document.querySelectorAll(".daterangepicker .cancelBtn"):
             btn.textContent = "Retour"
 
-    # Pour empêcher le msg session expired (suffit pour ordinateur, pas pour tel)
-    def timer_1_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        with anvil.server.no_loading_indicator:
-            result = anvil.server.call("ping")
-        print(
-            f"Saisie d'évenements: ping on server to prevent 'session expired' every 5 min, server answer:{result}"
-        )
+    
 
-    # Pour lancer une sauvegarde automatique toutes les 15 secondes
-    def timer_2_tick(self, **event_args):
-        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
-        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
-        with anvil.server.no_loading_indicator:
-            # J'execute la sauvegarde temporaire s'il y a eu un changement
-            # si on visualise l'événement ss le modifier, on ne le sauve pas, ...
-            #    ... ce qui positionnerait son tag 'auto_sov' sur True, et ne serait plus visible
-            if self.button_validation.visible is True:
-                self.button_validation_click(True, self.id)  # auto sov: TRUE
+    
 
     # Initialisation du préfixe du nom du fichier img
     def nom_img(self, num_img_txt):
@@ -432,12 +404,23 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         """This method is called when the selected date changes"""
         self.button_validation.visible = True
 
+    # =================================================================================================  RAISED EVENTS TREATMENTS
     
+    # Event raised every 15 sec: Automatic backup of the text in Word_editor form
+    def timer_text_backup(self, sender, **event_args):
+        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
+        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
+        print()
+        print("====================================================")
+        print(f"Timer_2 backup forme evt 2 : {sender.text}")
+        
+        with anvil.server.no_loading_indicator:
+            self.button_validation_click(True, self.id, sender.text)  # auto sov: TRUE
+            
    
-    # Event raised: BOUTON VALIDATION / Fin has was clicked
+    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
-        alert(sender.text)
         self.button_validation_click(False, self.id, sender.text)
 
    

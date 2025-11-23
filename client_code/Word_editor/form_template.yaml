@@ -1,4 +1,14 @@
 components:
+- event_bindings: {tick: timer_1_tick}
+  layout_properties: {grid_position: 'MKFFGE,GXJYLN'}
+  name: timer_1
+  properties: {interval: 300}
+  type: Timer
+- event_bindings: {tick: timer_2_tick}
+  layout_properties: {grid_position: 'LROIYH,ZKLALX'}
+  name: timer_2
+  properties: {interval: 15}
+  type: Timer
 - components:
   - components:
     - components:
@@ -146,6 +156,7 @@ container:
 custom_component: true
 events:
 - {default_event: true, description: When the validation button is clicked, name: fin_saisie}
+- {description: 'Every 15 seconds (timer_2),  allows a temp backup of the text  ', name: timer_text_backup}
 is_package: true
 properties:
 - {default_value: '', important: true, name: table_row_id, type: string}

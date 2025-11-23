@@ -501,10 +501,7 @@ class Main(MainTemplate):
         sid = str(uuid.uuid4())
         anvil.server.call('register_session', sid)
 
-    def button_pdf_copy_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        from ..Word_editor import Word_editor
-        open_form('Word_editor')
+ 
    
             
 
