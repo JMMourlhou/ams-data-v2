@@ -1,4 +1,4 @@
-from ._anvil_designer import EvenementsTemplate
+from ._anvil_designer import Evenements_oldTemplate
 from anvil import *
 import anvil.server
 
@@ -18,7 +18,7 @@ from datetime import datetime
     #                                mais pas sur un tel qd l'écran s'étteint....  
     #                            - Une sauvegarde auto toutes les 15 secondes (timer 2), ce qui permet de ne pas perdre bp de données si expired. 
 
-class Evenements(EvenementsTemplate):
+class Evenements_old(Evenements_oldTemplate):
     def __init__(self, to_be_modified_row=None, origine="", **properties): 
         # Set Form properties and Data Bindings.
         self.init_components(**properties)

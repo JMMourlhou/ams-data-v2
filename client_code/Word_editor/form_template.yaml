@@ -133,6 +133,11 @@ components:
           padding: [null, null, null, '']
         text: Erase
       type: Button
+    - event_bindings: {click: button_download_click}
+      layout_properties: {}
+      name: button_download
+      properties: {foreground: 'theme:On Primary', icon: 'fa:download', text: Download}
+      type: Button
     layout_properties: {grid_position: 'TNEKNW,YULENK'}
     name: flow_panel_menu
     properties: {background: 'theme:On Primary Container', gap: small, vertical_align: middle}

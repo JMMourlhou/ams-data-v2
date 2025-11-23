@@ -92,10 +92,87 @@ class Word_editor(Word_editorTemplate):
             cleanParentSpans(range.startContainer);
             cleanParentSpans(range.endContainer);
         };
-
-
         """
-        anvil.js.window.eval(js_code)     ### ADDED
+        anvil.js.window.eval(js_code)     
+
+        # --------------------------------------------------------
+        # global HTML cleaner to keep saved HTML clean
+        # --------------------------------------------------------
+        js_code_clean = """
+        window.cleanEditorHTML = function(root) {
+            if (!root) return;
+
+            // Helper: unwrap a node but keep its children
+            function unwrap(node) {
+                const parent = node.parentNode;
+                if (!parent) return;
+                while (node.firstChild) parent.insertBefore(node.firstChild, node);
+                parent.removeChild(node);
+            }
+
+            // 1) Unwrap spans with no attributes (completely useless wrappers)
+            const spans_no_attr = root.querySelectorAll("span");
+            spans_no_attr.forEach(function(span) {
+                if (!span.attributes || span.attributes.length === 0) {
+                    unwrap(span);
+                }
+            });
+
+            // 2) Merge nested spans that share the exact same style
+            const spans_same_style = root.querySelectorAll("span");
+            spans_same_style.forEach(function(span) {
+                const parent = span.parentNode;
+                if (!parent || parent.tagName !== "SPAN") return;
+
+                const styleChild = span.getAttribute("style");
+                const styleParent = parent.getAttribute("style");
+                if (!styleChild || !styleParent) return;
+
+                const normChild = styleChild.replace(/\\s+/g, '').toLowerCase();
+                const normParent = styleParent.replace(/\\s+/g, '').toLowerCase();
+
+                if (normChild === normParent) {
+                    unwrap(span);
+                }
+            });
+
+            // 3) Remove empty spans (no visible text, no element children)
+            const spans_empty = root.querySelectorAll("span");
+            spans_empty.forEach(function(span) {
+                const text = span.textContent || "";
+                const hasElementChild = !!span.querySelector("*");
+                if (!hasElementChild && text.trim() === "") {
+                    unwrap(span);
+                }
+            });
+    
+            // 4) Remove extra empty <p> but keep at most ONE in a row
+            let paragraphs = root.querySelectorAll("p");
+            let previousWasEmpty = false;
+            
+            paragraphs.forEach(function(p) {
+                const text = p.textContent || "";
+                const hasChild = p.querySelector("*") !== null;
+            
+                const isEmpty = (!hasChild && text.replace(/\u00A0/g, '').trim() === "");
+            
+                if (isEmpty) {
+                    if (previousWasEmpty) {
+                        // Remove the extra empty <p>
+                        p.parentNode.removeChild(p);
+                    } else {
+                        previousWasEmpty = true;
+                    }
+                } else {
+                    previousWasEmpty = false;
+                }
+            });
+            
+        };
+        """
+        anvil.js.window.eval(js_code_clean)
+        
+        
 
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
@@ -198,9 +275,29 @@ class Word_editor(Word_editorTemplate):
     
         # (4) Extract selected text
         text = sel.toString()
-    
-        # (5) Replace selection entirely by a new clean span
-        html = f"<span style='color:{color}'>{text}</span>"
+        
+        # (4b) Detect existing <span> if any and keep its styles
+        container = range.commonAncestorContainer
+        saved_style = ""
+        
+        if container.nodeType == 1 and container.tagName == "SPAN":
+            saved_style = container.getAttribute("style") or ""
+        else:
+            parent = container.parentNode
+            if parent and parent.tagName == "SPAN":
+                saved_style = parent.getAttribute("style") or ""
+        
+        # Remove existing color rules from style
+        import re
+        saved_style = re.sub(r"color\s*:\s*[^;]+;?", "", saved_style).strip()
+        
+        # Rebuild clean style
+        final_style = f"color:{color};"
+        if saved_style:
+            final_style = saved_style + ";" + final_style
+        
+        # (5) Replace selection with clean span preserving other styles
+        html = f"<span style='{final_style}'>{text}</span>"
         js.document.execCommand("insertHTML", False, html)
     
         # (6) Focus editor
@@ -262,6 +359,10 @@ class Word_editor(Word_editorTemplate):
 
     def button_validation_click(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
+
+        # Clean HTML before saving, to avoid dirty nested spans / useless wrappers
+        anvil.js.window.cleanEditorHTML(editor)   
+        
         self.text = editor.innerHTML
         self.raise_event('x-fin_saisie')
 
@@ -271,8 +372,63 @@ class Word_editor(Word_editorTemplate):
 
     def timer_2_tick(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
+
+        # Clean HTML before autosave backup
+        anvil.js.window.cleanEditorHTML(editor)
+        
         self.text = editor.innerHTML
         self.raise_event('x-timer_text_backup')
+
+    def button_download_click(self, **event_args):
+        """Export current editor content as a PDF using the Uplink 'render_pdf'"""
+
+        js = anvil.js.window
+        editor = js.document.getElementById("editor")
+    
+        # Clean HTML before sending to server (remove useless spans, empty tags, etc.)
+        anvil.js.window.cleanEditorHTML(editor)
+    
+        # Get inner HTML from editor
+        inner_html = editor.innerHTML
+    
+        # Basic CSS for PDF rendering
+        css = """
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+        }
+        p {
+            margin: 0 0 6pt 0;
+        }
+        """
+    
+        # Wrap inner HTML into a minimal full HTML document
+        html_doc = f"""
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Word editor export</title>
+        </head>
+        <body>
+            {inner_html}
+        </body>
+        </html>
+        """
+    
+        # Call the Uplink function
+        with anvil.server.no_loading_indicator:
+            pdf_media = anvil.server.call("render_pdf", html_doc, css, "texte.pdf")
+    
+        if pdf_media:
+            anvil.media.download(pdf_media)
+        else:
+            alert("PDF generation failed on server.")
+
 
 
     
