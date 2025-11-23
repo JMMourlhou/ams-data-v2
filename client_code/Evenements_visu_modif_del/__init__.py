@@ -34,9 +34,11 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         for r in app_tables.event_types.search(tables.order_by("code", ascending=True)):
             liste_event.append((r['msg_1'],r))   # on prend tous les msg: nouvel evnt, voir ...
         self.drop_down_event.items = liste_event
+        """
         for type in self.drop_down_event.items:
             print(type, type[0], type[1])
-
+        """
+        
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Main import Main
@@ -167,9 +169,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(
-            f"ping on server to prevent 'session expired' every 5 min, server answer:{result}"
-        )
+        print("ping on server to prevent 'session expired' every 5 min, server answer:{result}")
 
     
     # ----------------------------------------------------------------  Recherche sur date

@@ -129,7 +129,7 @@ components:
       text: Notes
       tooltip: ''
       underline: false
-      visible: false
+      visible: true
     type: TextArea
   - components:
     - components:

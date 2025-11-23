@@ -115,8 +115,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.text_area_notes.text = self.to_be_modified_row["note"]
             
             self.call_word_editor(self.to_be_modified_row["note"]) # Appel du Word Editor par fonction utilisé aussi pour la création d'un event
-
-            
+           
 
             if self.to_be_modified_row["img1"] is not None:
                 self.image_1.source = self.to_be_modified_row["img1"]
@@ -170,7 +169,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.text_area_mot_clef.text = ""
         if self.type_row["mot_clef_setup"] is True:
             self.text_area_mot_clef.text = f"Réunion du {date}"
-            self.call_word_editor(self.type_row["text_initial"]) # Appel du Word Editor avec texte initial (fonction utilisée aussi pour 'modif')
+        self.call_word_editor(self.type_row["text_initial"]) # Appel du Word Editor avec texte initial (fonction utilisée aussi pour 'modif')
 
     """
     =============================================================================================================================================      CALL FOR THE WORD EDITOR
@@ -326,9 +325,6 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             btn.textContent = "Retour"
 
     
-
-    
-
     # Initialisation du préfixe du nom du fichier img
     def nom_img(self, num_img_txt):
         date = str(self.date1)[0:16]
@@ -410,10 +406,6 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     def timer_text_backup(self, sender, **event_args):
         """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
         # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
-        print()
-        print("====================================================")
-        print(f"Timer_2 backup forme evt 2 : {sender.text}")
-        
         with anvil.server.no_loading_indicator:
             self.button_validation_click(True, self.id, sender.text)  # auto sov: TRUE
             
@@ -421,6 +413,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
+        print(sender.text)
         self.button_validation_click(False, self.id, sender.text)
-
+        print(sender.text)
    

@@ -218,14 +218,14 @@ class Word_editor(Word_editorTemplate):
         # Pour empêcher le msg session expired (suffit pour ordinateur, pas pour tel)
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(f"Word Editor: ping on server to prevent 'session expired' every 5 min, server answer:{result}")
+        #print(f"Word Editor: ping on server to prevent 'session expired' every 5 min, server answer:{result}")
 
     def timer_2_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         # 1. Récupérer le HTML du contenteditable
         editor = anvil.js.window.document.getElementById("editor")
         self.text = editor.innerHTML  # texte is the  property of the form 
-        print(f"Word Editor: sending the HTML text content: {self.text}")
+        #print(f"Word Editor: sending the HTML text content: {self.text}")
         self.raise_event('x-timer_text_backup')
 
     

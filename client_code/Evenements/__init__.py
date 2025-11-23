@@ -304,7 +304,7 @@ class Evenements(EvenementsTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         with anvil.server.no_loading_indicator:
             result = anvil.server.call("ping")
-        print(f"Saisie d'évenements: ping on server to prevent 'session expired' every 5 min, server answer:{result}")
+        #print(f"Saisie d'évenements: ping on server to prevent 'session expired' every 5 min, server answer:{result}")
 
     # Pour lancer une sauvegarde automatique toutes les 15 secondes
     def timer_2_tick(self, **event_args):
