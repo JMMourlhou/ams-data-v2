@@ -86,8 +86,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             # Test si ce row n'avait pas été validé
             if self.to_be_modified_row["auto_sov"] is True:
                 alert("Cet évenement n'avait pas été validé.\n Vous pouvez maintenant achever sa saisie ou le valider directement.")
-                self.button_validation.visible = True
-                self.button_validation_2.visible = True
+                #self.button_validation.visible = True
 
             self.id = self.to_be_modified_row.get_id()
             self.drop_down_event.visible = False
@@ -187,12 +186,12 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
 
     def text_area_commentaires_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
         # self.button_validation_1.visible = True
-        self.button_validation_2.visible = True
+    
 
     # validation:   auto_sov True si sauvegarde auto tte les 15", appelé par timer_2_tick
-    def button_validation_click(self, auto_sov=False, id=None, html_text="", **event_args):
+    def validation(self, auto_sov=False, id=None, html_text="", **event_args):
         """This method is called when the button is clicked"""
         test_mk = self.text_area_mot_clef.text
         if (len(test_mk) == 0 and auto_sov is False):  # Vraie validation, test si mot clef vide
@@ -267,7 +266,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             )  # 800x600 ou 600x800
             self.image_1.source = file_resized
             self.file_loader_1.text = "1 img chargée"
-            self.button_validation.visible = True
+            #self.button_validation.visible = True
 
             self.flow_panel_loader_1.visible = False
             self.outlined_card_1.visible = True
@@ -286,7 +285,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             )  # 800x600 ou 600x800
             self.image_2.source = file_resized
             self.file_loader_2.text = "1 img chargée"
-            self.button_validation.visible = True
+            #self.button_validation.visible = True
 
             self.flow_panel_loader_2.visible = False
             self.outlined_card_2.visible = True
@@ -305,7 +304,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             )  # 800x600 ou 600x800
             self.image_3.source = file_resized
             self.file_loader_3.text = "1 img chargée"
-            self.button_validation.visible = True
+            #self.button_validation.visible = True
 
             self.flow_panel_loader_3.visible = False
             self.outlined_card_3.visible = True
@@ -342,12 +341,12 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         """This method is called when the button is clicked"""
         file = self.image_1.source
         self.image_1.source = anvil.image.rotate(file, 90)
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
 
     def button_del_1_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.image_1.source = None
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
         self.outlined_card_1.visible = False
         self.flow_panel_loader_1.visible = True
         self.file_loader_1.text = "Photo1"
@@ -355,19 +354,18 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     def button_visu_2_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Pre_Visu_img import Pre_Visu_img
-
         open_form("Pre_Visu_img", self.image_2.source)
 
     def button_rotation_2_click(self, **event_args):
         """This method is called when the button is clicked"""
         file = self.image_2.source
         self.image_2.source = anvil.image.rotate(file, 90)
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
 
     def button_del_2_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.image_2.source = None
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
         self.outlined_card_2.visible = False
         self.flow_panel_loader_2.visible = True
         self.file_loader_2.text = "Photo2"
@@ -375,30 +373,29 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     def button_visu_3_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Pre_Visu_img import Pre_Visu_img
-
         open_form("Pre_Visu_img", self.image_3.source)
 
     def button_rotation_3_click(self, **event_args):
         """This method is called when the button is clicked"""
         file = self.image_3.source
         self.image_3.source = anvil.image.rotate(file, 90)
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
 
     def button_del_3_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.image_3.source = None
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
         self.outlined_card_3.visible = False
         self.flow_panel_loader_3.visible = True
         self.file_loader_3.text = "Photo3"
 
     def drop_down_lieux_change(self, **event_args):
         """This method is called when an item is selected"""
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
 
     def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
-        self.button_validation.visible = True
+        #self.button_validation.visible = True
 
     # =================================================================================================  RAISED EVENTS TREATMENTS
     
@@ -407,13 +404,22 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
         # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
         with anvil.server.no_loading_indicator:
-            self.button_validation_click(True, self.id, sender.text)  # auto sov: TRUE
+            self.validation(True, self.id, sender.text)  # auto sov: TRUE
             
    
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
         print(sender.text)
-        self.button_validation_click(False, self.id, sender.text)
+        self.validation(False, self.id, sender.text)
         print(sender.text)
+
+    def button_visu_html_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if self.text_area_notes.visible is False:
+            self.text_area_notes.visible = True
+        else:
+            self.text_area_notes.visible = False
+
+   
    
