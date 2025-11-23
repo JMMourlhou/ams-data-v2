@@ -105,7 +105,7 @@ components:
         background: theme:On Primary Container
         foreground: theme:On Primary
         include_placeholder: false
-        items: [Colors, red, blue, green, orange, purple, yellow, white]
+        items: ['Colors, 0', 'red, FA0000', blue, green, orange, purple, yellow, white]
         placeholder: Color
         role: outlined
       type: DropDown

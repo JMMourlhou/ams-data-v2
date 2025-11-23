@@ -12,6 +12,7 @@ class Word_editor(Word_editorTemplate):
  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        list_colors = [("Red", "#FA0000"),("Green","#60FA00"),("Blue","")]
         
 
     def form_show(self, **event_args):
