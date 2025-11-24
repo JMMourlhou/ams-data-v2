@@ -101,7 +101,6 @@ class Word_editor(Word_editorTemplate):
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
         editor = anvil.js.window.document.getElementById("editor")
-        alert(self.text)
         editor.innerHTML = f"<p>{self.text}</p>"  
 
     # ------------------------

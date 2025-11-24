@@ -94,7 +94,7 @@ components:
             padding: ['5', '10', '5', '10']
           wrap_on: never
         type: ColumnPanel
-      layout_properties: {width: 479.10727490234376}
+      layout_properties: {width: 411.83805908203124}
       name: flow_panel_1
       properties: {align: center, gap: tiny}
       type: FlowPanel
@@ -164,11 +164,11 @@ components:
           name: button_download
           properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
           type: Button
-        layout_properties: {width: 470.0540634765625}
+        layout_properties: {width: 441.73411572265627}
         name: column_panel_2
         properties: {col_widths: '{"DPIFUQ":16,"BVABPF":4,"EGHXEW":10,"RHZPHG":10,"JKQXRI":4,"NXKMZC":4,"OHMNJP":4,"WTRFYJ":4,"ZZUUSP":4,"QOYSMU":4}', wrap_on: never}
         type: ColumnPanel
-      layout_properties: {width: 451.73947265625}
+      layout_properties: {width: 450.9520126953125}
       name: flow_panel_2
       properties: {align: center}
       type: FlowPanel

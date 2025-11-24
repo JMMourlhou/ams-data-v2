@@ -23,19 +23,29 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         self.nb = len(liste_tous)
         self.text_box_2.text = str(self.nb)  # le premier code commencant à 0, je n'ai pas à incrémenter += 1
         self.check_box_1.checked = False
-        
+
+
+        # AJOUT DE CHAQUE TYPE D'EVENEMENT DS LE content panel "content_panel_events_rows"
         for row_event_type in liste_tous: 
             new_row = one_event_type(row_event_type)
             new_row.row_to_be_modified = None
             new_row.row_to_be_deleted = None
             new_row.set_event_handler('x-modif', self.modif)
-            new_row.set_event_handler('x-del', self.delete)
             self.content_panel_events_rows.add_component(new_row)
 
+
+    # Création d'un nouveau type d'évenemnt
+    def button_add_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.column_panel_add_modif.visible = True
+        self.call_word_editor("Entrer le texte ici", 'creation')
+    
+
     # ==========================================================================================================
-    # Event raised: Changement un text box du row a été cliqué pour modif
+    # EVENT RAISED;
+    # un text box d'un des type d'event row a été cliqué pour modif
     def modif(self, sender, **event_args):
-        self.row = sender.row_to_be_modified
+        self.row = sender.row_to_be_modified    # ROW A MODIFIER
         self.sov_text_box_2 = self.row['code']
         self.text_box_1.text = self.row['type']
         self.text_box_2.text = self.row['code']
@@ -58,25 +68,21 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
         self.content_panel.add_component(text_editor)
     """
-    =================================================================================================================================================================================
+    #===================================================================================================================================================
+    RETOUR DU WORD EDITOR  
+    # ==================================================================================================================================================
     """
-    
-    def delete(self, sender, **event_args):
-        row = sender.row_to_be_deleted
-        alert(row)
-    
-    # ------------------------------------------------Fonctions en CREATION d'un type d'évenement =================================================
-    def button_annuler_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        from ..Parametres import Parametres
-        open_form("Parametres")
+    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
+    def handle_click_fin_saisie(self, sender, **event_args):
+        # sender.text contains the 'Word_editor'form's HTML text
+        mode = sender.param1       # mode 'modif' /  'creation' 
+        self.text = sender.text    # texte html de lévenement
+        if mode == "modif":
+            self.ecriture_en_modif()
+        if mode == "creation":
+            self.ecriture_en_creation()
 
-    def button_add_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        self.column_panel_add_modif.visible = True
-
-    def button_valid_click(self, **event_args):
-        """This method is called when the button is clicked"""
+    def ecriture_en_creation(self, **event_args):
         # Text_box_1 (type evnt) non vide
         if self.text_box_1.text == "" or len(self.text_box_1.text) < 5:
             alert("Entrez un type d'évenement clair (> à 5 caractères")
@@ -123,48 +129,20 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
                 "add_type_evnt",
                 self.text_box_1.text,  # type devnt
                 nb,  # code (numérique)
-                self.text_box_3.text,  # msg_1
-                self.text_box_4.text,  # msg_2
-                self.text_area_1.text,  # text_initial
-                self.check_box_1.checked,  # mot clé daté ?  True/ False
+                self.text_box_3.text,       # msg_1
+                self.text_box_4.text,       # msg_2
+                self.text,                  # text_initial HTML
+                self.check_box_1.checked,   # mot clé daté ?  True/ False
             )
             if result is not True:
                 alert("ERREUR, Ajout non effectué !")
                 return
             alert("Création effectuée !")
-        self.column_panel_add.visible = False
-        open_form("Evenements_MAJ_table")
-
-    # Fin des fonctions de créations d'un type d'évenemnt ==============================================
+        self.column_panel_add_modif.visible = False
+        open_form("Evenements_types_MAJ_table_v2")
 
     
-
-    def text_box_1_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
-
-    def text_box_2_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
-
-    def text_box_3_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.button_valid.visible = True
-
-
-    
-    # ============================================================================================================
-    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
-    def handle_click_fin_saisie(self, sender, **event_args):
-        # sender.text contains the 'Word_editor'form's HTML text
-        mode = sender.param1       # mode 'modif' /  'creation' 
-        text = sender.text    # texte html de lévenement
-        self.validation(text, mode)
-
-    # mode= 'modif / 'creation'
-    def validation(self, text, mode, **event_args):    
-        """This method is called when the button is clicked"""
-
+    def ecriture_en_modif(self, **event_args):   
         # tests sur le code du type d'évenement -----------------------------    
         # Text_box_2 (code) vide ? 
         if self.text_box_2.text == "":
@@ -174,10 +152,6 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
 
         # Code existant en dehors de lui ?
         test = app_tables.event_types.search(code=int(self.text_box_2.text))
-        
-        alert(f"nb de rows existantes: {len(test)}")
-        alert(f"actuel: {self.text_box_2.text}")
-        alert(f"ancien: {str(self.sov_text_box_2)}")
         
         txt = str(self.text_box_2.text).strip()
         old = str(self.sov_text_box_2).strip()
@@ -210,11 +184,14 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         r=alert("Voulez-vous vraiment modifier ce type d'évenement ?",buttons=[("oui",True),("non",False)])
         if r :   # oui
             nb = int(self.text_box_2.text)
-            result = anvil.server.call("modif_type_evnt", self.item, self.text_box_1.text,
+
+            result = anvil.server.call("modif_type_evnt",
+                                       self.row,
+                                       self.text_box_1.text,
                                        nb,
                                        self.text_box_3.text,
                                        self.text_box_4.text,
-                                       text,
+                                       self.text,
                                        self.check_box_1.checked               
                                       )
             if result is not True:
@@ -226,4 +203,13 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
             pass
         open_form("Evenements_types_MAJ_table_v2")
 
-       
+
+    
+    # Retour
+    def button_annuler_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..Parametres import Parametres
+        open_form("Parametres")   
+
+    
+ 

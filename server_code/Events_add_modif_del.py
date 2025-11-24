@@ -140,6 +140,7 @@ def modif_type_evnt(row,
                   mot_clef_avec_date     # True / False
                  ):
     valid= False
+    #print(f"text_initial: {text_initial}")
     row.update(
                 type =           type_evnt,             # text
                 code =           code,                  # NUMBER 
@@ -149,6 +150,7 @@ def modif_type_evnt(row,
                 mot_clef_setup = mot_clef_avec_date     # True / False    
                 )
     valid = True
+    #print(f"text_initial: {row['text_initial']}")
     return valid
 
 # =========================================================================================
