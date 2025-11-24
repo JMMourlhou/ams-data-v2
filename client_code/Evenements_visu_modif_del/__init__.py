@@ -46,7 +46,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
 
     def drop_down_event_change(self, **event_args):
         """This method is called when an item is selected"""
-      
+    
         # Acquisition du choix d'évenements à afficher
         self.text_box_date.text = ""
         self.text_box_lieu.text = ""
