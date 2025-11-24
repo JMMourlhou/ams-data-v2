@@ -83,7 +83,7 @@ components:
               padding: [null, '15', null, null]
             text: ''
           type: Button
-        layout_properties: {width: 324.16828271484377}
+        layout_properties: {width: 368.30054443359376}
         name: column_panel_1
         properties:
           background: theme:On Primary Container
@@ -94,12 +94,16 @@ components:
             padding: ['5', '10', '5', '10']
           wrap_on: never
         type: ColumnPanel
-      layout_properties: {width: 324.4331416015625}
+      layout_properties: {width: 474.0523041992187}
       name: flow_panel_1
       properties: {align: center, gap: tiny}
       type: FlowPanel
     - components:
       - components:
+        - layout_properties: {grid_position: 'RSCXEN,QOYSMU'}
+          name: spacer_2
+          properties: {height: 32}
+          type: Spacer
         - event_bindings: {change: drop_down_font_size_change}
           layout_properties: {grid_position: 'RSCXEN,DPIFUQ'}
           name: drop_down_font_size
@@ -109,17 +113,6 @@ components:
             include_placeholder: false
             items: [Font size, '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
             placeholder: Font Size
-            role: outlined
-          type: DropDown
-        - event_bindings: {change: drop_down_color_change}
-          layout_properties: {grid_position: 'RSCXEN,KLGOFU'}
-          name: drop_down_color
-          properties:
-            background: theme:On Primary Container
-            foreground: theme:On Primary
-            include_placeholder: false
-            items: []
-            placeholder: Color
             role: outlined
           type: DropDown
         - event_bindings: {click: button_red_click}
@@ -152,6 +145,7 @@ components:
           name: button_erase
           properties:
             background: theme:Tertiary
+            font: '18'
             foreground: theme:Error
             icon: fa:eraser
             italic: true
@@ -170,11 +164,11 @@ components:
           name: button_download
           properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
           type: Button
-        layout_properties: {width: 607.7175107421875}
+        layout_properties: {width: 589.691021484375}
         name: column_panel_2
-        properties: {col_widths: '{"DPIFUQ":13,"KLGOFU":11,"BVABPF":3,"EGHXEW":8,"RHZPHG":9,"JKQXRI":3,"NXKMZC":3,"OHMNJP":3,"WTRFYJ":3,"ZZUUSP":4}', wrap_on: never}
+        properties: {col_widths: '{"DPIFUQ":15,"BVABPF":4,"EGHXEW":9,"RHZPHG":11,"JKQXRI":4,"NXKMZC":4,"OHMNJP":4,"WTRFYJ":4,"ZZUUSP":4,"QOYSMU":5}', wrap_on: never}
         type: ColumnPanel
-      layout_properties: {width: 568.749181640625}
+      layout_properties: {width: 451.73947265625}
       name: flow_panel_2
       properties: {align: center}
       type: FlowPanel

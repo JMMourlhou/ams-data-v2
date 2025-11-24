@@ -113,8 +113,17 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.text_area_mot_clef.text = self.to_be_modified_row["mot_clef"]
             self.text_area_notes.text = self.to_be_modified_row["note"]
 
-            
-            self.call_word_editor(self.to_be_modified_row["note"]) # Appel du Word Editor par fonction utilisé aussi pour la création d'un event
+            texte_brut = self.to_be_modified_row["note"]
+            paragraphs = texte_brut.split("\n\n")
+
+            # module pour ajouter les sauts de pages en modif 
+            html_list = []
+            for p in paragraphs:
+                p2 = p.replace("\n", "<br>")
+                html_list.append(f"<p>{p2}</p>")
+            html_text = "".join(html_list)
+
+            self.call_word_editor(html_text) # Appel du Word Editor par fonction utilisé aussi pour la création d'un event
            
 
             if self.to_be_modified_row["img1"] is not None:
