@@ -88,13 +88,13 @@ components:
         properties:
           background: theme:On Primary Container
           col_spacing: none
-          col_widths: '{"FSKSTQ":11,"FUZKJW":10,"ZYYGVC":7,"MWPNDN":14,"GYYXJZ":12,"DENREJ":8,"FWIZXZ":18}'
+          col_widths: '{"FSKSTQ":11,"FUZKJW":10,"ZYYGVC":9,"MWPNDN":12,"GYYXJZ":12,"DENREJ":8,"FWIZXZ":18}'
           role: tonal-card
           spacing:
             padding: ['5', '10', '5', '10']
           wrap_on: never
         type: ColumnPanel
-      layout_properties: {width: 474.0523041992187}
+      layout_properties: {width: 479.10727490234376}
       name: flow_panel_1
       properties: {align: center, gap: tiny}
       type: FlowPanel
@@ -145,7 +145,7 @@ components:
           name: button_erase
           properties:
             background: theme:Tertiary
-            font: '18'
+            font: '22'
             foreground: theme:Error
             icon: fa:eraser
             italic: true
@@ -164,9 +164,9 @@ components:
           name: button_download
           properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
           type: Button
-        layout_properties: {width: 589.691021484375}
+        layout_properties: {width: 470.0540634765625}
         name: column_panel_2
-        properties: {col_widths: '{"DPIFUQ":15,"BVABPF":4,"EGHXEW":9,"RHZPHG":11,"JKQXRI":4,"NXKMZC":4,"OHMNJP":4,"WTRFYJ":4,"ZZUUSP":4,"QOYSMU":5}', wrap_on: never}
+        properties: {col_widths: '{"DPIFUQ":16,"BVABPF":4,"EGHXEW":10,"RHZPHG":10,"JKQXRI":4,"NXKMZC":4,"OHMNJP":4,"WTRFYJ":4,"ZZUUSP":4,"QOYSMU":4}', wrap_on: never}
         type: ColumnPanel
       layout_properties: {width: 451.73947265625}
       name: flow_panel_2
