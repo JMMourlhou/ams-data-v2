@@ -12,88 +12,13 @@ class Word_editor(Word_editorTemplate):
 
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        """   
         # drop_down_color init
         list_colors = [("Colors",""),("Red", "#FA0000"),("Green","#60FA00"),("Blue","#00C0FA"),("Orange","#FAA300"),("Yellow","#F2FA00")]
         self.drop_down_color.items = [(r[0],r[1]) for r in list_colors]
-
-        # --------------------------------------------------------
-        # Color treatment:
-        # Inject a JS function that removes any previous color span 
-        # --------------------------------------------------------
-        js_code = """
-        window.cleanColorInSelection = function() {
-        
-            const sel = window.getSelection();
-            if (!sel || sel.rangeCount === 0) return;
-        
-            const range = sel.getRangeAt(0);
-        
-            // Function that removes a colored span but keeps its children
-            function unwrapColorSpan(span) {
-                const parent = span.parentNode;
-                while (span.firstChild) parent.insertBefore(span.firstChild, span);
-                parent.removeChild(span);
-            }
-        
-            // STEP 1 — Clean spans inside the selected content
-            const treeWalker = document.createTreeWalker(
-                range.commonAncestorContainer,
-                NodeFilter.SHOW_ELEMENT,
-                {
-                    acceptNode: (node) => {
-                        if (node.tagName === "SPAN" &&
-                            node.style &&
-                            node.style.color) {
-        
-                            // Check if this span intersects with selection
-                            const nRange = document.createRange();
-                            nRange.selectNodeContents(node);
-        
-                            if (
-                                range.compareBoundaryPoints(Range.END_TO_START, nRange) < 0 &&
-                                range.compareBoundaryPoints(Range.START_TO_END, nRange) > 0
-                            ) {
-                                return NodeFilter.FILTER_ACCEPT;
-                            }
-                        }
-                        return NodeFilter.FILTER_REJECT;
-                    }
-                }
-            );
-        
-            let node;
-            const to_unwrap = [];
-            while ((node = treeWalker.nextNode())) {
-                to_unwrap.push(node);
-            }
-        
-            to_unwrap.forEach(n => unwrapColorSpan(n));
-        
-            // STEP 2 — Clean parent spans that fully wrap the selection
-            function cleanParentSpans(node) {
-                while (node && node.nodeType === 1) {
-                    if (node.tagName === "SPAN" && node.style && node.style.color) {
-        
-                        // Check if span fully contains the selection
-                        const parentRange = document.createRange();
-                        parentRange.selectNodeContents(node);
-        
-                        if (
-                            parentRange.compareBoundaryPoints(Range.START_TO_START, range) <= 0 &&
-                            parentRange.compareBoundaryPoints(Range.END_TO_END, range) >= 0
-                        ) {
-                            unwrapColorSpan(node);
-                        }
-                    }
-                    node = node.parentNode;
-                }
-            }
-        
-            cleanParentSpans(range.startContainer);
-            cleanParentSpans(range.endContainer);
-        };
         """
-        anvil.js.window.eval(js_code)     
+        
+       
 
         # --------------------------------------------------------
         # global HTML cleaner to keep saved HTML clean
@@ -247,14 +172,109 @@ class Word_editor(Word_editorTemplate):
         html = selected_text
         anvil.js.window.document.execCommand("insertHTML", False, html)
 
-    # ------------------------
+    # -------------------------------------------------------------------------------------------------------------------
     # COLOR TREATMENT
-    # ------------------------
-    def drop_down_color_change(self, **event_args):
-        color = self.drop_down_color.selected_value
-        if not color:
-            return
+    # -------------------------------------------------------------------------------------------------------------------
+    # --------------------------------------------------------
+    # Inject a JS function that removes any previous color span 
+    # --------------------------------------------------------
+    js_code = """
+    window.cleanColorInSelection = function() {
     
+        const sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return;
+    
+        const range = sel.getRangeAt(0);
+    
+        // Function that removes a colored span but keeps its children
+        function unwrapColorSpan(span) {
+            const parent = span.parentNode;
+            while (span.firstChild) parent.insertBefore(span.firstChild, span);
+            parent.removeChild(span);
+        }
+    
+        // STEP 1 — Clean spans inside the selected content
+        const treeWalker = document.createTreeWalker(
+            range.commonAncestorContainer,
+            NodeFilter.SHOW_ELEMENT,
+            {
+                acceptNode: (node) => {
+                    if (node.tagName === "SPAN" &&
+                        node.style &&
+                        node.style.color) {
+    
+                        // Check if this span intersects with selection
+                        const nRange = document.createRange();
+                        nRange.selectNodeContents(node);
+    
+                        if (
+                            range.compareBoundaryPoints(Range.END_TO_START, nRange) < 0 &&
+                            range.compareBoundaryPoints(Range.START_TO_END, nRange) > 0
+                        ) {
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                    }
+                    return NodeFilter.FILTER_REJECT;
+                }
+            }
+        );
+    
+        let node;
+        const to_unwrap = [];
+        while ((node = treeWalker.nextNode())) {
+            to_unwrap.push(node);
+        }
+    
+        to_unwrap.forEach(n => unwrapColorSpan(n));
+    
+        // STEP 2 — Clean parent spans that fully wrap the selection
+        function cleanParentSpans(node) {
+            while (node && node.nodeType === 1) {
+                if (node.tagName === "SPAN" && node.style && node.style.color) {
+    
+                    // Check if span fully contains the selection
+                    const parentRange = document.createRange();
+                    parentRange.selectNodeContents(node);
+    
+                    if (
+                        parentRange.compareBoundaryPoints(Range.START_TO_START, range) <= 0 &&
+                        parentRange.compareBoundaryPoints(Range.END_TO_END, range) >= 0
+                    ) {
+                        unwrapColorSpan(node);
+                    }
+                }
+                node = node.parentNode;
+            }
+        }
+    
+        cleanParentSpans(range.startContainer);
+        cleanParentSpans(range.endContainer);
+    };
+    """
+    anvil.js.window.eval(js_code)     
+    
+    def button_red_click(self, **event_args):
+        color = "#FA0000"
+        self.color_change(color)
+        
+    def button_green_click(self, **event_args):
+        color = "#60FA00"
+        self.color_change(color)   
+
+    def button_blue_click(self, **event_args):
+        color = "#00C0FA"
+        self.color_change(color)  
+
+    def button_orange_click(self, **event_args):
+        color = "#FAA300"
+        self.color_change(color)   
+
+    def button_yellow_click(self, **event_args):
+        color = "#F2FA00"
+        self.color_change(color)  
+        
+    def color_change(self, color, **event_args):
+        #color = from the corresponding color button 
         js = anvil.js.window
         editor = js.document.getElementById("editor")
         sel = js.getSelection()
@@ -307,7 +327,7 @@ class Word_editor(Word_editorTemplate):
         self._restore_selection()
     
         # Reset dropdown
-        self.drop_down_color.selected_value = self.drop_down_color.items[0][1]
+        # self.drop_down_color.selected_value = self.drop_down_color.items[0][1]
 
 
     # ------------------------
@@ -428,6 +448,9 @@ class Word_editor(Word_editorTemplate):
             anvil.media.download(pdf_media)
         else:
             alert("PDF generation failed on server.")
+
+    
+        
 
 
 

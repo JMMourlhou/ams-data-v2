@@ -12,7 +12,7 @@ color_scheme:
   - {color: '#FFD8E4', name: Tertiary Container}
   - {color: '#1a298f', name: On Tertiary}
   - {color: '#370B1E', name: On Tertiary Container}
-  - {color: '#B3261E', name: Error}
+  - {color: '#FA0000', name: Error}
   - {color: '#FFFBFE', name: Background}
   - {color: '#FFFBFE', name: Surface}
   - {color: '#1C1B1F', name: On Background}
