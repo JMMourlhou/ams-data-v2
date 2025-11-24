@@ -17,8 +17,7 @@ class Word_editor(Word_editorTemplate):
         list_colors = [("Colors",""),("Red", "#FA0000"),("Green","#60FA00"),("Blue","#00C0FA"),("Orange","#FAA300"),("Yellow","#F2FA00")]
         self.drop_down_color.items = [(r[0],r[1]) for r in list_colors]
         """
-        
-       
+              
 
         # --------------------------------------------------------
         # global HTML cleaner to keep saved HTML clean
@@ -102,6 +101,7 @@ class Word_editor(Word_editorTemplate):
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
         editor = anvil.js.window.document.getElementById("editor")
+        alert(self.text)
         editor.innerHTML = f"<p>{self.text}</p>"  
 
     # ------------------------
