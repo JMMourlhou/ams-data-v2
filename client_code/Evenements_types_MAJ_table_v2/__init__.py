@@ -179,7 +179,9 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         alert(f"actuel: {self.text_box_2.text}")
         alert(f"ancien: {str(self.sov_text_box_2)}")
         
-        if len(test)==1 and (self.text_box_2.text != str(self.sov_text_box_2)):   # self.sov_text_box_2   est int
+        txt = str(self.text_box_2.text).strip()
+        old = str(self.sov_text_box_2).strip()
+        if len(test)==1 and txt != old:   # self.sov_text_box_2   est int
             alert("Ce code est déjà pris !")
             self.text_box_2.focus()
             return
