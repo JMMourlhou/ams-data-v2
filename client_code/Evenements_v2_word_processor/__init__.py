@@ -112,6 +112,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.drop_down_lieux.selected_value = self.to_be_modified_row["lieu"]
             self.text_area_mot_clef.text = self.to_be_modified_row["mot_clef"]
             self.text_area_notes.text = self.to_be_modified_row["note"]
+
             
             self.call_word_editor(self.to_be_modified_row["note"]) # Appel du Word Editor par fonction utilisé aussi pour la création d'un event
            
