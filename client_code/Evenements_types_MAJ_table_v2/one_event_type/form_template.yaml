@@ -1,6 +1,6 @@
 components:
 - components:
-  - event_bindings: {change: text_box_1_change}
+  - event_bindings: {change: text_box_1_change, focus: text_box_2_focus, pressed_enter: text_box_2_pressed_enter}
     layout_properties: {width: 68.353759765625}
     name: text_box_2
     properties: {background: 'theme:Primary', enabled: false, foreground: 'theme:On Primary', role: outlined}
@@ -9,7 +9,7 @@ components:
     name: spacer_1
     properties: {height: 32}
     type: Spacer
-  - event_bindings: {change: text_box_1_change}
+  - event_bindings: {focus: text_box_2_focus}
     layout_properties: {width: 146.74556787109375}
     name: text_box_1
     properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
@@ -18,12 +18,12 @@ components:
     name: spacer_4
     properties: {height: 32}
     type: Spacer
-  - event_bindings: {change: text_box_1_change}
+  - event_bindings: {focus: text_box_2_focus}
     layout_properties: {width: 231.5072333984375}
     name: text_box_3
     properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
-  - event_bindings: {change: text_box_1_change}
+  - event_bindings: {focus: text_box_2_focus}
     layout_properties: {width: 237.2013525390625}
     name: text_box_4
     properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
@@ -41,13 +41,20 @@ components:
     name: button_annuler
     properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 21, foreground: 'theme:Tertiary', icon: 'fa:minus-square', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: '', tooltip: '', underline: false, visible: true}
     type: Button
-  layout_properties: {grid_position: 'DXHQZD,CKURFP'}
+  layout_properties: {grid_position: 'PCRXGO,EULQWB'}
   name: flow_panel_1
   properties: {align: left, background: 'theme:Primary', border: '', foreground: '', gap: tiny, role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: middle, visible: true}
   type: FlowPanel
-- layout_properties: {grid_position: 'QMWBRC,XFJVVQ'}
-  name: content_panel
-  properties: {}
-  type: ColumnPanel
 container: {type: ColumnPanel}
+custom_component: true
+events:
+- default_event: true
+  description: 'when check box has changed in form '
+  name: modif
+  parameters: []
+- {name: del}
 is_package: true
+properties:
+- {default_binding_prop: true, description: event type row to be modified, important: true, name: row_to_be_modified, type: object}
+- {description: 'type event to be deleted ', important: true, name: row_to_be_deleted, type: object}
+toolbox_item: {hidden: true}
