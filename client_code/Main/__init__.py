@@ -501,6 +501,39 @@ class Main(MainTemplate):
         sid = str(uuid.uuid4())
         anvil.server.call('register_session', sid)
 
+    def button_alert_test_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # Création du composant RichText
+        rt = RichText(format="restricted_html",
+                      content = """
+        <h2 style="color:#0055aa; margin-top:0;">Informations importantes</h2>
+        
+        <p>
+        Ce message contient du texte <strong>formaté</strong> et un peu de HTML.
+        </p>
+        
+        <ul>
+        <li>Point <b>numéro 1</b></li>
+        <li>Point <span style="color:red;">important</span></li>
+        <li>Point <i>en italique</i></li>
+        </ul>
+        
+        <p>
+        Vous pouvez même insérer une <span style="background-color:yellow;">mise en évidence</span>.
+        </p>
+        """
+                     )
+        
+        # Afficher dans une alerte
+        alert(
+            content=rt,
+            title="Alerte avec RichText et HTML",
+            large=True,
+            buttons=["OK"]
+        )
+
+
+
  
    
             

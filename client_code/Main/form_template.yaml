@@ -132,6 +132,11 @@ components:
         name: button_pdf
         properties: {text: Test du page break, visible: false}
         type: Button
+      - event_bindings: {click: button_alert_test_click}
+        layout_properties: {grid_position: 'WAUWJT,QOKSMV'}
+        name: button_alert_test
+        properties: {foreground: 'theme:On Primary', text: Test alert, visible: true}
+        type: Button
       layout_properties: {grid_position: 'YROLRC,HBDKLU'}
       name: column_panel_bureaux
       properties: {col_spacing: none, spacing_above: none, wrap_on: never}
