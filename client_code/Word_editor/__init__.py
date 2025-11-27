@@ -410,7 +410,7 @@ class Word_editor(Word_editorTemplate):
         # Get inner HTML from editor
         inner_html = editor.innerHTML
     
-        # Basic CSS for PDF rendering
+        # Basic CSS for PDF rendering 
         css = """
         @page {
             size: A4;
