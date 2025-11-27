@@ -3,12 +3,16 @@ from anvil import *
 
 import anvil.js
 
+# Pour le download du texte
+from datetime import datetime
+
+
 # Force execCommand to use inline CSS
 anvil.js.window.document.execCommand("styleWithCSS", False, True)
 
 
 class Word_editor(Word_editorTemplate):
-    def __init__(self, **properties):
+    def __init__(self, title, sub_title, **properties):
 
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -17,8 +21,8 @@ class Word_editor(Word_editorTemplate):
         list_colors = [("Colors",""),("Red", "#FA0000"),("Green","#60FA00"),("Blue","#00C0FA"),("Orange","#FAA300"),("Yellow","#F2FA00")]
         self.drop_down_color.items = [(r[0],r[1]) for r in list_colors]
         """
-              
-
+        self.title = title # Titre, BT download 
+        self.sub_title = sub_title
         # --------------------------------------------------------
         # global HTML cleaner to keep saved HTML clean
         # --------------------------------------------------------
@@ -400,7 +404,7 @@ class Word_editor(Word_editorTemplate):
 
     def button_download_click(self, **event_args):
         """Export current editor content as a PDF using the Uplink 'render_pdf'"""
-
+        
         js = anvil.js.window
         editor = js.document.getElementById("editor")
     
@@ -409,35 +413,85 @@ class Word_editor(Word_editorTemplate):
     
         # Get inner HTML from editor
         inner_html = editor.innerHTML
-    
+        
         # Basic CSS for PDF rendering 
         css = """
-        @page {
-            size: A4;
-            margin: 2cm;
-        }
-        body {
-            font-family: DejaVu Sans, sans-serif;
-            font-size: 11pt;
-            line-height: 1.4;
-        }
-        p {
-            margin: 0 0 6pt 0;
-        }
+            @page {
+                size: A4;
+                margin: 2cm;
+        
+                /* Ligne gauche : numéro de page */
+                @top-left {
+                    content: counter(page) " / " counter(pages);
+                    font-size: 9pt;
+                }
+        
+                /* Ligne 1 : titre */
+                @top-center {
+                    content: string(title) "\A" string(subtitle);
+                    white-space: pre;      /* Obligatoire pour autoriser le retour à la ligne */
+                    font-size: 11pt;
+                    font-weight: bold;
+                }
+        
+                /* Pied de page : date */
+                @bottom-center {
+                    content: string(printdate);
+                    font-size: 9pt;
+                }
+            }
+        
+            body {
+                font-family: DejaVu Sans, sans-serif;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+        
+            p {
+                margin: 0 0 6pt 0;
+            }
+        
+            /* Variables cachées pour string-set */
+            h1.doc-title {
+                string-set: title content();
+                display: none;
+            }
+        
+            h2.doc-subtitle {
+                string-set: subtitle content();
+                display: none;
+            }
+        
+            span.print-date {
+                string-set: printdate content();
+                display: none;
+            }
         """
-    
+
+        # Date de l'impression
+        print_date = datetime.now().strftime("%d/%m/%Y à %H:%M")
+        
         # Wrap inner HTML into a minimal full HTML document
         html_doc = f"""
-        <html>
-        <head>
-            <meta charset="utf-8">
-            <title>Word editor export</title>
-        </head>
-        <body>
-            {inner_html}
-        </body>
-        </html>
-        """
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Word editor export</title>
+            </head>
+            <body>
+            
+                <!-- Variables pour l'en-tête -->
+                <h1 class="doc-title">{self.title}</h1>
+                <h2 class="doc-subtitle">{self.sub_title}</h2>
+            
+                <!-- Variable pour le pied de page -->
+                <span class="print-date">Imprimé le {print_date}</span>
+            
+                {inner_html}
+            
+            </body>
+            </html>
+            """
     
         # Call the Uplink function
         with anvil.server.no_loading_indicator:
