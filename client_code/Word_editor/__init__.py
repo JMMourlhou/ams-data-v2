@@ -412,91 +412,89 @@ class Word_editor(Word_editorTemplate):
         # Get inner HTML from editor
         inner_html = editor.innerHTML
         
-        # Basic CSS for PDF rendering 
         css = """
             @page {
                 size: A4;
-                margin: 2cm;
-        
-                /* Ligne gauche : numéro de page */
-                @top-left {
+                margin: 1.6cm 2cm 2cm 2cm;
+            
+                @top-right {
                     content: counter(page) " / " counter(pages);
                     font-size: 9pt;
                 }
-        
-                /* Ligne 1 : titre */
+            
                 @top-center {
                     content: string(title) "\A" string(subtitle);
-                    white-space: pre;      /* Obligatoire pour autoriser le retour à la ligne */
+                    white-space: pre;
                     font-size: 11pt;
                     font-weight: bold;
+                    text-align: center;
                 }
-        
-                /* Pied de page : date */
+            
                 @bottom-center {
                     content: string(printdate);
                     font-size: 9pt;
                 }
             }
-        
+            
             body {
                 font-family: DejaVu Sans, sans-serif;
                 font-size: 11pt;
                 line-height: 1.4;
+            
+                margin-top: 0.1cm;   /* < --------------------------------------  ESPACEMENT A AJUSTER si nécessaire */
             }
-        
+            
             p {
                 margin: 0 0 6pt 0;
             }
-        
-            /* Variables cachées pour string-set */
+            
             h1.doc-title {
                 string-set: title content();
-                display: none;
+                display: block;
+                height: 0;
+                overflow: hidden;
             }
-        
+            
             h2.doc-subtitle {
                 string-set: subtitle content();
-                display: none;
+                display: block;
+                height: 0;
+                overflow: hidden;
             }
-        
+            
             span.print-date {
                 string-set: printdate content();
-                display: none;
+                display: block;
+                height: 0;
+                overflow: hidden;
+            }
+            
+            .separator-line {
+                border-top: 1px solid #888;
+                margin: 2px 0 8px 0;  /* serré sous l’en-tête */
             }
         """
 
         # Date de l'impression
         print_date = datetime.now().strftime("%d/%m/%Y à %H:%M")
-        alert(print_date)
-        alert(self.top_ligne_1)
         # Wrap inner HTML into a minimal full HTML document
         html_doc = f"""
-            <html>
-            <head>
-                <meta charset="utf-8">
-            
-                <!-- Définition des strings pour WeasyPrint -->
-                <meta name="title" content="{self.top_ligne_1}">
-                <meta name="subtitle" content="{self.top_ligne_2}">
-                <meta name="printdate" content="Imprimé le {print_date}">
-            
-                <style>
-                    /* string-set global */
-                    meta[name=title] {{"string-set: title attr(content);"}}
-                    meta[name=subtitle] {{"string-set: subtitle attr(content);"}}
-                    meta[name=printdate] {{"string-set: printdate attr(content);"}}
-                </style>
-            
-                <title>Word editor export</title>
-            </head>
             <body>
+                <!-- Variables invisibles pour WeasyPrint -->
+                <h1 class="doc-title">{self.top_ligne_1}</h1>
+                <h2 class="doc-subtitle">{self.top_ligne_2}</h2>
+                <span class="print-date">Imprimé le {print_date}</span>
+            
+                <!-- Trait gris visible -->
+                <div class="separator-line"></div>
+            
+                <!-- Contenu du word editor -->
                 {inner_html}
+            
             </body>
-            </html>
+
             """
 
-    
         # Call the Uplink function
         with anvil.server.no_loading_indicator:
             pdf_media = anvil.server.call("render_pdf", html_doc, css, "texte.pdf")
