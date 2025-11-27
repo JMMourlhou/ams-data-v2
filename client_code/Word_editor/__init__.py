@@ -497,7 +497,8 @@ class Word_editor(Word_editorTemplate):
 
         # Call the Uplink function
         with anvil.server.no_loading_indicator:
-            pdf_media = anvil.server.call("render_pdf", html_doc, css, "texte.pdf")
+            file_name=f"{self.top_ligne_1}"
+            pdf_media = anvil.server.call("render_pdf", html_doc, css, file_name)
     
         if pdf_media:
             anvil.media.download(pdf_media)
