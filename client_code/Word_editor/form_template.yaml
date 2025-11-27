@@ -83,7 +83,7 @@ components:
               padding: [null, '15', null, null]
             text: ''
           type: Button
-        layout_properties: {width: 368.30054443359376}
+        layout_properties: {expand: true, width: 368.30054443359376}
         name: column_panel_1
         properties:
           background: theme:On Primary Container
@@ -96,25 +96,14 @@ components:
         type: ColumnPanel
       layout_properties: {width: 411.83805908203124}
       name: flow_panel_1
-      properties: {align: center, gap: tiny}
+      properties: {align: center, gap: tiny, spacing_below: none}
       type: FlowPanel
     - components:
       - components:
-        - layout_properties: {grid_position: 'RSCXEN,QOYSMU'}
-          name: spacer_2
+        - layout_properties: {grid_position: 'RSCXEN,RKVMQP'}
+          name: spacer_1
           properties: {height: 32}
           type: Spacer
-        - event_bindings: {change: drop_down_font_size_change}
-          layout_properties: {grid_position: 'RSCXEN,DPIFUQ'}
-          name: drop_down_font_size
-          properties:
-            background: theme:On Primary Container
-            foreground: theme:On Primary
-            include_placeholder: false
-            items: [Font size, '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
-            placeholder: Font Size
-            role: outlined
-          type: DropDown
         - event_bindings: {click: button_red_click}
           layout_properties: {grid_position: 'RSCXEN,BVABPF'}
           name: button_red
@@ -140,8 +129,30 @@ components:
           name: button_green
           properties: {background: '#60FA00', text: ''}
           type: Button
+        - event_bindings: {change: drop_down_font_size_change}
+          layout_properties: {grid_position: 'RSCXEN,YQFUJN'}
+          name: drop_down_font_size
+          properties:
+            align: left
+            background: theme:On Primary Container
+            foreground: theme:On Primary
+            include_placeholder: false
+            items: [Taille, '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
+            placeholder: Font Size
+            role: null
+          type: DropDown
+        layout_properties: {expand: true, width: 325.43374072265624}
+        name: column_panel_2
+        properties: {col_widths: '{"BVABPF":5,"JKQXRI":10,"NXKMZC":7,"OHMNJP":5,"WTRFYJ":5,"RKVMQP":8,"YQFUJN":20}', wrap_on: never}
+        type: ColumnPanel
+      layout_properties: {width: 396.03014453125}
+      name: flow_panel_2
+      properties: {align: center}
+      type: FlowPanel
+    - components:
+      - components:
         - event_bindings: {click: button_erase_click}
-          layout_properties: {grid_position: 'RSCXEN,EGHXEW'}
+          layout_properties: {grid_position: 'EQSIUJ,ZBGVPJ'}
           name: button_erase
           properties:
             background: theme:Tertiary
@@ -155,34 +166,38 @@ components:
               padding: [null, null, null, '']
             text: ''
           type: Button
-        - layout_properties: {grid_position: 'RSCXEN,ZZUUSP'}
-          name: spacer_1
-          properties: {height: 32}
-          type: Spacer
         - event_bindings: {click: button_download_click}
-          layout_properties: {grid_position: 'RSCXEN,RHZPHG'}
+          layout_properties: {grid_position: 'EQSIUJ,BUFEYY'}
           name: button_download
           properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
           type: Button
-        layout_properties: {width: 441.73411572265627}
-        name: column_panel_2
-        properties: {col_widths: '{"DPIFUQ":16,"BVABPF":4,"EGHXEW":10,"RHZPHG":10,"JKQXRI":4,"NXKMZC":4,"OHMNJP":4,"WTRFYJ":4,"ZZUUSP":4,"QOYSMU":4}', wrap_on: never}
+        layout_properties: {}
+        name: column_panel_3
+        properties: {col_widths: '{"ZBGVPJ":35,"BUFEYY":25}', wrap_on: never}
         type: ColumnPanel
-      layout_properties: {width: 450.9520126953125}
-      name: flow_panel_2
-      properties: {align: center}
+      layout_properties: {expand: true}
+      name: flow_panel_3
+      properties: {align: center, gap: tiny}
       type: FlowPanel
     layout_properties: {grid_position: 'TNEKNW,YULENK'}
     name: flow_panel_menu
     properties: {background: 'theme:On Primary Container', gap: small, vertical_align: middle}
     type: FlowPanel
+  - layout_properties: {grid_position: 'HTLVZU,TFKPQI'}
+    name: spacer_4
+    properties: {height: 239.29693603515625}
+    type: Spacer
   - layout_properties: {grid_position: 'HTLVZU,NIOEQS'}
     name: html_part_1
     properties: {text: sldfkjkldsjgkljfdkjs}
     type: form:Word_editor.HTML_part
+  - layout_properties: {grid_position: 'HTLVZU,ERACDY'}
+    name: spacer_3
+    properties: {height: 240.9566650390625}
+    type: Spacer
   layout_properties: {grid_position: 'UFYBHJ,MRLASC'}
   name: column_panel_Text_editor
-  properties: {background: '', foreground: 'theme:On Primary', wrap_on: never}
+  properties: {background: '', col_widths: '{"NIOEQS":60,"ERACDY":10,"TFKPQI":10}', foreground: 'theme:On Primary', wrap_on: never}
   type: ColumnPanel
 - event_bindings: {click: button_validation_click}
   layout_properties: {grid_position: 'TLROWX,QISBIF'}
