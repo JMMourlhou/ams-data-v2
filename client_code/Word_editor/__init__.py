@@ -12,7 +12,7 @@ anvil.js.window.document.execCommand("styleWithCSS", False, True)
 
 
 class Word_editor(Word_editorTemplate):
-    def __init__(self, title, sub_title, **properties):
+    def __init__(self, top_ligne_1, top_ligne_2 , **properties):
 
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -21,8 +21,8 @@ class Word_editor(Word_editorTemplate):
         list_colors = [("Colors",""),("Red", "#FA0000"),("Green","#60FA00"),("Blue","#00C0FA"),("Orange","#FAA300"),("Yellow","#F2FA00")]
         self.drop_down_color.items = [(r[0],r[1]) for r in list_colors]
         """
-        self.title = title # Titre, BT download 
-        self.sub_title = sub_title
+        self.top_ligne_1 = top_ligne_1 # Titre, BT download 
+        self.top_ligne_2 = top_ligne_2
         # --------------------------------------------------------
         # global HTML cleaner to keep saved HTML clean
         # --------------------------------------------------------
@@ -468,28 +468,34 @@ class Word_editor(Word_editorTemplate):
 
         # Date de l'impression
         print_date = datetime.now().strftime("%d/%m/%Y à %H:%M")
-        
+        alert(print_date)
+        alert(self.top_ligne_1)
         # Wrap inner HTML into a minimal full HTML document
         html_doc = f"""
             <html>
             <head>
                 <meta charset="utf-8">
+            
+                <!-- Définition des strings pour WeasyPrint -->
+                <meta name="title" content="{self.top_ligne_1}">
+                <meta name="subtitle" content="{self.top_ligne_2}">
+                <meta name="printdate" content="Imprimé le {print_date}">
+            
+                <style>
+                    /* string-set global */
+                    meta[name=title] {{"string-set: title attr(content);"}}
+                    meta[name=subtitle] {{"string-set: subtitle attr(content);"}}
+                    meta[name=printdate] {{"string-set: printdate attr(content);"}}
+                </style>
+            
                 <title>Word editor export</title>
             </head>
             <body>
-            
-                <!-- Variables pour l'en-tête -->
-                <h1 class="doc-title">{self.title}</h1>
-                <h2 class="doc-subtitle">{self.sub_title}</h2>
-            
-                <!-- Variable pour le pied de page -->
-                <span class="print-date">Imprimé le {print_date}</span>
-            
                 {inner_html}
-            
             </body>
             </html>
             """
+
     
         # Call the Uplink function
         with anvil.server.no_loading_indicator:
