@@ -100,8 +100,6 @@ class Word_editor(Word_editorTemplate):
         """
         anvil.js.window.eval(js_code_clean)
         
-        
-
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
         editor = anvil.js.window.document.getElementById("editor")
