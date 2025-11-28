@@ -143,9 +143,9 @@ components:
           type: DropDown
         layout_properties: {expand: true, width: 325.43374072265624}
         name: column_panel_2
-        properties: {col_widths: '{"BVABPF":5,"JKQXRI":10,"NXKMZC":7,"OHMNJP":5,"WTRFYJ":5,"RKVMQP":8,"YQFUJN":20}', wrap_on: never}
+        properties: {col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":5,"OHMNJP":5,"WTRFYJ":5,"RKVMQP":8,"YQFUJN":27}', wrap_on: never}
         type: ColumnPanel
-      layout_properties: {width: 396.03014453125}
+      layout_properties: {width: 395.2905625}
       name: flow_panel_2
       properties: {align: center}
       type: FlowPanel
@@ -171,7 +171,7 @@ components:
           name: button_download
           properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
           type: Button
-        layout_properties: {}
+        layout_properties: {width: 119.5777568359375}
         name: column_panel_3
         properties: {col_widths: '{"ZBGVPJ":35,"BUFEYY":25}', wrap_on: never}
         type: ColumnPanel
