@@ -1,48 +1,31 @@
 components:
 - components:
-  - event_bindings: {change: text_box_1_change, focus: text_box_2_focus, pressed_enter: text_box_2_pressed_enter}
-    layout_properties: {grid_position: 'HOJGWT,EMVPFZ'}
-    name: text_box_2
-    properties: {background: 'theme:Primary', enabled: false, foreground: 'theme:On Primary', role: outlined}
-    type: TextBox
-  - event_bindings: {focus: text_box_2_focus}
-    layout_properties: {grid_position: 'HOJGWT,HJTBAD'}
-    name: text_box_1
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-    type: TextBox
-  - event_bindings: {focus: text_box_2_focus}
-    layout_properties: {grid_position: 'HOJGWT,OFIUAT'}
-    name: text_box_3
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-    type: TextBox
-  - event_bindings: {focus: text_box_2_focus}
-    layout_properties: {grid_position: 'HOJGWT,FLLOBQ'}
-    name: text_box_4
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', hide_text: false, italic: false, placeholder: '', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
-    type: TextBox
-  - event_bindings: {change: text_box_1_change}
-    layout_properties: {grid_position: 'HOJGWT,HJMHES'}
-    name: check_box_1
-    properties: {text: mot clé daté}
-    type: CheckBox
-  - event_bindings: {click: button_modif_click}
-    layout_properties: {grid_position: 'HOJGWT,NJQOTC'}
-    name: button_modif
-    properties:
-      background: theme:Error
-      enabled: true
-      foreground: theme:Tertiary
-      spacing:
-        margin: ['10', null, null, null]
-      text: Modif
-      visible: false
+  - event_bindings: {click: button_code_click}
+    layout_properties: {grid_position: 'YYHVJZ,JQPRGE'}
+    name: button_code
+    properties: {foreground: 'theme:On Primary', text: num}
+    type: Button
+  - event_bindings: {click: button_code_click}
+    layout_properties: {grid_position: 'YYHVJZ,UOQBQS'}
+    name: button_type_evnt
+    properties: {foreground: 'theme:On Primary', text: type evnt}
+    type: Button
+  - event_bindings: {click: button_code_click}
+    layout_properties: {grid_position: 'YYHVJZ,ZILGXJ'}
+    name: button_msg_0
+    properties: {foreground: 'theme:On Primary', text: Msg 0}
+    type: Button
+  - event_bindings: {click: button_code_click}
+    layout_properties: {grid_position: 'YYHVJZ,QOIKQB'}
+    name: button_msg_1
+    properties: {foreground: 'theme:On Primary', text: Msg 1}
     type: Button
   - event_bindings: {click: button_annuler_click}
-    layout_properties: {grid_position: 'HOJGWT,QSFYIT'}
+    layout_properties: {grid_position: 'YYHVJZ,XBBQPF'}
     name: button_annuler
     properties:
       align: center
-      background: theme:Primary
+      background: ''
       bold: false
       border: ''
       enabled: true
@@ -64,7 +47,7 @@ components:
     type: Button
   layout_properties: {full_width_row: true, grid_position: 'OYWHPE,PMWGCG'}
   name: column_panel_1
-  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"EMVPFZ":3,"HJTBAD":10,"OFIUAT":10,"FLLOBQ":10,"HJMHES":6,"NJQOTC":4,"QSFYIT":17}', wrap_on: never}
+  properties: {background: 'theme:On Primary Container', col_spacing: tiny, col_widths: '{}', role: outlined-card, wrap_on: never}
   type: ColumnPanel
 container: {type: ColumnPanel}
 custom_component: true

@@ -12,12 +12,11 @@ class one_event_type(one_event_typeTemplate):
         # Set Form properties and Data Bindings.
         # Any code you write here will run before the form opens.
         self.item = item
-        self.text_box_1.text = self.item['type']
-        self.text_box_2.text = self.item['code']
-        self.text_box_3.text = self.item['msg_0']
-        self.text_box_4.text = self.item['msg_1']
-        self.check_box_1.checked = item['mot_clef_setup']
-        self.nb = int(self.text_box_2.text)
+        self.button_code.text = self.item['code']
+        self.button_type_evnt.text = self.item['type']
+        self.button_msg_0.text = self.item['msg_0']
+        self.button_msg_1.text = self.item['msg_1']
+        self.nb = self.item['code']
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -42,9 +41,11 @@ class one_event_type(one_event_typeTemplate):
             alert("Effacement effectué !")
         self.remove_from_parent()
 
-    def text_box_2_focus(self, **event_args):
-        """This method is called when the TextBox gets focus"""
+    def button_code_click(self, **event_args):
+        """This method is called when the button is clicked"""
         self.row_to_be_modified = self.item  # self.check_box_state   Propriété de la forme créée
         self.raise_event("x-modif")
+
+  
 
     

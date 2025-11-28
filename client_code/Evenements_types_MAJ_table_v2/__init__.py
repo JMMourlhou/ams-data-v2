@@ -54,6 +54,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         self.check_box_1.checked = self.row['mot_clef_setup']
         
         self.column_panel_add_modif.visible = True
+        self.content_panel_events_rows.visible = False
         self.call_word_editor(self.row['text_initial'], 'modif')
         
     """

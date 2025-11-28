@@ -88,100 +88,118 @@ components:
         properties:
           background: theme:On Primary Container
           col_spacing: none
-          col_widths: '{"FSKSTQ":11,"FUZKJW":10,"ZYYGVC":9,"MWPNDN":12,"GYYXJZ":12,"DENREJ":8,"FWIZXZ":18}'
-          role: tonal-card
+          col_widths: '{"FSKSTQ":9,"FUZKJW":9,"ZYYGVC":9,"MWPNDN":14,"GYYXJZ":11,"DENREJ":11,"FWIZXZ":19,"FVSCIO":5}'
+          role: outlined-card
           spacing:
             padding: ['5', '10', '5', '10']
           wrap_on: never
         type: ColumnPanel
-      layout_properties: {width: 411.83805908203124}
+      layout_properties: {width: 394.3578310546875}
       name: flow_panel_1
       properties: {align: center, gap: tiny, spacing_below: none}
       type: FlowPanel
     - components:
       - components:
-        - layout_properties: {grid_position: 'RSCXEN,RKVMQP'}
-          name: spacer_1
-          properties: {height: 32}
-          type: Spacer
-        - event_bindings: {click: button_red_click}
-          layout_properties: {grid_position: 'RSCXEN,BVABPF'}
-          name: button_red
-          properties: {background: '#FA0000', text: ''}
-          type: Button
-        - event_bindings: {click: button_orange_click}
-          layout_properties: {grid_position: 'RSCXEN,NXKMZC'}
-          name: button_orange
-          properties: {background: '#FAA300', text: ''}
-          type: Button
-        - event_bindings: {click: button_yellow_click}
-          layout_properties: {grid_position: 'RSCXEN,WTRFYJ'}
-          name: button_yellow
-          properties: {background: '#F2FA00', text: ''}
-          type: Button
-        - event_bindings: {click: button_blue_click}
-          layout_properties: {grid_position: 'RSCXEN,JKQXRI'}
-          name: button_blue
-          properties: {background: '#00C0FA', text: ''}
-          type: Button
-        - event_bindings: {click: button_green_click}
-          layout_properties: {grid_position: 'RSCXEN,OHMNJP'}
-          name: button_green
-          properties: {background: '#60FA00', text: ''}
-          type: Button
-        - event_bindings: {change: drop_down_font_size_change}
-          layout_properties: {grid_position: 'RSCXEN,YQFUJN'}
-          name: drop_down_font_size
+        - components:
+          - layout_properties: {grid_position: 'RSCXEN,RKVMQP'}
+            name: spacer_1
+            properties: {height: 32}
+            type: Spacer
+          - event_bindings: {click: button_red_click}
+            layout_properties: {grid_position: 'RSCXEN,BVABPF'}
+            name: button_red
+            properties: {background: '#FA0000', text: ''}
+            type: Button
+          - event_bindings: {click: button_orange_click}
+            layout_properties: {grid_position: 'RSCXEN,NXKMZC'}
+            name: button_orange
+            properties: {background: '#FAA300', text: ''}
+            type: Button
+          - event_bindings: {click: button_yellow_click}
+            layout_properties: {grid_position: 'RSCXEN,WTRFYJ'}
+            name: button_yellow
+            properties: {background: '#F2FA00', text: ''}
+            type: Button
+          - event_bindings: {click: button_blue_click}
+            layout_properties: {grid_position: 'RSCXEN,JKQXRI'}
+            name: button_blue
+            properties: {background: '#00C0FA', text: ''}
+            type: Button
+          - event_bindings: {click: button_green_click}
+            layout_properties: {grid_position: 'RSCXEN,OHMNJP'}
+            name: button_green
+            properties: {background: '#60FA00', text: ''}
+            type: Button
+          - event_bindings: {change: drop_down_font_size_change}
+            layout_properties: {grid_position: 'RSCXEN,YQFUJN'}
+            name: drop_down_font_size
+            properties:
+              align: left
+              background: theme:On Primary Container
+              foreground: theme:On Primary
+              include_placeholder: false
+              items: [Taille, '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
+              margin: ['1', null, '1', null]
+              placeholder: Font Size
+              role: null
+            type: DropDown
+          - components:
+            - components:
+              - event_bindings: {click: button_erase_click}
+                layout_properties: {grid_position: 'EQSIUJ,ZBGVPJ'}
+                name: button_erase
+                properties:
+                  background: theme:Tertiary
+                  font: '22'
+                  foreground: theme:Error
+                  icon: fa:eraser
+                  icon_align: right_edge
+                  italic: true
+                  role: outlined-button
+                  spacing:
+                    margin: [null, null, null, '20']
+                    padding: [null, null, null, '']
+                  text: ''
+                type: Button
+              - event_bindings: {click: button_download_click}
+                layout_properties: {grid_position: 'EQSIUJ,BUFEYY'}
+                name: button_download
+                properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
+                type: Button
+              layout_properties: {width: 146.92221289062502}
+              name: column_panel_3
+              properties:
+                col_widths: '{"ZBGVPJ":30,"BUFEYY":30}'
+                spacing:
+                  margin: ['0', null, '0', null]
+                wrap_on: never
+              type: ColumnPanel
+            layout_properties: {grid_position: 'RSCXEN,QXMYJU'}
+            name: flow_panel_3
+            properties: {align: center, gap: tiny}
+            type: FlowPanel
+          layout_properties: {expand: true, width: 325.43374072265624}
+          name: column_panel_2
           properties:
-            align: left
             background: theme:On Primary Container
-            foreground: theme:On Primary
-            include_placeholder: false
-            items: [Taille, '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
-            placeholder: Font Size
-            role: null
-          type: DropDown
-        layout_properties: {expand: true, width: 325.43374072265624}
-        name: column_panel_2
-        properties: {col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":5,"OHMNJP":5,"WTRFYJ":5,"RKVMQP":8,"YQFUJN":27}', wrap_on: never}
-        type: ColumnPanel
-      layout_properties: {width: 395.2905625}
-      name: flow_panel_2
-      properties: {align: center}
-      type: FlowPanel
-    - components:
-      - components:
-        - event_bindings: {click: button_erase_click}
-          layout_properties: {grid_position: 'EQSIUJ,ZBGVPJ'}
-          name: button_erase
-          properties:
-            background: theme:Tertiary
-            font: '22'
-            foreground: theme:Error
-            icon: fa:eraser
-            italic: true
-            role: outlined-button
+            col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":5,"OHMNJP":5,"WTRFYJ":5,"RKVMQP":5,"YQFUJN":16,"QXMYJU":21}'
+            role: outlined-card
             spacing:
-              margin: [null, null, null, '20']
-              padding: [null, null, null, '']
-            text: ''
-          type: Button
-        - event_bindings: {click: button_download_click}
-          layout_properties: {grid_position: 'EQSIUJ,BUFEYY'}
-          name: button_download
-          properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
-          type: Button
-        layout_properties: {width: 119.5777568359375}
-        name: column_panel_3
-        properties: {col_widths: '{"ZBGVPJ":35,"BUFEYY":25}', wrap_on: never}
-        type: ColumnPanel
-      layout_properties: {expand: true}
-      name: flow_panel_3
-      properties: {align: center, gap: tiny}
-      type: FlowPanel
+              margin: ['6', null, null, null]
+              padding: ['0', '10', '0', '10']
+            wrap_on: never
+          type: ColumnPanel
+        layout_properties: {grid_position: 'XLLISF,CCXWRH'}
+        name: flow_panel_2
+        properties: {align: center, gap: small, vertical_align: full}
+        type: FlowPanel
+      layout_properties: {width: 389.394529296875}
+      name: column_panel_4
+      properties: {}
+      type: ColumnPanel
     layout_properties: {grid_position: 'TNEKNW,YULENK'}
     name: flow_panel_menu
-    properties: {background: 'theme:On Primary Container', gap: small, vertical_align: middle}
+    properties: {background: '', gap: small, vertical_align: middle}
     type: FlowPanel
   - layout_properties: {grid_position: 'HTLVZU,TFKPQI'}
     name: spacer_4
