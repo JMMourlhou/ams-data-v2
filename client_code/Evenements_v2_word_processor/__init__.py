@@ -84,8 +84,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             # Modif à partir du row passé en init par la form Evenements_visu_modif_del
             self.mode = "modif"
             # Test si ce row n'avait pas été validé
-            if self.to_be_modified_row["auto_sov"] is True:
-                alert("Saisie Evenement non achevée normalement.\n Vous pouvez maintenant achever sa saisie ou le valider directement.")
+            #if self.to_be_modified_row["auto_sov"] is True:
+            #    alert("Saisie Evenement non achevée normalement.\n Vous pouvez maintenant achever sa saisie ou le valider directement.")
                 #self.button_validation.visible = True
 
             self.id = self.to_be_modified_row.get_id()
@@ -424,9 +424,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
-        print(sender.text)
+        #print(sender.text)
         self.validation(False, self.id, sender.text)
-        print(sender.text)
 
     def button_visu_html_click(self, **event_args):
         """This method is called when the button is clicked"""

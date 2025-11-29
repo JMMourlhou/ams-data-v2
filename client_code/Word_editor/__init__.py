@@ -516,6 +516,17 @@ class Word_editor(Word_editorTemplate):
         else:
             alert("PDF generation failed on server.")
 
+    def timer_3_tick(self, **event_args):
+        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        
+        if self.button_validation.foreground == "theme:On Primary":
+            self.button_validation.foreground = "theme:On Primary Container"
+            self.button_validation_copy.foreground = "theme:On Primary Container"
+            
+        else:
+            self.button_validation.foreground = "theme:On Primary"
+            self.button_validation_copy.foreground = "theme:On Primary"
+
     
         
 
