@@ -99,6 +99,7 @@ components:
           margin: ['10', null, null, null]
         spacing_above: medium
         text: Récupérer saisies non validées
+        visible: false
       type: CheckBox
     layout_properties: {grid_position: 'HYNVZO,MASFBI'}
     name: column_panel_recherche

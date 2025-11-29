@@ -55,6 +55,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         
         self.column_panel_add_modif.visible = True
         self.content_panel_events_rows.visible = False
+        self.button_add.visible = False
         self.call_word_editor(self.row['text_initial'], 'modif')
         
     """

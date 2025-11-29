@@ -85,7 +85,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.mode = "modif"
             # Test si ce row n'avait pas été validé
             if self.to_be_modified_row["auto_sov"] is True:
-                alert("Cet évenement n'avait pas été validé.\n Vous pouvez maintenant achever sa saisie ou le valider directement.")
+                alert("Saisie Evenement non achevée normalement.\n Vous pouvez maintenant achever sa saisie ou le valider directement.")
                 #self.button_validation.visible = True
 
             self.id = self.to_be_modified_row.get_id()
@@ -185,6 +185,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     """
     def call_word_editor(self, content_text_html):
         evnt = self.drop_down_event.selected_value
+        self.flow_panel_drop_type_evnt.visible = False  # cache le drop down type d'evnt
         title = f"Notes sur l'évenement: {evnt} du {self.date_picker_1.date.strftime('%d/%m/%Y')}"
         sub_title = f"Mot clé: {self.text_area_mot_clef.text}"
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)

@@ -1,10 +1,9 @@
 from ._anvil_designer import Word_editorTemplate
 from anvil import *
-
 import anvil.js
+from anvil.js import window
 
-# Pour le download du texte
-from datetime import datetime
+from datetime import datetime # Pour le download du texte
 
 
 # Force execCommand to use inline CSS
@@ -21,6 +20,18 @@ class Word_editor(Word_editorTemplate):
         list_colors = [("Colors",""),("Red", "#FA0000"),("Green","#60FA00"),("Blue","#00C0FA"),("Orange","#FAA300"),("Yellow","#F2FA00")]
         self.drop_down_color.items = [(r[0],r[1]) for r in list_colors]
         """
+        if window.innerWidth < 800: # tel: menu displayed on each side
+            self.column_panel_menu1.visible = False
+            self.column_panel_menu2.visible = False
+            self.column_panel_menu1_left.visible = True
+            self.column_panel_menu2_right.visible = True
+            self.button_validation.visible = False
+        else:
+            self.column_panel_menu1.visible = True
+            self.column_panel_menu2.visible = True
+            self.column_panel_menu1_left.visible = False
+            self.column_panel_menu2_right.visible = False
+            
         self.top_ligne_1 = top_ligne_1 # Titre, BT download 
         self.top_ligne_2 = top_ligne_2
         # --------------------------------------------------------

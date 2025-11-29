@@ -47,7 +47,7 @@ components:
         visible: true
       type: DropDown
     layout_properties: {grid_position: 'BWKGSA,VNTBFV'}
-    name: flow_panel_0
+    name: flow_panel_drop_type_evnt
     properties: {align: center, background: '', border: '', foreground: '', role: null, spacing: medium, spacing_above: none, spacing_below: none, tooltip: '', vertical_align: full, visible: true}
     type: FlowPanel
   - components:
@@ -90,12 +90,12 @@ components:
 - components:
   - layout_properties: {grid_position: 'ZSJQNI,JXRXRH'}
     name: label_1
-    properties: {foreground: 'theme:On Primary', text: 'Mot clef pour faciliter la recherche:'}
+    properties: {align: right, foreground: 'theme:On Primary', text: 'Mot clef pour faciliter la recherche:'}
     type: Label
   - event_bindings: {change: text_area_commentaires_change}
     layout_properties: {grid_position: 'ZSJQNI,GBJTFR'}
     name: text_area_mot_clef
-    properties: {background: 'theme:Tertiary', font_size: 13, foreground: 'theme:On Primary Container', height: 40.5771484375, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: Nom de la personne ou un mot qui rappelle facilement l'évenement}
+    properties: {background: 'theme:On Primary Container', font_size: 13, foreground: 'theme:On Primary', height: 40.5771484375, role: outlined, spacing_above: none, spacing_below: none, text: '', tooltip: Nom de la personne ou un mot qui rappelle facilement l'évenement}
     type: TextArea
   - layout_properties: {grid_position: 'MZQDLM,MPCNKU'}
     name: content_panel

@@ -71,11 +71,11 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         #   certaines raws viennent de sauvegardes temporaires ttes les 15 sec par forme 'Evenements'
         #      ( venant de sorties incontrolées par fermetures defenêtres ou appuis sur la touche gauche du tel)
         liste = app_tables.events.search(tables.order_by("date", ascending=False),
-                                        auto_sov=visu_des_erreurs, 
+                                        #auto_sov=visu_des_erreurs, # ----------------------------  MODIF pour simplifier
                                         type_event=type_evenement
                                         )
         self.repeating_panel_1.items=liste
-        self.check_box_visu_erreurs.visible = True
+        #self.check_box_visu_erreurs.visible = True # --------------------------------------------  MODIF pour simplifier
         self.data_grid_1.visible = True
         self.column_panel_recherche.visible = True
             
