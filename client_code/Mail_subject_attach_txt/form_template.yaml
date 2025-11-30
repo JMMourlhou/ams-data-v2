@@ -100,12 +100,12 @@ components:
         type: Label
       - layout_properties: {grid_position: 'CASXFL,UUMRYI'}
         name: content_panel
-        properties: {}
+        properties: {background: 'theme:Tertiary'}
         type: ColumnPanel
       - event_bindings: {change: text_area_text_detail_change}
         layout_properties: {grid_position: 'IVBGLR,YYYGMZ'}
         name: text_area_text_detail
-        properties: {auto_expand: true, background: 'theme:Primary', foreground: 'theme:On Primary', height: 91.49847412109375, placeholder: Texte du mail, role: outlined, spacing_above: none, text: ''}
+        properties: {auto_expand: true, background: 'theme:Primary', foreground: 'theme:On Primary', height: 91.49847412109375, placeholder: Texte du mail, role: outlined, spacing_above: none, text: '', visible: false}
         type: TextArea
       - components:
         - event_bindings: {change: file_loader_attachments_change}
@@ -114,12 +114,14 @@ components:
           properties: {foreground: 'theme:Tertiary', text: Attachement(s)}
           type: FileLoader
         - event_bindings: {click: button_modif_click}
+          layout_properties: {}
           name: button_modif
           properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: 15, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: Sauver ce modèle, tooltip: '', underline: false, visible: false}
           type: Button
         - event_bindings: {click: button_retour_click}
+          layout_properties: {}
           name: button_retour
-          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Retour}
+          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Retour, visible: false}
           type: Button
         - event_bindings: {click: button_sending_click}
           name: button_sending

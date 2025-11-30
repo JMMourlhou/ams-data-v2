@@ -1,28 +1,75 @@
 components:
 - components:
   - data_bindings: []
-    layout_properties: {grid_position: 'ZVISZF,WVKNHQ CCCYYW,CEZMFK'}
+    layout_properties: {grid_position: 'GNDHQY,AXHFJB LMEGBA,MCYHST'}
     name: text_area_subject
-    properties: {auto_expand: true, background: '', enabled: false, foreground: 'theme:On Primary', height: 42.20086669921875, role: outlined}
+    properties:
+      align: center
+      auto_expand: true
+      background: theme:On Secondary Container
+      enabled: false
+      font_size: 18
+      foreground: theme:On Primary
+      height: 39.168487548828125
+      italic: true
+      margin: ['15', '10', '0', '10']
+      role: outlined
+      spacing_below: none
     type: TextArea
-  - event_bindings: {}
-    layout_properties: {grid_position: 'ZVISZF,NGDSUX'}
-    name: text_area_text
-    properties: {auto_expand: true, enabled: false, foreground: 'theme:On Primary', height: 43.73089599609375, role: outlined}
+  - layout_properties: {full_width_row: true, grid_position: 'GNDHQY,AXHFJB ITIBGU,UGFLBW'}
+    name: rich_text_html
+    properties:
+      background: theme:On Secondary Container
+      border: ''
+      foreground: theme:On Primary
+      format: restricted_html
+      spacing:
+        margin: ['2', null, null, '10']
+        padding: [null, null, null, '2']
+    type: RichText
+  - layout_properties: {grid_position: 'GNDHQY,AXHFJB MZQUEI,EZWZMG'}
+    name: text_area_1
+    properties: {height: 23.29278564453125, visible: false}
     type: TextArea
+  - layout_properties: {grid_position: 'GNDHQY,JUTTSO BROPXS,OJCLIB'}
+    name: spacer_1
+    properties: {height: 12.928298950195312}
+    type: Spacer
   - event_bindings: {click: button_selection_click}
-    layout_properties: {grid_position: 'ZVISZF,BVFGCJ GNDHQY,JUTTSO'}
+    layout_properties: {grid_position: 'GNDHQY,JUTTSO RXUTEC,DLBZIK'}
     name: button_selection
-    properties: {background: 'theme:Green', foreground: 'theme:On Primary Container', icon: 'fa:arrow-left', text: Sélection}
+    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', icon: 'fa:arrow-left', text: Sélection}
     type: Button
   - event_bindings: {click: button_del_click}
-    layout_properties: {grid_position: 'ZVISZF,BVFGCJ KPVAWC,CUPHCM'}
+    layout_properties: {grid_position: 'GNDHQY,JUTTSO RQFNVS,NMDMDZ'}
     name: button_del
-    properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: 15, foreground: 'theme:Error', icon: 'fa:minus-square', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: none, text: Enlever, tooltip: '', underline: false, visible: true}
+    properties:
+      align: center
+      background: ''
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 20
+      foreground: theme:Error
+      icon: fa:minus
+      icon_align: left
+      italic: false
+      role: elevated-button
+      spacing:
+        margin: ['20', null, null, null]
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      underline: false
+      visible: true
     type: Button
   layout_properties: {grid_position: 'MIPLMV,IDRFAS'}
   name: column_panel_1
-  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"WVKNHQ":22,"NGDSUX":48}', role: null}
+  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"AXHFJB":50,"JUTTSO":10}', role: null}
   type: ColumnPanel
-container: {type: ColumnPanel}
+container:
+  event_bindings: {show: form_show}
+  type: ColumnPanel
 is_package: true

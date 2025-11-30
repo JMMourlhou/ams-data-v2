@@ -330,6 +330,7 @@ class Word_editor(Word_editorTemplate):
         anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
         self.raise_event('x-fin_saisie')
+        self.remove_from_parent()
 
 
     # ====================================================================================
@@ -471,3 +472,12 @@ class Word_editor(Word_editorTemplate):
             anvil.media.download(pdf_media)
         else:
             alert("Erreur lors de la génération du PDF")
+
+    def button_exit_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        editor = anvil.js.window.document.getElementById("editor")
+        anvil.js.window.cleanEditorHTML(editor)
+        self.text = ""
+        self.param1 = "exit"
+        self.raise_event('x-fin_saisie')
+        self.remove_from_parent()

@@ -1,5 +1,6 @@
 components: []
 container:
+  event_bindings: {}
   properties:
     background: theme:On Secondary Container
     html: |-

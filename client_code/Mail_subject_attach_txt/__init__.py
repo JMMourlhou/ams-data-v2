@@ -81,8 +81,9 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         open_form(self.f) 
-
-    def button_modif_click(self, **event_args):
+        
+    # text vient du retour du word processor, def handle_click_fin_saisie() ds list_modeles
+    def button_modif_click(self, html_text="", **event_args):   
         """This method is called when the button is clicked"""
         if self.mode_creation is True:  # Création du modèle
             if not self.drop_down_type_mails.selected_value:
@@ -90,21 +91,17 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
                 return
             #r=alert("Enregistrer ce modèle ?",buttons=[("oui",True),("non",False)])
             #if r :   # Oui               
-            result = anvil.server.call('add_mail_model', self.drop_down_type_mails.selected_value,self.text_box_subject_detail.text, self.text_area_text_detail.text)
+            result = anvil.server.call('add_mail_model', self.drop_down_type_mails.selected_value,self.text_box_subject_detail.text, html_text)
         else:   # Modif du modèle
             #r=alert("Modifier ce modèle ?",buttons=[("oui",True),("non",False)])
             #if r :   # Oui               
-            result = anvil.server.call('modify_mail_model',self.label_id.text,self.text_box_subject_detail.text, self.text_area_text_detail.text)
+            result = anvil.server.call('modify_mail_model',self.label_id.text,self.text_box_subject_detail.text, html_text)
         if not result:
             if self.mode_creation is True:  # Création du modèle
                 alert("Modèle de mail non créé")
             else:
                 alert("Modèle de mail non modifié")
-        else:
-            if self.mode_creation is True:  # Création du modèle
-                alert("Modèle de mail créé")
-            else:
-                alert("Modèle de mail modifié")      
+        
         #self.drop_down_type_mails_change()
         self.column_panel_detail.visible = False   # effact du panel de création/modif
         self.button_modif.visible = False
@@ -147,6 +144,45 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self.mode_creation = True
         self.text_box_subject_detail.text = ""
         self.text_area_text_detail.text = ""
+        # appel du word editor
+        self.call_word_editor("Entrer le nouveau texte ici", 'creation')
+
+    """
+    =============================================================================================================================================      CALL FOR THE WORD EDITOR
+    """
+    def call_word_editor(self, content_text_html, mode):
+        from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
+        title = "*** Nouveau Modèle de Mail ***"
+        sub_title = ""
+        # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
+        text_editor = Word_editor(title, sub_title)  # title/sub_title : pour le bt download 
+        text_editor.text = ""         # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        text_editor.param1 = 'creation'              # mode 'creation'
+        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
+        self.content_panel.add_component(text_editor)
+
+    """
+    #===================================================================================================================================================
+    RETOUR DU WORD EDITOR  
+    # ==================================================================================================================================================
+    """
+    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
+    def handle_click_fin_saisie(self, sender, **event_args):
+        # sender.text contains the 'Word_editor'form's HTML text
+        mode = sender.param1       # mode 'modif' /  'creation' 
+        self.text = sender.text    # texte html de lévenement
+        if mode == "modif":
+            self.button_modif_click(self.text)
+        if mode == "creation":
+            self.button_modif_click(self.text)
+        if mode == "exit":
+            self.button_annuler_click()
+    """
+    Fin RETOUR DU WORD EDITOR  
+    """  
+        
+        
         
 
     def button_retour_click(self, **event_args):

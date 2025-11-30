@@ -6,6 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Mail_subject_attach_txt
+#import html  # pour échapper le texte brut si besoin
 
 class list_modeles(list_modelesTemplate):
     def __init__(self, **properties):
@@ -14,8 +15,14 @@ class list_modeles(list_modelesTemplate):
          # Any code you write here will run before the form opens.
         self.text_area_subject.text = self.item['mail_subject']
         self.text_area_subject.tag.id = self.item.get_id() # je sauve l'id du modele mail row 
-        self.text_area_text.text = self.item['mail_text']
+        self.html_text = self.item['mail_text'] or ""  # Toujours une string
+        self.text_area_1.text = self.item['mail_text']
+        mail_html = self.item['mail_text'] or ""
 
+        # IMPORTANT : on utilise .content, pas .text
+        self.rich_text_html.format = "restricted_html"
+        self.rich_text_html.content = mail_html
+    
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
         r=alert("Voulez-vous enlever ce modèle de mail ?",dismissible=False,buttons=[("oui",True),("non",False)])
@@ -54,9 +61,9 @@ class list_modeles(list_modelesTemplate):
         
         self.f.label_id.text =  self.item.get_id() # récupère l'id du modele mail row (pour la modif en serveur)
         self.f.text_box_subject_detail.text = self.text_area_subject.text
-        self.f.text_area_text_detail.text = self.text_area_text.text
+        self.f.text_area_text_detail.text = self.item['mail_text']
         # appel du word editor
-        self.call_word_editor(self.text_area_text.text, 'modif')
+        self.call_word_editor(self.text_area_1.text, 'modif')
         
     """
     =============================================================================================================================================      CALL FOR THE WORD EDITOR
@@ -84,9 +91,9 @@ class list_modeles(list_modelesTemplate):
         mode = sender.param1       # mode 'modif' /  'creation' 
         self.text = sender.text    # texte html de lévenement
         if mode == "modif":
-            self.ecriture_en_modif()
-        if mode == "creation":
-            self.ecriture_en_creation()
+            self.f.button_modif_click(self.text)
+        if mode == "exit":
+            self.f.button_annuler_click()
     """
     Fin RETOUR DU WORD EDITOR  
     """  

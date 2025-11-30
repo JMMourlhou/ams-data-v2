@@ -4,8 +4,7 @@ from anvil import *
 import anvil.js
 
 class HTML_part(HTML_partTemplate):
-    def __init__(self, **properties):
+    def __init__(self, html_text="", **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        # Any code you write here will run before the form opens.
