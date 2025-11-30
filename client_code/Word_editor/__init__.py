@@ -286,7 +286,6 @@ class Word_editor(Word_editorTemplate):
         self.color_change(color)  
         
     def color_change(self, color, **event_args):
-        #color = from the corresponding color button 
         js = anvil.js.window
         editor = js.document.getElementById("editor")
         sel = js.getSelection()
@@ -295,54 +294,46 @@ class Word_editor(Word_editorTemplate):
             alert("Sélectionne du texte d'abord.")
             return
     
-        # (1) Save range
-        self._save_selection()
+        # 1) On récupère le texte sélectionné AVANT modification du DOM
+        selected_text = sel.toString()
     
-        # (2) Clean all colored spans in the selection (real DOM)
+        # 2) On nettoie les couleurs existantes
         js.cleanColorInSelection()
     
-        # (3) Get fresh range after cleanup
+        # ⚠️ IMPORTANT : on demande une sélection "fraîche" APRÈS nettoyage
         sel = js.getSelection()
+        if sel.rangeCount == 0:
+            return
         range = sel.getRangeAt(0)
     
-        # (4) Extract selected text
-        text = sel.toString()
-        
-        # (4b) Detect existing <span> if any and keep its styles
+        # 3) On récupère le conteneur d'origine pour conserver les styles
         container = range.commonAncestorContainer
         saved_style = ""
-        
+    
         if container.nodeType == 1 and container.tagName == "SPAN":
             saved_style = container.getAttribute("style") or ""
         else:
             parent = container.parentNode
             if parent and parent.tagName == "SPAN":
                 saved_style = parent.getAttribute("style") or ""
-        
-        # Remove existing color rules from style
+    
+        # Nettoyage des anciennes couleurs
         import re
         saved_style = re.sub(r"color\s*:\s*[^;]+;?", "", saved_style).strip()
-        
-        # Rebuild clean style
+    
+        # Nouveau style
         final_style = f"color:{color};"
         if saved_style:
             final_style = saved_style + ";" + final_style
-        
-        # (5) Replace selection with clean span preserving other styles
-        html = f"<span style='{final_style}'>{text}</span>"
+    
+        # 4) Insertion d’un nouveau span propre
+        html = f"<span style='{final_style}'>{selected_text}</span>"
         js.document.execCommand("insertHTML", False, html)
     
-        # (6) Focus editor
         editor.focus()
-    
-        # (7) Restore selection
-        self._restore_selection()
-    
-        # Reset dropdown
-        # self.drop_down_color.selected_value = self.drop_down_color.items[0][1]
 
-
-    # ------------------------
+    
+    #-------------------------
     # ALIGNMENTS
     # ------------------------
     def button_align_left_click(self, **event_args):
@@ -373,7 +364,7 @@ class Word_editor(Word_editorTemplate):
         editor.focus()
         self._restore_selection()
     
-    # Common selection save/restore
+    # Common selection save/restore to keep the selection after applying the color
     def _save_selection(self):
         js = anvil.js.window
         sel = js.getSelection()
