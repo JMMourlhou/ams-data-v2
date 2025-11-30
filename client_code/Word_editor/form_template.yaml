@@ -88,6 +88,11 @@ components:
               padding: [null, '15', null, null]
             text: ''
           type: Button
+        - event_bindings: {click: button_bullet_click}
+          layout_properties: {grid_position: 'PXEBSN,NWQJKV'}
+          name: button_bullet
+          properties: {foreground: 'theme:On Primary', icon: 'fa:list', text: button_1}
+          type: Button
         layout_properties: {expand: true, width: 368.30054443359376}
         name: column_panel_menu1
         properties:
