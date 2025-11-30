@@ -434,13 +434,15 @@ class Word_editor(Word_editorTemplate):
                 }
             
                 @top-center {
-                    content: string(title) "\A"
-                            string(subtitle) "\A"
-                            '_______________________________________________';
+                    content: string(title) "\A" string(subtitle);
                     white-space: pre;
                     font-size: 11pt;
                     font-weight: bold;
                     text-align: center;
+                
+                    padding-bottom: 2mm;     /* petit espace interne */
+                    border-bottom: 1px solid #888;  /* sert de ligne de séparation */
+                    margin-bottom: 0;        /* supprime tout espace sous l’en-tête */
                 }
             
                 @bottom-center {
@@ -480,16 +482,17 @@ class Word_editor(Word_editorTemplate):
                 overflow: hidden;
             }
             
-            .separator-line {
-                border-top: 1px solid #888;
-                margin: 2px 0 8px 0;  /* serré sous l’en-tête */
-            }
         """
 
         # Date de l'impression
         print_date = datetime.now().strftime("%d/%m/%Y à %H:%M")
         # Wrap inner HTML into a minimal full HTML document
         html_doc = f"""
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Word editor export</title>
+            </head>
             <body>
                 <!-- Variables invisibles pour WeasyPrint -->
                 <h1 class="doc-title">{self.top_ligne_1}</h1>

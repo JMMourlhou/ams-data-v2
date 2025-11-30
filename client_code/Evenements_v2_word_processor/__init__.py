@@ -186,7 +186,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     def call_word_editor(self, content_text_html):
         evnt = self.drop_down_event.selected_value
         self.flow_panel_drop_type_evnt.visible = False  # cache le drop down type d'evnt
-        title = f"Notes sur l'évenement: {evnt} du {self.date_picker_1.date.strftime('%d/%m/%Y')}"
+        title = f"Notes prises sur un évenement: {evnt} du {self.date_picker_1.date.strftime('%d/%m/%Y')}"
         sub_title = f"Mot clé: {self.text_area_mot_clef.text}"
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
         text_editor = Word_editor(title, sub_title)  # title/sub_title : pour le bt download 
