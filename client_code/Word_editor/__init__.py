@@ -169,7 +169,7 @@ class Word_editor(Word_editorTemplate):
             node.style.fontSize = f"{size_px}px"
 
     # ------------------------
-    # ERASE FORMATTING
+    # ERASE FORMATING
     # ------------------------
     def button_erase_click(self, **event_args):
         sel = anvil.js.window.getSelection()
@@ -426,7 +426,7 @@ class Word_editor(Word_editorTemplate):
         css = """
             @page {
                 size: A4;
-                margin: 1.6cm 2cm 2cm 2cm;
+                margin: 2cm;
             
                 @top-right {
                     content: counter(page) " / " counter(pages);
@@ -434,7 +434,9 @@ class Word_editor(Word_editorTemplate):
                 }
             
                 @top-center {
-                    content: string(title) "\A" string(subtitle);
+                    content: string(title) "\A"
+                            string(subtitle) "\A"
+                            '_______________________________________________';
                     white-space: pre;
                     font-size: 11pt;
                     font-weight: bold;
@@ -451,8 +453,6 @@ class Word_editor(Word_editorTemplate):
                 font-family: DejaVu Sans, sans-serif;
                 font-size: 11pt;
                 line-height: 1.4;
-            
-                margin-top: 0.1cm;   /* < --------------------------------------  ESPACEMENT A AJUSTER si nécessaire */
             }
             
             p {
@@ -495,9 +495,6 @@ class Word_editor(Word_editorTemplate):
                 <h1 class="doc-title">{self.top_ligne_1}</h1>
                 <h2 class="doc-subtitle">{self.top_ligne_2}</h2>
                 <span class="print-date">Imprimé le {print_date}</span>
-            
-                <!-- Trait gris visible -->
-                <div class="separator-line"></div>
             
                 <!-- Contenu du word editor -->
                 {inner_html}
