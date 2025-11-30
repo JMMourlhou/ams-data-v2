@@ -1,4 +1,4 @@
-from ._anvil_designer import ItemTemplate16Template
+from ._anvil_designer import list_attachmentsTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
-class ItemTemplate16(ItemTemplate16Template):
+class list_attachments(list_attachmentsTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)

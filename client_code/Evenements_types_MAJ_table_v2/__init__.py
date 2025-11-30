@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
+
 from .one_event_type import one_event_type
 
 # MAJ des types d'évènements, utilise Word_processor
@@ -56,12 +56,13 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         self.column_panel_add_modif.visible = True
         self.content_panel_events_rows.visible = False
         self.button_add.visible = False
-        self.call_word_editor(self.row['text_initial'], 'modif')
         
+        self.call_word_editor(self.row['text_initial'], 'modif')
     """
     =============================================================================================================================================      CALL FOR THE WORD EDITOR
     """
     def call_word_editor(self, content_text_html, mode):
+        from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
         title = "*** Plan de base pour un évenement ***"
         sub_title = self.text_box_1.text
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
@@ -85,7 +86,10 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
             self.ecriture_en_modif()
         if mode == "creation":
             self.ecriture_en_creation()
-
+    """
+    Fin RETOUR DU WORD EDITOR  
+    """
+        
     def ecriture_en_creation(self, **event_args):
         # Text_box_1 (type evnt) non vide
         if self.text_box_1.text == "" or len(self.text_box_1.text) < 5:

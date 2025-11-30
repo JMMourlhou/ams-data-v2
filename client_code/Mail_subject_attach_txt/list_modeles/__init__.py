@@ -1,4 +1,4 @@
-from ._anvil_designer import ItemTemplate15Template
+from ._anvil_designer import list_modelesTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Mail_subject_attach_txt
 
-class ItemTemplate15(ItemTemplate15Template):
+class list_modeles(list_modelesTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -35,7 +35,6 @@ class ItemTemplate15(ItemTemplate15Template):
         """This method is called when the button is clicked"""
         # récupération de la forme mère par  self.f = get_open_form() en init
         self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
-        #print("form mère atteingnable (en modif): ", self.f) 
 
         # si pas d'email liste, provenance mail du menu principal, je ne permets pas d'envoi de mail ou attachements
         
@@ -56,6 +55,42 @@ class ItemTemplate15(ItemTemplate15Template):
         self.f.label_id.text =  self.item.get_id() # récupère l'id du modele mail row (pour la modif en serveur)
         self.f.text_box_subject_detail.text = self.text_area_subject.text
         self.f.text_area_text_detail.text = self.text_area_text.text
+        # appel du word editor
+        self.call_word_editor(self.text_area_text.text, 'modif')
+        
+    """
+    =============================================================================================================================================      CALL FOR THE WORD EDITOR
+    """
+    def call_word_editor(self, content_text_html, mode):
+        from ...Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
+        title = "*** Modèle de Mail ***"
+        sub_title = self.text_area_subject.text
+        # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
+        text_editor = Word_editor(title, sub_title)  # title/sub_title : pour le bt download 
+        text_editor.text = content_text_html   # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        text_editor.param1 = mode              # mode 'modif'
+        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
+        self.f.content_panel.add_component(text_editor)
+        
+    """
+    #===================================================================================================================================================
+    RETOUR DU WORD EDITOR  
+    # ==================================================================================================================================================
+    """
+    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
+    def handle_click_fin_saisie(self, sender, **event_args):
+        # sender.text contains the 'Word_editor'form's HTML text
+        mode = sender.param1       # mode 'modif' /  'creation' 
+        self.text = sender.text    # texte html de lévenement
+        if mode == "modif":
+            self.ecriture_en_modif()
+        if mode == "creation":
+            self.ecriture_en_creation()
+    """
+    Fin RETOUR DU WORD EDITOR  
+    """  
+    
 
 
 
