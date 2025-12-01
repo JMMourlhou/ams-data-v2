@@ -27,10 +27,6 @@ components:
         margin: ['2', null, null, '10']
         padding: [null, null, null, '2']
     type: RichText
-  - layout_properties: {grid_position: 'GNDHQY,AXHFJB MZQUEI,EZWZMG'}
-    name: text_area_1
-    properties: {height: 23.29278564453125, visible: false}
-    type: TextArea
   - components:
     - layout_properties: {grid_position: 'DBPSSN,DPONSV TNQWSG,PDYLDU'}
       name: spacer_1
@@ -39,7 +35,14 @@ components:
     - event_bindings: {click: button_selection_click}
       layout_properties: {grid_position: 'DBPSSN,DPONSV NJGWCV,CVHWCM'}
       name: button_selection
-      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', icon: 'fa:mail-reply-all', icon_align: top, text: Sélection}
+      properties:
+        background: theme:On Primary Container
+        foreground: theme:On Primary
+        icon: fa:mail-reply-all
+        icon_align: top
+        spacing:
+          margin: [null, '5', null, null]
+        text: Sélection
       type: Button
     - event_bindings: {click: button_del_click}
       layout_properties: {grid_position: 'DBPSSN,DPONSV YCEPOO,NEOEXH'}
@@ -68,14 +71,14 @@ components:
       type: Button
     layout_properties: {grid_position: 'GNDHQY,ZPWQMR'}
     name: column_panel_2
-    properties: {col_widths: '{"DPONSV":52,"GTOSYQ":8}'}
+    properties: {col_widths: '{"DPONSV":52,"GTOSYQ":8}', wrap_on: never}
     type: ColumnPanel
   layout_properties: {grid_position: 'CUYAUZ,AWFBGH'}
   name: column_panel_1
   properties:
     background: theme:Primary
     col_spacing: large
-    col_widths: '{"AXHFJB":69,"ZPWQMR":9}'
+    col_widths: '{"AXHFJB":65,"ZPWQMR":13}'
     role: null
     spacing:
       margin: [null, null, null, '5']

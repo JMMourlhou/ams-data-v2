@@ -436,7 +436,7 @@ components:
     type: ColumnPanel
   layout_properties: {grid_position: 'UFYBHJ,MRLASC'}
   name: column_panel_Text_editor
-  properties: {background: '', col_widths: '{"NIOEQS":73,"EUFITA":15,"MSSSXS":22}', foreground: 'theme:On Primary', wrap_on: never}
+  properties: {background: '', col_widths: '{"NIOEQS":70,"EUFITA":16,"MSSSXS":24}', foreground: 'theme:On Primary', wrap_on: never}
   type: ColumnPanel
 - event_bindings: {click: button_validation_click}
   layout_properties: {grid_position: 'UMVJTM,WQLFPD'}

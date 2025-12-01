@@ -5,7 +5,7 @@ container:
     background: theme:On Secondary Container
     html: |-
       <div id="editor" contenteditable="true"
-          style="border:1px solid #999; min-height:150px; padding:2px;">
+          style="border:1px solid #999; min-height:350px; padding:2px;">
           <p>Entrez le texte ici</p>
       </div>
   type: HtmlTemplate

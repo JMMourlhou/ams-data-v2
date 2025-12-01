@@ -13,15 +13,22 @@ class list_modeles(list_modelesTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
          # Any code you write here will run before the form opens.
+        
+        #import anvil.js    # pour screen size
+        from anvil.js import window # to gain access to the window object
+        screen_size = window.innerWidth
+        if screen_size < 800:
+            self.button_selection.text = ""
+
+
+        
         self.text_area_subject.text = self.item['mail_subject']
         self.text_area_subject.tag.id = self.item.get_id() # je sauve l'id du modele mail row 
-        self.html_text = self.item['mail_text'] or ""  # Toujours une string
-        self.text_area_1.text = self.item['mail_text']
-        mail_html = self.item['mail_text'] or ""
-
-        # IMPORTANT : on utilise .content, pas .text
+        
+        # Pour rappel, rich_text au format html
         self.rich_text_html.format = "restricted_html"
-        self.rich_text_html.content = mail_html
+        self.html_text = self.item['mail_text'] or ""  # Toujours une string
+        self.rich_text_html.content = self.html_text
     
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -63,7 +70,7 @@ class list_modeles(list_modelesTemplate):
         self.f.text_box_subject_detail.text = self.text_area_subject.text
         self.f.text_area_text_detail.text = self.item['mail_text']
         # appel du word editor
-        self.call_word_editor(self.text_area_1.text, 'modif')
+        self.call_word_editor(self.html_text, 'modif')
         
     """
     =============================================================================================================================================      CALL FOR THE WORD EDITOR
