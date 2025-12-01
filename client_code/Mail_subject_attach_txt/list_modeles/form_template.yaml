@@ -1,15 +1,30 @@
 components:
 - components:
+  - event_bindings: {click: button_selection_click}
+    layout_properties: {grid_position: 'CJQSHE,HLGTIT'}
+    name: button_selection
+    properties:
+      background: theme:On Primary Container
+      foreground: theme:On Primary
+      icon: fa:mail-reply-all
+      icon_align: top
+      spacing:
+        margin: [null, '5', null, null]
+      text: Sélection
+      visible: false
+    type: Button
   - data_bindings: []
+    event_bindings: {focus: text_area_subject_focus}
     layout_properties: {grid_position: 'GNDHQY,AXHFJB LMEGBA,MCYHST'}
     name: text_area_subject
     properties:
       align: center
       auto_expand: true
       background: theme:On Secondary Container
-      enabled: false
-      font_size: 18
-      foreground: theme:On Primary
+      bold: false
+      enabled: true
+      font_size: 20
+      foreground: theme:Green
       height: 37.46710205078125
       italic: true
       margin: ['10', '20', '0', '10']
@@ -27,58 +42,42 @@ components:
         margin: ['2', null, null, '10']
         padding: [null, null, null, '2']
     type: RichText
-  - components:
-    - layout_properties: {grid_position: 'DBPSSN,DPONSV TNQWSG,PDYLDU'}
-      name: spacer_1
-      properties: {height: 64.87825012207031}
-      type: Spacer
-    - event_bindings: {click: button_selection_click}
-      layout_properties: {grid_position: 'DBPSSN,DPONSV NJGWCV,CVHWCM'}
-      name: button_selection
-      properties:
-        background: theme:On Primary Container
-        foreground: theme:On Primary
-        icon: fa:mail-reply-all
-        icon_align: top
-        spacing:
-          margin: [null, '5', null, null]
-        text: Sélection
-      type: Button
-    - event_bindings: {click: button_del_click}
-      layout_properties: {grid_position: 'DBPSSN,DPONSV YCEPOO,NEOEXH'}
-      name: button_del
-      properties:
-        align: center
-        background: ''
-        bold: false
-        border: ''
-        enabled: true
-        font: ''
-        font_size: 20
-        foreground: theme:Error
-        icon: fa:minus
-        icon_align: left
-        italic: false
-        role: elevated-button
-        spacing:
-          margin: ['10', null, '5', null]
-        spacing_above: small
-        spacing_below: none
-        text: ''
-        tooltip: ''
-        underline: false
-        visible: true
-      type: Button
+  - event_bindings: {click: button_del_click}
+    layout_properties: {grid_position: 'GNDHQY,AXHFJB AGUIYA,EVLZYG'}
+    name: button_del
+    properties:
+      align: center
+      background: ''
+      bold: false
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 20
+      foreground: theme:Error
+      icon: fa:minus
+      icon_align: left
+      italic: false
+      role: elevated-button
+      spacing:
+        margin: ['10', null, '5', null]
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      underline: false
+      visible: true
+    type: Button
+  - components: []
     layout_properties: {grid_position: 'GNDHQY,ZPWQMR'}
     name: column_panel_2
-    properties: {col_widths: '{"DPONSV":52,"GTOSYQ":8}', wrap_on: never}
+    properties: {col_widths: '{}', wrap_on: never}
     type: ColumnPanel
   layout_properties: {grid_position: 'CUYAUZ,AWFBGH'}
   name: column_panel_1
   properties:
     background: theme:Primary
     col_spacing: large
-    col_widths: '{"AXHFJB":65,"ZPWQMR":13}'
+    col_widths: '{"AXHFJB":75,"ZPWQMR":3}'
     role: null
     spacing:
       margin: [null, null, null, '5']

@@ -484,19 +484,23 @@ class Word_editor(Word_editorTemplate):
 
     def button_link_click(self, **event_args):
         """Insert a hyperlink around the currently selected text inside the contenteditable editor."""
-
         js = anvil.js.window
-
-        # 1) Check selection
-        selection = js.getSelection()
-        if not selection or selection.toString().strip() == "":
-            alert("Sélectionne d'abord un texte à transformer en lien.")
+    
+        # 1) Save the current selection BEFORE opening the alert.
+        # Opening an Anvil alert removes focus from the editor and destroys
+        # the selection/range, so we must store it now.
+        saved_range = js.saveSelection()
+    
+        # If no selection exists, we cannot insert a link.
+        if not saved_range or js.getSelection().toString().strip() == "":
+            alert("Sélectionne d'abord un texte à transformer en lien.")  # French alert per your requirement
             return
     
-        # 2) Create an editable TextBox for the URL
+        # 2) Create a TextBox where the user can input the URL.
         tb = TextBox(placeholder="https://example.com")
     
-        # IMPORTANT: large=True → activates focus and text input
+        # Show the alert (large=True ensures the TextBox is editable).
+        # IMPORTANT: While the alert is open, the selection is lost — but we have saved it.
         res = alert(
             title="Insert Link",
             content=tb,
@@ -504,15 +508,23 @@ class Word_editor(Word_editorTemplate):
             buttons=[("OK", True), ("Cancel", False)]
         )
     
-        # If user clicked Cancel → exit
+        # If the user pressed Cancel or entered an empty URL, stop here.
         if not res or not tb.text.strip():
             return
     
         link_url = tb.text.strip()
     
-        # 3) Apply the link
+        # 3) Restore the text selection INSIDE the editor.
+        # Without this step, execCommand() would have no range to apply the link to.
+        js.restoreSelection(saved_range)
+    
+        # 4) Insert the hyperlink using execCommand().
+        # This automatically wraps the selected text in:
+        #     <a href="URL">selected text</a>
         try:
             js.document.execCommand("createLink", False, link_url)
         except Exception as e:
+            # If something goes wrong, notify the user.
             alert(f"Unable to insert link.\nError: {e}")
+
 

@@ -100,10 +100,17 @@ class list_modeles(list_modelesTemplate):
         if mode == "modif":
             self.f.button_modif_click(self.text)
         if mode == "exit":
-            self.f.button_annuler_click()
+            # réaffichage de la forme 'Mail_subject_attach_txt'
+            open_form('Mail_subject_attach_txt', self.f.label_emails_liste.text, self.f.drop_down_type_mails.selected_value['ref'])
+            
+            #self.f.button_annuler_click()
     """
     Fin RETOUR DU WORD EDITOR  
     """  
+
+    def text_area_subject_focus(self, **event_args):
+        """This method is called when the text area gets focus"""
+        self.button_selection_click()
     
 
 

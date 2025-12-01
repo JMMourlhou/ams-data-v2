@@ -92,7 +92,7 @@ components:
       - event_bindings: {change: text_area_text_detail_change}
         layout_properties: {grid_position: 'NDADYJ,LPGRDB'}
         name: text_box_subject_detail
-        properties: {background: 'theme:Primary', foreground: 'theme:On Primary', placeholder: Objet du mail, spacing_above: none, spacing_below: none, text: ''}
+        properties: {align: center, background: 'theme:On Secondary Container', bold: true, foreground: 'theme:Green', placeholder: Objet du mail, spacing_above: none, spacing_below: none, text: ''}
         type: TextBox
       - layout_properties: {grid_position: 'XTSYDW,DGKENY'}
         name: label_2
@@ -100,7 +100,7 @@ components:
         type: Label
       - layout_properties: {grid_position: 'CASXFL,UUMRYI'}
         name: content_panel
-        properties: {background: 'theme:Tertiary'}
+        properties: {background: 'theme:Vert Foncé'}
         type: ColumnPanel
       - event_bindings: {change: text_area_text_detail_change}
         layout_properties: {grid_position: 'IVBGLR,YYYGMZ'}

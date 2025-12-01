@@ -3,11 +3,41 @@ container:
   event_bindings: {}
   properties:
     background: theme:On Secondary Container
-    html: |-
+    html: |
+      <!-- Editable text area for the custom Word Processor -->
       <div id="editor" contenteditable="true"
           style="border:1px solid #999; min-height:350px; padding:2px;">
           <p>Entrez le texte ici</p>
       </div>
+
+      <script>
+          // Save the current text selection inside the contenteditable editor.
+          // This is required because opening an Anvil alert causes the browser
+          // to lose the active selection.
+          window.saveSelection = function() {
+              const sel = window.getSelection();
+
+              // If there is at least one selection range, clone it and return it.
+              if (sel.rangeCount > 0) {
+                  return sel.getRangeAt(0).cloneRange();
+              }
+
+              // No selection → nothing to save
+              return null;
+          }
+
+          // Restore a previously saved selection.
+          // Called AFTER the alert closes, before executing execCommand().
+          window.restoreSelection = function(range) {
+              const sel = window.getSelection();
+
+              // Remove any existing ranges to avoid conflicts
+              sel.removeAllRanges();
+
+              // Re-apply the saved range
+              sel.addRange(range);
+          }
+      </script>
   type: HtmlTemplate
 custom_component: true
 custom_component_container: false

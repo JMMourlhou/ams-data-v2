@@ -7,6 +7,11 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+from . import French_zone_server_side
+
+global timing
+timing = French_zone_server_side.time_french_zone()
+print(f"time: {timing}")
 
 @anvil.server.callable
 def add_mail_model(row_type,
@@ -17,7 +22,8 @@ def add_mail_model(row_type,
     row = app_tables.mail_templates.add_row(
                     type = row_type,
                     mail_subject = subject,
-                    mail_text = text
+                    mail_text = text,
+                    last_modif_date = timing
                             )
     if row:
         return True
@@ -38,7 +44,8 @@ def modify_mail_model(id,
         return False
     else:           
         row.update(mail_subject = subject,
-                   mail_text = text
+                   mail_text = text,
+                   last_modif_date = timing
                             )
         return True
 

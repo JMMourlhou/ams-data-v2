@@ -17,6 +17,8 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         # Any code you write here will run before the form opens.
         self.f = get_open_form()
         self.old_stagiaires = old_stagiaires
+        self.ref_model = ref_model
+        self.emails_liste = emails_liste # liste des mails
         
          # Récupération des icones ds files pour afficher les icones en template 16
         self.icone_xls = app_tables.files.get(path="logo_xls.jpg")['file'] # lit la colonne 'file', media object
@@ -27,14 +29,14 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self.dico_attachements = {}                # initialisation du dict des attachements
         self.list_attach = []          # initialisation de la liste des attachements
     
-        self.ref_model = ref_model
+        
         #print('ref_model: ',self.ref_model)   
       
         self.mode_creation = False
 
         self.label_ref_model.text = ref_model # sauve la ref de modèle de mail
         
-        self.emails_liste = emails_liste # liste des mails
+        
         #print('emails liste: ', self.emails_liste)
         self.label_emails_liste.text = emails_liste   # sauve la liste de mails à envoyer, (utilisé ds le item repeating panel, del)
 
@@ -64,7 +66,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
             #self.ref_model = type_mail_row['ref']
             
         liste_mails =  app_tables.mail_templates.search(
-                                                        tables.order_by("mail_subject", ascending=True),
+                                                        tables.order_by("last_modif_date", ascending=False),
                                                         type = type_mail_row
                                                         )
         self.repeating_panel_1.visible = True
