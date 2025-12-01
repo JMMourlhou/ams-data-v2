@@ -10,9 +10,9 @@ components:
       enabled: false
       font_size: 18
       foreground: theme:On Primary
-      height: 39.168487548828125
+      height: 37.46710205078125
       italic: true
-      margin: ['15', '10', '0', '10']
+      margin: ['10', '20', '0', '10']
       role: outlined
       spacing_below: none
     type: TextArea
@@ -31,43 +31,55 @@ components:
     name: text_area_1
     properties: {height: 23.29278564453125, visible: false}
     type: TextArea
-  - layout_properties: {grid_position: 'GNDHQY,JUTTSO BROPXS,OJCLIB'}
-    name: spacer_1
-    properties: {height: 12.928298950195312}
-    type: Spacer
-  - event_bindings: {click: button_selection_click}
-    layout_properties: {grid_position: 'GNDHQY,JUTTSO RXUTEC,DLBZIK'}
-    name: button_selection
-    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', icon: 'fa:arrow-left', text: Sélection}
-    type: Button
-  - event_bindings: {click: button_del_click}
-    layout_properties: {grid_position: 'GNDHQY,JUTTSO RQFNVS,NMDMDZ'}
-    name: button_del
-    properties:
-      align: center
-      background: ''
-      bold: false
-      border: ''
-      enabled: true
-      font: ''
-      font_size: 20
-      foreground: theme:Error
-      icon: fa:minus
-      icon_align: left
-      italic: false
-      role: elevated-button
-      spacing:
-        margin: ['20', null, null, null]
-      spacing_above: small
-      spacing_below: none
-      text: ''
-      tooltip: ''
-      underline: false
-      visible: true
-    type: Button
-  layout_properties: {grid_position: 'MIPLMV,IDRFAS'}
+  - components:
+    - layout_properties: {grid_position: 'DBPSSN,DPONSV TNQWSG,PDYLDU'}
+      name: spacer_1
+      properties: {height: 64.87825012207031}
+      type: Spacer
+    - event_bindings: {click: button_selection_click}
+      layout_properties: {grid_position: 'DBPSSN,DPONSV NJGWCV,CVHWCM'}
+      name: button_selection
+      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', icon: 'fa:mail-reply-all', icon_align: top, text: Sélection}
+      type: Button
+    - event_bindings: {click: button_del_click}
+      layout_properties: {grid_position: 'DBPSSN,DPONSV YCEPOO,NEOEXH'}
+      name: button_del
+      properties:
+        align: center
+        background: ''
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 20
+        foreground: theme:Error
+        icon: fa:minus
+        icon_align: left
+        italic: false
+        role: elevated-button
+        spacing:
+          margin: ['10', null, '5', null]
+        spacing_above: small
+        spacing_below: none
+        text: ''
+        tooltip: ''
+        underline: false
+        visible: true
+      type: Button
+    layout_properties: {grid_position: 'GNDHQY,ZPWQMR'}
+    name: column_panel_2
+    properties: {col_widths: '{"DPONSV":52,"GTOSYQ":8}'}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'CUYAUZ,AWFBGH'}
   name: column_panel_1
-  properties: {background: 'theme:Primary', col_spacing: tiny, col_widths: '{"AXHFJB":50,"JUTTSO":10}', role: null}
+  properties:
+    background: theme:Primary
+    col_spacing: large
+    col_widths: '{"AXHFJB":69,"ZPWQMR":9}'
+    role: null
+    spacing:
+      margin: [null, null, null, '5']
+    wrap_on: never
   type: ColumnPanel
 container:
   event_bindings: {show: form_show}
