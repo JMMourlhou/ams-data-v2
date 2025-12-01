@@ -174,6 +174,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         # sender.text contains the 'Word_editor'form's HTML text
         mode = sender.param1       # mode 'modif' /  'creation' 
         self.text = sender.text    # texte html de lévenement
+        #self.content_panel.clear()  #effacement du content_panel
         if mode == "modif":
             self.button_modif_click(self.text)
         if mode == "creation":
@@ -184,9 +185,6 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
     Fin RETOUR DU WORD EDITOR  
     """  
         
-        
-        
-
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Abandon en création ou modif de modèle
@@ -221,7 +219,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
             if self.task_mail.is_completed():
                 self.timer_1.interval=0
                 anvil.server.call('task_killer',self.task_mail)
-
+                
                 # lit le nb de mails ds table temp
                 nb_mails = app_tables.temp.search()[0]['nb_mails_sent']
                 if nb_mails == 1:
@@ -229,6 +227,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
                 else:
                     msg = str(nb_mails)+" mails traités"
                 alert(msg)
+             
             self.button_retour_click()
         except:
             pass

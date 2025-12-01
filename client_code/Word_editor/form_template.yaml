@@ -105,17 +105,13 @@ components:
           visible: true
           wrap_on: never
         type: ColumnPanel
-      layout_properties: {width: 412.3662822265625}
+      layout_properties: {width: 383.1436284179687}
       name: flow_panel_1
       properties: {align: center, gap: tiny, spacing_below: none, visible: true}
       type: FlowPanel
     - components:
       - components:
         - components:
-          - layout_properties: {grid_position: 'RSCXEN,RKVMQP'}
-            name: spacer_1
-            properties: {height: 32}
-            type: Spacer
           - event_bindings: {click: button_red_click}
             layout_properties: {grid_position: 'RSCXEN,BVABPF'}
             name: button_red
@@ -146,7 +142,7 @@ components:
             name: button_link
             properties:
               icon: fa:link
-              role: null
+              role: filled-button
               spacing:
                 margin: ['10', null, null, null]
               text: ''
@@ -176,7 +172,7 @@ components:
                   icon: fa:eraser
                   icon_align: right_edge
                   italic: true
-                  role: outlined-button
+                  role: filled-button
                   spacing:
                     margin: [null, null, null, '20']
                     padding: [null, null, null, '']
@@ -190,7 +186,7 @@ components:
               layout_properties: {width: 124.9098248046875}
               name: column_panel_3
               properties:
-                col_widths: '{"ZBGVPJ":30,"BUFEYY":30}'
+                col_widths: '{"ZBGVPJ":33,"BUFEYY":27}'
                 spacing:
                   margin: ['0', null, '0', null]
                 wrap_on: never
@@ -203,7 +199,7 @@ components:
           name: column_panel_menu2
           properties:
             background: theme:On Primary Container
-            col_widths: '{"BVABPF":6,"JKQXRI":6,"NXKMZC":6,"OHMNJP":6,"WTRFYJ":6,"RKVMQP":5,"YQFUJN":14,"QXMYJU":16,"VRTOJJ":8}'
+            col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":6,"OHMNJP":6,"WTRFYJ":5,"RKVMQP":4,"YQFUJN":13,"QXMYJU":18,"VRTOJJ":11}'
             role: outlined-card
             spacing:
               margin: ['6', null, null, null]
@@ -215,7 +211,7 @@ components:
         name: flow_panel_2
         properties: {align: center, gap: small, vertical_align: full}
         type: FlowPanel
-      layout_properties: {width: 408.22531787109375}
+      layout_properties: {width: 463.3229228515625}
       name: column_panel_4
       properties: {}
       type: ColumnPanel
@@ -224,250 +220,260 @@ components:
     properties: {align: center, background: '', gap: small, vertical_align: middle}
     type: FlowPanel
   - components:
-    - event_bindings: {click: button_italic_click}
-      layout_properties: {grid_position: 'JLKRPB,MNFQMG'}
-      name: button_italic_copy
+    - components:
+      - event_bindings: {click: button_italic_click}
+        layout_properties: {grid_position: 'JLKRPB,MNFQMG'}
+        name: button_italic_copy
+        properties:
+          align: center
+          foreground: theme:On Primary
+          icon: fa:italic
+          italic: true
+          role: null
+          spacing:
+            margin: ['5', '0', '0', '0']
+            padding: [null, '5', null, '5']
+          text: ''
+        type: Button
+      - event_bindings: {click: button_bold_click}
+        layout_properties: {grid_position: 'TYBZJZ,GWXHKC'}
+        name: button_bold_copy
+        properties:
+          foreground: theme:On Primary
+          icon: fa:bold
+          icon_align: left
+          role: null
+          spacing:
+            margin: ['0', null, '0', null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_underlined_click}
+        layout_properties: {grid_position: 'EOWSQN,EPVPTQ'}
+        name: button_underlined_copy
+        properties:
+          align: center
+          foreground: theme:On Primary
+          icon: fa:underline
+          italic: true
+          role: null
+          spacing:
+            margin: ['0', null, '30', null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_align_center_click}
+        layout_properties: {grid_position: 'DILUJO,JVSNBP'}
+        name: button_align_center_copy
+        properties:
+          align: center
+          font_size: 18
+          icon: fa:align-center
+          spacing:
+            margin: ['0', '5', '1', null]
+            padding: [null, '15', null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_align_left_click}
+        layout_properties: {grid_position: ''}
+        name: button_align_left_copy
+        properties:
+          align: full
+          font_size: 18
+          icon: fa:align-left
+          spacing:
+            margin: [null, '5', '1', null]
+            padding: [null, '15', null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_align_right_click}
+        layout_properties: {grid_position: ''}
+        name: button_align_right_copy
+        properties:
+          align: center
+          font_size: 18
+          icon: fa:align-right
+          spacing:
+            margin: ['0', '5', '1', null]
+            padding: [null, '15', null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_align_justify_click}
+        layout_properties: {grid_position: ''}
+        name: button_align_justify_copy
+        properties:
+          align: center
+          font_size: 18
+          icon: fa:align-justify
+          spacing:
+            margin: ['0', '5', '30', null]
+            padding: [null, '15', null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_bullet_click}
+        layout_properties: {grid_position: 'JIQHGO,NLNPXY'}
+        name: button_bullet_copy
+        properties:
+          font_size: 18
+          foreground: theme:On Primary
+          icon: fa:list
+          spacing:
+            margin: ['0', null, '0', null]
+          text: ''
+        type: Button
+      layout_properties: {width: 66.14550729980468}
+      name: column_panel_menu1_left
       properties:
-        align: center
-        foreground: theme:On Primary
-        icon: fa:italic
-        italic: true
-        role: null
-        spacing:
-          margin: ['0', '0', '0', '0']
-          padding: [null, '5', null, '5']
-        text: ''
-      type: Button
-    - event_bindings: {click: button_bold_click}
-      layout_properties: {grid_position: 'TYBZJZ,GWXHKC'}
-      name: button_bold_copy
-      properties:
-        foreground: theme:On Primary
-        icon: fa:bold
-        icon_align: left
-        role: null
-        spacing:
-          margin: ['0', null, '0', null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_underlined_click}
-      layout_properties: {grid_position: 'EOWSQN,EPVPTQ'}
-      name: button_underlined_copy
-      properties:
-        align: center
-        foreground: theme:On Primary
-        icon: fa:underline
-        italic: true
-        role: null
-        spacing:
-          margin: ['0', null, '10', null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_align_center_click}
-      layout_properties: {grid_position: 'DILUJO,JVSNBP'}
-      name: button_align_center_copy
-      properties:
-        align: center
-        font_size: 18
-        icon: fa:align-center
-        spacing:
-          margin: ['0', '5', '1', null]
-          padding: [null, '15', null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_align_left_click}
-      layout_properties: {grid_position: ''}
-      name: button_align_left_copy
-      properties:
-        align: full
-        font_size: 18
-        icon: fa:align-left
-        spacing:
-          margin: [null, '5', '1', null]
-          padding: [null, '15', null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_align_right_click}
-      layout_properties: {grid_position: ''}
-      name: button_align_right_copy
-      properties:
-        align: center
-        font_size: 18
-        icon: fa:align-right
-        spacing:
-          margin: ['0', '5', '1', null]
-          padding: [null, '15', null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_align_justify_click}
-      layout_properties: {grid_position: ''}
-      name: button_align_justify_copy
-      properties:
-        align: center
-        font_size: 18
-        icon: fa:align-justify
-        spacing:
-          margin: ['0', '5', '5', null]
-          padding: [null, '15', null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_bullet_click}
-      layout_properties: {grid_position: 'JIQHGO,NLNPXY'}
-      name: button_bullet_copy
-      properties:
-        font_size: 18
-        foreground: theme:On Primary
-        icon: fa:list
-        spacing:
-          margin: ['0', null, '0', null]
-        text: ''
-      type: Button
-    layout_properties: {grid_position: 'HTLVZU,EUFITA'}
-    name: column_panel_menu1_left
-    properties:
-      background: theme:On Primary Container
-      col_spacing: none
-      col_widths: '{}'
-      role: outlined-card
-      spacing:
-        margin: ['0', null, null, null]
-        padding: ['5', '0', '5', '0']
-      wrap_on: never
-    type: ColumnPanel
-  - layout_properties: {grid_position: 'HTLVZU,NIOEQS CHZCDO,UINQAT'}
-    name: html_part_1
-    properties: {text: ''}
-    type: form:Word_editor.HTML_part
-  - components:
-    - event_bindings: {click: button_red_click}
-      layout_properties: {grid_position: 'RSCXEN,BVABPF'}
-      name: button_red_copy
-      properties:
-        align: right
-        background: '#FA0000'
-        spacing:
-          margin: [null, '2', null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_orange_click}
-      layout_properties: {grid_position: 'RSCXEN,NXKMZC'}
-      name: button_orange_copy
-      properties:
-        align: left
-        background: '#FAA300'
-        spacing:
-          margin: [null, null, null, '2']
-        text: ''
-      type: Button
-    - event_bindings: {click: button_green_click}
-      layout_properties: {grid_position: 'ESSZXA,ASSDOD'}
-      name: button_green_copy
-      properties:
-        align: right
-        background: '#60FA00'
-        spacing:
-          margin: [null, '2', null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_blue_click}
-      layout_properties: {grid_position: 'ESSZXA,YXQDBQ'}
-      name: button_blue_copy
-      properties:
-        align: left
-        background: '#00C0FA'
-        spacing:
-          margin: [null, null, null, '2']
-          padding: [null, null, null, null]
-        text: ''
-      type: Button
-    - event_bindings: {click: button_link_click}
-      layout_properties: {grid_position: 'ICVTIJ,OETDMY'}
-      name: button_link_copy
-      properties:
-        icon: fa:link
-        role: null
-        spacing:
-          margin: ['10', null, null, null]
-        text: ''
-      type: Button
-    - event_bindings: {change: drop_down_font_size_change}
-      layout_properties: {grid_position: ''}
-      name: drop_down_font_size_copy
-      properties:
-        align: center
         background: theme:On Primary Container
-        foreground: theme:On Primary
-        include_placeholder: false
-        items: ['', '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
-        margin: ['10', null, '10', null]
-        placeholder: Font Size
-        role: null
-      type: DropDown
-    - event_bindings: {click: button_erase_click}
-      layout_properties: {full_width_row: true, grid_position: ''}
-      name: button_erase_copy
-      properties:
-        align: center
-        background: theme:Tertiary
-        font: '22'
-        foreground: theme:Error
-        icon: fa:eraser
-        icon_align: left
-        italic: false
-        role: null
+        col_spacing: none
+        col_widths: '{}'
+        role: outlined-card
         spacing:
-          margin: ['20', null, null, '0']
-          padding: [null, null, null, '']
-        text: ''
-      type: Button
-    - event_bindings: {click: button_download_click}
-      layout_properties: {grid_position: 'LESZFV,LODXKW'}
-      name: button_download_copy
+          margin: ['0', null, null, '4']
+          padding: ['5', '0', '5', '0']
+        wrap_on: never
+      type: ColumnPanel
+    - layout_properties: {width: 768.6717236328125}
+      name: html_part_1
+      properties: {text: ''}
+      type: form:Word_editor.HTML_part
+    - components:
+      - event_bindings: {click: button_red_click}
+        layout_properties: {grid_position: 'RSCXEN,BVABPF'}
+        name: button_red_copy
+        properties:
+          align: right
+          background: '#FA0000'
+          spacing:
+            margin: [null, '2', null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_orange_click}
+        layout_properties: {grid_position: 'RSCXEN,NXKMZC'}
+        name: button_orange_copy
+        properties:
+          align: left
+          background: '#FAA300'
+          spacing:
+            margin: [null, null, null, '2']
+          text: ''
+        type: Button
+      - event_bindings: {click: button_green_click}
+        layout_properties: {grid_position: 'ESSZXA,ASSDOD'}
+        name: button_green_copy
+        properties:
+          align: right
+          background: '#60FA00'
+          spacing:
+            margin: [null, '2', null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_blue_click}
+        layout_properties: {grid_position: 'ESSZXA,YXQDBQ'}
+        name: button_blue_copy
+        properties:
+          align: left
+          background: '#00C0FA'
+          spacing:
+            margin: [null, null, null, '2']
+            padding: [null, null, null, null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_link_click}
+        layout_properties: {grid_position: 'ICVTIJ,OETDMY'}
+        name: button_link_copy
+        properties:
+          icon: fa:link
+          role: null
+          spacing:
+            margin: ['10', null, null, null]
+          text: ''
+        type: Button
+      - event_bindings: {change: drop_down_font_size_change}
+        layout_properties: {grid_position: ''}
+        name: drop_down_font_size_copy
+        properties:
+          align: center
+          background: theme:On Primary Container
+          foreground: theme:On Primary
+          include_placeholder: false
+          items: ['', '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30']
+          margin: ['10', null, '10', null]
+          placeholder: Font Size
+          role: null
+        type: DropDown
+      - event_bindings: {click: button_erase_click}
+        layout_properties: {full_width_row: true, grid_position: ''}
+        name: button_erase_copy
+        properties:
+          align: center
+          background: theme:Tertiary
+          font: '22'
+          foreground: theme:Error
+          icon: fa:eraser
+          icon_align: left
+          italic: false
+          role: null
+          spacing:
+            margin: ['20', null, null, '0']
+            padding: [null, null, null, '']
+          text: ''
+        type: Button
+      - event_bindings: {click: button_download_click}
+        layout_properties: {grid_position: 'LESZFV,LODXKW'}
+        name: button_download_copy
+        properties:
+          font_size: 18
+          foreground: theme:Primary
+          icon: fa:download
+          spacing:
+            margin: ['20', null, '0', null]
+          text: ''
+        type: Button
+      - event_bindings: {click: button_validation_click}
+        layout_properties: {grid_position: 'TOKGWS,RCAFQR'}
+        name: button_validation_copy
+        properties:
+          background: theme:Error
+          foreground: theme:On Primary
+          icon: fa:check
+          spacing:
+            margin: ['20', null, '15', null]
+          text: ''
+        type: Button
+      layout_properties: {width: 89.617715234375}
+      name: column_panel_menu2_right
       properties:
-        font_size: 18
-        foreground: theme:Primary
-        icon: fa:download
+        background: theme:On Primary Container
+        col_spacing: none
+        col_widths: '{"BVABPF":5,"NXKMZC":5,"LODXKW":30}'
+        role: outlined-card
         spacing:
-          margin: ['20', null, '0', null]
-        text: ''
-      type: Button
+          margin: ['1', null, null, null]
+          padding: ['0', '10', '0', '10']
+        wrap_on: never
+      type: ColumnPanel
+    layout_properties: {grid_position: 'CMGJUZ,FQUWKK'}
+    name: flow_panel_4
+    properties: {align: center}
+    type: FlowPanel
+  - components:
     - event_bindings: {click: button_validation_click}
-      layout_properties: {grid_position: 'TOKGWS,RCAFQR'}
-      name: button_validation_copy
-      properties:
-        background: theme:Error
-        foreground: theme:On Primary
-        icon: fa:check
-        spacing:
-          margin: ['20', null, '15', null]
-        text: ''
+      layout_properties: {grid_position: 'UQHSSU,RNMUEQ'}
+      name: button_validation
+      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', icon: 'fa:check', text: Validation}
       type: Button
-    layout_properties: {grid_position: 'HTLVZU,MSSSXS'}
-    name: column_panel_menu2_right
-    properties:
-      background: theme:On Primary Container
-      col_spacing: none
-      col_widths: '{"BVABPF":5,"NXKMZC":5,"LODXKW":30}'
-      role: outlined-card
-      spacing:
-        margin: ['1', null, null, null]
-        padding: ['0', '10', '0', '10']
-      wrap_on: never
+    - event_bindings: {click: button_exit_click}
+      layout_properties: {grid_position: 'UQHSSU,FTIEII'}
+      name: button_exit
+      properties: {background: 'theme:Error', font_size: 16, foreground: 'theme:On Primary', icon: 'fa:sign-out', text: ''}
+      type: Button
+    layout_properties: {grid_position: 'PPDAPA,IITIPA'}
+    name: column_panel_1
+    properties: {}
     type: ColumnPanel
   layout_properties: {grid_position: 'UFYBHJ,MRLASC'}
   name: column_panel_Text_editor
-  properties: {background: '', col_widths: '{"NIOEQS":70,"EUFITA":16,"MSSSXS":24}', foreground: 'theme:On Primary', wrap_on: never}
+  properties: {background: 'theme:On Primary Container', col_widths: '{}', foreground: 'theme:On Primary', wrap_on: never}
   type: ColumnPanel
-- event_bindings: {click: button_validation_click}
-  layout_properties: {grid_position: 'UMVJTM,WQLFPD'}
-  name: button_validation
-  properties: {background: 'theme:Olive', foreground: 'theme:On Primary', icon: 'fa:check', text: Validation}
-  type: Button
-- event_bindings: {click: button_exit_click}
-  layout_properties: {grid_position: 'UMVJTM,QBISAK'}
-  name: button_exit
-  properties: {background: 'theme:Error', font_size: 16, foreground: 'theme:On Primary', icon: 'fa:sign-out', text: ''}
-  type: Button
 container:
   event_bindings: {show: form_show}
   properties:

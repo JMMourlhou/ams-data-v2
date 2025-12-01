@@ -326,11 +326,13 @@ class Word_editor(Word_editorTemplate):
     # VALIDATION (save and return to caller)
     # ====================================================================================
     def button_validation_click(self, **e):
+       
         editor = anvil.js.window.document.getElementById("editor")
         anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
-        self.raise_event('x-fin_saisie')
         self.remove_from_parent()
+        self.raise_event('x-fin_saisie')
+        
 
 
     # ====================================================================================
@@ -480,7 +482,7 @@ class Word_editor(Word_editorTemplate):
         self.text = ""
         self.param1 = "exit"
         self.raise_event('x-fin_saisie')
-        self.remove_from_parent()
+        #self.remove_from_parent()
 
     def button_link_click(self, **event_args):
         """Insert a hyperlink around the currently selected text inside the contenteditable editor."""
