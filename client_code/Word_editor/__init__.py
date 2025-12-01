@@ -481,3 +481,38 @@ class Word_editor(Word_editorTemplate):
         self.param1 = "exit"
         self.raise_event('x-fin_saisie')
         self.remove_from_parent()
+
+    def button_link_click(self, **event_args):
+        """Insert a hyperlink around the currently selected text inside the contenteditable editor."""
+
+        js = anvil.js.window
+
+        # 1) Check selection
+        selection = js.getSelection()
+        if not selection or selection.toString().strip() == "":
+            alert("Sélectionne d'abord un texte à transformer en lien.")
+            return
+    
+        # 2) Create an editable TextBox for the URL
+        tb = TextBox(placeholder="https://example.com")
+    
+        # IMPORTANT: large=True → activates focus and text input
+        res = alert(
+            title="Insert Link",
+            content=tb,
+            large=True,
+            buttons=[("OK", True), ("Cancel", False)]
+        )
+    
+        # If user clicked Cancel → exit
+        if not res or not tb.text.strip():
+            return
+    
+        link_url = tb.text.strip()
+    
+        # 3) Apply the link
+        try:
+            js.document.execCommand("createLink", False, link_url)
+        except Exception as e:
+            alert(f"Unable to insert link.\nError: {e}")
+
