@@ -28,6 +28,7 @@ class Word_editor(Word_editorTemplate):
             self.column_panel_menu1_left.visible = True
             self.column_panel_menu2_right.visible = True
             self.button_validation.visible = False
+            self.html_part_1.width = 500
         else:
             self.column_panel_menu1.visible = True
             self.column_panel_menu2.visible = True
