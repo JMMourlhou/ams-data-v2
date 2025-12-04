@@ -6,6 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
     def __init__(self, **properties):  # row stagiaire inscrit, vient de pré_requis_pour stagiaire admin
@@ -61,11 +62,21 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
             AlertHTML.error("Erreur", "Ce lieu existe déjà !")
             self.text_box_1.focus()
             return
+
+        r = AlertConfirmHTML.ask(
+            titre="Confirmation",
+            contenu="<p>Voulez-vous vraiment ajouter ce lieu ?</p>",
+            boutons=[("oui", True), ("non", False)],
+            style="info",
+            large=True
+        )
+        """
         r = alert(
             "Voulez-vous vraiment ajouter ce Lieu ?",
             dismissible=False,
             buttons=[("oui", True), ("non", False)],
         )
+        """
         if r:  # oui
             result = anvil.server.call(
                 "add_lieu",
