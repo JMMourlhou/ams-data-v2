@@ -10,7 +10,7 @@ textarea {
 }
 
 /* allow lower case text on buttons and decrease the padding */
-/* origine: padding: 2px 4px !important;        6px élargi un peu le bouton     JM */
+/* origine: padding: 2px 4px !important;        6px ï¿½largi un peu le bouton     JM */
 .btn {
   padding: 1px 10px !important;
   text-transform: none !important;
@@ -784,7 +784,7 @@ button.close > span, button.close {
 /*this affects dropdowns, text boxes and text areas:*/
 input.anvil-component, textarea.anvil-component, .anvil-component select, .anvil-datepicker input {
   font-size: 16px;
-  line-height: 1.6;                         /* jm change de 1.5 à 1.6 (voir TextArea line spacin in Forum)  */
+  line-height: 1.6;                         /* jm change de 1.5 ï¿½ 1.6 (voir TextArea line spacin in Forum)  */
   border-radius: 4px 4px 0 0;
   background-color: %color:Surface Variant%;
   color: %color:On Surface Variant%;
@@ -1119,7 +1119,7 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 }  
 }
 
-/* Si le document est rendu pour impression/PDF!’ chaque élément ayant la classe ae-page-break provoque un saut de page. */
+/* Si le document est rendu pour impression/PDF!ï¿½ chaque ï¿½lï¿½ment ayant la classe ae-page-break provoque un saut de page. */
 @media print {
     .ae-page-break {
         break-after: page;
@@ -1127,8 +1127,36 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
     }
 }
 
-/* Optionnel: visible à l'écran pendant la mise au point */
+/* Optionnel: visible ï¿½ l'ï¿½cran pendant la mise au point */
 .ae-page-break-container {
     border: none; /* tu peux changer via la props .border */
 }
 
+
+/* ------------------------------------------
+ALERTES PERSONNALISÃ‰ES JMARC (HTML restricted)
+------------------------------------------- */
+
+/* INFO (bleu) */
+.anvil-role-info-alert {
+    background: #e7f1ff;
+    border-left: 6px solid #2a7be4;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+/* ERREUR (rouge) */
+.anvil-role-error-alert {
+    background: #ffe5e5;
+    border-left: 6px solid #cc0000;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+/* SUCCÃˆS (vert) */
+.anvil-role-success-alert {
+    background: #e6ffe8;
+    border-left: 6px solid #29a329;
+    padding: 16px;
+    border-radius: 6px;
+}

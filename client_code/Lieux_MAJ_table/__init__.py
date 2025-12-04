@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+from ..AlertHTML import AlertHTML
 
 class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
     def __init__(self, **properties):  # row stagiaire inscrit, vient de pré_requis_pour stagiaire admin
@@ -36,13 +36,15 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
     def button_valid_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Text_box_1 non vide
-        if self.text_box_1.text == "" or len(self.text_box_1.text) < 3:
-            alert("Entrez un lieu valide!")
+        if self.text_box_1.text == "" or len(self.text_box_1.text) < 5:
+            #alert("Entrez un lieu valide!")
+            AlertHTML.error("Erreur", "Entrez un lieu valide (Plus de 4 caractères) !")
             self.text_box_1.focus()
             return
         # Text_box_2 non vide
         if self.text_box_2.text == "" or len(self.text_box_2.text) < 6:
-            alert("Entrez une adresse supérieure à 5 caractères !")
+            AlertHTML.error("Erreur", "Entrez une adresse supérieure à 5 caractères !")
+            #alert("Entrez une adresse supérieure à 5 caractères !")
             self.text_box_2.focus()
             return
         # Text_box_3 non vide
@@ -55,7 +57,8 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
         # Code existant ?
         row = app_tables.pre_requis.get(code_pre_requis=self.text_box_1.text)
         if row:
-            alert("Ce lieu existe déjà !")
+            #alert("Ce lieu existe déjà !")
+            AlertHTML.error("Erreur", "Ce lieu existe déjà !")
             self.text_box_1.focus()
             return
         r = alert(
@@ -73,7 +76,8 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
             if result is not True:
                 alert("ERREUR, Ajout non effectué !")
                 return
-            alert("Création effectuée !")
+            #alert("Création effectuée !")
+            AlertHTML.success("Succès", "Création effectuée !")
         self.column_panel_add.visible = False
         open_form("Lieux_MAJ_table")
 
