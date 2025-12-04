@@ -344,4 +344,7 @@ roles:
 - components: [TextBox, TextArea, DatePicker, DropDown]
   name: outlined-error
 - components: [TextBox, TextArea, DatePicker, DropDown]
+  display_in_toolbox: false
   name: input-error
+- {components: null, display_in_toolbox: false, name: compact-alert}
+- {name: compact-buttons}

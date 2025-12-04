@@ -1133,39 +1133,102 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 }
 
 
-/* ------------------------------------------
-ALERTES PERSONNALISÉES JMARC (HTML restricted)
-------------------------------------------- */
 
-/* INFO (bleu) */
-.anvil-role-info-alert {
-    background: #e7f1ff;
-    border-left: 6px solid #2a7be4;
-    padding: 16px;
-    border-radius: 6px;
+
+/* =======================================================================
+ALERTES PREMIUM : styles principaux + icônes SVG HD + animation
+======================================================================= */
+
+/* Animation d'apparition */
+@keyframes fadeInAlert {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ERREUR (rouge) */
-.anvil-role-error-alert {
-    background: #ffe5e5;
-    border-left: 6px solid #cc0000;
-    padding: 16px;
-    border-radius: 6px;
-}
-
-/* SUCCÈS (vert) */
+/* ===== BASE : Structure des alertes ===== */
+.anvil-role-info-alert,
+.anvil-role-error-alert,
 .anvil-role-success-alert {
-    background: #e6ffe8;
-    border-left: 6px solid #29a329;
-    padding: 16px;
-    border-radius: 6px;
+    display: grid;
+    grid-template-columns: 48px auto;
+    gap: 12px;
+
+    padding: 16px 20px;
+    border-radius: 10px;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    animation: fadeInAlert 0.25s ease-out;
+
+    align-items: start;
+    font-size: 16px;
+    margin: 14px 0;
 }
 
-/* ---------------------------------------------------------
-ALERTES — Version centrée, compacte & responsive
---------------------------------------------------------- */
 
-/* Conteneur général (notre Form) */
+
+/* =======================================================================
+ICONES SVG HD — COMPACTÉES (PAS DE RETOURS À LA LIGNE !)
+======================================================================= */
+
+/* ===== INFO (bleu) ===== */
+.anvil-role-info-alert {
+    background: #e9f3ff;
+    border-left: 6px solid #2a7be4;
+}
+
+.anvil-role-info-alert::before {
+    content: "";
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='%232a7be4' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'/><line x1='12' y1='10' x2='12' y2='16'/><circle cx='12' cy='7' r='0.9' fill='%232a7be4'/></svg>");
+}
+
+/* ===== ERREUR (rouge) ===== */
+.anvil-role-error-alert {
+    background: #ffe9e9;
+    border-left: 6px solid #d40000;
+}
+
+.anvil-role-error-alert::before {
+    content: "";
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23d40000' viewBox='0 0 24 24'><path d='M12 2L2 20h20L12 2z'/><rect x='11' y='9' width='2' height='5' fill='white'/><rect x='11' y='15' width='2' height='2' fill='white'/></svg>");
+}
+
+
+
+/* ===== SUCCÈS (vert) ===== */
+.anvil-role-success-alert {
+    background: #e9ffe9;
+    border-left: 6px solid #28a745;
+}
+
+.anvil-role-success-alert::before {
+    content: "";
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2'><path d='M20 6 9 17l-5-5'/></svg>");
+}
+
+
+
+/* =======================================================================
+VERSION COMPACTE / CENTRÉE / RESPONSIVE
+======================================================================= */
+
 .compact-alert {
     max-width: 420px;
     margin: 0 auto;
@@ -1180,14 +1243,14 @@ ALERTES — Version centrée, compacte & responsive
     animation: fadeInAlert 0.25s ease-out;
 }
 
-/* Réduction du padding interne – version compacte */
+/* Réduction de padding interne des alertes */
 .compact-alert .anvil-role-info-alert,
 .compact-alert .anvil-role-error-alert,
 .compact-alert .anvil-role-success-alert {
     padding: 12px 14px !important;
 }
 
-/* Responsive : sur mobile, mettre en colonne */
+/* Responsive : icône au-dessus du texte sur mobile */
 @media (max-width: 480px) {
     .compact-alert {
         grid-template-columns: auto;
@@ -1195,16 +1258,22 @@ ALERTES — Version centrée, compacte & responsive
     }
 }
 
-/* Centrer les boutons */
+
+
+/* =======================================================================
+BOUTONS CENTRÉS (panel compact-buttons)
+======================================================================= */
+
 .compact-buttons {
-    margin-top: 12px;
+    margin-top: 14px;
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 14px;
 }
 
-/* Focus visuel du bouton par défaut */
+/* Focus du bouton par défaut */
 .compact-buttons button:focus {
     outline: 3px solid #0079ff;
     outline-offset: 2px;
 }
+.compact-buttons { background: yellow !important; }

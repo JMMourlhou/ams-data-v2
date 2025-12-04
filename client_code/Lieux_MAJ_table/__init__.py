@@ -64,12 +64,12 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
             return
 
         r = AlertConfirmHTML.ask(
-            titre="Confirmation",
-            contenu="<p>Voulez-vous vraiment ajouter ce lieu ?</p>",
-            boutons=[("oui", True), ("non", False)],
-            style="info",
-            large=True
+            "Ajouter ce lieu ?",
+            "<p>Voulez-vous vraiment ajouter ce lieu ?</p>",
+            style="info"
         )
+
+        
         """
         r = alert(
             "Voulez-vous vraiment ajouter ce Lieu ?",

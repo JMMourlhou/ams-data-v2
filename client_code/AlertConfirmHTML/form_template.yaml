@@ -1,18 +1,24 @@
 components:
+- layout_properties: {grid_position: 'HXRFGZ,TDLVJB'}
+  name: rt
+  properties: {format: restricted_html}
+  type: RichText
 - components:
-  - layout_properties: {grid_position: 'DHLZQD,YHIPFO'}
-    name: rt
-    properties: {format: restricted_html}
-    type: RichText
-  - layout_properties: {grid_position: 'FDOTBD,SHWPMO'}
-    name: button_panel
-    properties: {align: center}
-    type: FlowPanel
-  layout_properties: {grid_position: 'UCTTLK,DCWNUM'}
-  name: column_panel_1
-  properties: {}
+  - layout_properties: {grid_position: 'TJCIJQ,VAKWVQ'}
+    name: button_yes
+    properties: {text: oui}
+    type: Button
+  - layout_properties: {grid_position: 'TJCIJQ,LDUJER'}
+    name: button_no
+    properties: {text: non}
+    type: Button
+  layout_properties: {grid_position: 'KXHEGF,CJFFXZ'}
+  name: button_panel
+  properties: {role: compact-buttons, wrap_on: never}
   type: ColumnPanel
-container: {type: ColumnPanel}
+container:
+  properties: {role: compact-alert, wrap_on: never}
+  type: ColumnPanel
 custom_component: false
 is_package: true
 properties: []
