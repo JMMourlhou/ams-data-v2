@@ -1,0 +1,8 @@
+components: []
+container:
+  properties:
+    html: |
+      <div anvil-slot="content"></div>
+      <div class="alert-buttons" anvil-slot="buttons"></div>
+  type: HtmlTemplate
+is_package: true
