@@ -1,7 +1,7 @@
 components: []
 container:
   properties:
-    html: |-
+    html: |
       <html>
           <body>
               <div anvil-slot="content"></div>
