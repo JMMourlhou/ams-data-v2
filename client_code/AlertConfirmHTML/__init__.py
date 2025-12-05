@@ -1,5 +1,6 @@
 from ._anvil_designer import AlertConfirmHTMLTemplate
 from anvil import *
+import anvil.js
 
 class AlertConfirmHTML(AlertConfirmHTMLTemplate):
 
@@ -7,41 +8,40 @@ class AlertConfirmHTML(AlertConfirmHTMLTemplate):
         self,
         titre="Confirmation",
         contenu="",
-        style="info",     # "info", "error", "success"
+        style="info",      # "info", "error", "success"
         large=False,
         **properties
     ):
         self.init_components(**properties)
 
-        # Appliquer le style principal: .anvil-role-info-alert / error / success
+        # Style principal : .anvil-role-info-alert/.error-alert/.success-alert
         self.role = style + "-alert"
 
         # Contenu HTML
         self.rt.format = "restricted_html"
         self.rt.content = contenu
 
-        # Lier les boutons
-        self.button_yes.set_event_handler("click", lambda **e: self._choose(True))
-        self.button_no.set_event_handler("click", lambda **e: self._choose(False))
+        # Boutons
+        self.btn_oui.set_event_handler("click", lambda **e: self._choose(True))
+        self.btn_non.set_event_handler("click", lambda **e: self._choose(False))
 
-        # Afficher l'alerte
+        # Affichage de l'alerte
         self.result = alert(
             title=titre,
             content=self,
             large=large,
             dismissible=False,
-            buttons=[]        # pas de bouton OK automatique
+            buttons=[]
         )
 
-        # Focus par défaut sur "Oui"
-        self.call_later(0.05, self.btn_oui.focus)
+        # Focus sur OUI par défaut
+        anvil.js.window.setTimeout(lambda: self.btn_oui.focus(), 50)
 
     def _choose(self, value):
-        # Ferme l'alert et renvoie value comme résultat
         self.raise_event("x-close-alert", value=value)
 
     @staticmethod
-    def ask(titre, contenu, style="info", large=False):
+    def ask(titre, contenu="", style="info", large=False):
         form = AlertConfirmHTML(
             titre=titre,
             contenu=contenu,

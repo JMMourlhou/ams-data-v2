@@ -1167,7 +1167,7 @@ ALERTES PREMIUM : styles principaux + icônes SVG HD + animation
 
 
 /* =======================================================================
-ICONES SVG HD — COMPACTÉES (PAS DE RETOURS À LA LIGNE !)
+ICONES SVG HD — COMPACTÉES
 ======================================================================= */
 
 /* ===== INFO (bleu) ===== */
@@ -1184,6 +1184,7 @@ ICONES SVG HD — COMPACTÉES (PAS DE RETOURS À LA LIGNE !)
     background-size: 90%;
     background-position: center;
     background-repeat: no-repeat;
+
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='%232a7be4' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'/><line x1='12' y1='10' x2='12' y2='16'/><circle cx='12' cy='7' r='0.9' fill='%232a7be4'/></svg>");
 }
 
@@ -1220,6 +1221,7 @@ ICONES SVG HD — COMPACTÉES (PAS DE RETOURS À LA LIGNE !)
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
+
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2'><path d='M20 6 9 17l-5-5'/></svg>");
 }
 
@@ -1264,16 +1266,25 @@ VERSION COMPACTE / CENTRÉE / RESPONSIVE
 BOUTONS CENTRÉS (panel compact-buttons)
 ======================================================================= */
 
+/* Panel des boutons */
+/* Panel des boutons */
 .compact-buttons {
     margin-top: 14px;
-    display: flex;
-    justify-content: center;
-    gap: 14px;
+    text-align: center;       /* centre les enfants */
+    white-space: nowrap;      /* empêche le retour à la ligne */
 }
 
-/* Focus du bouton par défaut */
-.compact-buttons button:focus {
-    outline: 3px solid #0079ff;
-    outline-offset: 2px;
+/* Boutons à l'intérieur du panel */
+.compact-buttons button {
+    display: inline-block !important;
+    width: auto !important;   /* évite les width:100% imposés par Anvil */
+    margin: 0 8px;
+    vertical-align: middle;
 }
-.compact-buttons { background: yellow !important; }
+
+
+
+
+
+
+
