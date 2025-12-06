@@ -1134,9 +1134,9 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 
 
 
-
 /* =======================================================================
-🔵 ALERTES SANS BOUTONS (info / error / success)
+🔵 1) ALERTES SANS BOUTONS (info / error / success)
+Style Modern Light – doux, lisible, moderne
 ======================================================================= */
 
 /* Animation d'apparition des alertes */
@@ -1146,31 +1146,58 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 }
 
 /* -----------------------------------------------------------------------
-STRUCTURE DE BASE DES ALERTES 
-- Layout en grille : icône + texte
-- Ombre, arrondis, animation
+STRUCTURE DE BASE DES ALERTES
+- Grille icône + texte
+- Coins arrondis plus doux
+- Fond légèrement dégradé
+- Typographie semi-bold (600)
 ----------------------------------------------------------------------- */
 .anvil-role-info-alert,
 .anvil-role-error-alert,
 .anvil-role-success-alert {
     display: grid;
-    grid-template-columns: 48px auto;  /* icône | texte */
-    gap: 12px;
+    grid-template-columns: 44px auto;   /* ------------------------------------------------------   Taille de l'icône plus compacte */
+    gap: 10px;                        /*  ========================================================  espace icône/texte   */
 
-    padding: 16px 20px;
-    border-radius: 10px;
+    padding: 14px 18px;                 /* ====================================================== padding des alertes: vertical / horizontal */ 
+    border-radius: 14px;                /* arrondi moderne */
 
-    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    /* Ombre modernisée (effet iOS) */
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+
+    /* Dégradé subtil */
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.40),
+        rgba(255,255,255,0.25)
+    );
+
     animation: fadeInAlert 0.25s ease-out;
-
     align-items: start;
-    
-    /* 🔥 Texte plus grand et en gras pour meilleure lisibilité */
-    font-size: 18px;
-    font-weight: bold;
-    
-    margin: 14px 0;
+
+    font-size: 16px;     /* ---------------------------------------      TAILLE TEXTE */
+    font-weight: 600;    /* semi-bold */
+
+    margin: 10px 0;       /* ---------------------------------------     MARGE EXTERNE */
+
+    max-width: 560px;     /* ----------------------------------------   limite de largeur  */
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.alert-dialog .alert-title {
+    margin-bottom: 4px !important;   /* -----------------------    Espace entre le titre et le message interne    avant c’est ~12 à 16 px */
+}
+
+.alert-dialog .alert-content {
+    padding-bottom: 4px !important;   /* ----------------------    Espace sous le contenu */
+}
+
+.alert-dialog .alert-buttons {
+    margin-bottom: 4px !important;    /* ----------------------     Espace sous les boutons */
+}
+
+
 
 /* -----------------------------------------------------------------------
 STYLE : ALERT INFO (bleue)
@@ -1183,13 +1210,13 @@ STYLE : ALERT INFO (bleue)
 /* Icône info */
 .anvil-role-info-alert::before {
     content: "";
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     display: inline-block;
-    background-size: 90%;
+    background-size: 95%;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml;utf8,<svg ... ></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='%232a7be4' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'/><line x1='12' y1='10' x2='12' y2='16'/><circle cx='12' cy='7' r='1.2' fill='%232a7be4'/></svg>");
 }
 
 /* -----------------------------------------------------------------------
@@ -1203,13 +1230,13 @@ STYLE : ALERT ERROR (rouge)
 /* Icône erreur */
 .anvil-role-error-alert::before {
     content: "";
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     display: inline-block;
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml;utf8,<svg ... ></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23d40000' viewBox='0 0 24 24'><path d='M12 2L2 20h20L12 2z'/><rect x='11' y='9' width='2' height='6' fill='white'/><rect x='11' y='16' width='2' height='2' fill='white'/></svg>");
 }
 
 /* -----------------------------------------------------------------------
@@ -1223,16 +1250,18 @@ STYLE : ALERT SUCCESS (verte)
 /* Icône succès */
 .anvil-role-success-alert::before {
     content: "";
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml;utf8,<svg ... ></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2'><path d='M20 6 9 17l-5-5'/></svg>");
 }
 
+
+
 /* -----------------------------------------------------------------------
-VERSION COMPACTE DES ALERTES
+VERSION COMPACTE
 ----------------------------------------------------------------------- */
 .compact-alert {
     max-width: 420px;
@@ -1240,25 +1269,18 @@ VERSION COMPACTE DES ALERTES
     padding: 14px 18px;
 
     display: grid;
-    grid-template-columns: 48px auto;
+    grid-template-columns: auto auto;
     gap: 12px;
 
-    border-radius: 10px;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.18);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10);
     animation: fadeInAlert 0.25s ease-out;
 }
 
-/* Ajustements internes pour compact-alert */
-.compact-alert .anvil-role-info-alert,
-.compact-alert .anvil-role-error-alert,
-.compact-alert .anvil-role-success-alert {
-    padding: 12px 14px !important;
-}
-
-/* Responsive mobile : icône au-dessus du texte */
+/* Responsive mobile */
 @media (max-width: 480px) {
     .compact-alert {
-        grid-template-columns: auto;   /* icône au-dessus */
+        grid-template-columns: auto;
         text-align: center;
     }
 }
@@ -1266,66 +1288,64 @@ VERSION COMPACTE DES ALERTES
 
 
 /* =======================================================================
-🔵 ALERTES AVEC BOUTONS (AlertConfirmHTML)
+🔵 2) ALERTES AVEC BOUTONS (Oui / Non)
+Style Modern Light
 ======================================================================= */
 
-/* -----------------------------------------------------------------------
-CONTENEUR DES BOUTONS
-- Centré
-- Pas de retour à la ligne
-- Toujours au-dessus du contenu (z-index)
------------------------------------------------------------------------ */
+/* Conteneur des boutons */
 .alert-buttons {
     text-align: center;
-    margin-top: 12px;
+    margin-top: 14px;
     white-space: nowrap;
 
     position: relative !important;
-    z-index: 999999 !important;  /* évite tout recouvrement */
+    z-index: 999999 !important;  /* boutons toujours cliquables */
 }
 
-/* Le FlowPanel interne (slot) doit rester inline pour le centrage */
+/* FlowPanel interne */
 .alert-buttons > * {
     display: inline-block;
 }
 
 /* -----------------------------------------------------------------------
-STYLE DES BOUTONS OUI / NON
+STYLE DES BOUTONS (Modern Light)
 ----------------------------------------------------------------------- */
 .alert-buttons button {
     display: inline-block;
-    margin: 0 8px;
-    padding: 8px 20px;
+    margin: 0 10px;
+    padding: 10px 26px;
 
-    border-radius: 6px;
+    border-radius: 20px;       /* forme pill (iOS-like) */
     border: none;
 
-    background: #347eff;   /* bleu normal */
+    background: #347eff;       /* bleu standard */
     color: white;
 
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: 600;          /* semi-bold */
     cursor: pointer;
 
     transition: background 0.2s ease, transform 0.15s ease;
 
-    /* garantit qu'ils sont toujours cliquables */
     position: relative !important;
     z-index: 1000000 !important;
 }
 
-/* Survol → bleu plus foncé */
+/* Hover → bouton légèrement flottant et plus foncé */
 .alert-buttons button:hover {
     background: #2568d6;
+    transform: translateY(-1px);
 }
 
-/* Effet clic → petite pression */
+/* Clic → effet pression */
 .alert-buttons button:active {
     transform: scale(0.97);
 }
 
-/* Suppression totale de l'apparence focus */
+/* Focus complètement neutralisé (pour éviter le fond blanc natif) */
 .alert-buttons button:focus {
     outline: none !important;
     box-shadow: none !important;
-    background: #347eff !important;  /* reste comme l’état normal */
+    background: #347eff !important;  /* identique au repos */
 }
+
