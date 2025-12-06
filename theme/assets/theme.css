@@ -1136,21 +1136,25 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 
 
 /* =======================================================================
-ALERTES PREMIUM : styles principaux + icônes SVG HD + animation
+🔵 ALERTES SANS BOUTONS (info / error / success)
 ======================================================================= */
 
-/* Animation d'apparition */
+/* Animation d'apparition des alertes */
 @keyframes fadeInAlert {
     from { opacity: 0; transform: translateY(-6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== BASE : Structure des alertes ===== */
+/* -----------------------------------------------------------------------
+STRUCTURE DE BASE DES ALERTES 
+- Layout en grille : icône + texte
+- Ombre, arrondis, animation
+----------------------------------------------------------------------- */
 .anvil-role-info-alert,
 .anvil-role-error-alert,
 .anvil-role-success-alert {
     display: grid;
-    grid-template-columns: 48px auto;
+    grid-template-columns: 48px auto;  /* icône | texte */
     gap: 12px;
 
     padding: 16px 20px;
@@ -1160,22 +1164,23 @@ ALERTES PREMIUM : styles principaux + icônes SVG HD + animation
     animation: fadeInAlert 0.25s ease-out;
 
     align-items: start;
-    font-size: 16px;
+    
+    /* 🔥 Texte plus grand et en gras pour meilleure lisibilité */
+    font-size: 18px;
+    font-weight: bold;
+    
     margin: 14px 0;
 }
 
-
-
-/* =======================================================================
-ICONES SVG HD — COMPACTÉES
-======================================================================= */
-
-/* ===== INFO (bleu) ===== */
+/* -----------------------------------------------------------------------
+STYLE : ALERT INFO (bleue)
+----------------------------------------------------------------------- */
 .anvil-role-info-alert {
     background: #e9f3ff;
     border-left: 6px solid #2a7be4;
 }
 
+/* Icône info */
 .anvil-role-info-alert::before {
     content: "";
     width: 32px;
@@ -1184,16 +1189,18 @@ ICONES SVG HD — COMPACTÉES
     background-size: 90%;
     background-position: center;
     background-repeat: no-repeat;
-
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='%232a7be4' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'/><line x1='12' y1='10' x2='12' y2='16'/><circle cx='12' cy='7' r='0.9' fill='%232a7be4'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg ... ></svg>");
 }
 
-/* ===== ERREUR (rouge) ===== */
+/* -----------------------------------------------------------------------
+STYLE : ALERT ERROR (rouge)
+----------------------------------------------------------------------- */
 .anvil-role-error-alert {
     background: #ffe9e9;
     border-left: 6px solid #d40000;
 }
 
+/* Icône erreur */
 .anvil-role-error-alert::before {
     content: "";
     width: 32px;
@@ -1202,18 +1209,18 @@ ICONES SVG HD — COMPACTÉES
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23d40000' viewBox='0 0 24 24'><path d='M12 2L2 20h20L12 2z'/><rect x='11' y='9' width='2' height='5' fill='white'/><rect x='11' y='15' width='2' height='2' fill='white'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg ... ></svg>");
 }
 
-
-
-/* ===== SUCCÈS (vert) ===== */
+/* -----------------------------------------------------------------------
+STYLE : ALERT SUCCESS (verte)
+----------------------------------------------------------------------- */
 .anvil-role-success-alert {
     background: #e9ffe9;
     border-left: 6px solid #28a745;
 }
 
+/* Icône succès */
 .anvil-role-success-alert::before {
     content: "";
     width: 32px;
@@ -1221,16 +1228,12 @@ ICONES SVG HD — COMPACTÉES
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
-
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2'><path d='M20 6 9 17l-5-5'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg ... ></svg>");
 }
 
-
-
-/* =======================================================================
-VERSION COMPACTE / CENTRÉE / RESPONSIVE
-======================================================================= */
-
+/* -----------------------------------------------------------------------
+VERSION COMPACTE DES ALERTES
+----------------------------------------------------------------------- */
 .compact-alert {
     max-width: 420px;
     margin: 0 auto;
@@ -1245,17 +1248,17 @@ VERSION COMPACTE / CENTRÉE / RESPONSIVE
     animation: fadeInAlert 0.25s ease-out;
 }
 
-/* Réduction de padding interne des alertes */
+/* Ajustements internes pour compact-alert */
 .compact-alert .anvil-role-info-alert,
 .compact-alert .anvil-role-error-alert,
 .compact-alert .anvil-role-success-alert {
     padding: 12px 14px !important;
 }
 
-/* Responsive : icône au-dessus du texte sur mobile */
+/* Responsive mobile : icône au-dessus du texte */
 @media (max-width: 480px) {
     .compact-alert {
-        grid-template-columns: auto;
+        grid-template-columns: auto;   /* icône au-dessus */
         text-align: center;
     }
 }
@@ -1263,49 +1266,66 @@ VERSION COMPACTE / CENTRÉE / RESPONSIVE
 
 
 /* =======================================================================
-BOUTONS CENTRÉS (panel compact-buttons)
+🔵 ALERTES AVEC BOUTONS (AlertConfirmHTML)
 ======================================================================= */
 
-/* =======================================================================
-   COMPACTE ALERT DESIGN
-   ======================================================================= */
-
-.anvil-role-info-alert,
-.anvil-role-error-alert,
-.anvil-role-success-alert {
-    display: grid;
-    grid-template-columns: 48px auto;
-    gap: 12px;
-    padding: 16px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
-    animation: fadeInAlert 0.25s ease-out;
-    align-items: start;
-    font-size: 16px;
-    margin: 14px 0;
-}
-
-/* ... icônes ::before ... */
-
+/* -----------------------------------------------------------------------
+CONTENEUR DES BOUTONS
+- Centré
+- Pas de retour à la ligne
+- Toujours au-dessus du contenu (z-index)
+----------------------------------------------------------------------- */
 .alert-buttons {
     text-align: center;
     margin-top: 12px;
     white-space: nowrap;
+
+    position: relative !important;
+    z-index: 999999 !important;  /* évite tout recouvrement */
 }
 
+/* Le FlowPanel interne (slot) doit rester inline pour le centrage */
+.alert-buttons > * {
+    display: inline-block;
+}
+
+/* -----------------------------------------------------------------------
+STYLE DES BOUTONS OUI / NON
+----------------------------------------------------------------------- */
 .alert-buttons button {
     display: inline-block;
     margin: 0 8px;
     padding: 8px 20px;
+
     border-radius: 6px;
-    background: #347eff;
-    color: white;
     border: none;
+
+    background: #347eff;   /* bleu normal */
+    color: white;
+
     font-size: 15px;
     cursor: pointer;
+
+    transition: background 0.2s ease, transform 0.15s ease;
+
+    /* garantit qu'ils sont toujours cliquables */
+    position: relative !important;
+    z-index: 1000000 !important;
 }
 
+/* Survol → bleu plus foncé */
+.alert-buttons button:hover {
+    background: #2568d6;
+}
 
+/* Effet clic → petite pression */
+.alert-buttons button:active {
+    transform: scale(0.97);
+}
 
-
-
+/* Suppression totale de l'apparence focus */
+.alert-buttons button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    background: #347eff !important;  /* reste comme l’état normal */
+}
