@@ -5,7 +5,8 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+from ...AlertHTML import AlertHTML
+from ...AlertConfirmHTML import AlertConfirmHTML
 
 class ItemTemplate21(ItemTemplate21Template):
     def __init__(self, **properties):
@@ -21,16 +22,23 @@ class ItemTemplate21(ItemTemplate21Template):
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
-        r=alert("Voulez-vous vraiment effacer ce lieu ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        #r=alert("Voulez-vous vraiment effacer ce lieu ?",dismissible=False,buttons=[("oui",True),("non",False)])
+        r = AlertConfirmHTML.ask(
+            "Annulation d'un lieu :",
+            "<p>Voulez-vous annuler ce lieu ?</p>",
+            style="error",
+            large = True
+        )
         if r :   # oui
             result,nb,liste = anvil.server.call("del_lieu", self.item, self.item['lieu'])
             if result is not True:
                 detail=[]
                 for stage in liste:
                     detail.append(stage['numero'])
-                alert(f"Effacement non effectué, ce lieu est utilisé dans {nb} stage(s) :\nStage(s): {detail}")
+                AlertHTML.error("Erreur :", f"Effacement non effectué, ce lieu est utilisé dans {nb} stage(s) :\nStage(s): {detail}")
+                #alert(f"Effacement non effectué, ce lieu est utilisé dans {nb} stage(s) :\nStage(s): {detail}")
                 return
-            alert("Effacement effectué !")
+            AlertHTML.success("Succès", "Annulation effectuée !")
         open_form("Lieux_MAJ_table")
 
     def text_box_2_change(self, **event_args):

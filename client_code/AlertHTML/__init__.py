@@ -1,7 +1,7 @@
 from ._anvil_designer import AlertHTMLTemplate
 from anvil import *
 
-
+# style "info", "error", "success"
 class AlertHTML(AlertHTMLTemplate):
     def __init__(self, titre="Information", contenu="", large=False, style="info", **properties):
         self.init_components(**properties)

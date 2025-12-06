@@ -1,15 +1,11 @@
-components:
-- layout_properties: {slot: content}
-  name: alert_confirm_html_1
-  properties: {}
-  type: form:AlertConfirmHTML
+components: []
 container:
   properties:
     html: |+
       <div anvil-slot="content"></div>
       <div class="alert-buttons" anvil-slot="buttons"></div>
 
+
   type: HtmlTemplate
-custom_component: true
-custom_component_container: false
+custom_component: false
 is_package: true

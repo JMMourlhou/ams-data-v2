@@ -39,46 +39,33 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
         # Text_box_1 non vide
         if self.text_box_1.text == "" or len(self.text_box_1.text) < 5:
             #alert("Entrez un lieu valide!")
-            AlertHTML.error("Erreur", "Entrez un lieu valide (Plus de 4 caractères) !")
+            AlertHTML.error("Erreur :", "Entrez un lieu valide (Plus de 4 caractères) !")
             self.text_box_1.focus()
             return
         # Text_box_2 non vide
         if self.text_box_2.text == "" or len(self.text_box_2.text) < 6:
-            AlertHTML.error("Erreur", "Entrez une adresse supérieure à 5 caractères !")
+            AlertHTML.error("Erreur :", "Entrez une adresse supérieure à 5 caractères !")
             #alert("Entrez une adresse supérieure à 5 caractères !")
             self.text_box_2.focus()
             return
         # Text_box_3 non vide
-        """
-        if self.text_box_3.text == "" or len(self.text_box_3.text) < 6:
-            alert("Entrez un commentaire supérieur à 5 caractères !")
-            self.text_box_3.focus()
-            return
-        """
+        
         # Code existant ?
         row = app_tables.pre_requis.get(code_pre_requis=self.text_box_1.text)
         if row:
             #alert("Ce lieu existe déjà !")
-            AlertHTML.error("Erreur", "Ce lieu existe déjà !")
+            AlertHTML.error("Erreur :", "Ce lieu existe déjà !")
             self.text_box_1.focus()
             return
 
         r = AlertConfirmHTML.ask(
-            "Ajouter ce lieu ?",
-            "<p>Voulez-vous vraiment ajouter ce lieu ?</p>",
+            "Ajout d'un lieu :",
+            "<p>Voulez-vous ajouter ce lieu ?</p>",
             style="info",
             large = True
         )
-
-        
-        """
-        r = alert(
-            "Voulez-vous vraiment ajouter ce Lieu ?",
-            dismissible=False,
-            buttons=[("oui", True), ("non", False)],
-        )
-        """
         if r:  # oui
+            
             result = anvil.server.call(
                 "add_lieu",
                 self.text_box_1.text,
@@ -86,10 +73,10 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
                 self.text_box_3.text,
             )
             if result is not True:
-                alert("ERREUR, Ajout non effectué !")
+                AlertHTML.error("Erreur :", "Ajout non effectué !")
                 return
-            #alert("Création effectuée !")
             AlertHTML.success("Succès", "Création effectuée !")
+            
         self.column_panel_add.visible = False
         open_form("Lieux_MAJ_table")
 
