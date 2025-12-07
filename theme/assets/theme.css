@@ -1155,9 +1155,10 @@ STRUCTURE DE BASE DES ALERTES
 .anvil-role-info-alert,
 .anvil-role-error-alert,
 .anvil-role-success-alert {
+   
     display: grid;
     grid-template-columns: 44px auto;   /* ------------------------------------------------------   Taille de l'icône plus compacte */
-    gap: 10px;                        /*  ========================================================  espace icône/texte   */
+    gap: 10px;                          /*  ========================================================  espace icône/texte   */
 
     padding: 12px 16px;                 /* ====================================================== padding des alertes: vertical / horizontal */ 
     border-radius: 14px;                /* arrondi moderne */
@@ -1184,6 +1185,7 @@ STRUCTURE DE BASE DES ALERTES
     margin-left: auto;
     margin-right: auto;
 }
+
 
 .alert-dialog .alert-title {
     margin-bottom: 4px !important;   /* -----------------------    Espace entre le titre et le message interne    avant c’est ~12 à 16 px */
@@ -1349,3 +1351,31 @@ STYLE DES BOUTONS (Modern Light)
     background: #347eff !important;  /* identique au repos */
 }
 
+
+/* ----- le titre ----- */
+h4.modal-title.alert-title {
+    margin-bottom: 1px !important;
+}
+
+/* ----- tout l'espace sous le titre ----- */
+.modal-body {
+    padding-bottom: 1px !important;
+}
+
+.modal-dialog {
+    background: rgba(255,0,0,0.1) !important;
+    margin-top: 100px !important;
+    margin-bottom: 100px !important;
+}
+
+/* ----- ESPACE TOUT AUTOUR DU MESSAGE */
+.modal-content {
+    /* background: rgba(255,0,0,0.1) !important; */      /* pour vérifier la zone */
+    padding: 1px 1px !important;
+}
+
+/* ----- ESPACE autour des boutons  ok ----- */
+.modal-footer {
+    margin-top: 1px !important;      /* espace entre contenu et boutons */
+    margin-bottom: 1px !important;   /* espace entre boutons et bas de la popup */
+}
