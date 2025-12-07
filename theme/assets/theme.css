@@ -1136,7 +1136,7 @@ https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-m
 
 /* =======================================================================
 🔵 1) ALERTES SANS BOUTONS (info / error / success)
-Style Modern Light – doux, lisible, moderne
+Style "Modern Light" – doux, lisible, moderne
 ======================================================================= */
 
 /* Animation d'apparition des alertes */
@@ -1146,27 +1146,26 @@ Style Modern Light – doux, lisible, moderne
 }
 
 /* -----------------------------------------------------------------------
-STRUCTURE DE BASE DES ALERTES
-- Grille icône + texte
-- Coins arrondis plus doux
+STRUCTURE DE BASE DES ALERTES (info / error / success)
+- Grille : icône + texte
+- Coins arrondis
+- Ombre douce
 - Fond légèrement dégradé
-- Typographie semi-bold (600)
 ----------------------------------------------------------------------- */
 .anvil-role-info-alert,
 .anvil-role-error-alert,
 .anvil-role-success-alert {
-   
     display: grid;
-    grid-template-columns: 44px auto;   /* ------------------------------------------------------   Taille de l'icône plus compacte */
-    gap: 10px;                          /*  ========================================================  espace icône/texte   */
+    grid-template-columns: 44px auto;  /* Colonne icône (44px) + colonne texte */
+    gap: 10px;                         /* Espace entre icône et texte */
 
-    padding: 12px 16px;                 /* ====================================================== padding des alertes: vertical / horizontal */ 
-    border-radius: 14px;                /* arrondi moderne */
+    padding: 12px 16px;                /* Padding vertical / horizontal */
+    border-radius: 14px;               /* Coins arrondis modernes */
 
-    /* Ombre modernisée (effet iOS) */
+    /* Ombre type "carte" moderne */
     box-shadow: 0 4px 18px rgba(0,0,0,0.10);
 
-    /* Dégradé subtil */
+    /* Dégradé subtil du fond (clair) */
     background: linear-gradient(
         to bottom,
         rgba(255,255,255,0.40),
@@ -1174,42 +1173,50 @@ STRUCTURE DE BASE DES ALERTES
     );
 
     animation: fadeInAlert 0.25s ease-out;
-    align-items: start;
+    align-items: start;                /* Aligne le contenu en haut */
 
-    font-size: 16px;     /* ---------------------------------------      TAILLE TEXTE */
-    font-weight: 600;    /* semi-bold */
+    font-size: 16px;                   /* Taille du texte */
+    font-weight: 600;                  /* Semi-bold */
 
-    margin: 2px 0;       /* ---------------------------------------     MARGE EXTERNE */
+    margin: 2px 0;                     /* Marges externes verticales */
 
-    max-width: 560px;     /* ----------------------------------------   limite de largeur  */
+    max-width: 560px;                  /* Largeur max de l’alerte */
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;                /* Centre horizontalement */
 }
-
-
-.alert-dialog .alert-title {
-    margin-bottom: 4px !important;   /* -----------------------    Espace entre le titre et le message interne    avant c’est ~12 à 16 px */
-}
-
-.alert-dialog .alert-content {
-    padding-bottom: 2px !important;   /* ----------------------    Espace sous le contenu */
-}
-
-.alert-dialog .alert-buttons {
-    margin-bottom: 2px !important;    /* ----------------------     Espace sous les boutons */
-}
-
-
 
 /* -----------------------------------------------------------------------
-STYLE : ALERT INFO (bleue)
+ESPACEMENT INTERNE DES ALERTES (titre / contenu / boutons)
+----------------------------------------------------------------------- */
+
+/* Espace entre le titre et le texte du message */
+.alert-dialog .alert-title {
+    margin-bottom: 4px !important;     /* Avant : ~12 à 16 px -> réduit */
+}
+
+/* Espace sous le contenu de l’alerte */
+.alert-dialog .alert-content {
+    padding-bottom: 2px !important;
+}
+
+/* Espace sous les boutons (zone alert-buttons) */
+.alert-dialog .alert-buttons {
+    margin-bottom: 2px !important;
+}
+
+/* =======================================================================
+1.a) VARIANTES PAR TYPE D’ALERTE (INFO / ERROR / SUCCESS)
+======================================================================= */
+
+/* -----------------------------------------------------------------------
+ALERTE INFO (bleue)
 ----------------------------------------------------------------------- */
 .anvil-role-info-alert {
     background: #e9f3ff;
-    border-left: 6px solid #2a7be4;
+    border-left: 6px solid #2a7be4;   /* Bande verticale bleue */
 }
 
-/* Icône info */
+/* Icône info (pseudo-élément avant) */
 .anvil-role-info-alert::before {
     content: "";
     width: 40px;
@@ -1222,14 +1229,14 @@ STYLE : ALERT INFO (bleue)
 }
 
 /* -----------------------------------------------------------------------
-STYLE : ALERT ERROR (rouge)
+ALERTE ERROR (rouge)
 ----------------------------------------------------------------------- */
 .anvil-role-error-alert {
     background: #ffe9e9;
-    border-left: 6px solid #d40000;
+    border-left: 6px solid #d40000;   /* Bande verticale rouge */
 }
 
-/* Icône erreur */
+/* Icône erreur (triangle + point d’exclamation) */
 .anvil-role-error-alert::before {
     content: "";
     width: 40px;
@@ -1242,14 +1249,14 @@ STYLE : ALERT ERROR (rouge)
 }
 
 /* -----------------------------------------------------------------------
-STYLE : ALERT SUCCESS (verte)
+ALERTE SUCCESS (verte)
 ----------------------------------------------------------------------- */
 .anvil-role-success-alert {
     background: #e9ffe9;
-    border-left: 6px solid #28a745;
+    border-left: 6px solid #28a745;   /* Bande verticale verte */
 }
 
-/* Icône succès */
+/* Icône succès (check) */
 .anvil-role-success-alert::before {
     content: "";
     width: 40px;
@@ -1260,11 +1267,10 @@ STYLE : ALERT SUCCESS (verte)
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2328a745' stroke-width='2'><path d='M20 6 9 17l-5-5'/></svg>");
 }
 
+/* =======================================================================
+🔵 1.b) VERSION COMPACTE D’ALERTE
+======================================================================= */
 
-
-/* -----------------------------------------------------------------------
-VERSION COMPACTE
------------------------------------------------------------------------ */
 .compact-alert {
     max-width: 420px;
     margin: 0 auto;
@@ -1279,7 +1285,7 @@ VERSION COMPACTE
     animation: fadeInAlert 0.25s ease-out;
 }
 
-/* Responsive mobile */
+/* Version mobile : une seule colonne et texte centré */
 @media (max-width: 480px) {
     .compact-alert {
         grid-template-columns: auto;
@@ -1287,95 +1293,112 @@ VERSION COMPACTE
     }
 }
 
-
-
 /* =======================================================================
 🔵 2) ALERTES AVEC BOUTONS (Oui / Non)
-Style Modern Light
+Style "Modern Light"
 ======================================================================= */
 
-/* Conteneur des boutons */
+/* -----------------------------------------------------------------------
+CONTENEUR DES BOUTONS (FlowPanel Anvil)
+----------------------------------------------------------------------- */
 .alert-buttons {
-    text-align: center;
-    margin-top: 14px;
-    white-space: nowrap;
+    text-align: center;               /* Centre les boutons */
+    margin-top: 14px;                 /* Espace au-dessus des boutons */
+    white-space: nowrap;              /* Évite le retour à la ligne brutal */
 
     position: relative !important;
-    z-index: 999999 !important;  /* boutons toujours cliquables */
+    z-index: 999999 !important;       /* Boutons toujours cliquables, au-dessus */
 }
 
-/* FlowPanel interne */
+/* Les éléments internes (FlowPanel) sont mis en inline-block */
 .alert-buttons > * {
     display: inline-block;
 }
 
 /* -----------------------------------------------------------------------
-STYLE DES BOUTONS (Modern Light)
+STYLE DES BOUTONS (Modern Light, forme "pill")
 ----------------------------------------------------------------------- */
 .alert-buttons button {
     display: inline-block;
-    margin: 0 10px;
-    padding: 10px 26px;
+    margin: 0 10px;                  /* Espace horizontal entre les boutons */
+    padding: 10px 26px;              /* Taille du bouton */
 
-    border-radius: 20px;       /* forme pill (iOS-like) */
+    border-radius: 20px;             /* Forme "pill" (arrondi complet) */
     border: none;
 
-    background: #347eff;       /* bleu standard */
+    background: #347eff;             /* Bleu principal */
     color: white;
 
     font-size: 16px;
-    font-weight: 600;          /* semi-bold */
+    font-weight: 600;                /* Semi-bold */
     cursor: pointer;
 
     transition: background 0.2s ease, transform 0.15s ease;
 
     position: relative !important;
-    z-index: 1000000 !important;
+    z-index: 1000000 !important;     /* Encore au-dessus du reste */
 }
 
-/* Hover → bouton légèrement flottant et plus foncé */
+/* Survol : bouton légèrement plus foncé et qui remonte un peu */
 .alert-buttons button:hover {
     background: #2568d6;
     transform: translateY(-1px);
 }
 
-/* Clic → effet pression */
+/* Clic : léger effet de pression */
 .alert-buttons button:active {
     transform: scale(0.97);
 }
 
-/* Focus complètement neutralisé (pour éviter le fond blanc natif) */
+/* Focus : suppression complète du focus natif (bordure / halo) */
 .alert-buttons button:focus {
     outline: none !important;
     box-shadow: none !important;
-    background: #347eff !important;  /* identique au repos */
+    background: #347eff !important;  /* Couleur conservée */
 }
 
+/* =======================================================================
+🔵 3) ESPACEMENTS GLOBAUX DANS LA MODAL (titre / corps / footer)
+======================================================================= */
 
-/* ----- le titre ----- */
+/* Titre de la modal (ligne du haut) */
 h4.modal-title.alert-title {
-    margin-bottom: 1px !important;
+    margin-bottom: 1px !important;   /* Réduction de l’espace sous le titre */
 }
 
-/* ----- tout l'espace sous le titre ----- */
+/* Corps de la modal (contenu central, y compris alert-content) */
 .modal-body {
-    padding-bottom: 1px !important;
+    padding-bottom: 1px !important;  /* Réduit l’espace en bas du corps */
 }
 
-.modal-dialog {
-    background: rgba(255,0,0,0.1) !important;
-    margin-top: 100px !important;
-    margin-bottom: 100px !important;
-}
-
-/* ----- ESPACE TOUT AUTOUR DU MESSAGE */
+/* Contenu global de la modal */
 .modal-content {
-    /* background: rgba(255,0,0,0.1) !important; */      /* pour vérifier la zone */
-    padding: 1px 1px !important;
+    /* background: rgba(255,0,0,0.1) !important; */  /* Debug visuel de la zone */
+    padding: 1px 1px !important;                    /* Réduit les marges internes */
 }
 
-/* ----- ESPACE autour des boutons  ok ----- */
+/* Pied de la modal (zone des boutons OK/Annuler natifs Bootstrap) */
 .modal-footer {
-    margin-top: 1px !important;      /* espace entre contenu et boutons */
-    margin-bottom: 1px !important;   /* espace entre boutons et bas de la popup */
+    margin-top: 1px !important;      /* Espace entre contenu et boutons */
+    margin-bottom: 1px !important;   /* Espace entre boutons et bas de la popup */
+}
+
+/* ==========================================================================
+   BOUTON OK — ALERTES (sélecteur structurel garanti)
+   ========================================================================== */
+
+.modal-dialog .modal-footer .btn-default {
+    background: #347eff !important;
+    border-color: #347eff !important;
+    color: #ffffff !important;
+
+    border-radius: 20px !important;
+    padding: 10px 26px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+.modal-dialog .modal-footer .btn-default:hover {
+    background: #2568d6 !important;
+    border-color: #2568d6 !important;
 }
