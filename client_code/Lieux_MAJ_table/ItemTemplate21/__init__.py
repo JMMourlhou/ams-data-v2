@@ -51,7 +51,12 @@ class ItemTemplate21(ItemTemplate21Template):
 
     def button_modif_click(self, **event_args):
         """This method is called when the button is clicked"""
-        r=alert("Voulez-vous vraiment modifier ce Lieu ?",buttons=[("oui",True),("non",False)])
+        r = AlertConfirmHTML.ask(
+            "Modification d'un lieu :",
+            "<p>Voulez-vous modifier ce lieu ?</p>",
+            style="error",
+            large = False
+        )
         if r :   # oui
             # 1 modif ds les lieux stages 
             result = anvil.server.call("modif_lieu", self.item, self.text_box_1.text, self.text_box_2.text, self.sov_old_lieu)
