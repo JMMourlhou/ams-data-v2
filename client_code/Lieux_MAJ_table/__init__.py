@@ -91,3 +91,4 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
     def text_box_3_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
         self.button_valid.visible = True
+

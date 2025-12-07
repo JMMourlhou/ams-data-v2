@@ -30,29 +30,32 @@ def modify_users_after_trombi(mel,
                      role
                 ):
     # finding the stagiaire's row 
+    
     row = app_tables.users.get(email=mel)
-    if not row:
-        raise Exception("Erreur: stagiaire not found !")
-        return False
-    else:           
+    
+    try:
         row.update(email=mail_modif,
-                   nom=nom,
-                   prenom=prenom,
-                   photo = photo,
-                   ville_naissance = ville_naissance,
-                   code_postal_naissance = cp_naissance,
-                   date_naissance = date_naissance,
-                   pays_naissance = pays_naissance,
-                   adresse_rue = rue,
-                   adresse_ville = ville,
-                   adresse_code_postal = cp,
-                   tel = tel,
-                   email2 = mail2,
-                   accept_data = accept_storage,
-                   commentaires = comments,
-                   role = role
+                nom=nom,
+                prenom=prenom,
+                photo = photo,
+                ville_naissance = ville_naissance,
+                code_postal_naissance = cp_naissance,
+                date_naissance = date_naissance,
+                pays_naissance = pays_naissance,
+                adresse_rue = rue,
+                adresse_ville = ville,
+                adresse_code_postal = cp,
+                tel = tel,
+                email2 = mail2,
+                accept_data = accept_storage,
+                commentaires = comments,
+                role = role
                             )
         return True
+    except Exception as e:
+        print(f"Erreur en MAJ user: {e}")
+        return e
+        
 
 # Appelé des paramètres, modif table users, colonnes mail confirmé   et     compte enabled
 @anvil.server.callable

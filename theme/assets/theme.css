@@ -1341,7 +1341,8 @@ STYLE DES BOUTONS (Modern Light, forme "pill")
 
 /* Survol : bouton légèrement plus foncé et qui remonte un peu */
 .alert-buttons button:hover {
-    background: #2568d6;
+    background: #1e57c4 !important;
+    color: #ffffff !important;         /* texte blanc comme OK */
     transform: translateY(-1px);
 }
 
@@ -1384,21 +1385,122 @@ h4.modal-title.alert-title {
 }
 
 /* ==========================================================================
-   BOUTON OK — ALERTES (sélecteur structurel garanti)
-   ========================================================================== */
+CENTRAGE DU BOUTON OK (structure réelle Anvil)
+========================================================================== */
+
+/* Le conteneur principal doit prendre toute la largeur */
+.modal-dialog .modal-footer .html-templated-panel {
+    width: 100% !important;
+    display: block !important;
+    text-align: center !important;    /* centre tout son contenu */
+}
+
+/* Le sous-conteneur doit aussi centrer son contenu */
+.modal-dialog .modal-footer .align-center {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+
+/* ==========================================================================
+STYLE DU BOUTON OK (même style que Oui / Non)
+========================================================================== */
 
 .modal-dialog .modal-footer .btn-default {
     background: #347eff !important;
     border-color: #347eff !important;
     color: #ffffff !important;
 
-    border-radius: 20px !important;
-    padding: 10px 26px !important;
+    /* padding: 10px 26px !important; */     /* même padding que Oui/Non */
+    border-radius: 20px !important;     /* même forme pill */
     font-size: 16px !important;
     font-weight: 600 !important;
+
+    padding-top: 2px !important;  /* Réduit l’espace en bas du corps */
+    padding-bottom: 2px !important;  /* Réduit l’espace en bas du corps */
+    padding-left: 6px !important;  /* Réduit l’espace en bas du corps */
+    padding-right: 6px !important;  /* Réduit l’espace en bas du corps */
+    
+    margin-top: 3px !important;         /* ESPACE SOUS LE TEXTE */
 }
 
+/* Hover */
 .modal-dialog .modal-footer .btn-default:hover {
-    background: #2568d6 !important;
+    background: #1e57c4 !important;
     border-color: #2568d6 !important;
 }
+
+/* ========================================================================
+   BOUTONS OUI / NON — MODE ERROR (rouge)
+   ======================================================================== */
+
+/* Si la popup contient une alerte type error → colorer les boutons du footer */
+.modal-dialog:has(.anvil-role-error-alert) .alert-buttons button {
+    background: #d40000 !important;
+    border-color: #d40000 !important;
+    color: #ffffff !important;
+}
+
+/* Hover */
+.modal-dialog:has(.anvil-role-error-alert) .alert-buttons button:hover {
+    background: #a80000 !important;
+    border-color: #a80000 !important;
+    color: #ffffff !important;
+}
+
+/* ========================================================================
+BOUTONS OUI / NON — MODE SUCCESS (vert)
+======================================================================== */
+
+/* Si la popup contient une alerte type success → colorer les boutons */
+.modal-dialog:has(.anvil-role-success-alert) .alert-buttons button {
+    background: #28a745 !important;    /* vert standard */
+    border-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+/* Hover */
+.modal-dialog:has(.anvil-role-success-alert) .alert-buttons button:hover {
+    background: #1f7e34 !important;    /* vert plus foncé */
+    border-color: #1f7e34 !important;
+    color: #ffffff !important;
+}
+
+/* OK bleu si alerte info */
+.modal-dialog:has(.anvil-role-info-alert) .modal-footer .btn-default {
+    background: #347eff !important;
+    border-color: #347eff !important;
+    color: #ffffff !important;
+}
+
+.modal-dialog:has(.anvil-role-info-alert) .modal-footer .btn-default:hover {
+    background: #1e57c4 !important;   /* bleu un peu plus foncé */
+    border-color: #1e57c4 !important;
+}
+
+/* OK vert si alerte success */
+.modal-dialog:has(.anvil-role-success-alert) .modal-footer .btn-default {
+    background: #28a745 !important;    /* vert normal */
+    border-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+.modal-dialog:has(.anvil-role-success-alert) .modal-footer .btn-default:hover {
+    background: #1f7e34 !important;    /* vert foncé */
+    border-color: #1f7e34 !important;
+}
+
+/* OK rouge si alerte error */
+.modal-dialog:has(.anvil-role-error-alert) .modal-footer .btn-default {
+    background: #d40000 !important;
+    border-color: #d40000 !important;
+    color: #ffffff !important;
+}
+
+.modal-dialog:has(.anvil-role-error-alert) .modal-footer .btn-default:hover {
+    background: #a80000 !important;
+    border-color: #a80000 !important;
+}
+
+
+

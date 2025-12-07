@@ -12,7 +12,8 @@ from .. import Mail_valideur  # pour test du mail format
 from .. import French_zone   #pour tester la date de naissance
 from datetime import datetime
 from datetime import timedelta
-
+from .. import AlertConfirmHTML
+from .. import AlertHTML
 
 global user
 user=anvil.users.get_user()
@@ -95,7 +96,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
         """This method is called when the button is clicked"""
         global user
         if self.text_box_prenom.text == "" :           # dates vides ?
-            alert("Entrez votre Prénom !")
+            AlertHTML.success("error", "Entrez votre Prénom !")
             return
         else:
             pn = self.text_box_prenom.text
@@ -192,8 +193,14 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
 
         
         if self.check_box_accept_data_use.checked is not True:
-            r=alert("Voulez-vous valider l'utilisation de vos données par AMsport ?",dismissible=False, buttons=[("oui",True),("non",False)])
-            if r :   #Non, nom pas correct
+            
+            r = AlertConfirmHTML.ask(
+                "RGPD: ",
+                "<p>Voulez-vous valider l'utilisation de vos données par AMsport ?</p>",
+                style="info",
+                large = True
+            )
+            if r:  # oui
                 self.check_box_accept_data_use.checked = True
                 return
 
@@ -213,6 +220,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             if test:  # un mail existe déjà en table user, est-ce bien cet utisateur ?  
                 row_id2 = test.get_id()
                 if self.row_id != row_id2: # 2 id pour le même mail !
+                    
                     alert("Le mail entré existe déjà dans la base de données !")
                     return
         except:
@@ -241,7 +249,8 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 # insertion du stagiaire automatiqt si num_stage != 0
                 if user and self.first_entry:          # 1ERE ENTREE 
                     if  user['temp']==0:
-                        alert("Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
+                        AlertHTML.success("Succès", "Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
+                        #alert("Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
                         self.button_retour_click()
                     else:
                         code_fi = "???"
@@ -257,13 +266,13 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                         txt_msg = anvil.server.call("add_stagiaire", user, self.stage, code_fi, "", pour_stage)
                         alert(txt_msg)
                         anvil.users.logout()
-                        alert("Si ce n'est pas fait, créez un raccourci de cette appli sur votre tel maintenant... \n\n ... puis ouvrez la de nouveau pour commencer à l'utiliser.")
+                        AlertHTML.success("info", "Vous pouvez créer un raccourci pour cette appli")
                         self.button_retour_click()
             else :
-                alert("Fiche de renseignements non enregistée !")
+                AlertHTML.success("error", "Fiche de renseignements non enregistée !")
                 self.button_retour_click()
         else:
-            alert("utilisateur non trouvé !")
+            AlertHTML.success("error", "Utilisateur non trouvé !")
             
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""

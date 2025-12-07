@@ -6,6 +6,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Mail_valideur  # pour test du mail format 
+from .. AlertHTML import AlertHTML
+from .. AlertConfirmHTML import AlertConfirmHTML
 
 class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
     def __init__(self, mel, num_stage=0, intitule="", row_id=None, **properties):
@@ -88,29 +90,29 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
         if self.text_box_prenom.text == "" :           # dates vides ?
-            alert("Entrez le prénom !")
+            AlertHTML.error("Erreur :", "Entrez le Prénom !")
             return
         if self.text_box_nom.text == "" :           # dates vides ?
-            alert("Entrez le nom !")
+            AlertHTML.error("Erreur :", "Entrez le Nom !")
             return
         if self.text_box_tel.text == "" :              # tel vides ?
-            alert("Entrez le teléphone")
+            AlertHTML.error("Erreur", "Entrez le Téléphone !")
             return
         if len(self.text_box_tel.text) < 10:    # tel inf à 10 caract ?
-            alert("Le numéro de teléphone n'est pas valide")
+            AlertHTML.error("Erreur :", "Le numéro de teléphone n'est pas valide !")
             return
         if self.check_box_accept_data_use.checked is not True:
-            r=alert("Voulez-vous valider l'utilisation de vos données par AMsport ?",dismissible=False,buttons=[("oui",True),("non",False)])
+            r = AlertConfirmHTML.ask("RGPD: ", "<p>Voulez-vous valider l'utilisation de vos données par AMsport ?</p>", style="info", large = True)
             if r :   #Non, nom pas correct
                 self.check_box_accept_data_use.checked = True
                 return
             
         if self.user['role'] == "S":
             if self.date_naissance.date is None :           # dateN vide ?
-                alert("Entrez la date de naissance")
+                AlertHTML.error("error", "Entrez la date de Naissance !")
                 return
             if self.text_box_ville_naissance.text == "" :    # ville N vide ?
-                alert("Entrez la ville de Naissance")
+                AlertHTML.error("error", "Entrez la ville de Naissance !")
                 return
                 
         # il y a eu un changement du role de l'admin au cours de la maj de cette fiche         
@@ -130,7 +132,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         mail = self.text_box_mail.text.lower()
         result = Mail_valideur.is_valid_email(mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
         if result is False:
-            alert("Le mail n'a pas le bon format !")
+            AlertHTML.error("Erreur :", "Le mail n'a pas le bon format !")
             self.text_box_mail.focus()
             return
             
@@ -140,7 +142,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
         if test:
             row_id2 = test.get_id()
             if self.id_fiche_stagiaire != row_id2: # 2 id pour le même mail !
-                alert("Le mail entré existe déjà dans la base de données !")
+                AlertHTML.error("Erreur :", "Le mail entré existe déjà dans la base de données !")
                 return
             
         if self.stagiaire:
@@ -165,17 +167,16 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             if result is True :
                 self.button_validation_copy.visible = False
                 self.button_validation.visible = False
-                n=Notification("Modifications enregistées !",timeout=1)
+                n=Notification("Modifications enregistées !",timeout=2)
                 n.show()
             else :
-                alert("Renseignements non sauvés !", title="Erreur")
+                AlertHTML.error("Erreur :", f"Renseignements non sauvés !\n {result}")
             
             # self.button_annuler_click()
         else:
-            alert("Utilisateur non trouvé !", title="Erreur")
+            AlertHTML.error("Erreur :", "Utilisateur non trouvé !")
             self.button_annuler_click()
 
-        #js.call_js('showSidebar')
     
     def text_box_role_change(self, **event_args):                                    # Role du stagiaire a changé
         """This method is called when the text in this text box is edited"""
