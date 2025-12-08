@@ -5,7 +5,8 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+from ...AlertHTML import AlertHTML
+from ...AlertConfirmHTML import AlertConfirmHTML
 
 class ItemTemplate12(ItemTemplate12Template):
     def __init__(self, **properties):
@@ -22,9 +23,9 @@ class ItemTemplate12(ItemTemplate12Template):
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         if self.item['doc1'] is not None:
-            r=alert("Ce pré-requis n'est pas vide, Voulez-vous vraiment le détruire ?",dismissible=False,buttons=[("oui",True),("non",False)])
+            r = AlertConfirmHTML.ask("Annulation d'un Pré-Requis : ", "Il y a un document pour ce P.Requis: Voulez-vous vraiment le détruire ?", style="error", large = True)
         else:
-            r=alert("Voulez-vous détruire ce pré-requis ?", dismissible=False ,buttons=[("oui",True),("non",False)])
+            r = AlertConfirmHTML.ask("Annulation d'un Pré-Requis : ", "Voulez-vous détruire ce P.Requis ?", style="error", large = True)
         if r :   # Oui               
             result = anvil.server.call('pr_stagiaire_del',self.item['stagiaire_email'], self.item['stage_num'], self.item['item_requis'], "destruction" )  # mode  destruction de PR pour ce stgiaire
             if not result:

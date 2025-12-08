@@ -12,8 +12,8 @@ from .. import Mail_valideur  # pour test du mail format
 from .. import French_zone   #pour tester la date de naissance
 from datetime import datetime
 from datetime import timedelta
-from .. import AlertConfirmHTML
-from .. import AlertHTML
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 global user
 user=anvil.users.get_user()
@@ -96,7 +96,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
         """This method is called when the button is clicked"""
         global user
         if self.text_box_prenom.text == "" :           # dates vides ?
-            AlertHTML.success("error", "Entrez votre Prénom !")
+            AlertHTML.error("Oublie !", "Entrez votre Prénom !")
             return
         else:
             pn = self.text_box_prenom.text
@@ -105,7 +105,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             self.text_box_prenom.text =  pn  
         
         if self.text_box_nom.text == "" :           # dates vides ?
-            alert("Entrez votre Nom de Famille !")
+            AlertHTML.error("Oublie !", "Entrez votre Nom de Famille !")
             return
         else:
             n = self.text_box_nom.text
@@ -114,21 +114,21 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             self.text_box_nom.text =  n  
 
         if self.image_photo.source is None:
-            alert("Prenez votre Photo svp !")
+            AlertHTML.error("Oublie !", "Entrez votre Photo !")
             return
             
         if self.text_box_tel.text == "":    # tel vides ou inf à 10 caract ?
-            alert("Entrez votre teléphone !")
+            AlertHTML.error("Oublie !", "Entrez votre numéro de Tel !")
             return
         if len(self.text_box_tel.text) < 10:    # tel inf à 10 caract ?
-            alert("Le numéro de teléphone n'est pas valide !")
+            AlertHTML.error("Erreur !", "Le num de Tel doit avoir 10 caractères !")
             return   
             
         # Si Inscription ds un stage numéro > 998 : F ou T ou QCM: pas de test sur Naissance et adresse     
         if int(self.stage) < 998:
             # naissance non vide, supérieure à 15 ans
             if self.date_naissance.date is None :           # dateN vide ?
-                alert("Entrez la date de naissance !")
+                AlertHTML.error("Oublie !", "Entrez la date de Naissance !")
                 return   
             now=French_zone.french_zone_time()   # now est le jour/h actuelle (datetime object)
             now=now.date()                       # extraction de la date, format yyyy-mm-dd
@@ -141,19 +141,19 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             span_years = span.days/365
             #alert(f"écart: {span_years}")
             if span_years < 15:
-                alert("Erreur sur votre date de naissance !")
+                AlertHTML.error("Age trop jeune !", "Erreur sur la date de naissance !")
                 return   
 
             if self.text_box_v_naissance.text == "" :    # ville N vide ?
-                alert("Entrez la ville de naissance !")
+                AlertHTML.error("Ville de Naissance oubliée!", "Entrez votre ville de naissance !")
                 return   
             if len(self.text_box_v_naissance.text)<3:
-                alert("La ville de naissance est incomplète !")
+                AlertHTML.error("Ville de Naissance incomplète !", "Entrez votre Ville de Naissance !")
                 return 
                 
             # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
             if self.text_box_c_naissance.text == "":
-                alert("Entrez votre Code Postal de naissance !\n\n Si vous êtes né à l'étranger, entrez 99999")
+                AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez votre Code Postal de naissance !\n\n Si vous êtes né à l'étranger, entrez 99999")
                 return
                 
             
@@ -193,7 +193,6 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
 
         
         if self.check_box_accept_data_use.checked is not True:
-            
             r = AlertConfirmHTML.ask(
                 "RGPD: ",
                 "<p>Voulez-vous valider l'utilisation de vos données par AMsport ?</p>",
@@ -223,8 +222,9 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                     
                     alert("Le mail entré existe déjà dans la base de données !")
                     return
-        except:
-            alert("Erreur en lecture du mail entré !")
+        except Exception as e:
+            AlertHTML.error("Erreur: ", f"Erreur en relecture du user sur mail entré !\n {e}")
+            alert(f"Erreur en lecture du mail entré !\n {e}")
             return
         
         if user:
@@ -266,13 +266,13 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                         txt_msg = anvil.server.call("add_stagiaire", user, self.stage, code_fi, "", pour_stage)
                         alert(txt_msg)
                         anvil.users.logout()
-                        AlertHTML.success("info", "Vous pouvez créer un raccourci pour cette appli")
+                        AlertHTML.success("info", "Vous devriez créer un raccourci pour cette application !")
                         self.button_retour_click()
             else :
-                AlertHTML.success("error", "Fiche de renseignements non enregistée !")
+                AlertHTML.error("Erreur: ", "Fiche de renseignements non enregistée !")
                 self.button_retour_click()
         else:
-            AlertHTML.success("error", "Utilisateur non trouvé !")
+            AlertHTML.error("Erreur:", "Utilisateur non trouvé !")
             
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
