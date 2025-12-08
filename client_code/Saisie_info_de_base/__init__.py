@@ -152,50 +152,51 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 return 
                 
             # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
-            if self.text_box_c_naissance.text == "":
+            if self.text_box_c_naissance.text == "" or len(self.text_box_c_naissance.text)!=5:
                 AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez votre Code Postal de naissance !\n\n Si vous êtes né à l'étranger, entrez 99999")
                 return
                 
             
             if self.text_area_rue.text == "":
-                alert("Entrez votre Rue !")
+                AlertHTML.error("Adresse postale incomplète !", "Entrez votre rue !")
                 return  
             if len(self.text_area_rue.text)<5:
                 alert("La Rue est incomplète !")
                 return 
                 
             if self.text_box_ville.text == "":
-                alert("Entrez votre Ville (adresse postale) !")
+                AlertHTML.error("Adresse postale incomplète !", "Entrez votre ville !")
                 return
+                
             if len(self.text_box_ville.text)<3:
-                alert("La Ville (adresse postale) est incomplète !")
+                AlertHTML.error("Adresse postale incomplète !", "Complétez votre ville !")
                 return 
                 
             # Test sur Code postal adresse, non vide, 5 caractères numériques.
             if self.text_box_code_postal.text == "":
-                alert("Entrez votre Code Postal (adresse postale) !")
+                AlertHTML.error("Adresse postale incomplète !", "Entrez votre Code Postal !")
                 return
          
             if len(self.text_box_code_postal.text) != 5:
-                alert("Le Code Postal (adresse postale) doit être de 5 chiffres !")
+                AlertHTML.error("Adresse postale incomplète !", "Le Code Postal doit être de 5 chiffres !")
                 return
                 
             try:
                 cp_test = int(self.text_box_code_postal.text)
             except:
-                alert("Le Code Postal (adresse postale) ne doit contenir que des chiffres !")
+                AlertHTML.error("Adresse postale incomplète !", "Le Code Postal ne doit contenir que des chiffres !")
                 return  
                 
             # Stage non type formateur: Si mode de financemt non sélectionné alors que 1ere saisie de la fiche renseignemnt
             if self.drop_down_fi.selected_value is None and self.first_entry is True: 
-                alert("Vous devez sélectionner un mode de financement !")
+                AlertHTML.error("Mode de Financemnet :", "Entrez le mode de financement !")
                 return
 
         
         if self.check_box_accept_data_use.checked is not True:
             r = AlertConfirmHTML.ask(
                 "RGPD: ",
-                "<p>Voulez-vous valider l'utilisation de vos données par AMsport ?</p>",
+                "Voulez-vous valider l'utilisation de vos données par AMsport ?",
                 style="info",
                 large = True
             )
@@ -209,7 +210,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
         mail = self.text_box_mail.text.lower()
         result = Mail_valideur.is_valid_email(mail)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
         if result is False:
-            alert("Le mail n'a pas le bon format !")
+            AlertHTML.error("Adresse mail :", "L'adresse mail contient une erreur !")
             self.text_box_mail.focus()
             return
             

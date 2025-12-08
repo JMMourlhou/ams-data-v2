@@ -5,6 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from .. AlertHTML import AlertHTML
 
 class z_user_pw_reset(z_user_pw_resetTemplate):
     def __init__(self,email, api_key, **properties):

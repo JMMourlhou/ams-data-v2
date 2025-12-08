@@ -6,7 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Mail_valideur  # pour button_export_xls_click
-
+from .. AlertHTML import AlertHTML
 
 class z_user_login(z_user_loginTemplate):
     def __init__(self, **properties):
@@ -28,7 +28,7 @@ class z_user_login(z_user_loginTemplate):
         # --------------------------------Tests sur mail
         # mail vide ?
         if self.email_box.text == "":
-            alert("Entrez votre mail svp !")
+            AlertHTML.info("Oublie :", "Entrez votre mail !")
             return
         # mail en minuscule    et strip
         mel = self.email_box.text
@@ -36,14 +36,16 @@ class z_user_login(z_user_loginTemplate):
         mel = mel.strip()
         self.email_box.text = mel
 
-        # @ ds mail ?
-        if "@" not in self.email_box.text:
-            alert("Entrez un mail valide !")
+        # Mail format validation
+        result = Mail_valideur.is_valid_email(mel)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
+        if result is False:
+            AlertHTML.error("Adresse Mail :", "Mail erroné !")
             self.email_box.focus()
             return
-        # --------------------------------Tests sur mot de passe   
+            
+        # Tests sur mot de passe   
         if self.password_box.text == "":
-            alert("Entrez le mot de passe svp !")
+            AlertHTML.info("Oublie :", "Entrez votre Mot de Passe !")
             self.password_box.focus()
             return   
         # ------------------------------------------------------------   VALIDATION 
@@ -55,14 +57,12 @@ class z_user_login(z_user_loginTemplate):
         except anvil.users.EmailNotConfirmed:
             alert("Votre mail n'est pas encore confirmé! Nous vous envoyons un nouveau lien par mail !")
             if anvil.server.call('_send_email_confirm_link', self.email_box.text):
-                alert(f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
+                AlertHTML.info("Confirmation de votre mail :", f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
                 open_form('Main',99)   #je retourne et efface l'url
         except anvil.users.AuthenticationFailed as e:
             #alert(f"Erreur:\n\n{e}")
-            alert("Adresse email ou Mot de Passe erroné !",title="Erreur")
+            AlertHTML.error("Erreur :", "Email ou Mot de Passe erroné !")
             return
-
-    
 
     def reset_pw_link_click(self, **event_args):
         """This method is called when the link is clicked"""
@@ -70,7 +70,7 @@ class z_user_login(z_user_loginTemplate):
         # --------------------------------Tests sur mail
         # mail vide ?
         if self.email_box.text == "":
-            alert("Entrez votre mail svp !")
+            AlertHTML.info("Oublie :", "Entrez votre mail !")
             self.email_box.focus()
             return
             
@@ -83,12 +83,12 @@ class z_user_login(z_user_loginTemplate):
         # Mail format validation
         result = Mail_valideur.is_valid_email(mel)    # dans module Mail_valideur, fonction appelée 'is_valid_email'
         if result is False:
-            alert("Le mail n'a pas le bon format !")
+            AlertHTML.error("Adresse Mail :", "Mail erroné !")
             self.email_box.focus()
             return
 
         if anvil.server.call('_send_password_reset', self.email_box.text):
-            alert(f"Un mail de réinitilisation du mot de passe vous a été envoyé à {self.email_box.text}.")
+            AlertHTML.info("Réinitialisation du Mot de Passe :", f"Un mail de réinitilisation vous a été envoyé à {self.email_box.text}.")
             open_form('Main',99)     #je retourne et efface l'url
 
     def email_box_pressed_enter(self, **event_args):

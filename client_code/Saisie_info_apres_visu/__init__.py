@@ -109,12 +109,17 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             
         if self.user['role'] == "S":
             if self.date_naissance.date is None :           # dateN vide ?
-                AlertHTML.error("error", "Entrez la date de Naissance !")
+                AlertHTML.error("Erreur :", "Entrez la date de Naissance !")
                 return
             if self.text_box_ville_naissance.text == "" :    # ville N vide ?
-                AlertHTML.error("error", "Entrez la ville de Naissance !")
+                AlertHTML.error("Erreur :", "Entrez la ville de Naissance !")
                 return
                 
+        # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
+        if self.text_box_cp_naissance.text == "" or len(self.text_box_cp_naissance.text)!=5:
+            AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez le Code Postal de naissance exacte!\n\n Si vous êtes né à l'étranger, entrez 99999")
+            return
+        
         # il y a eu un changement du role de l'admin au cours de la maj de cette fiche         
         if self.user['role'] == "A" and self.stagiaire['role'] == "A" and self.text_box_role.text != "A":    # L'utilisateur est l'admin et il traite sa propre fiche
             r = alert(
@@ -124,7 +129,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             )
             if not r:  # non
                 self.text_box_role.text = 'A'
-
+        
         # Deux tests sur le mail: Mail format & MAIL EXISTE DEJA ? (il a peut être été modifié):
         
         # 1-Test mail au bon format ?

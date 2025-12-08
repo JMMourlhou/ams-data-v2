@@ -10,7 +10,6 @@ from anvil.tables import app_tables
 import anvil.server
 
 @anvil.server.callable
-@anvil.tables.in_transaction
 def modify_users_after_trombi(mel,
                      mail_modif,                
                      nom,
@@ -32,7 +31,6 @@ def modify_users_after_trombi(mel,
     # finding the stagiaire's row 
     
     row = app_tables.users.get(email=mel)
-    
     try:
         row.update(email=mail_modif,
                 nom=nom,
