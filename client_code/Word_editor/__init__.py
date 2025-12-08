@@ -20,21 +20,28 @@ class Word_editor(Word_editorTemplate):
 
         # Anvil initialisation
         self.init_components(**properties)
-
+        
         # Responsive UI (small screens → menus on sides)
-        if window.innerWidth < 800:
+        if window.innerWidth < 450:
             self.column_panel_menu1.visible = False
             self.column_panel_menu2.visible = False
             self.column_panel_menu1_left.visible = True
             self.column_panel_menu2_right.visible = True
             self.button_validation.visible = False
-            self.html_part_1.width = 500
+            self.html_part_1.width = 250
+        elif window.innerWidth < 800:
+            self.column_panel_menu1.visible = False
+            self.column_panel_menu2.visible = False
+            self.column_panel_menu1_left.visible = True
+            self.column_panel_menu2_right.visible = True
+            self.button_validation.visible = False
+            self.html_part_1.width = 650
         else:
             self.column_panel_menu1.visible = True
             self.column_panel_menu2.visible = True
             self.column_panel_menu1_left.visible = False
             self.column_panel_menu2_right.visible = False
-
+        #alert(window.innerWidth)
         # Titles used for PDF export
         self.top_ligne_1 = top_ligne_1
         self.top_ligne_2 = top_ligne_2

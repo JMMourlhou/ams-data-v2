@@ -71,8 +71,8 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
                                                         )
         self.repeating_panel_1.visible = True
         self.repeating_panel_1.items = liste_mails
-        #for mail in liste_mails:
-        #    self.column_panel_content.add_component(Mail_model(mail['mail_subject'], mail['mail_text'], mail.get_id(), self.ref_model, self.emails_liste))
+        
+        self.content_panel.clear()  #effacement du content_panel
 
         self.column_panel_detail.visible = False
         self.file_loader_attachments.visible = True

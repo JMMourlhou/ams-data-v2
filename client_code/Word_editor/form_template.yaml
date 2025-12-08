@@ -320,7 +320,7 @@ components:
               margin: ['0', null, '0', null]
             text: ''
           type: Button
-        layout_properties: {width: 66.14550729980468}
+        layout_properties: {width: 52.10440261230468}
         name: column_panel_menu1_left
         properties:
           background: theme:On Primary Container
@@ -328,7 +328,7 @@ components:
           col_widths: '{}'
           role: outlined-card
           spacing:
-            margin: ['0', null, null, '4']
+            margin: ['0', null, null, '1']
             padding: ['5', '0', '5', '0']
           wrap_on: never
         type: ColumnPanel
@@ -440,7 +440,7 @@ components:
               margin: ['20', null, '15', null]
             text: ''
           type: Button
-        layout_properties: {width: 89.617715234375}
+        layout_properties: {width: 71.2774955078125}
         name: column_panel_menu2_right
         properties:
           background: theme:On Primary Container
@@ -448,8 +448,8 @@ components:
           col_widths: '{"BVABPF":5,"NXKMZC":5,"LODXKW":30}'
           role: outlined-card
           spacing:
-            margin: ['1', null, null, null]
-            padding: ['0', '10', '0', '10']
+            margin: ['1', '1', null, null]
+            padding: ['0', '1', '0', '1']
           wrap_on: never
         type: ColumnPanel
       layout_properties: {grid_position: 'YUAOHO,NFXANV'}
