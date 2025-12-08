@@ -1385,15 +1385,36 @@ h4.modal-title.alert-title {
 }
 
 /* ==========================================================================
-CENTRAGE DU BOUTON OK (structure réelle Anvil)
+ALIGNEMENT HORIZONTAL DES BOUTONS (OK / OUI / NON)
 ========================================================================== */
 
-/* Le conteneur principal doit prendre toute la largeur */
 .modal-dialog .modal-footer .html-templated-panel {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;   /* ou flex-end */
+    align-items: center !important;
+    gap: 12px !important;
+
     width: 100% !important;
-    display: block !important;
-    text-align: center !important;    /* centre tout son contenu */
+    text-align: center !important; /* ok, n'affecte pas le flex */
 }
+
+/* Chaque wrapper autour d’un bouton (les div align-center) */
+.modal-dialog .modal-footer .html-templated-panel > div {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* Boutons eux-mêmes */
+.modal-dialog .modal-footer .html-templated-panel button {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
 
 /* Le sous-conteneur doit aussi centrer son contenu */
 .modal-dialog .modal-footer .align-center {
@@ -1501,6 +1522,8 @@ BOUTONS OUI / NON — MODE SUCCESS (vert)
     background: #a80000 !important;
     border-color: #a80000 !important;
 }
+
+
 
 
 

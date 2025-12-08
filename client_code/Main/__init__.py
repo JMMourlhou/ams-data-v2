@@ -529,8 +529,10 @@ class Main(MainTemplate):
             content=rt,
             title="Alerte avec RichText et HTML",
             large=True,
-            buttons=["OK"]
+            buttons=["essai"]
         )
+
+        
 
 
 
