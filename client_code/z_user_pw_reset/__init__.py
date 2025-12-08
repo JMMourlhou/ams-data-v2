@@ -23,19 +23,19 @@ class z_user_pw_reset(z_user_pw_resetTemplate):
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
         if self.password_box.text == "":
-            alert("Entrez un mot de passe !")
+            AlertHTML.info("Oublie :", "Entrez votre Mot de Passe !")
             return
         if self.password_repeat_box.text == "":
-            alert("Entrez 2 fois le mot de passe !")
+            AlertHTML.info("Oublie :", "Entrez votre Mot de Passe une 2eme fois !")
             return         
         # si 2 pass words identiques
         if self.password_box.text == self.password_repeat_box.text:
             r=anvil.server.call("_perform_password_reset",self.email, self.api_key, self.password_box.text)
             if r:
-                alert("Vous pouvez vous connecter avec le nouveau mot de passe !")
+                AlertHTML.success("Succès ! ", "Vous pouvez vous connecter avec le nouveau Mot de Passe !")
                 self.button_retour_click()
         else:
-            alert("Les mots de passe sont différents !")
+            AlertHTML.error("Erreur :", "Les Mots de Passe sont différents !")
             return
 
     def button_retour_click(self, **event_args):
