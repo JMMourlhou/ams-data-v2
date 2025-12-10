@@ -153,15 +153,6 @@ class Parametres(ParametresTemplate):
         from ..Files_MAJ_Table import Files_MAJ_Table
         open_form('Files_MAJ_Table')
 
-    def button_types_mails_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        alert("à implémenter !")
-
-    def button_connections_actives_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        liste_connections = anvil.server.call("get_sessions_actives")
-        if len(liste_connections) > 1:
-            alert(liste_connections)
 
 
    

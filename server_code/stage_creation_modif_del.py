@@ -110,37 +110,45 @@ def add_stage(code_stage,     # row codes_stage concernée
              ):
     #print("lieu: ",lieu)         
     numero=int(numero)   
-    new_row=app_tables.stages.add_row(
-                              type_stage = code_stage['type_stage'],   # copie du type de stage, S,F,V,T
-                              code = code_stage,
-                              code_txt = code_stage['code'],
-                              numero = numero,
-                              lieu = lieu_stage,
-                              date_debut = date_debut,
-                              nb_stagiaires_deb = 0,
-                              date_fin = date_fin,
-                              nb_stagiaires_fin = None,
-                              nb_stagiaires_diplomes = None,
-                              commentaires = commentaires,
-                              allow_bgt_generation = False,
-                              saisie_satisf_ok = False,     # Ne pas saisir le form de stisfaction
-                              num_pv = pv,                  # Num de pv 
-                              satis_dico1_q_ferm=code_stage["satisf_q_ferm_template"],  # copie du template satisf de la table "code_stages", questions fermées
-                              satis_dico2_q_ouv=code_stage["satisf_q_ouv_template"],     # copie du template satisf de la table "code_stages", questions ouvertes
-                              suivi_dico1_q_ferm=code_stage["suivi_stage_q_ferm_template"],  # copie du template suivi de la table "code_stages", questions fermées
-                              suivi_dico2_q_ouv=code_stage["suivi_stage_q_ouv_template"],    # copie du template suivi de la table "code_stages", questions ouvertes
-                              com_ouv=code_stage["com_ouv"],                              # copie du template com de la table "code_stages", questions ouvertes
-                              com_ferm=code_stage["com_ferm"]                             # copie  du template com de la table "code_stages", questions fermées
-                             )
-        
+    try:
+        new_row=app_tables.stages.add_row(
+                                type_stage = code_stage['type_stage'],   # copie du type de stage, S,F,V,T
+                                code = code_stage,
+                                code_txt = code_stage['code'],
+                                numero = numero,
+                                lieu = lieu_stage,
+                                date_debut = date_debut,
+                                nb_stagiaires_deb = 0,
+                                date_fin = date_fin,
+                                nb_stagiaires_fin = None,
+                                nb_stagiaires_diplomes = None,
+                                commentaires = commentaires,
+                                allow_bgt_generation = False,
+                                saisie_satisf_ok = False,     # Ne pas saisir le form de stisfaction
+                                num_pv = pv,                  # Num de pv 
+                                satis_dico1_q_ferm=code_stage["satisf_q_ferm_template"],  # copie du template satisf de la table "code_stages", questions fermées
+                                satis_dico2_q_ouv=code_stage["satisf_q_ouv_template"],     # copie du template satisf de la table "code_stages", questions ouvertes
+                                suivi_dico1_q_ferm=code_stage["suivi_stage_q_ferm_template"],  # copie du template suivi de la table "code_stages", questions fermées
+                                suivi_dico2_q_ouv=code_stage["suivi_stage_q_ouv_template"],    # copie du template suivi de la table "code_stages", questions ouvertes
+                                com_ouv=code_stage["com_ouv"],                              # copie du template com de la table "code_stages", questions ouvertes
+                                com_ferm=code_stage["com_ferm"]                             # copie  du template com de la table "code_stages", questions fermées
+                                )
+    except Exception as e:
+        valid=False
+        return e
                  
     stage = app_tables.stages.search(numero=new_row['numero'])
     if len(stage)>0:
-        valid=True
+        
         #incrément du compteur de stages
         num = app_tables.cpt_stages.search()[0]
         cpt=int(num['compteur'])+1 
-        num.update(compteur=cpt)
+        try:
+            num.update(compteur=cpt)
+            valid=True
+        except Exception as e:
+            valid=False
+            return e
     else:
         valid=False
     return valid
@@ -249,15 +257,23 @@ def del_stage(row_id, stage_num):   # row id du stage à annuler, numéro du sta
     #lecture du row du stage:
     stage_row = app_tables.stages.get_by_id(row_id)
     if stage_row:
-        stage_row.delete()
-        result = True
-       
+        try:
+            stage_row.delete()
+            result = True
+        except Exception as e:
+            return e
+            
         #décrément du compteur de stages si c'est le dernier stage créé
         cpt_num_stage_row = app_tables.cpt_stages.search()[0]
         if stage_num ==  cpt_num_stage_row['compteur']:
             cpt=int(cpt_num_stage_row['compteur'])-1 
-            cpt_num_stage_row.update(compteur=cpt)
-    return result
+            try:
+                cpt_num_stage_row.update(compteur=cpt)
+                result = True
+                
+            except Exception as e:
+                return e   
+        return result
 
 # Appelé par Stage_visu_modif   
 # Sauve le fichier pdf des diplomes

@@ -10,6 +10,8 @@ from anvil import open_form
 from ...Pre_R_pour_stagiaire_admin import Pre_R_pour_stagiaire_admin
 from ...Recherche_stagiaire_v3 import Recherche_stagiaire_v3
 from ... import Mail_valideur  # pour button_export_xls_click
+from ...AlertHTML import AlertHTML
+from ...AlertConfirmHTML import AlertConfirmHTML
 
 #import anvil.js    # pour screen size
 from anvil.js import window # to gain access to the window object, validation du mail saisi
@@ -112,9 +114,9 @@ class RowTemplate3(RowTemplate3Template):
         """This method is called when the button is clicked"""
         num_stage = self.text_box_1.text
         if num_stage != "1003":
-            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1)   # par défaut 2 secondes
+            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1.5)   # par défaut 2 secondes
         else:
-            n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
+            n = Notification("Recherchez le Tuteur à inscrire", timeout=1.5)   # par défaut 2 secondes
         n.show()
         open_form('Recherche_stagiaire_v3',num_stage)
 
@@ -139,16 +141,21 @@ class RowTemplate3(RowTemplate3Template):
         # Stagiaires ds le stage ?
         liste_test = app_tables.stagiaires_inscrits.search(numero=self.item['numero'])
         if len(liste_test) == 0:
-            r=alert("Voulez-vous vraiment effacer ce stage ?",dismissible=False,buttons=[("oui",True),("non",False)])
-            if r :   # oui
+            r = AlertConfirmHTML.ask(
+                "Effacement de Stage :",
+                "Voulez-vous vraiment effacer ce stage ?",
+                style="error",
+                large = True
+            )
+            if r:  # oui
                 # acquistion du row id pour éviter les erreurs 
                 row_id = self.item.get_id()
                 result = anvil.server.call('del_stage',row_id, self.item['numero'] )
             if result is True:
-                alert("Stage annulé !")
+                AlertHTML.success("Succès", "Stage annulé !")
                 open_form('Visu_stages')
             else:
-                alert("Stage non trouvé, annulation impossible")
+                AlertHTML.error("Erreur", f"Stage non annulé !\n\n {result}")
         else:
             msg = f"{str(self.item['numero'])} {self.item['code']['code']}"
             alert(f"Ce stage {msg} contient {len(liste_test)} stagiaires, vous ne pouvez pas l'annuler !")    

@@ -1,14 +1,14 @@
 from ._anvil_designer import Stage_creationTemplate
 from anvil import *
-
 import anvil.server
-
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from datetime import datetime
 from anvil import open_form
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class Stage_creation(Stage_creationTemplate):
     def __init__(self, **properties):
@@ -42,7 +42,7 @@ class Stage_creation(Stage_creationTemplate):
         """This method is called when the selected date changes"""
         date1 = self.date_picker_to.date
         date2 = self.date_picker_from.date
-        if date2 == None:  # 1ere date vide
+        if date2 is None:  # 1ere date vide
             alert("La date de fin est inférieure à la date de début !")
             self.date_picker_from.focus()
         if date1 < date2 :
@@ -96,9 +96,9 @@ class Stage_creation(Stage_creationTemplate):
                                                 self.text_box_pv.text
                                                  )
         if result is True :
-            alert("Stage enregisté !")
+            AlertHTML.success("Succès", "Stage créé !")
         else :
-            alert("Stage non enregisté !")
+            AlertHTML.error("Erreur", "Stage non créé !")
         self.button_annuler_click()
 
     def button_qr_code_display_click(self, **event_args):
