@@ -98,7 +98,7 @@ class Stage_creation(Stage_creationTemplate):
         if result is True :
             AlertHTML.success("Succès", "Stage créé !")
         else :
-            AlertHTML.error("Erreur", "Stage non créé !")
+            AlertHTML.error("Erreur", f"Stage non créé !\n\n {result}")
         self.button_annuler_click()
 
     def button_qr_code_display_click(self, **event_args):
