@@ -117,7 +117,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                 
         # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
         if self.text_box_cp_naissance.text == "" or len(self.text_box_cp_naissance.text)!=5:
-            AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez le Code Postal de naissance exacte!\n\n Si vous êtes né à l'étranger, entrez 99999")
+            AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez le Code Postal de naissance exacte!<br><br> Si vous êtes né à l'étranger, entrez 99999")
             return
         
         # il y a eu un changement du role de l'admin au cours de la maj de cette fiche         
@@ -296,14 +296,14 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             list = app_tables.stagiaires_inscrits.search(user_email=self.stagiaire)
             detail =""
             for stage in list:
-                detail=detail+str(stage['numero'])+"  "
+                detail=detail+str(stage['numero'])+" "
 
             nb_stages = len(list)
             if nb_stages != 0:
                 txt="stage"
                 if nb_stages > 1:
                     txt = "stages"
-                alert(f"Effacement impossible:\nCette personne est inscrite dans {nb_stages} {txt}\n\n Détail:\n{txt} N°{detail}")
+                alert(f"Effacement impossible:<br>Cette personne est inscrite dans {nb_stages} {txt}<br><br>Détail:<br>{txt} N°{detail}")
                 self.button_histo_click()   # visu de l'histo du stagiaire
                 return
             # Effact de la personne si confirmation

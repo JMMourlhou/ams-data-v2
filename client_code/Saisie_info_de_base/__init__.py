@@ -153,7 +153,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 
             # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
             if self.text_box_c_naissance.text == "" or len(self.text_box_c_naissance.text)!=5:
-                AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez votre Code Postal de naissance !\n\n Si vous êtes né à l'étranger, entrez 99999")
+                AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez votre Code Postal de naissance !<br><br> Si vous êtes né à l'étranger, entrez 99999")
                 return
                 
             

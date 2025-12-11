@@ -155,7 +155,7 @@ class RowTemplate3(RowTemplate3Template):
                 AlertHTML.success("Succès", "Stage annulé !")
                 open_form('Visu_stages')
             else:
-                AlertHTML.error("Erreur", f"Stage non annulé !\n\n {result}")
+                AlertHTML.error("Erreur", f"Stage non annulé !<br><br> {result}")
         else:
             msg = f"{str(self.item['numero'])} {self.item['code']['code']}"
             alert(f"Ce stage {msg} contient {len(liste_test)} stagiaires, vous ne pouvez pas l'annuler !")    

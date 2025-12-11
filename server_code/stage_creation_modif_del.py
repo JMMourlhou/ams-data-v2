@@ -210,8 +210,7 @@ def modif_stage(row_stage,    # row table stages
                     )
         valid=True
     except Exception as e:
-        print(f"Erreur en modif du stage: {e}")
-        valid=False
+        valid=e
     return valid
 
 # Appelé par Stage_visu_modif, click sur self.check_box_allow_satisf.checked = TRUE

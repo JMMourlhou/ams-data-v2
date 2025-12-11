@@ -10,6 +10,8 @@ from anvil.tables import app_tables
 from .. import French_zone  # pour afficher la date du jour
 from datetime import datetime
 from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 # Change les bt 'apply' en 'Valider' si je veux saisir l'heure en même tps que la date (picktime set à True)
 # VOIR DATE PICKER, SHOW EVENT
@@ -119,7 +121,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             # module pour ajouter les sauts de pages en modif 
             html_list = []
             for p in paragraphs:
-                p2 = p.replace("\n", "<br>")
+                p2 = p.replace("\n", "<br>")  # en HTML \n non reconnu, remplacé par <br>
                 html_list.append(f"<p>{p2}</p>")
             html_text = "".join(html_list)
 
@@ -178,6 +180,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.text_area_mot_clef.text = ""
         if self.type_row["mot_clef_setup"] is True:
             self.text_area_mot_clef.text = f"Réunion du {date}"
+        else:
+            self.text_area_mot_clef.text = self.type_row['type'].capitalize()
         self.call_word_editor(self.type_row["text_initial"]) # Appel du Word Editor avec texte initial (fonction utilisée aussi pour 'modif')
 
     """
@@ -207,16 +211,6 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     # validation:   auto_sov True si sauvegarde auto tte les 15", appelé par timer_2_tick
     def validation(self, auto_sov=False, id=None, html_text="", **event_args):
         """This method is called when the button is clicked"""
-        test_mk = self.text_area_mot_clef.text
-        if (len(test_mk) == 0 and auto_sov is False):  # Vraie validation, test si mot clef vide
-            msg = "Rentrez un mot clef qui vous permettra de retrouver facilement cet évenemnt !\n\nPar ex:\nNom de la personne\nType particulier d'évenement"
-            alert(msg)
-            return
-
-        writing_date_time = (French_zone.french_zone_time())  # now est le jour/h actuelle (datetime object)
-        row_lieu = self.drop_down_lieux.selected_value
-        lieu_txt = row_lieu["lieu"]
-
         if self.mode == "creation":
             type_row = self.drop_down_event.selected_value
             type_evenement = type_row["type"]  # reunion/entretien/incident ...
@@ -225,10 +219,24 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             type_evenement = self.to_be_modified_row["type_event"]
 
         row = app_tables.event_types.get(type=type_evenement)
+
+        
+        # Vraie validation, test si mot clef vide
+        if (len(self.text_area_mot_clef.text) == 0 and auto_sov is False):  
+            mk_temp = row['type']
+            msg = f"Le mot clef temporaire '{mk_temp}' a été créé car il était vide"
+            AlertHTML.info("Oublie :",msg)
+            self.text_area_mot_clef.text = mk_temp
+
         # Il y aura une recherche spéciale (#  wildcard search) sur le 'mot_clef' en Evenements_visu_modif_del
         # enlève les espaces à gauche et droite, sinon, erreur en recherche
         mot_k = self.text_area_mot_clef.text
         mot_k = mot_k.strip()
+  
+        writing_date_time = (French_zone.french_zone_time())  # now est le jour/h actuelle (datetime object)
+        row_lieu = self.drop_down_lieux.selected_value
+        lieu_txt = row_lieu["lieu"]
+
         date_sov = str(self.date_picker_1.date)
         date_sov = date_sov[0:16]
         date_sov = date_sov.replace("-", " ")
@@ -249,8 +257,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             writing_date_time,  # Date et heure de l'enregistrement
             mot_k,  # Mot clef pour accès rapide en recherche
         )
-        if not result:
-            alert("Evenement non sauvegardé !")
+        if result is not True:
+            AlertHTML.error("Erreur :", f"Evenement non sauvegardé ! <br><br>{result}")
 
         # si la sauvegarde a été effectuée en fin de saisie de l'évenemnt (clique sur Bt 'Valider'), on sort en renvoyant le type d'évenemnt pour initiliser la drop down
         if auto_sov is False:

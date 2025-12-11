@@ -21,20 +21,24 @@ def add_event(id, auto_sov, type_event, row, date_time, lieu_row, lieu_txt, note
     
     #   id = None, indique que c'est une premiere sauvegarde, j'utilise .add_row
     if id is None:
-        new_row=app_tables.events.add_row(  
-                                            auto_sov=auto_sov,      # si c'est une sauvegarde automatique ts les 15 sec, le tag auto_sov est à True
-                                            type_event=type_event,
-                                            event_typ=row,
-                                            date=date_time,
-                                            lieu=lieu_row,
-                                            lieu_text=lieu_txt,
-                                            note=note,
-                                            img1=img_1,
-                                            img2=img_2,
-                                            img3=img_3,
-                                            writing_date_time=writing_date_time,
-                                            mot_clef=mot_clef
-                                        )
+        try:
+            new_row=app_tables.events.add_row(  
+                                                auto_sov=auto_sov,      # si c'est une sauvegarde automatique ts les 15 sec, le tag auto_sov est à True
+                                                type_event=type_event,
+                                                event_typ=row,
+                                                date=date_time,
+                                                lieu=lieu_row,
+                                                lieu_text=lieu_txt,
+                                                note=note,
+                                                img1=img_1,
+                                                img2=img_2,
+                                                img3=img_3,
+                                                writing_date_time=writing_date_time,
+                                                mot_clef=mot_clef
+                                            )
+        except Exception as e:
+            return e, None   # erreur je retourne l'exception et la deuxiemevariable attendue (l'id) à None
+            
         id = new_row.get_id()  # en création de l'évènement, je sauve l'id pour pouvoir le modifier en sauvegrde auto ou sauvegarde finale (bt Validation)
         re_read_row = app_tables.events.get_by_id(id)
         if re_read_row:
@@ -44,24 +48,30 @@ def add_event(id, auto_sov, type_event, row, date_time, lieu_row, lieu_txt, note
         
     # si id = not None, indique qu'il y a déjà eu une sauvegarde: j'utilise update
     if id is not None:
-        re_read_row = app_tables.events.get_by_id(id)
-        if re_read_row:
+        try:
+            re_read_row = app_tables.events.get_by_id(id)
             valid=True
-            re_read_row.update(
-                                auto_sov=auto_sov,      # si c'est une sauvegarde automatique ts les 15 sec, le tag auto_sov est à True
-                                type_event=type_event,
-                                date=date_time,
-                                lieu=lieu_row,
-                                lieu_text=lieu_txt,
-                                note=note,
-                                img1=img_1,
-                                img2=img_2,
-                                img3=img_3,
-                                writing_date_time=writing_date_time,
-                                mot_clef=mot_clef
-                                )
-        else:
-            valid=False
+        except Exception as e:
+            return e, id
+            
+        if re_read_row:
+            try:
+                re_read_row.update(
+                                    auto_sov=auto_sov,      # si c'est une sauvegarde automatique ts les 15 sec, le tag auto_sov est à True
+                                    type_event=type_event,
+                                    date=date_time,
+                                    lieu=lieu_row,
+                                    lieu_text=lieu_txt,
+                                    note=note,
+                                    img1=img_1,
+                                    img2=img_2,
+                                    img3=img_3,
+                                    writing_date_time=writing_date_time,
+                                    mot_clef=mot_clef
+                                    )
+                valid=True
+            except Exception as e:
+                return e, id
     return valid, id
 
 

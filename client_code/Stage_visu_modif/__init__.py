@@ -7,6 +7,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from datetime import datetime
 from .. import French_zone
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class Stage_visu_modif(Stage_visu_modifTemplate):
     def __init__(self, num_stage=0, id=None, bg_task=False, **properties):     # bg_task True: je crée les bg task en entrée de stage visu modif
@@ -55,7 +57,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         if type_row:
             intit = type_row['intitulé']
         else:
-            alert("intitulé du stage non trouvé !")
+            AlertHTML.error("Erreur :","Intitulé du stage non trouvé !")
             return
         
         if self.stage_row:
@@ -94,7 +96,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
                     self.timer_2.interval=0.5
                     """
         else:
-            alert("Stage non trouvé")
+            AlertHTML.error("Erreur :","Stage non trouvé !")
             return
 
     def date_picker_to_change(self, **event_args):
@@ -112,7 +114,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         date1 = self.date_picker_to.date
         date2 = self.date_picker_from.date
         if date1 < date2:
-            alert("La date de fin est inférieure à la date de début !")
+            AlertHTML.error("Erreur :","La date de fin est inférieure à la date de début !")
             self.date_picker_to.focus()
     
     def button_annuler_click(self, **event_args):
@@ -136,14 +138,14 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             return
         row2 = self.drop_down_lieux.selected_value         # Récupération du lieu sélectionné
         if row2 is None:
-            alert("Entrez le lieu du stage")
+            AlertHTML.info("Oublie :","Entrez le lieu du stage !")
             return
 
         if self.date_picker_to.date is None :           # dates vides ?
-            alert("Entrez la date de fin du stage")
+            AlertHTML.info("Oublie :","Entrez la date de fin du stage")
             return
         if self.date_picker_from.date is None :
-            alert("Entrez la date de début du stage")
+            AlertHTML.info("Oublie :","Entrez la date de début du stage")
             return
 
         # Test si numero stage est nouveau, il ne faut pas qu'il soit un numéro d'un stage déjà existant
@@ -158,7 +160,7 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             id2 = stage.get_id() # j'extraie son id
             # est-ce le même ?
             if self.id != id2:
-                alert("Ce numéro de stage existe déja !")
+                AlertHTML.error("Erreur :","Ce numéro de stage existe déjà !")
                 self.button_validation.visible = False
                 return
                 
@@ -180,12 +182,12 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
                                                 self.text_box_pv.text
                                                  )
         if result is True :
-            alert("Stage mis à jour !")
+            AlertHTML.success("Succès :","Stage mis à jour !")
             #open_form(self.f)
             from ..Visu_stages import Visu_stages
             open_form("Visu_stages")
         else :
-            alert("Stage non modifié !")
+            AlertHTML.error("Erreur :",f"Stage non modifié !<br><br>{result}")
             self.button_validation.visible = False
             return
 
@@ -221,12 +223,15 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             # lecture de table mère 'code_stage' pour verif si un dict template existant
             code_stage_row = app_tables.codes_stages.get(code=self.stage_row['code']['code'])
             if code_stage_row['satisf_q_ferm_template'] != {}:
-                r=alert(f"Voulez-vous authoriser l'utilisation du formulaire de satisfaction {self.stage_row['code']['code']} existant pour les stagiaires de ce stage ?", dismissible=False ,buttons=[("oui",True),("non",False)])
+                r = AlertConfirmHTML.ask("Formulaire de Satisfaction :",
+                                         f"Voulez-vous authoriser l'utilisation de ce formulaire {self.stage_row['code']['code']} existant pour les stagiaires de ce stage ?",
+                                         style="info",
+                                         large = True)
                 if r :   # Oui
                     # copie du formulaire de satisfaction de table code_stages vers la table stage pour ce stage
                     anvil.server.call("update_satisf_pour_un_stage",self.stage_row, code_stage_row['satisf_q_ouv_template'], code_stage_row['satisf_q_ferm_template'])
             else:
-                alert(f"Attention, pas de formulaire de satisfaction {self.stage_row['code']['code']} encore créé !\n\nCréez d'abord un formulaire de satisfaction pour ce type de stage (Dans les Paramètres)")
+                AlertHTML.error("Erreur :",f"Attention, pas de formulaire de satisfaction {self.stage_row['code']['code']} existant, <br><br> Créez d'abord un formulaire de satisfaction pour ce type de stage (Dans les Paramètres)")
                 self.check_box_allow_satisf.checked = False
                 self.button_validation.visible = False
                 return
@@ -241,12 +246,16 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             # lecture de table mère 'code_stage' pour verif si un dict template existant
             code_stage_row = app_tables.codes_stages.get(code=self.stage_row['code']['code'])
             if code_stage_row['suivi_stage_q_ferm_template'] != {}:
-                r=alert(f"Voulez-vous authoriser l'utilisation du formulaire de suivi {self.stage_row['code']['code']} existant pour les stagiaires de ce stage ?", dismissible=False ,buttons=[("oui",True),("non",False)])
+                r = AlertConfirmHTML.ask("Formulaire de Suivi :",
+                                         f"Voulez-vous authoriser l'utilisation de ce formulaire {self.stage_row['code']['code']} existant pour les stagiaires de ce stage ?",
+                                         style="info",
+                                         large = True)
                 if r :   # Oui
                     # copie du formulaire de suivi de table code_stages vers la table stage pour ce stage
                     anvil.server.call("update_suivi_pour_un_stage",self.stage_row, code_stage_row['suivi_stage_q_ouv_template'], code_stage_row['suivi_stage_q_ferm_template'])
             else:
-                alert(f"Attention, pas de formulaire de suivi {self.stage_row['code']['code']} encore créé !\n\nCréez d'abord un formulaire de suivi pour ce type de stage (Dans les Paramètres)")
+                
+                AlertHTML.error("Erreur :",f"Attention, pas de formulaire de suivi {self.stage_row['code']['code']} existant, <br><br> Créez d'abord un formulaire de suivi pour ce type de stage (Dans les Paramètres)")
                 self.check_box_allow_suivi.checked = False
                 self.button_validation.visible = False
                 return
@@ -261,12 +270,15 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             # lecture de table mère 'code_stage' pour verif si un dict template existant
             code_stage_row = app_tables.codes_stages.get(code=self.stage_row['code']['code'])
             if code_stage_row['com_ferm'] != {}:
-                r=alert(f"Voulez-vous authoriser l'utilisation du formulaire de communication {self.stage_row['code']['code']} existant pour les stagiaires de ce stage ?", dismissible=False ,buttons=[("oui",True),("non",False)])
+                r = AlertConfirmHTML.ask("Formulaire de Communication :",
+                                         f"Voulez-vous authoriser l'utilisation de ce formulaire {self.stage_row['code']['code']} existant pour les stagiaires de ce stage ?",
+                                         style="info",
+                                         large = True)
                 if r :   # Oui
                     # copie du formulaire de communication de table code_stages vers la table stage pour ce stage
                     anvil.server.call("update_com_pour_un_stage",self.stage_row, code_stage_row['com_ouv'], code_stage_row['com_ferm'])
             else:
-                alert(f"Attention, pas de formulaire de communication {self.stage_row['code']['code']} encore créé !\n\nCréez d'abord un formulaire de com pour ce type de stage (Dans les Paramètres)")
+                AlertHTML.error("Erreur :",f"Attention, pas de formulaire de communication {self.stage_row['code']['code']} eexistant, <br><br> Créez d'abord un formulaire de com pour ce type de stage (Dans les Paramètres)")
                 self.check_box_allow_com.checked = False 
                 self.button_validation.visible = False
                 return
@@ -327,9 +339,9 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         """This method is called when the button is clicked"""
         num_stage = self.text_box_num_stage.text
         if num_stage != "1003":
-            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1)   # par défaut 2 secondes
+            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1.5)   # par défaut 2 secondes
         else:
-            n = Notification("Recherchez le Tuteur à inscrire", timeout=1)   # par défaut 2 secondes
+            n = Notification("Recherchez le Tuteur à inscrire", timeout=1.5)   # par défaut 2 secondes
         n.show()
         open_form('Recherche_stagiaire_v3',num_stage)
 

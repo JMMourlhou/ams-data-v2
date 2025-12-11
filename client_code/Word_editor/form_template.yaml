@@ -98,7 +98,7 @@ components:
         properties:
           background: theme:On Primary Container
           col_spacing: none
-          col_widths: '{"FSKSTQ":9,"FUZKJW":9,"ZYYGVC":9,"MWPNDN":14,"GYYXJZ":11,"DENREJ":11,"FWIZXZ":19,"FVSCIO":5}'
+          col_widths: '{"FSKSTQ":9,"FUZKJW":9,"ZYYGVC":9,"MWPNDN":13,"GYYXJZ":12,"DENREJ":11,"FWIZXZ":15,"NWQJKV":11}'
           role: outlined-card
           spacing:
             padding: ['5', '10', '5', '10']
@@ -183,10 +183,10 @@ components:
                 name: button_download
                 properties: {font_size: 18, foreground: 'theme:Error', icon: 'fa:download', text: ''}
                 type: Button
-              layout_properties: {width: 124.9098248046875}
+              layout_properties: {width: 104.62321630859375}
               name: column_panel_3
               properties:
-                col_widths: '{"ZBGVPJ":33,"BUFEYY":27}'
+                col_widths: '{"ZBGVPJ":31,"BUFEYY":29}'
                 spacing:
                   margin: ['0', null, '0', null]
                 wrap_on: never
@@ -199,7 +199,7 @@ components:
           name: column_panel_menu2
           properties:
             background: theme:On Primary Container
-            col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":6,"OHMNJP":6,"WTRFYJ":5,"RKVMQP":4,"YQFUJN":13,"QXMYJU":18,"VRTOJJ":11}'
+            col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":6,"OHMNJP":6,"WTRFYJ":5,"YQFUJN":12,"QXMYJU":20,"VRTOJJ":10}'
             role: outlined-card
             spacing:
               margin: ['6', null, null, null]
