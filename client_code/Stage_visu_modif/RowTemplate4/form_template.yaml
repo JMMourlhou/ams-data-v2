@@ -179,7 +179,7 @@ components:
         underline: false
         visible: false
       type: Button
-    - event_bindings: {click: bt_delete}
+    - event_bindings: {click: button_delete_click}
       layout_properties: {}
       name: button_delete
       properties: {align: center, background: 'theme:Tertiary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Primary', icon: 'fa:minus-circle', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}

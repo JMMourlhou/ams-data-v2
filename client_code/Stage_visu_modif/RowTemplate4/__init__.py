@@ -1,12 +1,12 @@
 from ._anvil_designer import RowTemplate4Template
 from anvil import *
-
 import anvil.server
-
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from ...AlertHTML import AlertHTML
+from ...AlertConfirmHTML import AlertConfirmHTML
 
 class RowTemplate4(RowTemplate4Template):
     def __init__(self, **properties):
@@ -20,7 +20,7 @@ class RowTemplate4(RowTemplate4Template):
         screen_size = window.innerWidth
         #print("screen: ", screen_size)
 
-        if screen_size >= 700:
+        if screen_size >= 650:
             self.text_box_3.font_size = 18
             self.text_box_tel.font_size = 1
             self.text_box_mail.font_size = 18
@@ -88,7 +88,7 @@ class RowTemplate4(RowTemplate4Template):
             stagiaire_row = self.item['user_email']
             stage_num = self.item['numero']
             txt_msg = anvil.server.call("del_stagiaire", stagiaire_row, stage_num)   # module serveur "add_stagiaire"
-            alert(txt_msg)
+            AlertHTML.error("Erreur :", txt_msg)
             # réaffichage par initialisation de la forme mère 
             id=self.item['stage'].get_id()
             open_form('Stage_visu_modif', self.item['numero'], id) # réinitialisation de la fenêtre
@@ -99,7 +99,12 @@ class RowTemplate4(RowTemplate4Template):
         sov = self.check_box_form_satis.checked
         
         if self.check_box_form_satis.checked is False:
-            r=alert("ATTENTION ! Le ou les formulaire(s) de satisfaction du stagiaire vont être annulés.\n\nConfirmez svp ! ",dismissible=False,buttons=[("Non",False),("Oui",True)])
+            r = AlertConfirmHTML.ask(
+                "Annulation d'un ou plusieurs formulaires de SATISFACTION:",
+                "ATTENTION ! Le ou les formulaire(s) du stagiaire vont être annulés.\n\nConfirmez svp !",
+                style="error",
+                large = True
+            )
             if not r :   #non
                 if sov is False: # je remets à True
                     self.check_box_form_satis.checked = True
@@ -109,13 +114,13 @@ class RowTemplate4(RowTemplate4Template):
         stagiaire_row=self.item    # formulaire de satisf rempli T/F
         valid_1, valid_2 = anvil.server.call("init_formulaire_satis_stagiaire", stagiaire_row, self.check_box_form_satis.checked)   # module serveur "add_stagiaire"
         if valid_1 is False:
-            alert(f"Erreur en modification de l'indicateur du Formulaire de satisf°: {valid_1}")
+            AlertHTML.error("Erreur :",f"Erreur en modification de l'indicateur du Formulaire de satisf°:\n\n {valid_1}")
         if valid_2 == 1: # indicateur est checké, autorisation de saisir des formulaires
-            alert("Le stagiaire peut entrer un ou plusieurs formulaires.")
+            AlertHTML.info("Information :","Le stagiaire peut entrer un ou plusieurs formulaires.")
         elif valid_2 is True:
-            alert("Un ou plusieurs formulaires ont correctement été effacés !")
+            AlertHTML.success("Succès :","Un ou plusieurs formulaires ont correctement été effacés !")
         elif valid_2 == 0:
-            alert("Le stagiaire n'avait pas encore rempli de formulaire")
+            AlertHTML.info("Information :", "Le stagiaire n'avait pas encore rempli de formulaire")
             
     def check_box_form_suivi_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
@@ -125,20 +130,25 @@ class RowTemplate4(RowTemplate4Template):
         stagiaire_row=self.item   # formulaire de suivi rempli T/F
         if self.item['numero'] != 1003:
             if self.check_box_form_suivi.checked is False: 
-                    r=alert("ATTENTION ! Le formulaire de suivi du stagiaire va être annulé.\nIl devra le refaire.\n\nConfirmez svp ! ",dismissible=False,buttons=[("Non",False),("Oui",True)])
-                    if not r :   #non
-                        if sov is False: # je remets à True
-                            self.check_box_form_suivi.checked = True
-                        else:
-                            self.check_box_form_suivi.checked = False
-                        return
+                r = AlertConfirmHTML.ask(
+                    "Annulation d'un ou plusieurs formulaires de SUIVI:",
+                    "ATTENTION ! Le ou les formulaire(s) du stagiaire vont être annulés.\n\nConfirmez svp !",
+                    style="error",
+                    large = True
+                )
+            if not r :   #non
+                if sov is False: # je remets à True
+                    self.check_box_form_suivi.checked = True
+                else:
+                    self.check_box_form_suivi.checked = False
+                return
             valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, True)   # on effecera le formulaire 
             if valid is True:
-                alert("Le formulaire a bien été effacé !\n\n Il peut être ré-entré par le stagiaire si nécessaire.")
-        else: # stage 1003, tuteur de MTnoto, je peux effacer le check du formulaire de suivi car chaque année il peut le refaire pour un autre stagiaire
+                AlertHTML.success("Succès :","Le formulaire a bien été effacé !\n\n Il peut être ré-entré par le stagiaire si nécessaire.")
+        else: # stage 1003, tuteur de MTnoto, je peux effacer le check du formulaire de suivi car chaque année il peut le refaire pour un autre stage
             valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, False)   # False, on n'effacera pas les anciens formulaires
             if valid is True:
-                alert("Réinitialisation effectuée au niveau du Tuteur, Le ou les formulaires n'ont pas été effacé(s).")
+                AlertHTML.success("Succès :","Réinitialisation effectuée au niveau du Tuteur, Le ou les formulaires n'ont pas été effacé(s).")
         
     def init_drop_down_mode_fi(self):
         self.f = get_open_form()   # récupération de la forme mère (Stage_visu_modif) ou (Recherche_stagiaire_v3) pour revenir ds la forme appelante
@@ -152,18 +162,19 @@ class RowTemplate4(RowTemplate4Template):
         """This method is called when an item is selected"""
         # sauvegarde du mode de fi si ok 
         nom_p = self.item["name"].capitalize() + " " + self.item["prenom"].capitalize()
-        r = alert(
+        r = AlertConfirmHTML.ask(
+            "Mode de financement",
             f"Voulez-vous vraiment Changer le mode de financement pour {nom_p} ?",
-            dismissible=False,
-            buttons=[("oui", True), ("non", False)],
+            style="error",
+            large = True
         )
         if r:  # oui
             stagiaire_row=self.item   # Changement du mode de fi
             result = anvil.server.call("modif_mode_fi_1_stagiaire", stagiaire_row, self.drop_down_mode_fi.selected_value)
             if result:
-                alert("Modification du mode de financemnt effectuée !")
+                AlertHTML.success("Succès :","Modification du mode de financemnt effectuée !")
             else:
-                alert("Modification du mode de financemnt NON effectuée !")
+                AlertHTML.error("Erreur :",f"Modification du mode de financemnt NON effectuée !\n\n {result}")
         else:
             self.drop_down_mode_fi.selected_value = self.item["financement"]
 
@@ -180,9 +191,9 @@ class RowTemplate4(RowTemplate4Template):
         new_file_named = anvil.BlobMedia("application/pdf", pdf.get_bytes(), name=new_file_name+".pdf")
         if pdf:
             anvil.media.download(new_file_named)
-            alert("Diplôme téléchargé !")
+            AlertHTML.success("Succès :","Diplôme téléchargé !")
         else:
-            alert("Diplôme non trouvé")
+            AlertHTML.error("Erreur :","Diplôme non trouvé !")
 
     def check_box_reussite_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
@@ -201,8 +212,10 @@ class RowTemplate4(RowTemplate4Template):
                 self.button_sending_diplome.visible = True
             
         valid = anvil.server.call("maj_reussite", self.item, self.check_box_reussite.checked) 
-        if valid is False:
-            alert("Maj effectuée !")
+        if valid :
+            AlertHTML.success("Succès :","Maj effectuée !")
+        else :
+            AlertHTML.error("Erreur :",valid)
 
     def button_sending_diplome_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -225,6 +238,10 @@ class RowTemplate4(RowTemplate4Template):
                     alert(f"Diplôme {self.item['stage_txt']} bien envoyé à {self.item['prenom'].capitalize()} {self.item['name'].capitalize()} !")
                 else:
                     alert(result)
+
+    def button_delete_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
 
         
 
