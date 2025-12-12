@@ -265,9 +265,9 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                             pour_stage = 0
                         
                         txt_msg = anvil.server.call("add_stagiaire", user, self.stage, code_fi, "", pour_stage)
-                        alert(txt_msg)
+                        AlertHTML.info("info",txt_msg)
                         anvil.users.logout()
-                        AlertHTML.success("info", "Vous devriez créer un raccourci pour cette application !")
+                        AlertHTML.success("info", "Créez un raccourci pour cette application sur votre portable ou ordinateur!")
                         self.button_retour_click()
             else :
                 AlertHTML.error("Erreur: ", "Fiche de renseignements non enregistée !")

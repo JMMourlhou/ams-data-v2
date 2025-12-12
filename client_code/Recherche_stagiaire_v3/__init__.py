@@ -8,7 +8,8 @@ from anvil.tables import app_tables
 from time import sleep
 from ..Box_types_fi import Box_types_fi
 from ..Box_stages import Box_stages
-
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
     def __init__(self, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
@@ -611,7 +612,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 row = app_tables.users.get(email=self.item['email'])
                 if row:
                     txt_msg = anvil.server.call("del_personne",row)
-                alert(txt_msg)
+                AlertHTML.info("Information :",txt_msg)
             open_form("Recherche_stagiaire_v3")
             
     def button_fiche_click(self, **event_args):

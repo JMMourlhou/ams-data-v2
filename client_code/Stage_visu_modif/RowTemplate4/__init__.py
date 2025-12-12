@@ -81,18 +81,6 @@ class RowTemplate4(RowTemplate4Template):
         self.text_box_3_focus()
 
 
-    def bt_delete(self, **event_args):
-        """This method is called when the button is clicked"""
-        r=alert("Enlever ce stagiaire de ce stage ?",dismissible=False,buttons=[("Non",False),("Oui",True)])
-        if r :   #oui   
-            stagiaire_row = self.item['user_email']
-            stage_num = self.item['numero']
-            txt_msg = anvil.server.call("del_stagiaire", stagiaire_row, stage_num)   # module serveur "add_stagiaire"
-            AlertHTML.error("Erreur :", txt_msg)
-            # réaffichage par initialisation de la forme mère 
-            id=self.item['stage'].get_id()
-            open_form('Stage_visu_modif', self.item['numero'], id) # réinitialisation de la fenêtre
-
     def check_box_form_satis_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         # Sauvegarde du check box au cas ou l'utilisateur répond 'non'
@@ -241,7 +229,21 @@ class RowTemplate4(RowTemplate4Template):
 
     def button_delete_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        r = AlertConfirmHTML.ask(
+            "Retrait d'un stagiaire :",
+            "Enlever ce stagiaire de ce stage ?",
+            style="error",
+            large = True
+        )
+        if r :   #oui   
+            stagiaire_row = self.item['user_email']
+            stage_num = self.item['numero']
+            txt_msg = anvil.server.call("del_stagiaire", stagiaire_row, stage_num)   # module serveur "add_stagiaire"
+            AlertHTML.success("Succès :",txt_msg)
+            # réaffichage par initialisation de la forme mère 
+            id=self.item['stage'].get_id()
+            open_form('Stage_visu_modif', self.item['numero'], id) # réinitialisation de la fenêtre
+
 
         
 

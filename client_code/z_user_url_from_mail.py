@@ -1,12 +1,12 @@
 """ Read the URL sent by the mail link, after a new user signed in or PW reset"""
 from anvil import *   # to load the alert    
-
 import anvil.users
 import anvil.tables as tables
 import anvil.server
 from . import z_user_login_flow
-
 from anvil import open_form
+from .AlertHTML import AlertHTML
+from .AlertConfirmHTML import AlertConfirmHTML
 
 """In a URL, what travels after # is known as hash.
 In an HTTP request that reaches a server (server side)
@@ -61,9 +61,9 @@ def confirm_or_pwreset(h, num_stage=0):
             user=anvil.server.call("search", to_be_confirmed_email, hpw)
             #Displaying the confirm alert 
             msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, rentrez maintenant vos données personnelles."
-            alert(msg)
+            AlertHTML.success("Succès", msg)
         except anvil.users.EmailNotConfirmed:   # pas confirmé ?
-            alert("Votre mail est connu par nos services mais n'est pas confirmé, cliquez le dernier lien envoyé par mail.")
+            AlertHTML.error("Erreur :","Votre mail est connu par nos services mais n'est pas confirmé, cliquez le dernier lien envoyé par mail.")
         except:  #user confirmé
             #alert("Votre mail est déjà confirmé, essayez de vous connecter.")
             pass

@@ -5,11 +5,12 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
 import anvil.js   # pour fermer la fenêtre qd on a demandé à l'utilisateur d'aller ds ses mails pour valider le mail de confirmation
 from anvil.js.window import localStorage
 from anvil.js import window
 from .. import Mail_valideur  # pour button_export_xls_click
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class z_user_new_account(z_user_new_accountTemplate):
     def __init__(self, h={}, num_stage=0, pour_stage=0, x=0, **properties):
@@ -74,7 +75,7 @@ class z_user_new_account(z_user_new_accountTemplate):
             open_form("Main",99)
         else:           #Pas d'erreur, on envoi le mail de confirmation
             if anvil.server.call('_send_email_confirm_link', self.email_box.text):
-                alert(f"Un email de confirmation vous a été envoyé à {self.email_box.text}. Ouvrez-le svp.<br><br>Cette fenêtre devrait se fermer.")
+                AlertHTML.success(" Confirmation de votre mail :",f"Un email de confirmation a été envoyé à l'adresse {self.email_box.text}. Ouvrez-le svp.<br><br>Cette fenêtre va se fermer.")
                 # Déconnecter l'utilisateur 
                 anvil.users.logout()
                 window.close()

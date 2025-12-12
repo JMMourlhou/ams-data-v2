@@ -55,7 +55,7 @@ class z_user_login(z_user_loginTemplate):
             open_form('Main',99)    #x=3 si login normal
             #return_to_mother_app.calling_mother_app(99)    #je retourne et efface l'url
         except anvil.users.EmailNotConfirmed:
-            alert("Votre mail n'est pas encore confirmé! Nous vous envoyons un nouveau lien par mail !")
+            AlertHTML.info("Votre mail n'est pas encore confirmé! Nous vous envoyons un nouveau lien par mail !")
             if anvil.server.call('_send_email_confirm_link', self.email_box.text):
                 AlertHTML.info("Confirmation de votre mail :", f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
                 open_form('Main',99)   #je retourne et efface l'url
