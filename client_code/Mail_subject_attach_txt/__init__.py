@@ -6,7 +6,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.media
-
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 # emails_liste liste des mails
 # ref_model contient lea ref du modele de mail si vient de qcm ou formul satisf ou recherche etc...du permet de court circuiter la drop down du choix du modèle 
@@ -225,11 +226,11 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
                 if nb_mails == 1:
                     msg = "1 mail envoyé"
                 else:
-                    msg = str(nb_mails)+" mails traités"
-                alert(msg)
+                    msg = str(nb_mails)+" mails envoyés"
+                AlertHTML.success("Réussite :", msg)
              
             self.button_retour_click()
-        except:
-            pass
+        except Exception as e:
+            AlertHTML.error("Erreur :", f"Erreur lors d'envoi de mail{e}")
        
         
