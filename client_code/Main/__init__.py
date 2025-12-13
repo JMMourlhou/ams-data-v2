@@ -532,6 +532,10 @@ class Main(MainTemplate):
             buttons=["essai"]
         )
 
+    def button_video_test_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
         
 
 

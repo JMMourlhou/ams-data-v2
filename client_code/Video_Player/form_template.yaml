@@ -1,0 +1,27 @@
+components: []
+container:
+  properties:
+    html: |
+      <video id="vp" style="width:100%; max-height:360px;" controls preload="metadata">
+          <source id="vp_src" src="" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo.
+      </video>
+
+      <script>
+          // Petit helper pour retrouver le player depuis Python
+          window._vp_get = function(root){
+              // root = element DOM du composant Custom HTML
+              return root.querySelector("#vp");
+          }
+          window._vp_set_src = function(root, url){
+              const v = root.querySelector("#vp");
+              const s = root.querySelector("#vp_src");
+              s.src = url || "";
+              v.load();
+          }
+      </script>
+  type: HtmlTemplate
+custom_component: true
+is_package: true
+properties:
+- {default_binding_prop: true, default_value: '""', description: URL de la vidéo, important: true, name: video_url, type: string}
