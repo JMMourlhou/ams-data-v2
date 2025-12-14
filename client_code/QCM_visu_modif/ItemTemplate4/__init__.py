@@ -160,7 +160,6 @@ class ItemTemplate4(ItemTemplate4Template):
         self.label_2.tag.numero = self.item['num']
         self.label_2.tag.nom = "num"
         qst = self.item['question']
-        qst = qst.strip()
         
         if self.mode != "creation":                 # Mode Utilisation
             """
@@ -169,7 +168,15 @@ class ItemTemplate4(ItemTemplate4Template):
             else:  # bareme 1 point
                 self.text_area_question.text = (f"{qst} \n  ({self.item['bareme']} point)")
             """
-            self.text_area_question.content = qst
+            paragraphs = qst.split("\n\n")
+
+            # module pour ajouter les sauts de pages en modif 
+            html_list = []
+            for p in paragraphs:
+                p2 = p.replace("\n", "<br>")  # en HTML \n non reconnu, remplacé par <br>
+                html_list.append(f"<p>{p2}</p>")
+            html_text = "".join(html_list)
+            self.text_area_question.content = html_text
             self.text_area_question.enabled = False
             self.text_box_correction.enabled = False
             self.button_delete.visible = False

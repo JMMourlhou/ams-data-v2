@@ -206,28 +206,27 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         self.rep5.checked = False
         choix = self.drop_down_nb_options.selected_value
         #print(choix, type(choix))
-        question_part1 = """<p style="margin-bottom: 6px; text-align: left; color: rgb(0, 192, 250);">
+        question_part1 = """<!-- Question -->
+                            <p
+                            style="
+                                margin-bottom: 10px;
+                                text-align: left;
+                                font-weight: bold;
+                                color: rgb(0, 192, 250);
+                            "
+                            >
                             <span
                                 style="
                                 background-color: var(--anvil-color-On-Secondary-Container-94f5);
                                 padding: 2px 6px;
                                 border-radius: 4px;
                                 margin-right: 6px;
-                                ">
+                                "
+                            >
                                 Question :
                             </span>
                             Texte de la question ici
                             </p>
-                            
-                            <!-- Séparateur pleine largeur -->
-                            <div
-                            style="
-                                width: 100%;
-                                height: 2px;
-                                background-color: #bbb;
-                                margin: 10px 0;
-                            ">
-                            </div>
                         """
         
         if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
