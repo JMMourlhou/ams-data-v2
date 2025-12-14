@@ -491,6 +491,6 @@ events:
 - {description: 'Every 15 seconds (timer_2),  allows a temp backup of the text  ', name: timer_text_backup}
 is_package: true
 properties:
-- {default_value: '', important: true, name: param1, type: string}
-- {default_value: '', important: true, name: text, type: string}
+- {default_value: '', description: 'Work mode passed: ''modif'' / ''creation''', important: true, name: param1, type: string}
+- {default_value: '', description: HTML text to be passed and displayed in the Word Editor, important: true, name: text, type: string}
 toolbox_item: {hidden: false, title: Word-editor}

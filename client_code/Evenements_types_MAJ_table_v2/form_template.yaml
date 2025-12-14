@@ -82,7 +82,7 @@ components:
 container:
   properties: {col_widths: '{}'}
   type: ColumnPanel
-custom_component: true
+custom_component: false
 events:
 - {description: a button of the row type d'evenement clicked, name: modif}
 is_package: true

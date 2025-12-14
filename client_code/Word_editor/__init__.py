@@ -16,11 +16,11 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     # INITIALISATION # top_ligne_1, top_ligne_2 used for PDF export
     # ====================================================================================
-    def __init__(self, top_ligne_1, top_ligne_2, **properties):
+    def __init__(self, top_ligne_1="", top_ligne_2="", **properties):
 
         # Anvil initialisation
         self.init_components(**properties)
-        
+                
         # Responsive UI (small screens → menus on sides)
         if window.innerWidth < 450:
             self.column_panel_menu1.visible = False

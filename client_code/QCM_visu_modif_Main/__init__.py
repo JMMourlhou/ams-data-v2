@@ -217,6 +217,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
             self.rep4.visible = False
             self.rep5.visible = False
             self.text_box_question.text = "titre\n\nA  .\n\nB  ."
+            self.word_editor_1.text = "titre\n\nA  .\n\nB  ."
         if choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
             self.rep3.visible = True
             self.rep4.visible = False

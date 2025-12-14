@@ -243,14 +243,18 @@ components:
     properties: {background: 'theme:On Primary Container', col_widths: '{"QAOCRN":15,"BESKSH":15}'}
     type: ColumnPanel
   - event_bindings: {change: text_box_question_change}
-    layout_properties: {grid_position: 'OQBWAL,EOAWPD'}
+    layout_properties: {grid_position: 'OQBWAL,EOAWPD ECRLVV,OHJOIY'}
     name: text_box_question
     properties: {align: left, auto_expand: true, background: 'theme:Primary 700', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', height: 82.52047729492188, italic: false, placeholder: Question, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
     type: TextArea
+  - layout_properties: {grid_position: 'OQBWAL,EOAWPD ZNVOGZ,FFOFYC'}
+    name: word_editor_1
+    properties: {}
+    type: form:Word_editor
   - event_bindings: {change: text_box_correction_change}
     layout_properties: {grid_position: 'OQBWAL,KUNSFE'}
     name: text_box_correction
-    properties: {align: left, auto_expand: true, background: 'theme:Secondary 700', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary Container', height: 83.68646240234375, italic: false, placeholder: Correction, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
+    properties: {align: left, auto_expand: true, background: 'theme:Secondary 700', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary Container', height: 660.5841064453125, italic: false, placeholder: Correction, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
     type: TextArea
   - components:
     - event_bindings: {click: button_creer_click}
