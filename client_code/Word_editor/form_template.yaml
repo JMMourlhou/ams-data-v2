@@ -484,6 +484,7 @@ container:
   properties:
     spacing:
       margin: ['0', null, null, null]
+    visible: true
   type: ColumnPanel
 custom_component: true
 events:
@@ -493,4 +494,6 @@ is_package: true
 properties:
 - {default_value: '', description: 'Work mode passed: ''modif'' / ''creation''', important: true, name: param1, type: string}
 - {default_value: '', description: HTML text to be passed and displayed in the Word Editor, important: true, name: text, type: string}
+- {default_value: '', description: Pdf title when button download pressed in Word_Editor Form, important: true, name: top_ligne_1, type: string}
+- {default_value: '', description: Pdf sub title when button download pressed in Word_Editor Form, important: true, name: top_ligne_2, type: string}
 toolbox_item: {hidden: false, title: Word-editor}

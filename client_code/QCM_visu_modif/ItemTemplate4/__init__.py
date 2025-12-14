@@ -169,12 +169,12 @@ class ItemTemplate4(ItemTemplate4Template):
             else:  # bareme 1 point
                 self.text_area_question.text = (f"{qst} \n  ({self.item['bareme']} point)")
             """
-            self.text_area_question.text = qst
+            self.text_area_question.content = qst
             self.text_area_question.enabled = False
             self.text_box_correction.enabled = False
             self.button_delete.visible = False
         else:                                       # Mode Création/MAJ 
-            self.text_area_question.text = qst
+            self.text_area_question.content = qst
             self.text_area_question.enabled = True
             
         self.text_area_question.tag.nom = "question"

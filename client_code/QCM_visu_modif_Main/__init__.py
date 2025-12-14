@@ -15,7 +15,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-        
+        self.word_editor_1.visible = False   # Pour ne pas afficher tout de suite le Word processor
         # ----------------------------------------------------A mettre en BG task: Vérif des qcm_sources en table Qcm desco
         liste_sources = app_tables.qcm_description.search()
         for qcm in liste_sources:
@@ -196,6 +196,8 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
 
     def drop_down_nb_options_change(self, **event_args):
         """This method is called when an item is selected"""
+        
+        
         self.drop_down_menu.visible = False  # effacer le menu si pas fait
         self.rep1.checked = False
         self.rep2.checked = False
@@ -203,13 +205,39 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         self.rep4.checked = False
         self.rep5.checked = False
         choix = self.drop_down_nb_options.selected_value
-        print(choix, type(choix))
+        #print(choix, type(choix))
+        question_part1 = """<p style="margin-bottom: 6px; text-align: left; color: rgb(0, 192, 250);">
+                            <span
+                                style="
+                                background-color: var(--anvil-color-On-Secondary-Container-94f5);
+                                padding: 2px 6px;
+                                border-radius: 4px;
+                                margin-right: 6px;
+                                ">
+                                Question :
+                            </span>
+                            Texte de la question ici
+                            </p>
+                            
+                            <!-- Séparateur pleine largeur -->
+                            <div
+                            style="
+                                width: 100%;
+                                height: 2px;
+                                background-color: #bbb;
+                                margin: 10px 0;
+                            ">
+                            </div>
+                        """
+        
         if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
             self.rep3.visible = False
             self.rep4.visible = False
             self.rep5.visible = False
             self.rep1.text = "Vrai"
             self.rep2.text = "Faux"
+            self.word_editor_1.text = question_part1
+            
         if choix > 1:     # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
             self.rep1.text = "A"
             self.rep2.text = "B"
@@ -217,25 +245,85 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
             self.rep4.visible = False
             self.rep5.visible = False
             self.text_box_question.text = "titre\n\nA  .\n\nB  ."
-            self.word_editor_1.text = "titre\n\nA  .\n\nB  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        </ul>
+                                    """
+            
         if choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
             self.rep3.visible = True
             self.rep4.visible = False
             self.rep5.visible = False
             self.text_box_question.text = "titre\n\nA  .\nB  .\nC  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        <li>C</li>
+                                        </ul>
+                                    """
         if choix > 3:     # au moins 4 options possibles, rep1 et rep4 peuvent être identiques  ex  1111
             self.rep4.visible = True
             self.rep5.visible = False
             self.text_box_question.text = "titre\n\nA  .\nB  .\nC  .\nD  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        <li>C</li>
+                                        <li>D</li>
+                                        </ul>
+                                    """
         if choix > 4:     # 5 options possibles, rep1 à rep2 peuvent être identiques
             self.rep5.visible = True
             self.text_box_question.text = "titre\n\nA  .\nB  .\nC  .\nD  .\nE  ."
-
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        <li>C</li>
+                                        <li>D</li>
+                                        <li>E</li>
+                                        </ul>
+                                    """
+        
         self.column_panel_img.visible = True
-        self.text_box_correction.visible = True    
-        self.text_box_question.visible = True    
+        self.text_box_correction.visible = True
+        self.text_box_question.visible = False 
+        # -----------------------------------------------------------------------
+        self.word_editor_1.visible = True  # Affiche le component 'Word_Editor'
+        self.word_editor_1.param1 = "creation"
+        self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        
+        # -----------------------------------------------------------------------
         self.column_panel_options.visible = True
         self.button_creer_couleurs()
+
+    """
+    #===================================================================================================================================================
+    RETOUR DU WORD EDITOR  
+    # ==================================================================================================================================================
+    """
+    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
+    def handle_click_fin_saisie(self, sender, **event_args):
+        # sender.text contains the 'Word_editor'form's HTML text
+        mode = sender.param1       # mode 'modif' /  'creation' 
+        alert(mode)
+        self.text = sender.text    # texte html de lévenement
+        #self.content_panel.clear()  #effacement du content_panel
+        if mode == "modif":
+            self.button_modif_click(self.text)
+        if mode == "creation":
+            alert("creation")
+            self.button_creer_click(self.text)
+        if mode == "exit":
+            self.button_annuler_click()
+    """
+    Fin RETOUR DU WORD EDITOR  
+    """  
+        
 
     def text_box_question_change(self, **event_args):   # Question a changé
         """This method is called when the text in this text box is edited"""
@@ -258,17 +346,17 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         self.button_creer.background = "red"
         self.button_creer.foregroundground = "yellow"
 
-    def button_creer_click(self, **event_args):   #ce n'est que l'orsque le user a clicker sur modif que je prend le contenu
+    def button_creer_click(self, text, **event_args):   #ce n'est que l'orsque le user a clicker sur modif que je prend le contenu
         """This method is called when the button is clicked"""
-        if self.text_box_question.text == "":
+        if text == "":
             alert("La question est vide !")
             return
-        if self.drop_down_bareme.selected_value == None:
+        if self.drop_down_bareme.selected_value is None:
             alert("Choisissez un barême !")
             return
-        qst = self.text_box_question.text
-        qst = qst.strip()
-        question = qst
+        #qst = text
+        #qst = qst.strip()
+        question = text
 
         cor = self.text_box_correction.text
         cor = cor.strip()
@@ -562,9 +650,6 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
             from ..QCM_par_stage import QCM_par_stage
             open_form("QCM_par_stage")
 
-    def button_quitter_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        open_form('Main',99) 
 
     def check_box_examen_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
@@ -577,7 +662,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         alert("Validez les caractéristiques de ce QCM examen !")
         self.column_panel_question.visible = False
         self.button_valid.visible = True
-        
+
 
 
 

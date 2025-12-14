@@ -16,11 +16,14 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     # INITIALISATION # top_ligne_1, top_ligne_2 used for PDF export
     # ====================================================================================
-    def __init__(self, top_ligne_1="", top_ligne_2="", **properties):
+    def __init__(self, **properties):
 
         # Anvil initialisation
         self.init_components(**properties)
-                
+        
+        # Titles used for PDF export
+        self.top_ligne_1 = self.top_ligne_1
+        self.top_ligne_2 = self.top_ligne_2
         # Responsive UI (small screens → menus on sides)
         if window.innerWidth < 450:
             self.column_panel_menu1.visible = False
@@ -42,9 +45,7 @@ class Word_editor(Word_editorTemplate):
             self.column_panel_menu1_left.visible = False
             self.column_panel_menu2_right.visible = False
         #alert(window.innerWidth)
-        # Titles used for PDF export
-        self.top_ligne_1 = top_ligne_1
-        self.top_ligne_2 = top_ligne_2
+        
 
 
         # ====================================================================================
@@ -210,8 +211,7 @@ class Word_editor(Word_editorTemplate):
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
         editor.innerHTML = f"<p>{self.text}</p>"
-
-
+        
     # ====================================================================================
     # BASIC FORMATTING ACTIONS
     # ====================================================================================
@@ -328,19 +328,6 @@ class Word_editor(Word_editorTemplate):
             return
         js.document.execCommand("insertUnorderedList", False, None)
         editor.focus()
-
-
-    # ====================================================================================
-    # VALIDATION (save and return to caller)
-    # ====================================================================================
-    def button_validation_click(self, **e):
-       
-        editor = anvil.js.window.document.getElementById("editor")
-        anvil.js.window.cleanEditorHTML(editor)
-        self.text = editor.innerHTML
-        self.remove_from_parent()
-        self.raise_event('x-fin_saisie')
-        
 
 
     # ====================================================================================
@@ -483,14 +470,7 @@ class Word_editor(Word_editorTemplate):
         else:
             alert("Erreur lors de la génération du PDF")
 
-    def button_exit_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        editor = anvil.js.window.document.getElementById("editor")
-        anvil.js.window.cleanEditorHTML(editor)
-        self.text = ""
-        self.param1 = "exit"
-        self.raise_event('x-fin_saisie')
-        #self.remove_from_parent()
+   
 
     def button_link_click(self, **event_args):
         """Insert a hyperlink around the currently selected text inside the contenteditable editor."""
@@ -536,5 +516,26 @@ class Word_editor(Word_editorTemplate):
         except Exception as e:
             # If something goes wrong, notify the user.
             alert(f"Unable to insert link.\nError: {e}")
+
+    def button_exit_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        editor = anvil.js.window.document.getElementById("editor")
+        anvil.js.window.cleanEditorHTML(editor)
+        self.text = ""
+        self.param1 = "exit"
+        self.raise_event('x-fin_saisie')
+        #self.remove_from_parent()
+
+    # ==============================================================================================
+    # VALIDATION : save content in self.text (form propriety) and return to caller that will read it
+    # ==============================================================================================
+    def button_validation_click(self, **e):
+
+        editor = anvil.js.window.document.getElementById("editor")
+        anvil.js.window.cleanEditorHTML(editor)
+        self.text = editor.innerHTML
+        self.remove_from_parent()
+        self.raise_event('x-fin_saisie')
+
 
 

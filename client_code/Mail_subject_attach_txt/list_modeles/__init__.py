@@ -80,9 +80,11 @@ class list_modeles(list_modelesTemplate):
         title = "*** Modèle de Mail ***"
         sub_title = self.text_area_subject.text
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
-        text_editor = Word_editor(title, sub_title)  # title/sub_title : pour le bt download 
+        text_editor = Word_editor()  
         text_editor.text = content_text_html   # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
         text_editor.param1 = mode              # mode 'modif'
+        text_editor.top_ligne_1 = title              # pdf title when download 
+        text_editor.top_ligne_2 = sub_title          # pdf sub_title when download 
         text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
         #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
         self.f.content_panel.add_component(text_editor)
