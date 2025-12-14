@@ -147,43 +147,36 @@ class ItemTemplate4(ItemTemplate4Template):
         self.label_2.tag.nom = "cpt"
         global nb
         nb = -1 * (int(self.label_nb_questions.text)+1)
-        #self.label_2.text = self.item['num']  #-------------Affichage du num de question (universelle, y compris pour qcm à partir )
+        self.label_2.text = self.item['num']  #-------------Affichage du num de question (universelle, y compris pour qcm à partir )
         #self.label_2.text = nb                 # VOIR L'initialisation avec global nb = nb de questions
 
-        if self.mode == "creation":                   # EN MODE CREATION JE CONSERVE LES NUM DE QUESTION REELS
-            self.rep1.tag.numero = self.item['num']
-            self.rep2.tag.numero = self.item['num']
-            self.rep3.tag.numero = self.item['num']
-            self.rep4.tag.numero = self.item['num']
-            self.rep5.tag.numero = self.item['num']
+        #if self.mode == "creation":                   # EN MODE CREATION JE CONSERVE LES NUM DE QUESTION REELS
+        self.rep1.tag.numero = self.item['num']
+        self.rep2.tag.numero = self.item['num']
+        self.rep3.tag.numero = self.item['num']
+        self.rep4.tag.numero = self.item['num']
+        self.rep5.tag.numero = self.item['num']
         
         self.label_2.tag.numero = self.item['num']
         self.label_2.tag.nom = "num"
         qst = self.item['question']
         
+        # module pour ajouter les sauts de pages HTML en modif 
+        paragraphs = qst.split("\n\n")
+        html_list = []
+        for p in paragraphs:
+            p2 = p.replace("\n", "<br>")  # en HTML \n non reconnu, remplacé par <br>
+            html_list.append(f"<p>{p2}</p>")
+        html_text = "".join(html_list)
+        
         if self.mode != "creation":                 # Mode Utilisation
-            """
-            if int(self.item['bareme']) > 1:
-                self.text_area_question.text = (f"{qst} \n  ({self.item['bareme']} points)")
-            else:  # bareme 1 point
-                self.text_area_question.text = (f"{qst} \n  ({self.item['bareme']} point)")
-            """
-            paragraphs = qst.split("\n\n")
-
-            # module pour ajouter les sauts de pages en modif 
-            html_list = []
-            for p in paragraphs:
-                p2 = p.replace("\n", "<br>")  # en HTML \n non reconnu, remplacé par <br>
-                html_list.append(f"<p>{p2}</p>")
-            html_text = "".join(html_list)
-            self.text_area_question.content = html_text
             self.text_area_question.enabled = False
             self.text_box_correction.enabled = False
             self.button_delete.visible = False
         else:                                       # Mode Création/MAJ 
-            self.text_area_question.content = qst
             self.text_area_question.enabled = True
             
+        self.text_area_question.content = html_text  
         self.text_area_question.tag.nom = "question"
         self.text_area_question.tag.numero = self.item['num']
         self.text_area_question.tag.corr_multi = self.item['rep_multi']    # la correction de chaque question qcm sera sauvée ds chaque question, utilisé pour la correction
@@ -375,7 +368,7 @@ class ItemTemplate4(ItemTemplate4Template):
                     if cpnt1.tag.nom == "question":
                         #print(cpnt1, cpnt1.tag.nom)
                         #print("mode :", self.mode)
-                        question = cpnt1.text
+                        question = cpnt1.content
                         # mettre la 1ere lettre en maj mais laisser le reste comme tappé
                         #je boucle à partir de la deuxieme lettre et cumul le text             
                         txt = question[0].capitalize()    # txt commence par la position 1 de la question, mise en majuscule
