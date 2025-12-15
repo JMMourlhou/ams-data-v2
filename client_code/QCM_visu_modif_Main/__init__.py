@@ -295,7 +295,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         # -----------------------------------------------------------------------
         self.word_editor_1.visible = True  # Affiche le component 'Word_Editor'
         self.word_editor_1.param1 = "creation"
-        self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie_modif)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
         
         # -----------------------------------------------------------------------
         self.column_panel_options.visible = True
@@ -307,16 +307,14 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
     # ==================================================================================================================================================
     """
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
-    def handle_click_fin_saisie(self, sender, **event_args):
+    def handle_click_fin_saisie_modif(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
         mode = sender.param1       # mode 'modif' /  'creation' 
-        alert(mode)
-        self.text = sender.text    # texte html de lévenement
+        self.text = sender.text    # texte html de la question
         #self.content_panel.clear()  #effacement du content_panel
         if mode == "modif":
             self.button_modif_click(self.text)
         if mode == "creation":
-            alert("creation")
             self.button_creer_click(self.text)
         if mode == "exit":
             self.button_annuler_click()

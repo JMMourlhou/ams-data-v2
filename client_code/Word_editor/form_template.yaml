@@ -496,4 +496,7 @@ properties:
 - {default_value: '', description: HTML text to be passed and displayed in the Word Editor, important: true, name: text, type: string}
 - {default_value: '', description: Pdf title when button download pressed in Word_Editor Form, important: true, name: top_ligne_1, type: string}
 - {default_value: '', description: Pdf sub title when button download pressed in Word_Editor Form, important: true, name: top_ligne_2, type: string}
+- {default_value: Ok, description: Button Validation text, important: true, name: bt_valid_text, type: string}
+- {default_value: false, description: 'Button Exit visible ?', important: true, name: bt_exit_visible, type: boolean}
+- {default_value: '', description: Bt exit text, important: true, name: bt_exit_text, type: string}
 toolbox_item: {hidden: false, title: Word-editor}

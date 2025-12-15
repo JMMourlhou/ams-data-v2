@@ -20,10 +20,19 @@ class Word_editor(Word_editorTemplate):
 
         # Anvil initialisation
         self.init_components(**properties)
-        
+        """ ===============================================================
+        Parameteres passed through the 'Word_Editor' properties
+        """
         # Titles used for PDF export
         self.top_ligne_1 = self.top_ligne_1
         self.top_ligne_2 = self.top_ligne_2
+        # Buttons Parameters
+        self.button_validation.text = self.bt_valid_text
+        self.button_exit.text = self.bt_exit_text
+        self.button_exit.visible = self.bt_exit_visible
+        """ ===============================================================
+        End of Parameteres 
+        """
         # Responsive UI (small screens → menus on sides)
         if window.innerWidth < 450:
             self.column_panel_menu1.visible = False
@@ -46,8 +55,6 @@ class Word_editor(Word_editorTemplate):
             self.column_panel_menu2_right.visible = False
         #alert(window.innerWidth)
         
-
-
         # ====================================================================================
         # 1) CLEAN HTML (removes useless spans, empty paragraphs, redundant wrappers, etc.)
         # ====================================================================================

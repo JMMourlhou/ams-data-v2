@@ -258,7 +258,7 @@ components:
   - event_bindings: {change: text_box_correction_change}
     layout_properties: {grid_position: 'OQBWAL,KUNSFE EIQVMI,OVRSCW'}
     name: text_box_correction
-    properties: {align: left, auto_expand: true, background: 'theme:Secondary 700', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary Container', height: 401.58203125, italic: false, placeholder: Correction, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
+    properties: {align: left, auto_expand: true, background: 'theme:Secondary 700', bold: true, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary Container', height: 401.65447998046875, italic: false, placeholder: Correction, role: null, spacing_above: none, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
     type: TextArea
   - components:
     - event_bindings: {click: button_creer_click}

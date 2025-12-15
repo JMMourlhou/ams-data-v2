@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+from anvil.js import window
 
 class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def __init__(self, qcm_row, question_row, nb_questions, **properties):  
@@ -19,29 +19,14 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.label_2.text = self.question_row['num']
         self.label_nb_questions.text = nb_questions
         
-        # question
-        # module pour ajouter les sauts de pages HTML en modif (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
-        qst = self.question_row['question']
-        paragraphs = qst.split("\n\n")
-        html_list = []
-        for p in paragraphs:
-            p2 = p.replace("\n", "<br>")  # en HTML \n non reconnu, remplacé par <br>
-            html_list.append(f"<p>{p2}</p>")
-        html_text = "".join(html_list)
-
-        self.text_area_question.enabled = True
-        self.text_area_question.content = html_text  
-        
-        self.text_box_correction.text = self.question_row['correction']
+        self.rich_text_correction.content = self.question_row['correction']
         
         self.drop_down_bareme.items=["1","2","3","4","5","10"]
         self.drop_down_bareme.selected_value = self.question_row['bareme']                 
        
         if self.question_row['photo'] is not None:
             self.image_1.source = self.question_row['photo']
-            #print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
         else:
-            #print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
             self.image_1.source = None
             self.cp_img.visible = False
             self.image_1.visible = False
@@ -92,6 +77,70 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             else:
                 self.rep5.checked = False
 
+        # question
+        # module pour ajouter les sauts de pages HTML en modif (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
+        text_not_html = self.question_row['question']
+        self.rich_text_correction.visible = False      # Hiding the Coorection text
+        self.sending_to_word_editor(text_not_html, "question")
+
+    def sending_to_word_editor(self, text_not_html, type_text, **event_args):
+        paragraphs = text_not_html.split("\n\n")
+        html_list = []
+        for p in paragraphs:
+            p2 = p.replace("\n", "<br>")  # en HTML \n non reconnu, remplacé par <br>
+            html_list.append(f"<p>{p2}</p>")
+        html_text = "".join(html_list)
+        # -----------------------------------------------------------------------
+        # Word_Editor buttons parameters: (through form 'Word_Editor' proprieties)
+        self.word_editor_1.bt_exit_visible = False
+        if window.innerWidth > 800:
+            self.word_editor_1.bt_valid_text = "Validation de la Question"   
+            self.word_editor_1.bt_exit_text = "Sortie"
+        elif window.innerWidth < 450:
+            self.word_editor_1.bt_valid_text = ""   
+            self.word_editor_1.bt_exit_text = ""
+        else :
+            self.word_editor_1.bt_valid_text = "Validat°"   
+            self.word_editor_1.bt_exit_text = "Sortie"
+        # Word_Editor PDF download titles parameters:
+        self.word_editor_1.top_ligne_2 = f"Question N° {self.question_row['num']} "
+        self.top_ligne_2 = self.top_ligne_1 = f"QCM {self.qcm_row['destination']} "
+        
+        # Text to be modified by Word_Editor
+        self.word_editor_1.param1 = type_text   # QUESTION
+        self.word_editor_1.text = html_text
+        self.word_editor_1.visible = True  # 'Word_Editor' component display
+       
+        self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+
+    """
+    #===================================================================================================================================================
+    RETOUR DU WORD EDITOR  
+    # ==================================================================================================================================================
+    """
+    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
+    def handle_click_fin_saisie(self, sender, **event_args):
+        # sender.text contains the 'Word_editor'form's HTML text
+        mode = sender.param1       # mode 'modif' /  'creation' 
+        #alert(sender.text)
+        #alert(mode)
+        self.text = sender.text    # texte html de lévenement
+        #self.content_panel.clear()  #effacement du content_panel
+        self.rich_text_question.visible = True       # display the Question Rich Text
+        self.rich_text_correction.visible = True      # display the Correction Rich Text
+        if mode == "question":
+            self.rich_text_question.content = sender.text
+        if mode == "correction":
+            self.rich_text_correction.content = sender.text
+        self.button_modif_color()
+        if mode == "creation":
+            self.button_creer_click(self.text)
+        if mode == "exit":
+            self.button_retour_click()
+    """
+    Fin RETOUR DU WORD EDITOR  
+    """  
+
     def file_loader_photo_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
         # self.image_photo.source = file
@@ -102,6 +151,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     
 
     def button_modif_color(self, **event_args):                # ========================== Changes
+        self.button_modif.visible = True
         self.button_modif.enabled = True
         self.button_modif.background = "red"
         self.button_modif.foreground = "yellow"
@@ -205,3 +255,5 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         """This method is called when the button is clicked"""
         qcm_descro_nb = self.qcm_row
         open_form('QCM_visu_modif_Main', qcm_descro_nb)
+
+   
