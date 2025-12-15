@@ -217,6 +217,7 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
+        print(self.text)
         editor.innerHTML = f"<p>{self.text}</p>"
         
     # ====================================================================================
@@ -541,8 +542,10 @@ class Word_editor(Word_editorTemplate):
         editor = anvil.js.window.document.getElementById("editor")
         anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
-        self.remove_from_parent()
         self.raise_event('x-fin_saisie')
-
+        
+        # If propriety remove_on_exit is True, remove_from_parent()
+        if self.remove_on_exit is True:  
+            self.remove_from_parent()
 
 

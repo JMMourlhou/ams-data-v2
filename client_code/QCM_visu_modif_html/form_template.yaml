@@ -50,6 +50,10 @@ components:
     properties: {}
     type: form:Word_editor
   - components:
+    - layout_properties: {grid_position: 'TPCGTE,IIMOUG'}
+      name: spacer_3
+      properties: {height: 89.37615966796875}
+      type: Spacer
     - event_bindings: {change: rep1_change}
       layout_properties: {full_width_row: false, grid_position: 'JSZRDP,EICFQK'}
       name: rep1
@@ -61,7 +65,7 @@ components:
         font_size: 10
         foreground: theme:On Primary
         spacing:
-          margin: ['30', null, null, null]
+          margin: ['0', null, null, null]
         spacing_above: none
         spacing_below: none
         text: V
@@ -94,12 +98,26 @@ components:
   - event_bindings: {show: text_area_question_show}
     layout_properties: {grid_position: 'LQGWBG,GEMQRU'}
     name: rich_text_question
-    properties: {background: '', content: Question, foreground: 'theme:On Primary', format: restricted_html, visible: false}
+    properties:
+      background: ''
+      content: Question
+      foreground: theme:On Primary
+      format: restricted_html
+      spacing:
+        padding: [null, null, null, '5']
+      visible: true
     type: RichText
   - event_bindings: {show: text_area_question_show}
     layout_properties: {grid_position: 'ORXDES,PBOZIO'}
     name: rich_text_correction
-    properties: {background: 'theme:Tertiary', content: Question, foreground: 'theme:On Secondary Container', format: restricted_html, visible: false}
+    properties:
+      background: theme:Tertiary
+      content: Question
+      foreground: theme:On Secondary Container
+      format: restricted_html
+      spacing:
+        padding: [null, null, null, '5']
+      visible: true
     type: RichText
   - components:
     - components:
@@ -136,6 +154,16 @@ components:
         name: button_modif
         properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Validation, tooltip: '', underline: false, visible: true}
         type: Button
+      - event_bindings: {click: button_question_click}
+        layout_properties: {}
+        name: button_question
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Modif Quest°, tooltip: '', underline: false, visible: true}
+        type: Button
+      - event_bindings: {click: button_correction_click}
+        layout_properties: {}
+        name: button_correction
+        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Modif Correct°, tooltip: '', underline: false, visible: true}
+        type: Button
       - event_bindings: {click: button_retour_click}
         layout_properties: {}
         name: button_retour
@@ -148,11 +176,11 @@ components:
       type: FlowPanel
     layout_properties: {grid_position: 'XSHTGG,HKPRWC'}
     name: column_panel_menu1
-    properties: {}
+    properties: {col_widths: '{"SLPNNT":18,"SUPMRE":42}'}
     type: ColumnPanel
   layout_properties: {grid_position: 'EWFOJA,VHIKZI'}
   name: cp_father
-  properties: {col_widths: '{"ALPISY":3,"TNYCOV":22}', spacing_above: none, spacing_below: none}
+  properties: {col_widths: '{"ALPISY":2,"TNYCOV":33}', spacing_above: none, spacing_below: none}
   type: ColumnPanel
 container:
   properties: {background: 'theme:On Primary Container', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}

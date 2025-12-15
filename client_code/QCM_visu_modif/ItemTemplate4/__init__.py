@@ -85,6 +85,8 @@ class ItemTemplate4(ItemTemplate4Template):
         self.button_enregistrer_et_sortir.tag.nom = "sortir"
         self.column_panel_results.tag.nom = "cp_results"
         self.spacer_1.tag.nom = "spacer"
+        self.button_modif2.tag.nom = "modif2"
+        self.button_modif2.tag.numero = "0"
         
         # ==============================================================================================="                      INFOS DE BASE
         self.button_delete.tag.nom = "delete"
@@ -178,13 +180,16 @@ class ItemTemplate4(ItemTemplate4Template):
             self.button_delete.visible = False
         else:                                       # Mode Création/MAJ 
             self.text_area_question.enabled = True
+            self.button_modif2.visible = True
+            self.button_modif.visible = False
+            
             
         self.text_area_question.content = html_text  
         self.text_area_question.tag.nom = "question"
         self.text_area_question.tag.numero = self.item['num']
         self.text_area_question.tag.corr_multi = self.item['rep_multi']    # la correction de chaque question qcm sera sauvée ds chaque question, utilisé pour la correction
 
-        self.text_box_correction.text = self.item['correction']
+        self.text_box_correction.content = self.item['correction']
         self.text_box_correction.tag.nom = "correction"
         self.text_box_correction.tag.numero = self.item['num']
         
@@ -442,7 +447,7 @@ class ItemTemplate4(ItemTemplate4Template):
                 
             if cpnt.tag.nom == "correction":
                 #print(cpnt, cpnt.tag.nom)
-                correction = cpnt.text                                #    j'ai la correction
+                correction = cpnt.content                                #    j'ai la correction
                 
             #print("avt test2",cpnt, cpnt.tag.nom)
             if cpnt.tag.nom == "fp_vrai/faux_bareme":                 # fp_vf_barem contient  bareme   
@@ -498,8 +503,9 @@ class ItemTemplate4(ItemTemplate4Template):
                 self.text_box_correction.background = "Green"
                 self.text_box_correction.foreground = "White"
             else:
-                self.text_box_correction.background = "Orange"
-   
+                self.text_box_correction.background = "yellow"
+                self.text_box_correction.foreground = "Black"
+            
             if num == int(self.label_nb_questions.text):
                 self.button_fin_qcm.visible = True
 
@@ -616,7 +622,7 @@ class ItemTemplate4(ItemTemplate4Template):
                             #print("c", c.tag.nom)
                             
                             if c.tag.nom == "correction" :
-                                if c.text != "":
+                                if c.content != "":
                                     c.visible = True
                                     c.enabled = False
                                 
