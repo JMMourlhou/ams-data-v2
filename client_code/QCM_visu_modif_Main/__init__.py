@@ -92,6 +92,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         self.user=anvil.users.get_user()
 
         # test s'il est le propriétaire ou A ou B
+        #alert(self.qcm_row["qcm_owner"]["email"])
         if self.qcm_row["qcm_owner"]["email"] != self.user["email"] and self.user["role"] != "B" and self.user["role"] != "A" :
             alert("Vous n'êtes pas le propriétaire de ce QCM, \nVous ne pouvez pas le modifier !")
             # Réinitialisation

@@ -52,12 +52,15 @@ class ItemTemplate4(ItemTemplate4Template):
             self.vrai_numero_qcm = user['temp3']
             if user['temp2']!="test":            # si le concepteur du qcm a demandé un test (bt 'test' en QCM_visu_modif_Main) 
                 self.admin = user['role']
-                owner = self.f.drop_down_qcm_row.selected_value["qcm_owner"]["email"]   # obtenir le propriétaire en form QCM_visu_modif_main
-                    
-                if self.admin[0:1]=="A" or self.admin[0:1]=="B" or user["email"]==owner:    # ---------------------    # si Admin ou Bureaux ou propriétaire du qcm
+                try:
+                    owner = self.f.drop_down_qcm_row.selected_value["qcm_owner"]["email"]   # obtenir le propriétaire en form QCM_visu_modif_main
+                    if self.admin[0:1]=="A" or self.admin[0:1]=="B" or user["email"]==owner:    # ---------------------    # si Admin ou Bureaux ou propriétaire du qcm
+                        self.mode= "creation"        # "creation" = mode création/MAJ pas de test stagiaire
+                    else:
+                        self.mode = "test"
+                except:
+                    # le self.f peut planter si c'est un retour de modif de Qcm_visu_modif_html, ce n'est donc pas un 'test'
                     self.mode= "creation"        # "creation" = mode création/MAJ pas de test stagiaire
-                else:
-                    self.mode = "test"
             else:
                 self.mode = "test"     # le concepteur du qcm a demandé un test (bt 'test' en QCM_visu_modif_Main) 
 
@@ -161,7 +164,7 @@ class ItemTemplate4(ItemTemplate4Template):
         self.label_2.tag.nom = "num"
         qst = self.item['question']
         
-        # module pour ajouter les sauts de pages HTML en modif 
+        # module pour ajouter les sauts de pages HTML en modif (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
         paragraphs = qst.split("\n\n")
         html_list = []
         for p in paragraphs:
@@ -766,5 +769,8 @@ class ItemTemplate4(ItemTemplate4Template):
 
     def button_modif2_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
-      
+        row_qcm = self.item['qcm_nb']
+            
+        row_question = self.item
+        open_form('QCM_visu_modif_html', row_qcm, row_question, self.label_nb_questions.text)
+        
