@@ -763,4 +763,8 @@ class ItemTemplate4(ItemTemplate4Template):
             self.rep3.tag.numero = self.label_2.text
             self.rep4.tag.numero = self.label_2.text
             self.rep5.tag.numero = self.label_2.text
+
+    def button_modif2_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
       
