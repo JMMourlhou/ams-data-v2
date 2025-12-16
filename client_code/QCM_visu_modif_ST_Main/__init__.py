@@ -52,7 +52,9 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
             qcm_row = app_tables.qcm_description.get(qcm_nb=int(clef))
             if qcm_row['visible'] is True:                               # SI QCM VISIBLE
                 liste_qcm_rows.append(qcm_row)                           #  INSERERE LA ROW PAS UNIQT la destination 
-        if liste_qcm_rows:    
+        if liste_qcm_rows:   
+            # TRI ALPHABÉTIQUE DES QCM
+            liste_qcm_rows.sort(key=lambda row: row['destination'].lower())
             self.drop_down_qcm_row.items = [(r['destination'],r) for r in liste_qcm_rows]     # initialisation de la drop down par "compréhension de liste"
         
         if qcm_descro_nb is not None:      #réinitialisation de la forme après une création ou modif
