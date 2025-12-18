@@ -12,5 +12,11 @@ class Video_test(Video_testTemplate):
         # https://videos.jmweb34.net  est le sous domaine configuré dans cloudflare
 
         self.video_player_1.video_url = (
-            "https://videos.jmweb34.net/Essai1.mp4"
+            "https://videos.jmweb34.net/Essai1_stream.mp4"
+
         )
+
+    def button_annuler_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..Main import Main
+        open_form('Main',99) 

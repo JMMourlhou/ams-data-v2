@@ -3,5 +3,10 @@ components:
   name: video_player_1
   properties: {}
   type: form:Video_Player
+- event_bindings: {click: button_annuler_click}
+  layout_properties: {grid_position: 'TUUFWE,SLNUMM'}
+  name: button_annuler
+  properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
+  type: Button
 container: {type: ColumnPanel}
 is_package: true
