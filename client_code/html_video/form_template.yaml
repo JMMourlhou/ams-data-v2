@@ -22,4 +22,6 @@ container:
           }
       </script>
   type: HtmlTemplate
+custom_component: true
+custom_component_container: false
 is_package: true

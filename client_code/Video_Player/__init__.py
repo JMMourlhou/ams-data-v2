@@ -7,8 +7,8 @@ class Video_Player(Video_PlayerTemplate):
         self.init_components(**properties)
 
         # Accès au DOM du Custom HTML
-        self._root = self.html_video.dom_node
-
+        self._root = self.html_video_1.dom_node
+        
         # Si une URL est déjà définie, on charge la vidéo
         if self.video_url:
             self._apply_video_url(self.video_url)
