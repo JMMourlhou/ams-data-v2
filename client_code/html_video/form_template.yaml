@@ -2,26 +2,16 @@ components: []
 container:
   properties:
     html: |
-      <video id="vp" style="width:100%; max-height:360px;" controls preload="metadata">
-          <source id="vp_src" src="" type="video/mp4">
+      <video
+          style="width:100%; max-height:360px;"
+          controls
+          preload="metadata"
+          src="{{video_url}}">
           Votre navigateur ne supporte pas la vidéo.
       </video>
-
-      <script>
-          // Retourne l'élément <video>
-          window._vp_get = function(root){
-              return root.querySelector("#vp");
-          }
-
-          // Change la source et recharge
-          window._vp_set_src = function(root, url){
-              const v = root.querySelector("#vp");
-              const s = root.querySelector("#vp_src");
-              s.src = url || "";
-              v.load();
-          }
-      </script>
   type: HtmlTemplate
 custom_component: true
 custom_component_container: false
 is_package: true
+properties:
+- {allow_binding_writeback: true, default_binding_prop: true, default_value: '', important: true, name: video_url, type: string}
