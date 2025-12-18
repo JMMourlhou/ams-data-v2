@@ -534,8 +534,8 @@ class Main(MainTemplate):
 
     def button_video_test_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
-
+        from ..Video_test import Video_test
+        open_form("Video_test")  
         
 
 
