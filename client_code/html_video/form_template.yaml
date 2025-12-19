@@ -1,13 +1,9 @@
 components: []
 container:
   properties:
-    html: |
-      <video
-          style="width:100%; max-height:360px;"
-          controls
-          preload="metadata"
-          src="{{video_url}}">
-          Votre navigateur ne supporte pas la vidéo.
+    html: |-
+      <video controls preload="metadata" style="width:100%; max-height:360px;">
+          <source src="http://media.jmweb34.net:8080/Essai1_stream.mp4" type="video/mp4">
       </video>
   type: HtmlTemplate
 custom_component: true
