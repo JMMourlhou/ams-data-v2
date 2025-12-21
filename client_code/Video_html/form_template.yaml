@@ -3,18 +3,8 @@ container:
   properties:
     background: ''
     html: |
-      <div style="width:100%; border:3px solid red;">
-          <p style="color:red; font-weight:bold;">
-              HTML VIDEO LOADED
-          </p>
-
-          <video
-              id="video_player"
-              controls
-              preload="metadata"
-              playsinline
-              style="width:100%; max-height:360px; background:#000;">
-          </video>
+      <div id="video-container" style="width:100%;">
+          <h3 style="color:red;">Vidéo test</h3>
       </div>
   type: HtmlTemplate
 custom_component: true
