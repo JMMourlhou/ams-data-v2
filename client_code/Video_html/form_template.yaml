@@ -2,10 +2,9 @@ components: []
 container:
   properties:
     background: ''
-    html: |
-      <div id="video-container" style="width:100%;">
-          <h3 style="color:red;">Vidéo test</h3>
-      </div>
+    html: |+
+      <div id="video-container"></div>
+
   type: HtmlTemplate
 custom_component: true
 is_package: true

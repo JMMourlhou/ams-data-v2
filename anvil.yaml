@@ -966,6 +966,6 @@ services:
 - client_config: {}
   server_config: {custom_smtp: true}
   source: /runtime/services/anvil/email.yml
-startup: {module: Video_Player, type: form}
+startup: {module: Main, type: form}
 startup_form: null
 uplink_visible: true
