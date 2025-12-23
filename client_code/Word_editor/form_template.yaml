@@ -439,6 +439,7 @@ components:
             spacing:
               margin: ['20', null, '15', null]
             text: ''
+            visible: false
           type: Button
         layout_properties: {width: 71.2774955078125}
         name: column_panel_menu2_right
@@ -464,7 +465,7 @@ components:
     - event_bindings: {click: button_validation_click}
       layout_properties: {grid_position: 'UQHSSU,RNMUEQ'}
       name: button_validation
-      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', icon: 'fa:check', text: Validation}
+      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', icon: 'fa:check', text: Validation, visible: false}
       type: Button
     - event_bindings: {click: button_exit_click}
       layout_properties: {grid_position: 'UQHSSU,FTIEII'}

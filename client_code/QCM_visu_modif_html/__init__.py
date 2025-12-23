@@ -14,6 +14,15 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.init_components(**properties)
         #=========================================================================================
         # POUR AUTO SAUVEGARDE DU TEXTE:
+        
+        # Bouton Validation caché tant que rien n'est modifié
+        self.button_validation.visible = False
+
+        # Écoute l'état de modification du Word Editor
+        self.word_editor_1.set_event_handler(
+            "x-text-changed-state",
+            self._on_text_changed_state
+        )
         # 1 --- Anti-spam ---
         self._last_saved_text = ""
         self._last_save_ts = 0
@@ -118,6 +127,14 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas 
         self.button_validation_click(True)  
 
+    # ------------------------------------------------------------------
+    # Réaction aux modifications du texte
+    # ------------------------------------------------------------------
+    def _on_text_changed_state(self, **e):
+        has_changes = e.get("has_changes", False)
+        self.button_validation.visible = has_changes
+        
+            
     
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -209,7 +226,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.word_editor_1.form_show() # will execute the show event in Word_Editor form
         self.word_editor_1.visible = True  # 'Word_Editor' component display
        
-        self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        #self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
 
     """
     #===================================================================================================================================================
@@ -217,20 +234,24 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     # ==================================================================================================================================================
     """
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
-    def handle_click_fin_saisie(self, sender, **event_args):
+    def handle_click_fin_saisie(self, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
-        mode = sender.param1       # mode 'modif' /  'creation' 
+        mode = self.word_editor_1.param1       # mode 'modif' /  'creation' 
         #alert(sender.text)
         #alert(mode)
-        self.text = sender.text    # texte html de lévenement
+        
+
+        html = self.word_editor_1.text
+
+        
         #self.content_panel.clear()  #effacement du content_panel
         self.rich_text_question.visible = True       # display the Question Rich Text
         self.rich_text_correction.visible = True      # display the Correction Rich Text
         self.rich_text_correction.scroll_into_view()
         if mode == "question":
-            self.rich_text_question.content = sender.text
+            self.rich_text_question.content = html
         if mode == "correction":
-            self.rich_text_correction.content = sender.text
+            self.rich_text_correction.content = html
         self.button_modif_color()
         if mode == "creation":
             self.button_creer_click(self.text)
@@ -246,8 +267,6 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         thumb_pic = anvil.image.generate_thumbnail(file, 320)
         self.image_photo.source = thumb_pic
         self.button_modif_color()
-
-    
 
     def button_modif_color(self, **event_args):                # ========================== Changes
         self.button_validation.visible = True
@@ -298,7 +317,9 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):                                         # =============  VALIDATION
         """This method is called when the button is clicked"""
-
+        
+        self.handle_click_fin_saisie()
+        
         rep_multi_stagiaire = ""                              # CUMUL de la codif des réponses du stagiaire
         if self.type_question == "V/F":
             if self.rep1.checked is True:   # question V/F
@@ -349,6 +370,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             return
             # j'initialise la forme principale
         else:
+            # --- Réinitialisation état ---
+            self.word_editor_1.mark_saved()
             if sov_auto is False: 
                 # Click sur bt validation on quitte
                 alert('on retourne')
@@ -363,6 +386,10 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         qcm_descro_nb = self.qcm_row
         open_form('QCM_visu_modif_Main', qcm_descro_nb)
 
-    
+    # ------------------------------------------------------------------
+    # Chargement initial du contenu
+    # ------------------------------------------------------------------
+    def load_qcm_content(self, html):
+        self.word_editor_1.set_initial_html(html)
 
    
