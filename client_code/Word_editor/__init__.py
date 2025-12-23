@@ -33,9 +33,9 @@ class Word_editor(Word_editorTemplate):
         self.top_ligne_1 = self.top_ligne_1
         self.top_ligne_2 = self.top_ligne_2
         # Buttons Parameters
-        self.button_validation.text = self.bt_valid_text
-        self.button_exit.text = self.bt_exit_text
-        self.button_exit.visible = self.bt_exit_visible
+        # self.button_valid.text = self.bt_valid_text
+        # self.button_exit.text = self.bt_exit_text
+        # self.button_exit.visible = self.bt_exit_visible
         """ ===============================================================
         End of Parameteres 
         """
@@ -45,14 +45,14 @@ class Word_editor(Word_editorTemplate):
             self.column_panel_menu2.visible = False
             self.column_panel_menu1_left.visible = True
             self.column_panel_menu2_right.visible = True
-            self.button_validation.visible = False
+            #self.button_validation.visible = False
             self.html_part_1.width = 250
         elif window.innerWidth < 800:
             self.column_panel_menu1.visible = False
             self.column_panel_menu2.visible = False
             self.column_panel_menu1_left.visible = True
             self.column_panel_menu2_right.visible = True
-            self.button_validation.visible = False
+            #self.button_validation.visible = False
             self.html_part_1.width = 650
         else:
             self.column_panel_menu1.visible = True
@@ -235,10 +235,7 @@ class Word_editor(Word_editorTemplate):
         self._initial_text = self.text
         self._text_is_modified = False
 
-        self.raise_event(
-            "x-text-changed-state",
-            has_changes=False
-        )
+        self.raise_event("x-text-changed-state", has_changes=False)
         
     # ====================================================================================
     # BASIC FORMATTING ACTIONS
@@ -381,10 +378,7 @@ class Word_editor(Word_editorTemplate):
         is_modified_now = (self.text != self._initial_text)
         if is_modified_now != self._text_is_modified:
             self._text_is_modified = is_modified_now
-            self.raise_event(
-                "x-text-changed-state",
-                has_changes=is_modified_now
-            )
+            self.raise_event("x-text-changed-state", has_changes=is_modified_now)
             
         # Envoie le texte au parent
         self.raise_event("x-timer_text_backup", text=self.text)
@@ -408,11 +402,11 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def timer_3_tick(self, **event_args):
 
-        if self.button_validation.foreground == "theme:On Primary":
-            self.button_validation.foreground = "theme:On Primary Container"
+        if self.button_valid.foreground == "theme:On Primary":
+            self.button_valid.foreground = "theme:On Primary Container"
             self.button_validation_copy.foreground = "theme:On Primary Container"
         else:
-            self.button_validation.foreground = "theme:On Primary"
+            self.button_valid.foreground = "theme:On Primary"
             self.button_validation_copy.foreground = "theme:On Primary"
 
     # ------------------------------------------------------------------
@@ -593,7 +587,7 @@ class Word_editor(Word_editorTemplate):
     # ==============================================================================================
     # VALIDATION : save content in self.text (form propriety) and return to caller that will read it
     # ==============================================================================================
-    def button_validation_click(self, **e):
+    def button_valid_click(self, **e):
 
         editor = anvil.js.window.document.getElementById("editor")
         anvil.js.window.cleanEditorHTML(editor)
