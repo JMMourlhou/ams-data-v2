@@ -20,6 +20,12 @@ class Word_editor(Word_editorTemplate):
 
         # Anvil initialisation
         self.init_components(**properties)
+        
+        # Texte initial (chargé ou sauvegardé)
+        self._initial_text = ""
+        # Indique si le texte a été modifié
+        self._text_is_modified = False
+
         """ ===============================================================
         Parameteres passed through the 'Word_Editor' properties
         """
@@ -219,6 +225,20 @@ class Word_editor(Word_editorTemplate):
         editor = anvil.js.window.document.getElementById("editor")
         print(self.text)
         editor.innerHTML = f"<p>{self.text}</p>"
+
+    # ------------------------------------------------------------------
+    # Appelée par la forme mère / surveilance si texte changé 
+    # ------------------------------------------------------------------
+    def set_initial_html(self, html):
+        self.text = html or ""
+
+        self._initial_text = self.text
+        self._text_is_modified = False
+
+        self.raise_event(
+            "x-text-changed-state",
+            has_changes=False
+        )
         
     # ====================================================================================
     # BASIC FORMATTING ACTIONS
@@ -350,12 +370,22 @@ class Word_editor(Word_editorTemplate):
 
 
     # ====================================================================================
-    # TIMER 2 — auto-save backup
+    # TIMER 2 — auto-save backup every 1 second
     # ====================================================================================
     def timer_2_tick(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
         anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
+
+        # -------- text modified ? --------
+        is_modified_now = (self.text != self._initial_text)
+        if is_modified_now != self._text_is_modified:
+            self._text_is_modified = is_modified_now
+            self.raise_event(
+                "x-text-changed-state",
+                has_changes=is_modified_now
+            )
+            
         # Envoie le texte au parent
         self.raise_event("x-timer_text_backup", text=self.text)
         # Note lea forme parent test l'event et reçoit le text avec ce scrip
@@ -385,7 +415,19 @@ class Word_editor(Word_editorTemplate):
             self.button_validation.foreground = "theme:On Primary"
             self.button_validation_copy.foreground = "theme:On Primary"
 
+    # ------------------------------------------------------------------
+    # called by mother form after a successed backup
+    # ------------------------------------------------------------------
+    def mark_saved(self):
+        self._initial_text = self.text or ""
 
+        if self._text_is_modified:
+            self._text_is_modified = False
+            self.raise_event(
+                "x-text-changed-state",
+                has_changes=False
+            )
+            
     # ====================================================================================
     # PDF EXPORT using uplink "render_pdf"
     # ====================================================================================
