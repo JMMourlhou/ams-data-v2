@@ -17,7 +17,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         
         # Bouton Validation caché tant que rien n'est modifié
         self.button_validation.visible = False
-
+        self._editor_ready = False
+        
         # Écoute l'état de modification du Word Editor
         self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
         
@@ -29,7 +30,9 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         # 2- handler sur l'INSTANCE word_editor_1  (si word_editor a été copy_glissé en tant que component)
         self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
         # =========================================================================================
-
+        # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
+        self.word_editor_1.set_event_handler("x-editor-ready", self._arm_editor_ready)
+        
         self.qcm_row = qcm_row              # QCM descro row
         self.question_row = question_row    # la question row
 
@@ -95,9 +98,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             else:
                 self.rep5.checked = False
                 
-        
+        # on affiche la correction en init, la question est ds le word editor
         self.rich_text_correction.content = self.question_row['correction']
-        self.rich_text_question.content = self.question_row['question']
+        self.rich_text_correction.visible = True      # display the Correction Rich Text
+        
+        #self.rich_text_question.content = self.question_row['question']
         self.rich_text_question.visible = False
         #self.word_editor_1.scroll_into_view()
         self.button_question_click() # on affiche la question
@@ -130,6 +135,9 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     # Réaction aux modifications du texte : on affiche lebt Validation
     # ------------------------------------------------------------------
     def _on_text_changed_state(self, **e):
+        if not self._editor_ready:
+            return  # on ignore les events de chargement
+
         self.button_validation.visible = True
         
             
@@ -186,12 +194,14 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         text_not_html = self.question_row['question']
         self.rich_text_correction.visible = False      # Hiding the Correction text
         self.sending_to_word_editor(text_not_html, "question")
+        self.button_validation.visible = False
 
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
         text_not_html = self.question_row['correction']
         self.rich_text_question.visible = False      # Hiding the question text
         self.sending_to_word_editor(text_not_html, "correction")
+        self.button_validation.visible = False
 
     def sending_to_word_editor(self, text_not_html, type_text, **event_args):
         # ajout des sauts de ligne HTML (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
@@ -223,8 +233,20 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.word_editor_1.text = html_text
         self.word_editor_1.form_show() # will execute the show event in Word_Editor form
         self.word_editor_1.visible = True  # 'Word_Editor' component display
-       
-        #self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+
+        if self.word_editor_1.param1 == "question":
+            self.rich_text_correction.visible = True      # display the Correction Rich Text
+            self.rich_text_question.visible = False       # display the Question Rich Text
+            self.rich_text_question.content = html_text
+            
+        if self.word_editor_1.param1 == "correction":
+            self.rich_text_correction.visible = False      # display the Correction Rich Text
+            self.rich_text_question.visible = True       # display the Question Rich Text
+            self.rich_text_correction.content = html_text
+
+    # handler por afficher le bouton validation uniqt qd text est modifié
+    def _arm_editor_ready(self, **e):
+        self._editor_ready = True    
 
    
 
@@ -280,15 +302,19 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):                                         # =============  VALIDATION
         """This method is called when the button is clicked"""
-        self.rich_text_question.visible = True       # display the Question Rich Text
-        self.rich_text_correction.visible = True      # display the Correction Rich Text
+        
+        
         
         mode = self.word_editor_1.param1       # mode 'modif' /  'creation' 
         html = self.word_editor_1.text
         #self.rich_text_correction.scroll_into_view()
         if mode == "question":
+            self.rich_text_correction.visible = True      # display the Correction Rich Text
+            self.rich_text_question.visible = False       # display the Question Rich Text
             self.rich_text_question.content = html
         if mode == "correction":
+            self.rich_text_correction.visible = False      # display the Correction Rich Text
+            self.rich_text_question.visible = True       # display the Question Rich Text
             self.rich_text_correction.content = html
         if mode == "creation":
             self.button_creer_click(self.text)

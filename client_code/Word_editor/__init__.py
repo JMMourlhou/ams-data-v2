@@ -219,9 +219,9 @@ class Word_editor(Word_editorTemplate):
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
         editor.innerHTML = self.text or ""
-        
         self._initial_text = editor.innerHTML
         self._text_is_modified = False
+        self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)
         
         
@@ -358,9 +358,13 @@ class Word_editor(Word_editorTemplate):
     # TIMER 2 — auto-save backup every 1 second
     # ====================================================================================
     def timer_2_tick(self, **event_args):
-        editor = anvil.js.window.document.getElementById("editor")
-        if not editor:
+        
+        if not self._ready_emitted:
+            self._ready_emitted = True
+            self.raise_event("x-editor-ready")
             return
+            
+        editor = anvil.js.window.document.getElementById("editor")    
         self.text = editor.innerHTML
         
         if self._text_is_modified:
@@ -369,8 +373,10 @@ class Word_editor(Word_editorTemplate):
         # -------- text modified pour la 1ere fois, pour afficher le bt_validation? --------
         if self.text != self._initial_text:
             self._text_is_modified = True
-            #alert("texte change")
-            self.raise_event("x-text-changed-state", has_changes=True)
+            alert("texte change")
+            # Event raised and must be caught in mother form by:
+            #    self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
+            self.raise_event("x-text-changed-state", has_changes=True)  
             
         # Envoie le texte au parent toutes les secondes pour backup
         self.raise_event("x-timer_text_backup", text=self.text)

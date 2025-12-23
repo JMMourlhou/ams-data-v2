@@ -71,19 +71,29 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         text_editor.param1 = mode                    # mode 'modif'
         text_editor.top_ligne_1 = title              # pdf title when download 
         text_editor.top_ligne_2 = sub_title          # pdf sub_title when download 
-        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
-        #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
+        #text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        text_editor.set_event_handler("x-text-changed-state", self._on_text_changed_state)
         self.content_panel.add_component(text_editor)
     """
     #===================================================================================================================================================
     RETOUR DU WORD EDITOR  
     # ==================================================================================================================================================
     """
+    def _on_text_changed_state(self, sender, **event_args):
+        self.button_validation.visible = True
+        self.param1 = sender.param1
+        self.text = sender.text
+        alert(sender.text)
+        
+    def button_validation_click(self, sender, **event_args):
+        """This method is called when the button is clicked"""
+        self.handle_click_fin_saisie(sender)   
+        
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
-        mode = sender.param1       # mode 'modif' /  'creation' 
-        self.text = sender.text    # texte html de lévenement
+        mode = self.param1       # mode 'modif' /  'creation' 
+        #self.text = sender.text    # texte html de lévenement
         if mode == "modif":
             self.ecriture_en_modif()
         if mode == "creation":
@@ -220,6 +230,8 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         """This method is called when the button is clicked"""
         from ..Parametres import Parametres
         open_form("Parametres")   
+
+    
 
     
  
