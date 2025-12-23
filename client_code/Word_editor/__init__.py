@@ -20,11 +20,6 @@ class Word_editor(Word_editorTemplate):
 
         # Anvil initialisation
         self.init_components(**properties)
-        
-        # Texte initial (chargé ou sauvegardé)
-        self._initial_text = ""
-        # Indique si le texte a été modifié
-        self._text_is_modified = False
 
         """ ===============================================================
         Parameteres passed through the 'Word_Editor' properties
@@ -223,19 +218,12 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
-        print(self.text)
-        editor.innerHTML = f"<p>{self.text}</p>"
-
-    # ------------------------------------------------------------------
-    # Appelée par la forme mère / surveilance si texte changé 
-    # ------------------------------------------------------------------
-    def set_initial_html(self, html):
-        self.text = html or ""
-
-        self._initial_text = self.text
+        editor.innerHTML = self.text or ""
+        
+        self._initial_text = editor.innerHTML
         self._text_is_modified = False
-
         self.raise_event("x-text-changed-state", has_changes=False)
+        
         
     # ====================================================================================
     # BASIC FORMATTING ACTIONS
@@ -371,24 +359,28 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def timer_2_tick(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
-        anvil.js.window.cleanEditorHTML(editor)
+        if not editor:
+            return
         self.text = editor.innerHTML
-
-        # -------- text modified ? --------
-        is_modified_now = (self.text != self._initial_text)
-        if is_modified_now != self._text_is_modified:
-            self._text_is_modified = is_modified_now
-            self.raise_event("x-text-changed-state", has_changes=is_modified_now)
+        
+        if self._text_is_modified:
+            return  # on ne redétecte jamais
             
-        # Envoie le texte au parent
+        # -------- text modified pour la 1ere fois, pour afficher le bt_validation? --------
+        if self.text != self._initial_text:
+            self._text_is_modified = True
+            #alert("texte change")
+            self.raise_event("x-text-changed-state", has_changes=True)
+            
+        # Envoie le texte au parent toutes les secondes pour backup
         self.raise_event("x-timer_text_backup", text=self.text)
-        # Note lea forme parent test l'event et reçoit le text avec ce scrip
+        # Note lea forme parent test l'event et reçoit le text avec ce script
         """
         Ee Init:
             def __init__(self, **properties):
                 self.init_components(**properties)
         
-                # handler sur l'INSTANCE word_editor_1  (siword_editor a été copy_glissé en tant que component)
+                # handler sur l'INSTANCE word_editor_1  (si word_editor a été copy_glissé en tant que component)
                 self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
 
             
@@ -409,18 +401,7 @@ class Word_editor(Word_editorTemplate):
             self.button_valid.foreground = "theme:On Primary"
             self.button_validation_copy.foreground = "theme:On Primary"
 
-    # ------------------------------------------------------------------
-    # called by mother form after a successed backup
-    # ------------------------------------------------------------------
-    def mark_saved(self):
-        self._initial_text = self.text or ""
-
-        if self._text_is_modified:
-            self._text_is_modified = False
-            self.raise_event(
-                "x-text-changed-state",
-                has_changes=False
-            )
+   
             
     # ====================================================================================
     # PDF EXPORT using uplink "render_pdf"
@@ -432,7 +413,6 @@ class Word_editor(Word_editorTemplate):
 
         # Clean HTML before sending to PDF engine
         anvil.js.window.cleanEditorHTML(editor)
-
         inner_html = editor.innerHTML
 
         # Minimal CSS for PDF

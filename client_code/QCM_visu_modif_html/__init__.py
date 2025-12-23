@@ -25,6 +25,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self._last_saved_text = ""
         self._last_save_ts = 0
         self._min_delay_sec = 10   # 1 écriture max toutes les 10 s
+        
         # 2- handler sur l'INSTANCE word_editor_1  (si word_editor a été copy_glissé en tant que component)
         self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
         # =========================================================================================
@@ -126,11 +127,9 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.button_validation_click(True)  
 
     # ------------------------------------------------------------------
-    # Réaction aux modifications du texte
+    # Réaction aux modifications du texte : on affiche lebt Validation
     # ------------------------------------------------------------------
     def _on_text_changed_state(self, **e):
-        has_changes = e.get("has_changes", False)
-        self.button_validation.visible = has_changes
         self.button_validation.visible = True
         
             
@@ -227,36 +226,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
        
         #self.word_editor_1.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
 
-    """
-    #===================================================================================================================================================
-    RETOUR DU WORD EDITOR  
-    # ==================================================================================================================================================
-    """
-    # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
-    def handle_click_fin_saisie(self, **event_args):
-        # sender.text contains the 'Word_editor'form's HTML text
-        mode = self.word_editor_1.param1       # mode 'modif' /  'creation' 
-        #alert(sender.text)
-        #alert(mode)
-        
-
-        html = self.word_editor_1.text
-
-        self.rich_text_question.visible = True       # display the Question Rich Text
-        self.rich_text_correction.visible = True      # display the Correction Rich Text
-        self.rich_text_correction.scroll_into_view()
-        if mode == "question":
-            self.rich_text_question.content = html
-        if mode == "correction":
-            self.rich_text_correction.content = html
-        self.button_modif_color()
-        if mode == "creation":
-            self.button_creer_click(self.text)
-        if mode == "exit":
-            self.button_retour_click()
-    """
-    Fin RETOUR DU WORD EDITOR  
-    """  
+   
 
     def file_loader_photo_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -265,11 +235,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.image_photo.source = thumb_pic
         self.button_modif_color()
 
-    def button_modif_color(self, **event_args):                # ========================== Changes
-        self.button_validation.visible = True
-        #self.button_validation.enabled = True
-        #self.button_validation.background = "red"
-        #self.button_validation.foreground = "yellow"
+    
 
     def rep1_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
@@ -314,9 +280,19 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):                                         # =============  VALIDATION
         """This method is called when the button is clicked"""
+        self.rich_text_question.visible = True       # display the Question Rich Text
+        self.rich_text_correction.visible = True      # display the Correction Rich Text
         
-        self.handle_click_fin_saisie()
-        
+        mode = self.word_editor_1.param1       # mode 'modif' /  'creation' 
+        html = self.word_editor_1.text
+        #self.rich_text_correction.scroll_into_view()
+        if mode == "question":
+            self.rich_text_question.content = html
+        if mode == "correction":
+            self.rich_text_correction.content = html
+        if mode == "creation":
+            self.button_creer_click(self.text)
+            
         rep_multi_stagiaire = ""                              # CUMUL de la codif des réponses du stagiaire
         if self.type_question == "V/F":
             if self.rep1.checked is True:   # question V/F
@@ -379,7 +355,6 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             # j'initialise la forme principale
         else:
             # --- Réinitialisation état ---
-            self.word_editor_1.mark_saved()
             if sov_auto is False: 
                 # Click manuel sur bt validation on quitte
                 # alert('on retourne')
