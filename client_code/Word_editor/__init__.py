@@ -356,8 +356,22 @@ class Word_editor(Word_editorTemplate):
         editor = anvil.js.window.document.getElementById("editor")
         anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
-        self.raise_event("x-timer_text_backup")
+        # Envoie le texte au parent
+        self.raise_event("x-timer_text_backup", text=self.text)
+        # Note lea forme parent test l'event et reçoit le text avec ce scrip
+        """
+        Ee Init:
+            def __init__(self, **properties):
+                self.init_components(**properties)
+        
+                # handler sur l'INSTANCE word_editor_1  (siword_editor a été copy_glissé en tant que component)
+                self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
 
+            
+            def _backup_word_editor(self, **e):
+                # Récupéreration du html envoyé
+                html = e.get("text")
+        """
 
     # ====================================================================================
     # TIMER 3 — gentle blinking of validation button

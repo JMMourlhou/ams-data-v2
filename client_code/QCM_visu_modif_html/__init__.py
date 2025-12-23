@@ -6,12 +6,22 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil.js import window
+import time
 
 class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def __init__(self, qcm_row, question_row, nb_questions, **properties):  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        # Any code you write here will run before the form opens.
+        #=========================================================================================
+        # POUR AUTO SAUVEGARDE DU TEXTE:
+        # 1 --- Anti-spam ---
+        self._last_saved_text = ""
+        self._last_save_ts = 0
+        self._min_delay_sec = 10   # 1 écriture max toutes les 10 s
+        # 2- handler sur l'INSTANCE word_editor_1  (si word_editor a été copy_glissé en tant que component)
+        self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
+        # =========================================================================================
+
         self.qcm_row = qcm_row              # QCM descro row
         self.question_row = question_row    # la question row
 
@@ -83,8 +93,31 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.rich_text_question.visible = False
         self.word_editor_1.scroll_into_view()
         self.button_question_click() # on affiche la question
-        
-                
+
+    # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2 
+    def _backup_word_editor(self, **e):
+        html = e.get("text")
+        if not html:
+            return
+    
+        # --- 1) rien n'a changé ---
+        if html == self._last_saved_text:
+            return
+    
+        # --- 2) anti-spam temporel ---
+        now = time.time()
+        if now - self._last_save_ts < self._min_delay_sec:
+            return
+    
+        # --- 3) sauvegarde ---
+        self._last_saved_text = html
+        self._last_save_ts = now
+    
+        self.word_editor_1.text = html
+    
+        # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas 
+        self.button_validation_click(True)  
+
     
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -217,10 +250,10 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     
 
     def button_modif_color(self, **event_args):                # ========================== Changes
-        self.button_modif.visible = True
-        self.button_modif.enabled = True
-        self.button_modif.background = "red"
-        self.button_modif.foreground = "yellow"
+        self.button_validation.visible = True
+        self.button_validation.enabled = True
+        self.button_validation.background = "red"
+        self.button_validation.foreground = "yellow"
 
     def rep1_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
@@ -262,7 +295,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.button_modif_color()
         
 
-    def button_modif_click(self, **event_args):                                         # =============  VALIDATION
+    # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
+    def button_validation_click(self, sov_auto=False, **event_args):                                         # =============  VALIDATION
         """This method is called when the button is clicked"""
 
         rep_multi_stagiaire = ""                              # CUMUL de la codif des réponses du stagiaire
@@ -315,8 +349,15 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             return
             # j'initialise la forme principale
         else:
-            self.button_retour_click()
-
+            if sov_auto is False: 
+                # Click sur bt validation on quitte
+                alert('on retourne')
+                self.button_retour_click()
+            else:
+                print("on a sauvé atomatiqt ")
+                # sovegarde auto, on ne fait rien
+                pass
+                
     def button_retour_click(self, **event_args):                                        # =============  RETOUR
         """This method is called when the button is clicked"""
         qcm_descro_nb = self.qcm_row
