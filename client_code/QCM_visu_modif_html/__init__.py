@@ -212,7 +212,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         # self.image_photo.source = file
         thumb_pic = anvil.image.generate_thumbnail(file, 320)
         self.image_photo.source = thumb_pic
-        elf.button_modif_color()
+        self.button_modif_color()
 
     
 
