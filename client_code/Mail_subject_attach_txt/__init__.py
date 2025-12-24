@@ -8,6 +8,7 @@ from anvil.tables import app_tables
 import anvil.media
 from ..AlertHTML import AlertHTML
 from ..AlertConfirmHTML import AlertConfirmHTML
+from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
 
 # emails_liste liste des mails
 # ref_model contient lea ref du modele de mail si vient de qcm ou formul satisf ou recherche etc...du permet de court circuiter la drop down du choix du modèle 
@@ -20,8 +21,8 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self.old_stagiaires = old_stagiaires
         self.ref_model = ref_model
         self.emails_liste = emails_liste # liste des mails
-        
-         # Récupération des icones ds files pour afficher les icones en template 16
+       
+        # Récupération des icones ds files pour afficher les icones en template 16
         self.icone_xls = app_tables.files.get(path="logo_xls.jpg")['file'] # lit la colonne 'file', media object
         self.icone_doc = app_tables.files.get(path="logo word.jpg")['file']
         self.icone_ppt = app_tables.files.get(path="logo_ppt.jpg")['file']
@@ -130,13 +131,20 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
     """
     def call_word_editor(self, content_text_html, mode):
         alert(mode)
-        from ..Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
-        title = "*** Nouveau Modèle de Mail ***"
-        sub_title = ""
+        
+        
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
         text_editor = Word_editor()
-        text_editor.text = ""                        # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
-        text_editor.param1 = mode            # mode 'creation'
+        if mode == "creation":
+            title = "*** Nouveau Modèle de Mail ***"
+            sub_title = ""
+            text_editor.text = ""                        # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+        else:
+            title = "*** Modèle de Mail ***"
+            sub_title = ""
+            text_editor.text = content_text_html
+            
+        text_editor.param1 = mode                    # mode 'creation' / "modif"
         text_editor.top_ligne_1 = title              # pdf title when download 
         text_editor.top_ligne_2 = sub_title          # pdf sub_title when download 
 
@@ -159,12 +167,14 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
     """
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
     def _on_text_changed_state(self, sender, **e):
+        alert("change")
         if not self._editor_ready:
             return  # on ignore les events de chargement
             
         self.mode = sender.param1       # mode 'modif' /  'creation' 
         self.text = sender.text    # texte html de lévenement
         self.button_validation.visible = True 
+       
         """
         if mode == "modif":
             self.button_modif_click(self.text)
@@ -182,7 +192,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
         # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
         with anvil.server.no_loading_indicator:
-            self.button_validation(sender.text)  # auto sov: TRUE
+            self.button_validation_click(sender.text) 
     """
     Fin RETOUR DU WORD EDITOR  
     """  
