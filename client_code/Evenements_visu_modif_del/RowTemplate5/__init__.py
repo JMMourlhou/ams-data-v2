@@ -13,8 +13,8 @@ class RowTemplate5(RowTemplate5Template):
 
         # Any code you write here will run before the form opens.
         #self.f = get_open_form()   # Récup du nom de la forme mère
-        if self.item['auto_sov'] is True:
-            self.button_date.foreground = "red"
+        #if self.item['auto_sov'] is True:
+        #    self.button_date.foreground = "red"
         self.button_date.text = self.item['date']
         self.button_mot_clef.text = self.item['mot_clef']
         self.button_lieu.text = self.item['lieu_text']

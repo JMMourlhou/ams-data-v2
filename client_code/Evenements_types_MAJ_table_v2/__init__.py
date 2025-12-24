@@ -13,6 +13,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
     def __init__(self, **properties):  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        
         # Any code you write here will run before the form opens.
         self.text_box_1.placeholder = "Nom du nouveau type d'évenement"
         self.text_box_3.placeholder = "1er message ex: 'Nouvel xxx'"
@@ -78,6 +79,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         #text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
         text_editor.set_event_handler("x-text-changed-state", self._on_text_changed_state)
         # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
+        self._editor_ready = False
         text_editor.set_event_handler("x-editor-ready", self._arm_editor_ready)
         # récup du text chaque seconde, repris lors de la validation
         text_editor.set_event_handler("x-timer_text_backup", self._backup_word_editor)
@@ -100,6 +102,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
 
     # handler por afficher le bouton validation uniqt qd text est modifié
     def _arm_editor_ready(self, **e):
+        # ! self._editor_ready = False  à mettre en init
         self._editor_ready = True    
         
     def button_validation_click(self, sender, **event_args):

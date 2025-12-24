@@ -11,7 +11,7 @@ from . import French_zone_server_side
 
 global timing
 timing = French_zone_server_side.time_french_zone()
-print(f"time: {timing}")
+#print(f"time: {timing}")
 
 @anvil.server.callable
 def add_mail_model(row_type,

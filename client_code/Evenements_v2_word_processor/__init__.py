@@ -20,7 +20,7 @@ from ..AlertConfirmHTML import AlertConfirmHTML
 #   Pb rencontré: session expired si la saisie est intérrompue
 # 2 Solutions implémentées:  - Un 'ping' sur le serveur toutes les 5 minutes (300" timer 1) empêche la session d'expirer (sur un ordinateur)
 #                                mais pas sur un tel qd l'écran s'étteint....
-#                            - Une sauvegarde auto toutes les 15 secondes (timer 2), ce qui permet de ne pas perdre bp de données si expired.
+#                            - Une sauvegarde auto toutes les 1 secondes (timer 2), ce qui permet de ne pas perdre bp de données si expired.
 
 
 class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
@@ -54,8 +54,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
 
         # Test si ouverture en mode Création ou modif (self.to_be_modified_row = None si création)  Initialisé en init
         self.to_be_modified_row = to_be_modified_row
-        if self.to_be_modified_row is None:
-            # Creation
+        if self.to_be_modified_row is None:             # Creation d'un évenement
+            
             self.mode = "creation"
             self.id = None
             self.text_area_mot_clef.text = ""
@@ -82,7 +82,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.date1 = datetime(int(yy), int(mm), int(dd), int(hh), int(mi))  # réutilisée pour le nom des images
             self.date_picker_1.pick_time = True
             self.date_picker_1.date = self.date1
-        else:
+        else:                                                                                            # MODIF d'un évenement
             # Modif à partir du row passé en init par la form Evenements_visu_modif_del
             self.mode = "modif"
             # Test si ce row n'avait pas été validé
@@ -188,7 +188,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     =============================================================================================================================================      CALL FOR THE WORD EDITOR
     """
     def call_word_editor(self, content_text_html):
-        evnt = self.drop_down_event.selected_value
+        evnt = self.drop_down_event.selected_value  # (réunion, incident ...)
         self.flow_panel_drop_type_evnt.visible = False  # cache le drop down type d'evnt
         title = f"Notes prises sur un évenement: {evnt} du {self.date_picker_1.date.strftime('%d/%m/%Y')}"
         sub_title = f"Mot clé: {self.text_area_mot_clef.text}"
@@ -197,20 +197,58 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         text_editor.text = content_text_html   # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
         text_editor.top_ligne_1 = title              # pdf title when download 
         text_editor.top_ligne_2 = sub_title          # pdf sub_title when download 
-        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        
+        if self.origine == "modif":
+            text_editor.param1 = "modif"
+        else:
+            text_editor.param1 = "creation"
+        #text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        
+        # y a til eu un changement dans le texte ? si oui affiche le bt validation
+        text_editor.set_event_handler("x-text-changed-state", self._on_text_changed_state)
+        
+        # attendre que la forme fille soit pr^te pour gérer le bt_validation
+        self._editor_ready = False
+        text_editor.set_event_handler("x-editor-ready", self._arm_editor_ready)
+        
+        # récup du text chaque seconde, repris lors de la validation
         text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
         self.content_panel.add_component(text_editor)
     """
     =================================================================================================================================================================================
+    # Réaction aux modifications du texte : on affiche le bt Validation
+    # ------------------------------------------------------------------
     """
+    def _on_text_changed_state(self, sender, **e):
+        if not self._editor_ready:
+            return  # on ignore les events de chargement
+        self.button_validation.visible = True   
+        self.mode = sender.param1   # création / modif
+        self.texte_a_sauver = sender.text
 
+    # handler por afficher le bouton validation uniqt qd text est modifié
+    # ! self._editor_ready = False en création de la forme
+    def _arm_editor_ready(self, **e):
+        self._editor_ready = True    
+
+    # Event raised every 1 sec: Automatic backup of the text in Word_editor form
+    def timer_text_backup(self, sender, **event_args):
+        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
+        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
+        with anvil.server.no_loading_indicator:
+            self.validation(True, self.id, sender.text)  # auto sov: TRUE
+
+    def button_validation_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.validation(False, self.id, self.texte_a_sauver)  # auto sov: TRUE
+    
     def text_area_commentaires_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
         #self.button_validation.visible = True
         # self.button_validation_1.visible = True
     
 
-    # validation:   auto_sov True si sauvegarde auto tte les 15", appelé par timer_2_tick
+    # validation:   auto_sov True si sauvegarde auto tte les 1", appelé par timer_2_tick
     def validation(self, auto_sov=False, id=None, html_text="", **event_args):
         """This method is called when the button is clicked"""
         if self.mode == "creation":
@@ -423,12 +461,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
 
     # =================================================================================================  RAISED EVENTS TREATMENTS
     
-    # Event raised every 15 sec: Automatic backup of the text in Word_editor form
-    def timer_text_backup(self, sender, **event_args):
-        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
-        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
-        with anvil.server.no_loading_indicator:
-            self.validation(True, self.id, sender.text)  # auto sov: TRUE
+
             
    
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form
@@ -443,6 +476,8 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.text_area_notes.visible = True
         else:
             self.text_area_notes.visible = False
+
+    
 
    
    

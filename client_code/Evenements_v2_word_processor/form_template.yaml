@@ -274,6 +274,11 @@ components:
     name: button_visu_html
     properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:On Primary Container', icon: 'fa:binoculars', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: html, tooltip: '', underline: false, visible: true}
     type: Button
+  - event_bindings: {click: button_validation_click}
+    layout_properties: {grid_position: 'FATAJR,XOIKQG'}
+    name: button_validation
+    properties: {background: 'theme:Error', foreground: 'theme:Tertiary', text: Validation, visible: false}
+    type: Button
   layout_properties: {grid_position: 'BMRWJG,ZTASWK'}
   name: outlined_card_main
   properties:

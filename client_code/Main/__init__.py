@@ -337,7 +337,6 @@ class Main(MainTemplate):
     # BT admin, Visu, maj, modif, del Saisie évenements
     def button_events_click(self, **event_args):
         """This method is called when the button is clicked"""
-        
         from ..Evenements_visu_modif_del import Evenements_visu_modif_del
         open_form('Evenements_visu_modif_del')
        
