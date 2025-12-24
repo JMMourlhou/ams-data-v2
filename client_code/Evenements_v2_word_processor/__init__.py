@@ -212,7 +212,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         text_editor.set_event_handler("x-editor-ready", self._arm_editor_ready)
         
         # récup du text chaque seconde, repris lors de la validation
-        text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
+        text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 1 sec, timer_2 de la form Word_editor
         self.content_panel.add_component(text_editor)
     """
     =================================================================================================================================================================================

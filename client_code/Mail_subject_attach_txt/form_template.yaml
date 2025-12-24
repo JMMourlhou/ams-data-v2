@@ -98,15 +98,15 @@ components:
           name: file_loader_attachments
           properties: {foreground: 'theme:Tertiary', text: Attachement(s)}
           type: FileLoader
-        - event_bindings: {click: button_modif_click}
+        - event_bindings: {click: button_validation_click}
           layout_properties: {}
-          name: button_modif
+          name: button_validation
           properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: 15, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: Sauver ce modèle, tooltip: '', underline: false, visible: false}
           type: Button
         - event_bindings: {click: button_retour_click}
           layout_properties: {}
           name: button_retour
-          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Retour, visible: false}
+          properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Retour, visible: true}
           type: Button
         - event_bindings: {click: button_sending_click}
           name: button_sending
