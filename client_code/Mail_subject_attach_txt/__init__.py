@@ -167,7 +167,6 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
     """
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
     def _on_text_changed_state(self, sender, **e):
-        alert("change")
         if not self._editor_ready:
             return  # on ignore les events de chargement
             
@@ -216,12 +215,13 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
                 alert("Modèle de mail non créé")
             else:
                 alert("Modèle de mail non modifié")
-
+        """
         #self.drop_down_type_mails_change()
         self.column_panel_detail.visible = False   # effact du panel de création/modif
         self.button_validation.visible = False
         self.file_loader_attachments.visible = True
         self.drop_down_type_mails_change(self.drop_down_type_mails.selected_value)   
+        """
         
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""

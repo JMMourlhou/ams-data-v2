@@ -85,7 +85,15 @@ class list_modeles(list_modelesTemplate):
         text_editor.param1 = mode              # mode 'modif'
         text_editor.top_ligne_1 = title              # pdf title when download 
         text_editor.top_ligne_2 = sub_title          # pdf sub_title when download 
-        text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        # y a til eu un changement dans le texte ? si oui affiche le bt validation
+        text_editor.set_event_handler("x-text-changed-state", self._on_text_changed_state)
+
+        # attendre que la forme fille soit pr^te pour gérer le bt_validation
+        self._editor_ready = False
+        text_editor.set_event_handler("x-editor-ready", self._arm_editor_ready)
+
+        #text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
+        text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 1 sec, timer_2 de la form Word_editor
         #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
         self.f.content_panel.add_component(text_editor)
         
@@ -94,18 +102,32 @@ class list_modeles(list_modelesTemplate):
     RETOUR DU WORD EDITOR  
     # ==================================================================================================================================================
     """
+        
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
-    def handle_click_fin_saisie(self, sender, **event_args):
-        # sender.text contains the 'Word_editor'form's HTML text
-        mode = sender.param1       # mode 'modif' /  'creation' 
+    def _on_text_changed_state(self, sender, **e):
+        if not self._editor_ready:
+            return  # on ignore les events de chargement
+
+        self.mode = sender.param1       # mode 'modif' /  'creation' 
         self.text = sender.text    # texte html de lévenement
-        if mode == "modif":
-            self.f.button_modif_click(self.text)
-        if mode == "exit":
-            # réaffichage de la forme 'Mail_subject_attach_txt'
-            open_form('Mail_subject_attach_txt', self.f.label_emails_liste.text, self.f.drop_down_type_mails.selected_value['ref'])
-            
-            #self.f.button_annuler_click()
+        self.f.button_validation.visible = True 
+
+        
+        if self.mode == "modif":
+            self.button_modif_click(self.text)
+        
+
+    # handler por afficher le bouton validation uniqt qd text est modifié
+    # ! self._editor_ready = False en création de la forme
+    def _arm_editor_ready(self, **e):
+        self._editor_ready = True    
+
+    # Event raised every 1 sec: Automatic backup of the text in Word_editor form
+    def timer_text_backup(self, sender, **event_args):
+        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
+        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
+        with anvil.server.no_loading_indicator:
+            self.f.button_validation_click(sender.text) 
     """
     Fin RETOUR DU WORD EDITOR  
     """  
