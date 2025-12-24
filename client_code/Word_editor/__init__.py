@@ -364,21 +364,21 @@ class Word_editor(Word_editorTemplate):
             self.raise_event("x-editor-ready")
             return
             
+        # toutes les secondes self.text proriété est mise àjour    
         editor = anvil.js.window.document.getElementById("editor")    
         self.text = editor.innerHTML
         
-        if self._text_is_modified:
-            return  # on ne redétecte jamais
-            
-        # -------- text modified pour la 1ere fois, pour afficher le bt_validation? --------
-        if self.text != self._initial_text:
-            self._text_is_modified = True
-            alert("texte change")
-            # Event raised and must be caught in mother form by:
-            #    self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
-            self.raise_event("x-text-changed-state", has_changes=True)  
+        if not self._text_is_modified:  # on ne redétecte jamais cat Bt validation visible en forme mère
+            # -------- text modified pour la 1ere fois, pour afficher le bt_validation? --------
+            if self.text != self._initial_text:
+                self._text_is_modified = True
+                print("Word_Editor; Changt de texte détecté, bt validation sera affiché ")
+                # Event raised and must be caught in mother form by:
+                #    self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
+                self.raise_event("x-text-changed-state", has_changes=True)  
             
         # Envoie le texte au parent toutes les secondes pour backup
+        #    ou pour maj du texte à sauver lors du bt_validation click 
         self.raise_event("x-timer_text_backup", text=self.text)
         # Note lea forme parent test l'event et reçoit le text avec ce script
         """

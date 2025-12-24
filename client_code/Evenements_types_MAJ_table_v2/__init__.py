@@ -32,7 +32,11 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
             new_row.row_to_be_deleted = None
             new_row.set_event_handler('x-modif', self.modif)
             self.content_panel_events_rows.add_component(new_row)
-
+            
+        # Bouton Validation caché tant que rien n'est modifié
+        self.button_validation.visible = False
+        self._editor_ready = False
+        
 
     # Création d'un nouveau type d'évenemnt
     def button_add_click(self, **event_args):
@@ -73,21 +77,43 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         text_editor.top_ligne_2 = sub_title          # pdf sub_title when download 
         #text_editor.set_event_handler('x-fin_saisie', self.handle_click_fin_saisie)   # Qd bouton 'Fin' de 'Word_editor'form is clicked
         text_editor.set_event_handler("x-text-changed-state", self._on_text_changed_state)
+        # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
+        text_editor.set_event_handler("x-editor-ready", self._arm_editor_ready)
+        # récup du text chaque seconde, repris lors de la validation
+        text_editor.set_event_handler("x-timer_text_backup", self._backup_word_editor)
         self.content_panel.add_component(text_editor)
     """
     #===================================================================================================================================================
-    RETOUR DU WORD EDITOR  
+    Modules de gestion des evenements 
     # ==================================================================================================================================================
     """
-    def _on_text_changed_state(self, sender, **event_args):
-        self.button_validation.visible = True
+    # ------------------------------------------------------------------
+    # Réaction aux modifications du texte : on affiche le bt Validation
+    # ------------------------------------------------------------------
+    def _on_text_changed_state(self, sender, **e):
+        if not self._editor_ready:
+            return  # on ignore les events de chargement
+        self.button_validation.visible = True   
         self.param1 = sender.param1
-        self.text = sender.text
-        alert(sender.text)
+        #self.text = sender.text
+        #alert(sender.text)
+
+    # handler por afficher le bouton validation uniqt qd text est modifié
+    def _arm_editor_ready(self, **e):
+        self._editor_ready = True    
         
     def button_validation_click(self, sender, **event_args):
         """This method is called when the button is clicked"""
-        self.handle_click_fin_saisie(sender)   
+        self.handle_click_fin_saisie(sender) 
+        
+    # ================================================================================    self.backed_up_text_each_sec
+    # Backup du texte chaque seconde
+    # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2 
+    def _backup_word_editor(self, **e):
+        self.backed_up_text_each_sec = e.get("text")
+        if not self.backed_up_text_each_sec:
+            return
+    # ================================================================================
         
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
     def handle_click_fin_saisie(self, sender, **event_args):
@@ -99,7 +125,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         if mode == "creation":
             self.ecriture_en_creation()
     """
-    Fin RETOUR DU WORD EDITOR  
+    Fin des modules de gestion des évnts du Word_editor
     """
         
     def ecriture_en_creation(self, **event_args):
@@ -149,10 +175,10 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
                 "add_type_evnt",
                 self.text_box_1.text,  # type devnt
                 nb,  # code (numérique)
-                self.text_box_3.text,       # msg_1
-                self.text_box_4.text,       # msg_2
-                self.text,                  # text_initial HTML
-                self.check_box_1.checked,   # mot clé daté ?  True/ False
+                self.text_box_3.text,            # msg_1
+                self.text_box_4.text,            # msg_2
+                self.backed_up_text_each_sec,    # text HTML sauvé cha seconde voir fonction _backup_word_editor
+                self.check_box_1.checked,        # mot clé daté ?  True/ False
             )
             if result is not True:
                 alert("ERREUR, Ajout non effectué !")
@@ -162,6 +188,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         open_form("Evenements_types_MAJ_table_v2")
 
     
+            
     def ecriture_en_modif(self, **event_args):   
         # tests sur le code du type d'évenement -----------------------------    
         # Text_box_2 (code) vide ? 
@@ -211,7 +238,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
                                        nb,
                                        self.text_box_3.text,
                                        self.text_box_4.text,
-                                       self.text,
+                                       self.backed_up_text_each_sec,       # le texte modifié, sauvé ch seconde ds la propriété du text_editor créé
                                        self.check_box_1.checked               
                                       )
             if result is not True:

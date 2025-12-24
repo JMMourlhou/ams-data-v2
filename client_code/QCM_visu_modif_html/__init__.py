@@ -27,7 +27,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self._last_save_ts = 0
         self._min_delay_sec = 10   # 1 écriture max toutes les 10 s
         
-        # 2- handler sur l'INSTANCE word_editor_1  (si word_editor a été copy_glissé en tant que component)
+        # 2- handler sur l'INSTANCE word_editor_1  raised each sec to get the updated text
         self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
         # =========================================================================================
         # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
@@ -132,7 +132,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.button_validation_click(True)  
 
     # ------------------------------------------------------------------
-    # Réaction aux modifications du texte : on affiche lebt Validation
+    # Réaction aux modifications du texte : on affiche le bt Validation
     # ------------------------------------------------------------------
     def _on_text_changed_state(self, **e):
         if not self._editor_ready:
