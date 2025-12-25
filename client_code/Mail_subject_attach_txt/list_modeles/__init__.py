@@ -18,7 +18,7 @@ class list_modeles(list_modelesTemplate):
         from anvil.js import window # to gain access to the window object
         screen_size = window.innerWidth
         if screen_size < 800:
-            self.button_selection.text = ""
+            pass
 
 
         

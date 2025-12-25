@@ -265,9 +265,4 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         except Exception as e:
             AlertHTML.error("Erreur :", f"Erreur lors d'envoi de mail{e}")
 
-    @handle("text_box_subject_detail", "pressed_enter")
-    def text_box_subject_detail_pressed_enter(self, **event_args):
-        """This method is called when the user presses Enter in this text box"""
-        pass
-       
         
