@@ -341,7 +341,6 @@ class Main(MainTemplate):
         open_form('Evenements_visu_modif_del')
        
         
-        
     # BT stagiaire QCM
     def button_qcm_click(self, **event_args):
         from ..QCM_visu_modif_ST_Main import QCM_visu_modif_ST_Main
@@ -532,9 +531,12 @@ class Main(MainTemplate):
         )
 
     def button_video_test_click(self, **event_args):
-        """This method is called when the button is clicked"""
         from ..Video_test import Video_test
         open_form("Video_test")  
+
+    def button_modeles_mails_click(self, **event_arg):
+        from ..Mail_subject_attach_txt import Mail_subject_attach_txt
+        open_form("Mail_subject_attach_txt")
         
 
 

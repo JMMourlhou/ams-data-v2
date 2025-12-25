@@ -93,12 +93,6 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         r=alert("Confirmez-vous l'envoi ?",dismissible=False, buttons=[("oui",True),("non",False)])
         if r :   # Oui    
             liste_des_attachements = list(self.dico_attachements.keys()) # extraction des clefs du dico des attachements
-            """
-            print("Avant envoi server pour mailing")
-            print("email liste:",self.emails_liste)
-            print("subject:",self.text_box_subject_detail.text)
-            print("texte: ",self.text_area_text_detail.text)
-            """
 
             self.task_mail = anvil.server.call("run_bg_task_mail",self.emails_liste, self.text_box_subject_detail.text, self.text_area_text_detail.text, liste_des_attachements, self.old_stagiaires)
             self.timer_1.interval=0.5
@@ -106,7 +100,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
 
     def text_box_subject_detail_change(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
-        self.button_modif.visible = True
+        self.button_validation.visible = True
         
     def text_area_text_detail_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
@@ -121,8 +115,9 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self.file_loader_attachments.visible = False
         self.button_sending.visible = False
         self.mode_creation = True
-        self.text_box_subject_detail.text = ""
-        self.text_area_text_detail.text = ""
+        self.text_box_subject_detail.text = "Entrez ici le Nom de ce modèle"
+        self.text_box_subject_detail.focus()
+       
         # appel du word editor
         self.call_word_editor("Entrer le nouveau texte ici", 'creation')
 
@@ -130,15 +125,12 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
     =============================================================================================================================================      CALL FOR THE WORD EDITOR
     """
     def call_word_editor(self, content_text_html, mode):
-        alert(mode)
-        
-        
         # INSERTION TEXT-EDITOR form 'Word_editor'  (voir import)
         text_editor = Word_editor()
         if mode == "creation":
             title = "*** Nouveau Modèle de Mail ***"
             sub_title = ""
-            text_editor.text = ""                        # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
+            text_editor.text = "Le prénom est déjà prévu"                        # .text: propriété crée ds la forme student_row (col de gauche ide anvil, 'Edit properties and event')
         else:
             title = "*** Modèle de Mail ***"
             sub_title = ""
@@ -174,12 +166,7 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self.text = sender.text    # texte html de lévenement
         self.button_validation.visible = True 
        
-        """
-        if mode == "modif":
-            self.button_modif_click(self.text)
-        if mode == "creation":
-            self.button_modif_click(self.text)
-        """
+       
 
     # handler por afficher le bouton validation uniqt qd text est modifié
     # ! self._editor_ready = False en création de la forme
@@ -187,41 +174,46 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
         self._editor_ready = True    
 
     # Event raised every 1 sec: Automatic backup of the text in Word_editor form
-    def timer_text_backup(self, sender, **event_args):
-        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
-        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
-        with anvil.server.no_loading_indicator:
-            self.button_validation_click(sender.text) 
-    """
-    Fin RETOUR DU WORD EDITOR  
-    """  
-    # text vient du retour du word processor, ds list_modeles
     
-    def button_validation_click(self, html_text="", **event_args):   
-        """This method is called when the button is clicked"""
-        if self.mode_creation is True:  # Création du modèle
+    def timer_text_backup(self, sender, **event_args):
+        # Toutes les 1 secondes, sauvegarde auto du texte en mémoire par sur table
+        self.mode_sov = sender.param1       # mode 'modif' /  'creation' 
+        self.text_sov = sender.text
+       
+
+    def button_validation_click(self, **event_args):   
+        self.validation(self.mode_sov, self.text_sov) 
+        
+    def validation(self, mode, html_text="", **event_args):   
+        result = ""
+        if mode=="creation":  # Création du modèle
             if not self.drop_down_type_mails.selected_value:
                 alert("Sélectionnez le type de modèle")
                 return
             #r=alert("Enregistrer ce modèle ?",buttons=[("oui",True),("non",False)])
             #if r :   # Oui               
             result = anvil.server.call('add_mail_model', self.drop_down_type_mails.selected_value,self.text_box_subject_detail.text, html_text)
-        else:   # Modif du modèle
+        
+        if mode=="modif":  # Création du modèle
             #r=alert("Modifier ce modèle ?",buttons=[("oui",True),("non",False)])
             #if r :   # Oui               
             result = anvil.server.call('modify_mail_model',self.label_id.text,self.text_box_subject_detail.text, html_text)
-        if not result:
-            if self.mode_creation is True:  # Création du modèle
+            
+        if result is False:
+            if mode=="creation":  # Création du modèle
                 alert("Modèle de mail non créé")
             else:
                 alert("Modèle de mail non modifié")
-        """
-        #self.drop_down_type_mails_change()
+        # Si bt validation a bien été cliqué (sov_auto = False)
+        
+        
+        self.content_panel.clear()
+        self.mode_sov = ""       # mode 'modif' /  'creation' 
+        self.text_sov = ""
         self.column_panel_detail.visible = False   # effact du panel de création/modif
         self.button_validation.visible = False
-        self.file_loader_attachments.visible = True
+        #self.file_loader_attachments.visible = True
         self.drop_down_type_mails_change(self.drop_down_type_mails.selected_value)   
-        """
         
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -272,5 +264,10 @@ class Mail_subject_attach_txt(Mail_subject_attach_txtTemplate):
             self.button_retour_click()
         except Exception as e:
             AlertHTML.error("Erreur :", f"Erreur lors d'envoi de mail{e}")
+
+    @handle("text_box_subject_detail", "pressed_enter")
+    def text_box_subject_detail_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        pass
        
         

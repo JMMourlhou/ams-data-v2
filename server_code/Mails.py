@@ -36,7 +36,7 @@ def modify_mail_model(id,
                 subject,
                 text
                 ):
-    print("id: ",id)
+    #print("id: ",id)
     # finding the mail's row 
     row=tables.app_tables.mail_templates.get_by_id(id)
     if not row:

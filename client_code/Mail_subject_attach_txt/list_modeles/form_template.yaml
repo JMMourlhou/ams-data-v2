@@ -1,18 +1,5 @@
 components:
 - components:
-  - event_bindings: {click: button_selection_click}
-    layout_properties: {grid_position: 'CJQSHE,HLGTIT'}
-    name: button_selection
-    properties:
-      background: theme:On Primary Container
-      foreground: theme:On Primary
-      icon: fa:mail-reply-all
-      icon_align: top
-      spacing:
-        margin: [null, '5', null, null]
-      text: Sélection
-      visible: false
-    type: Button
   - data_bindings: []
     event_bindings: {focus: text_area_subject_focus}
     layout_properties: {grid_position: 'GNDHQY,AXHFJB LMEGBA,MCYHST'}

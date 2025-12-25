@@ -45,10 +45,9 @@ class list_modeles(list_modelesTemplate):
         ref_model = self.f.label_ref_model.text
         open_form('Mail_subject_attach_txt', emails_liste, ref_model) # réouverture pour réaffichage sans le modèle enlevé 
         """
-    def button_selection_click(self, **event_args):
+    def text_area_subject_focus(self, **event_args):
         """This method is called when the button is clicked"""
-        # récupération de la forme mère par  self.f = get_open_form() en init
-        self.f = get_open_form()   # récupération de la forme mère pour accéder aux fonctions et composents
+        self.f = get_open_form()   # récupération de la forme mère 
 
         # si pas d'email liste, provenance mail du menu principal, je ne permets pas d'envoi de mail ou attachements
         
@@ -65,16 +64,14 @@ class list_modeles(list_modelesTemplate):
         self.f.column_panel_detail.visible = True # montre la form création/modif de modèle
         self.f.repeating_panel_1.visible = False # cache les modèles 
         
-        
         self.f.label_id.text =  self.item.get_id() # récupère l'id du modele mail row (pour la modif en serveur)
         self.f.text_box_subject_detail.text = self.text_area_subject.text
-        self.f.text_area_text_detail.text = self.item['mail_text']
+        self.f.text_area_text_detail.text = self.item['mail_text'] # utilisé pour l'envoi du mail
         # appel du word editor
-        self.call_word_editor(self.html_text, 'modif')
+        self.f.call_word_editor(self.html_text, 'modif')
         
     """
-    =============================================================================================================================================      CALL FOR THE WORD EDITOR
-    """
+    
     def call_word_editor(self, content_text_html, mode):
         from ...Word_editor import Word_editor   # Word processor component inséré ds self.content_panel
         title = "*** Modèle de Mail ***"
@@ -97,11 +94,9 @@ class list_modeles(list_modelesTemplate):
         #text_editor.set_event_handler('x-timer_text_backup', self.timer_text_backup)   # Backup tous les 15 sec, timer_2 de la form Word_editor
         self.f.content_panel.add_component(text_editor)
         
-    """
-    #===================================================================================================================================================
-    RETOUR DU WORD EDITOR  
-    # ==================================================================================================================================================
-    """
+   
+    # RETOUR DU WORD EDITOR  
+   
         
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
     def _on_text_changed_state(self, sender, **e):
@@ -113,8 +108,8 @@ class list_modeles(list_modelesTemplate):
         self.f.button_validation.visible = True 
 
         
-        if self.mode == "modif":
-            self.button_modif_click(self.text)
+        #if self.mode == "modif":
+        #    self.button_modif_click(self.text)
         
 
     # handler por afficher le bouton validation uniqt qd text est modifié
@@ -124,17 +119,13 @@ class list_modeles(list_modelesTemplate):
 
     # Event raised every 1 sec: Automatic backup of the text in Word_editor form
     def timer_text_backup(self, sender, **event_args):
-        """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
-        # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
+        alert(sender.text)
+        
+        # Toutes les 1 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
         with anvil.server.no_loading_indicator:
-            self.f.button_validation_click(sender.text) 
+            self.f.button_validation_click("modif",sender.text) 
+    
     """
-    Fin RETOUR DU WORD EDITOR  
-    """  
-
-    def text_area_subject_focus(self, **event_args):
-        """This method is called when the text area gets focus"""
-        self.button_selection_click()
     
 
 
