@@ -534,6 +534,7 @@ class Main(MainTemplate):
         from ..Video_test import Video_test
         open_form("Video_test")  
 
+    @handle("button_modeles_mails", "click")
     def button_modeles_mails_click(self, **event_arg):
         from ..Mail_subject_attach_txt import Mail_subject_attach_txt
         open_form("Mail_subject_attach_txt")
