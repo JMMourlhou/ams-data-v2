@@ -86,6 +86,16 @@ components:
       name: button_del
       properties: {align: center, background: 'theme:Error', foreground: 'theme:On Primary Container', text: Effacer ce QCM, visible: false}
       type: Button
+    - event_bindings: {click: button_test_click}
+      layout_properties: {}
+      name: button_test
+      properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Test de ce Qcm, visible: true}
+      type: Button
+    - event_bindings: {click: creation_question_click}
+      layout_properties: {}
+      name: creation_question
+      properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Création nelle question}
+      type: Button
     layout_properties: {grid_position: 'CMLBND,CUSTHP'}
     name: flow_panel_7
     properties: {align: center}
@@ -265,11 +275,6 @@ components:
       layout_properties: {}
       name: button_creer
       properties: {align: center, background: 'theme:On Primary Container', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: 'Insérer ', tooltip: '', underline: false, visible: true}
-      type: Button
-    - event_bindings: {click: button_test_click}
-      layout_properties: {}
-      name: button_test
-      properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: Test Qcm, visible: false}
       type: Button
     layout_properties: {grid_position: 'CWYLSB,IXFVSQ'}
     name: flow_panel_2

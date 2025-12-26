@@ -17,34 +17,143 @@ components:
     name: flow_panel_num
     properties: {align: center, spacing_above: none, spacing_below: none, vertical_align: middle}
     type: FlowPanel
+  - components:
+    - components:
+      - layout_properties: {}
+        name: label_5
+        properties: {font_size: 16, foreground: 'theme:On Primary', text: 'Q° #'}
+        type: Label
+      - layout_properties: {}
+        name: label_2_copy
+        properties: {foreground: 'theme:On Primary', text: ''}
+        type: Label
+      - event_bindings: {change: file_loader_photo_change}
+        layout_properties: {width: 94.85434931640626}
+        name: file_loader_photo
+        properties:
+          align: center
+          background: theme:On Primary Container
+          bold: false
+          border: ''
+          enabled: true
+          file: null
+          file_types: null
+          files: []
+          font: ''
+          font_size: null
+          foreground: theme:On Primary
+          icon: fa:upload
+          icon_align: left
+          italic: false
+          multiple: false
+          role: elevated-button
+          show_state: true
+          spacing_above: none
+          spacing_below: none
+          text: Choix de l'Image
+          tooltip: ''
+          underline: false
+          visible: true
+        type: FileLoader
+      layout_properties: {grid_position: 'LSIOOU,PIDVHC'}
+      name: flow_panel_6
+      properties: {align: center, vertical_align: middle}
+      type: FlowPanel
+    - data_bindings: []
+      layout_properties: {full_width_row: true, grid_position: 'LSIOOU,UOWYNL'}
+      name: image_1
+      properties: {background: 'theme:Primary', display_mode: shrink_to_fit, height: 103.63302612304688, role: null, spacing_above: small, spacing_below: medium}
+      type: Image
+    layout_properties: {grid_position: 'WQHDVU,QTQMWN'}
+    name: column_panel_img
+    properties: {background: 'theme:On Primary Container', role: outlined-card, visible: true}
+    type: ColumnPanel
+  - components:
+    - components:
+      - event_bindings: {change: drop_down_nb_options_change}
+        name: drop_down_nb_options
+        properties:
+          align: center
+          background: theme:Primary
+          foreground: theme:On Primary
+          include_placeholder: true
+          items: [' ']
+          placeholder: Nb d'options
+          role: outlined
+          spacing_above: none
+          spacing_below: none
+        type: DropDown
+      - event_bindings: {change: drop_down_bareme_change}
+        layout_properties: {}
+        name: drop_down_bareme_copy
+        properties:
+          align: left
+          background: theme:Primary
+          bold: false
+          border: ''
+          enabled: true
+          font: ''
+          font_size: 18
+          foreground: theme:On Primary
+          include_placeholder: true
+          italic: false
+          items: ['']
+          placeholder: 'Barême   '
+          role: outlined
+          spacing_above: none
+          spacing_below: none
+          tooltip: ''
+          underline: false
+          visible: true
+        type: DropDown
+      layout_properties: {grid_position: 'JRSSFJ,ATXDVY'}
+      name: flow_panel_1
+      properties: {align: center, spacing: huge}
+      type: FlowPanel
+    layout_properties: {grid_position: 'WAYULB,SHWUPF'}
+    name: column_panel_3
+    properties: {background: 'theme:On Primary Container', col_spacing: huge, col_widths: '{}', role: outlined-card}
+    type: ColumnPanel
+  - components:
+    - components:
+      - event_bindings: {change: rep1_change}
+        layout_properties: {}
+        name: rep1_copy
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: A, visible: true}
+        type: CheckBox
+      - event_bindings: {change: rep2_change}
+        layout_properties: {}
+        name: rep2_copy
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: B, visible: true}
+        type: CheckBox
+      - event_bindings: {change: rep3_change}
+        layout_properties: {}
+        name: rep3_copy
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: C, visible: true}
+        type: CheckBox
+      - event_bindings: {change: rep4_change}
+        layout_properties: {}
+        name: rep4_copy
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: D, visible: true}
+        type: CheckBox
+      - event_bindings: {change: rep5_change}
+        layout_properties: {}
+        name: rep5_copy
+        properties: {align: center, background: 'theme:On Primary Container', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: E, visible: true}
+        type: CheckBox
+      layout_properties: {full_width_row: false, grid_position: 'FOLJCY,VQUWUB'}
+      name: flow_panel_4
+      properties: {align: center, spacing: medium, vertical_align: middle}
+      type: FlowPanel
+    layout_properties: {grid_position: 'WAYULB,LLEZAC'}
+    name: column_panel_options
+    properties: {background: 'theme:On Primary Container', col_spacing: none, role: outlined-card, visible: true}
+    type: ColumnPanel
   layout_properties: {grid_position: 'IKDQHX,TDKNTP'}
   name: column_panel_modif_qcm
   properties: {}
   type: ColumnPanel
 - components:
-  - components:
-    - layout_properties: {grid_position: 'NJZSBG,EAWKPG'}
-      name: spacer_2
-      properties: {height: 158.9381103515625}
-      type: Spacer
-    - data_bindings: []
-      layout_properties: {grid_position: 'NJZSBG,MVJVXU'}
-      name: image_1
-      properties: {display_mode: shrink_to_fit, height: 160.13076782226562, role: null, spacing_above: small, spacing_below: medium}
-      type: Image
-    - layout_properties: {grid_position: 'NJZSBG,LTWPGS AKHICC,QTNFPT'}
-      name: spacer_1
-      properties: {height: 50.965576171875}
-      type: Spacer
-    - event_bindings: {change: file_loader_1_change}
-      layout_properties: {grid_position: 'NJZSBG,LTWPGS VGZCKE,XOAHIG'}
-      name: file_loader_1
-      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: Choix de l'image, visible: true}
-      type: FileLoader
-    layout_properties: {grid_position: 'HWSCUQ,YYYUYU'}
-    name: cp_img
-    properties: {background: 'theme:Primary', col_widths: '{"MVJVXU":40,"LTWPGS":20}', role: tonal-card}
-    type: ColumnPanel
   - layout_properties: {grid_position: 'VWBXEW,TNYCOV'}
     name: word_editor_1
     properties: {}
@@ -112,7 +221,7 @@ components:
     name: rich_text_correction
     properties:
       background: theme:Tertiary
-      content: Question
+      content: Correction
       foreground: theme:On Secondary Container
       format: restricted_html
       spacing:
@@ -149,6 +258,11 @@ components:
       properties: {align: center, spacing: tiny, vertical_align: middle}
       type: FlowPanel
     - components:
+      - event_bindings: {click: button_creer_click}
+        layout_properties: {}
+        name: button_creer
+        properties: {align: center, background: 'theme:On Primary Container', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: 'Insérer ', tooltip: '', underline: false, visible: true}
+        type: Button
       - event_bindings: {click: button_validation_click}
         layout_properties: {}
         name: button_validation

@@ -447,6 +447,11 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_creer_couleurs()
 
+    # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
+    #   _________________________________________________________________________________________________________
+    #                             Test D'UN QCM
+    #   _________________________________________________________________________________________________________    
+
     def button_test_click(self, **event_args):
         """This method is called when the button is clicked"""
 
@@ -458,14 +463,11 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
             self.affiche_lignes_qcm()
             result = anvil.server.call("modify_users_temp2", user, None)   # je remets temp2 à vide
 
-
-
-
     # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
     #   _________________________________________________________________________________________________________
     #                             CREATION D'UN QCM
     #   _________________________________________________________________________________________________________
-    def button_creation(self, **event_args):
+    def creation(self, **event_args):
         """This method is called when the button is clicked"""
         self.column_panel_creation_qcm.visible = True
         self.column_panel_question.visible = False
@@ -627,11 +629,13 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         if self.choix==0:   # "Créer un nouveau QCM standard"
             self.drop_down_menu.visible = False
             self.check_box_examen.checked = False
-            self.button_creation()
+            self.button_test.visible = False
+            self.creation()
         if self.choix==1:   # "Créer un nouveau QCM exam"
             self.drop_down_menu.visible = False
             self.check_box_examen.checked = True
-            self.button_creation()   
+            self.button_test.visible = False
+            self.creation()   
         if self.choix==2:    # "Modif un QCM existant":
             self.drop_down_qcm_row.visible = True
             self.drop_down_menu.visible = False
@@ -661,6 +665,10 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         self.column_panel_question.visible = False
         self.button_valid.visible = True
 
+    def creation_question_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
 
 
 
@@ -668,7 +676,6 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
     
 
    
-
 
 
     

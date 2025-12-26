@@ -20,7 +20,13 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.image_1.source = None
         self.cp_img.visible = False
         self.image_1.visible = False
-
+        # réponses
+        self.rep1.checked = False
+        self.rep2.checked = False
+        self.rep3.checked = False
+        self.rep4.checked = False
+        self.rep5.checked = False
+        
         # num / nb de quesions
         self.label_2.text = ""
         self.label_nb_questions.text = nb_questions
@@ -391,3 +397,78 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     # ------------------------------------------------------------------
     def load_qcm_content(self, html):
         self.word_editor_1.set_initial_html(html)
+
+    def button_creer_click(self, text, **event_args):
+        """This method is called when the button is clicked"""
+        if text == "":
+            alert("La question est vide !")
+            return
+        if self.drop_down_bareme.selected_value is None:
+            alert("Choisissez un barême !")
+            return
+        #qst = text
+        #qst = qst.strip()
+        question = text
+
+        cor = self.text_box_correction.text
+        cor = cor.strip()
+        correction = cor
+        bareme = int(self.drop_down_bareme.selected_value)
+        qcm_nb = self.drop_down_qcm_row.selected_value
+
+        if self.image_1.source != "":
+            image = self.image_1.source
+        else:
+            image = None
+        # creation de la réponse multi en fonction du nb d'options choisies +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        reponse = ""
+        if self.rep1.checked is True:
+            r1 = "1"
+        else: 
+            r1 = "0"
+        if self.rep2.checked is True:
+            r2 = "1"
+        else: 
+            r2 = "0"
+        if self.rep3.checked is True:
+            r3 = "1"
+        else: 
+            r3 = "0"
+        if self.rep4.checked is True:
+            r4 = "1"
+        else: 
+            r4 = "0"
+        if self.rep5.checked is True:
+            r5 = "1"
+        else: 
+            r5 = "0"
+        if self.drop_down_nb_options.selected_value == 1 or self.drop_down_nb_options.selected_value == 2:    
+            reponse = r1 + r2
+        if self.drop_down_nb_options.selected_value == 3:
+            reponse = r1 + r2 + r3
+        if self.drop_down_nb_options.selected_value == 4:
+            reponse = r1 + r2 + r3 + r4
+        if self.drop_down_nb_options.selected_value == 5:
+            reponse = r1 + r2 + r3 + r4 + r5
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  NUM question   +++++++++++++++++++++++++++++
+        num = int(self.label_2.text) #je connais le num de question à changer
+        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  type de question   +++++++++++++++++++++++++++++
+        if self.drop_down_nb_options.selected_value == 1:    # type V/F
+            type = "V/F"       # rep1 ou rep2 peuvent être vrai
+        else:
+            type = "Multi"     # rep1 et rep2 peuvent être vrai 
+            
+        # param (descro du QCM)
+        param = self.drop_down_qcm_row.selected_value["destination"]
+                    
+        # je récupère mes variables globales  question, reponse, bareme
+        result = anvil.server.call("add_ligne_qcm", num, question, correction, reponse, bareme, image, qcm_nb, type, param)         #num du stage  de la ligne
+        if result:
+            n = Notification("Création de la question !",
+                 timeout=1)   # par défaut 2 secondes
+            n.show()
+            # raffraichit les lignes qcm en récupérant le choix du qcm ds la dropdown
+            from anvil import open_form       # j'initialise la forme principale avec le choix du qcm ds la dropdown
+            open_form("QCM_visu_modif_Main", qcm_nb)
+        else:
+            alert("erreur de création d'une question QCM")
