@@ -15,7 +15,7 @@ components:
   - event_bindings: {change: file_loader_1_change}
     layout_properties: {}
     name: file_loader_1
-    properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: Choix de l'image, visible: true}
+    properties: {background: 'theme:On Primary Container', enabled: true, foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: Choix de l'image, visible: true}
     type: FileLoader
   layout_properties: {grid_position: 'QCTQTJ,CDGXYX'}
   name: flow_panel_num
@@ -42,27 +42,27 @@ components:
       - event_bindings: {change: rep1_change}
         layout_properties: {full_width_row: false, grid_position: 'JSZRDP,EICFQK'}
         name: rep1
-        properties: {align: center, background: 'theme:Outline', bold: true, checked: false, font_size: 10, foreground: 'theme:Tertiary', role: null, spacing_above: none, spacing_below: none, text: V, visible: true}
+        properties: {align: center, background: 'theme:Outline', bold: true, checked: false, enabled: true, font_size: 10, foreground: 'theme:Tertiary', role: null, spacing_above: none, spacing_below: none, text: V, visible: true}
         type: CheckBox
       - event_bindings: {change: rep2_change}
         layout_properties: {grid_position: 'YEFAGY,IYUETY'}
         name: rep2
-        properties: {align: center, background: 'theme:Outline', bold: true, checked: false, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: F}
+        properties: {align: center, background: 'theme:Outline', bold: true, checked: false, enabled: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: F}
         type: CheckBox
       - event_bindings: {change: rep3_change}
         layout_properties: {grid_position: 'UNTKDO,VKZZDN'}
         name: rep3
-        properties: {align: center, background: 'theme:Outline', bold: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: C, visible: false}
+        properties: {align: center, background: 'theme:Outline', bold: true, enabled: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: C, visible: false}
         type: CheckBox
       - event_bindings: {change: rep4_change}
         layout_properties: {grid_position: 'EIBGWA,IJOGUK'}
         name: rep4
-        properties: {align: center, background: 'theme:Outline', bold: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: D, visible: false}
+        properties: {align: center, background: 'theme:Outline', bold: true, enabled: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: D, visible: false}
         type: CheckBox
       - event_bindings: {change: rep5_change}
         layout_properties: {grid_position: 'PPWLBL,TJKTNJ'}
         name: rep5
-        properties: {align: center, background: 'theme:Outline', bold: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: E, visible: false}
+        properties: {align: center, background: 'theme:Outline', bold: true, enabled: true, font_size: 10, foreground: 'theme:Tertiary', spacing_above: none, spacing_below: none, text: E, visible: false}
         type: CheckBox
       data_bindings: []
       layout_properties: {grid_position: 'JRGWCO,SNTWTT'}

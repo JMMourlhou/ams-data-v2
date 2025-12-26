@@ -18,7 +18,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.type_question = "V/F"
         self.nb_options = 1
         self.image_1.source = None
-        self.cp_img.visible = False
         self.image_1.visible = False
         # réponses
         self.rep1.checked = False
@@ -117,19 +116,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         if html == self._last_saved_text:
             return
 
-        # --- 2) anti-spam temporel ---
-        now = time.time()
-        if now - self._last_save_ts < self._min_delay_sec:
-            return
-
-        # --- 3) sauvegarde ---
-        self._last_saved_text = html
-        self._last_save_ts = now
-
         self.word_editor_1.text = html
 
         # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas
-        self.button_validation_click(True)
+        #self.button_validation_click(True)
 
     # ------------------------------------------------------------------
     # Réaction aux modifications du texte : on affiche le bt Validation
@@ -138,6 +128,9 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         if not self._editor_ready:
             return  # on ignore les events de chargement
 
+            self.button_modif_color()  #affiche bt valid
+
+    def button_modif_color(self):
         self.button_validation.visible = True
 
     def button_question_click(self, **event_args):
@@ -222,7 +215,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.word_editor_1.bt_valid_text = "Validat°"
             self.word_editor_1.bt_exit_text = "Sortie"
         # Word_Editor PDF download titles parameters:
-        self.word_editor_1.top_ligne_2 = f"Question N° {self.question_row['num']} "
+        self.word_editor_1.top_ligne_2 = "Nouvelle Question"
         self.top_ligne_2 = self.top_ligne_1 = f"QCM {self.qcm_row['destination']} "
 
         # Text to be modified by Word_Editor
@@ -248,11 +241,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def _arm_editor_ready(self, **e):
         self._editor_ready = True
 
-    def file_loader_photo_change(self, file, **event_args):
+    def file_loader_1_change(self, file, **event_args):                         # image a changé (en création QCM)
         """This method is called when a new file is loaded into this FileLoader"""
-        # self.image_photo.source = file
-        thumb_pic = anvil.image.generate_thumbnail(file, 320)
-        self.image_photo.source = thumb_pic
+        thumb_pic = anvil.image.generate_thumbnail(file, 640)
+        self.image_1.source = thumb_pic
         self.button_modif_color()
 
     def rep1_change(self, **event_args):
@@ -312,7 +304,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rich_text_correction.content = html
             
         #"creation":
-        self.button_creer_click(self.text)
+        self.button_creer_click(html)
 
         rep_multi_stagiaire = ""  # CUMUL de la codif des réponses du stagiaire
         if self.type_question == "V/F":
@@ -472,3 +464,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             open_form("QCM_visu_modif_Main", qcm_nb)
         else:
             alert("erreur de création d'une question QCM")
+
+    def file_loader_photo_change(self, file, **event_args):
+        """This method is called when a new file is loaded into this FileLoader"""
+        thumb_pic = anvil.image.generate_thumbnail(file, 640)
+        self.image_1.source = thumb_pic
+        self.button_modif_color()
+

@@ -137,11 +137,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def _on_text_changed_state(self, **e):
         if not self._editor_ready:
             return  # on ignore les events de chargement
+        self.button_modif_color()  #affiche bt valid
 
+    def button_modif_color(self):
         self.button_validation.visible = True
         
-            
-    
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
         
@@ -401,4 +401,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def load_qcm_content(self, html):
         self.word_editor_1.set_initial_html(html)
 
+    
+    def file_loader_1_change(self, file, **event_args):                         # image a changé (en création QCM)
+        """This method is called when a new file is loaded into this FileLoader"""
+        thumb_pic = anvil.image.generate_thumbnail(file, 640)
+        self.image_1.source = thumb_pic
+        self.button_modif_color()
+        
    
