@@ -26,7 +26,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
         self.rich_text_question.content = ""
         self.rich_text_correction.content = "Correction"
-        
+        self.button_question.visible = False
         # num / nb de quesions
         self.label_2.text = ""
         self.label_nb_questions.text = nb_questions
