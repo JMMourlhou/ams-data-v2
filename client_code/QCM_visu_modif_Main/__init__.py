@@ -197,8 +197,6 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
 
     def drop_down_nb_options_change(self, **event_args):
         """This method is called when an item is selected"""
-        
-        
         self.drop_down_menu.visible = False  # effacer le menu si pas fait
         self.rep1.checked = False
         self.rep2.checked = False

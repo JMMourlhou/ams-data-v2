@@ -16,33 +16,31 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.qcm_row = qcm_row  # QCM descro row
         self.question_row = question_row  # la question row
         self.type_question = "V/F"
-        self.nb_options = 1
         self.image_1.source = None
-        self.image_1.visible = False
         # réponses
         self.rep1.checked = False
         self.rep2.checked = False
         self.rep3.checked = False
         self.rep4.checked = False
         self.rep5.checked = False
+
+        self.rich_text_question.content = ""
+        self.rich_text_correction.content = "Correction"
         
         # num / nb de quesions
         self.label_2.text = ""
         self.label_nb_questions.text = nb_questions
-
+        # Initialisation des drop down nb potions et Barême
+        self.drop_down_nb_options.items=([("Vrai/Faux", 1), ("2 options", 2), ("3 options", 3), ("4 options", 4), ("5 options", 5)])
         self.drop_down_bareme.items = ["1", "2", "3", "4", "5", "10"]
-        self.drop_down_bareme.selected_value = None
+        
+        #self.drop_down_bareme.selected_value = None
         # =========================================================================================
         # POUR AUTO SAUVEGARDE DU TEXTE:
         # Bouton Validation caché tant que rien n'est modifié
         self.button_validation.visible = False
         self._editor_ready = False
 
-        # 0 --- Anti-spam ---
-        self._last_saved_text = ""
-        self._last_save_ts = 0
-        self._min_delay_sec = 10  # 1 écriture max toutes les 10 s
-        
         # 1- Écoute l'état de modification du Word Editor
         self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
 
@@ -53,58 +51,13 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.word_editor_1.set_event_handler("x-editor-ready", self._arm_editor_ready)
 
         
-        if self.nb_options > 1:
-            if self.type_question == "V/F":
-                self.rep1.text = "V"
-                self.rep2.text = "F"
-            else:  # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11
-                self.rep1.text = "A"
-                self.rep2.text = "B"
-
-            if self.question_row["rep_multi"][0:1] == "1":
-                self.rep1.checked = True
-            else:
-                self.rep1.checked = False
-
-            if self.question_row["rep_multi"][1:2] == "1":
-                self.rep2.checked = True
-            else:
-                self.rep2.checked = False
-
-        if self.nb_options > 2:
-            self.rep1.text = "A"
-            self.rep2.text = "B"
-            self.rep3.text = "C"
-            self.rep3.visible = True
-            if self.question_row["rep_multi"][2:3] == "1":
-                self.rep3.checked = True
-            else:
-                self.rep3.checked = False
-
-        if self.nb_options > 3:
-            self.rep4.text = "D"
-            self.rep4.visible = True
-            if self.question_row["rep_multi"][3:4] == "1":
-                self.rep4.checked = True
-            else:
-                self.rep4.checked = False
-
-        if self.nb_options > 4:
-            self.rep5.text = "E"
-            self.rep5.visible = True
-            if self.question_row["rep_multi"][4:5] == "1":
-                self.rep5.checked = True
-            else:
-                self.rep5.checked = False
-
         # on affiche la correction en init, la question est ds le word editor
         self.rich_text_correction.content = "Correction"
         self.rich_text_correction.visible = True  # display the Correction Rich Text
 
         self.rich_text_question.content = ""
         self.rich_text_question.visible = False
-        # self.word_editor_1.scroll_into_view()
-        self.button_question_click()  # on affiche la question
+        
 
     # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2
     def _backup_word_editor(self, **e):
@@ -241,49 +194,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def _arm_editor_ready(self, **e):
         self._editor_ready = True
 
-    def file_loader_1_change(self, file, **event_args):                         # image a changé (en création QCM)
-        """This method is called when a new file is loaded into this FileLoader"""
-        thumb_pic = anvil.image.generate_thumbnail(file, 640)
-        self.image_1.source = thumb_pic
-        self.button_modif_color()
-
-    def rep1_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        if self.type_question == "V/F":
-            if self.rep1.checked is True:  # question V/F
-                self.rep2.checked = False
-            else:
-                self.rep2.checked = True
-        self.button_modif_color()
-
-    def rep2_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        if self.type_question == "V/F":
-            if self.rep2.checked is True:  # question V/F
-                self.rep1.checked = False
-            else:
-                self.rep1.checked = True
-        self.button_modif_color()
-
-    def rep3_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
-
-    def rep4_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
-
-    def rep5_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
-
-    def text_box_correction_change(self, **event_args):
-        """This method is called when the text in this text area is edited"""
-        self.button_modif_color()
-
-    def drop_down_bareme_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
+   
 
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):  # =============  VALIDATION
@@ -379,10 +290,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 # sovegarde auto, on ne fait rien
                 pass
 
-    def button_retour_click(self, **event_args):  # =============  RETOUR
-        """This method is called when the button is clicked"""
-        qcm_descro_nb = self.qcm_row
-        open_form("QCM_visu_modif_Main", qcm_descro_nb)
+    
 
     # ------------------------------------------------------------------
     # Chargement initial du contenu
@@ -470,4 +378,140 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         thumb_pic = anvil.image.generate_thumbnail(file, 640)
         self.image_1.source = thumb_pic
         self.button_modif_color()
+
+    def drop_down_nb_options_change(self, **event_args):
+        """This method is called when an item is selected"""
+        self.rep1.checked = False
+        self.rep2.checked = False
+        self.rep3.checked = False
+        self.rep4.checked = False
+        self.rep5.checked = False
+        choix = self.drop_down_nb_options.selected_value
+        #print(choix, type(choix))
+        question_part1 = """<!-- Question -->
+                            <p
+                            style="
+                                margin-bottom: 10px;
+                                text-align: left;
+                                font-weight: bold;
+                                color: rgb(0, 192, 250);
+                            "
+                            >
+                            <span
+                                style="
+                                background-color: var(--anvil-color-On-Secondary-Container-94f5);
+                                padding: 2px 6px;
+                                border-radius: 4px;
+                                margin-right: 6px;
+                                "
+                                <Question ici>
+                            </span>
+                            
+                            </p>
+                        """
+
+        if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
+            self.rich_text_question.content = question_part1
+            self.rep3.visible = False
+            self.rep4.visible = False
+            self.rep5.visible = False
+            self.rep1.text = "Vrai"
+            self.rep2.text = "Faux"
+            self.word_editor_1.text = question_part1
+
+        if choix > 1:     # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
+            self.rep1.text = "A"
+            self.rep2.text = "B"
+            self.rep3.visible = False
+            self.rep4.visible = False
+            self.rep5.visible = False
+            self.rich_text_question.content  = "titre\n\nA  .\n\nB  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        </ul>
+                                    """
+
+        if choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
+            self.rep3.visible = True
+            self.rep4.visible = False
+            self.rep5.visible = False
+            self.rich_text_question.content  = "titre\n\nA  .\nB  .\nC  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        <li>C</li>
+                                        </ul>
+                                    """
+        if choix > 3:     # au moins 4 options possibles, rep1 et rep4 peuvent être identiques  ex  1111
+            self.rep4.visible = True
+            self.rep5.visible = False
+            self.rich_text_question.content  = "titre\n\nA  .\nB  .\nC  .\nD  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        <li>C</li>
+                                        <li>D</li>
+                                        </ul>
+                                    """
+        if choix > 4:     # 5 options possibles, rep1 à rep2 peuvent être identiques
+            self.rep5.visible = True
+            self.rich_text_question.content = "titre\n\nA  .\nB  .\nC  .\nD  .\nE  ."
+            self.word_editor_1.text = question_part1 + """
+                                        <ul>
+                                        <li>A</li>
+                                        <li>B</li>
+                                        <li>C</li>
+                                        <li>D</li>
+                                        <li>E</li>
+                                        </ul>
+                                    """
+
+        # -----------------------------------------------------------------------
+        
+        self.button_modif_color()
+
+    def rep1_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        if self.type_question == "V/F":
+            if self.rep1.checked is True:  # question V/F
+                self.rep2.checked = False
+            else:
+                self.rep2.checked = True
+        self.button_modif_color()
+
+    def rep2_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        if self.type_question == "V/F":
+            if self.rep2.checked is True:  # question V/F
+                self.rep1.checked = False
+            else:
+                self.rep1.checked = True
+        self.button_modif_color()
+    
+    def rep3_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
+    
+    def rep4_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
+    
+    def rep5_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
+    
+    
+    
+    def drop_down_bareme_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
+
+    def button_retour_click(self, **event_args):  # =============  RETOUR
+        """This method is called when the button is clicked"""
+        qcm_descro_nb = self.qcm_row
+        open_form("QCM_visu_modif_Main", qcm_descro_nb)
 
