@@ -93,15 +93,17 @@ def qcm_enfant_del(qcm_parent_row, qcm_enfant_nb):
 @anvil.server.callable
 def add_ligne_qcm(num_question, question, correction, rep, bareme, image, qcm_nb, type, param):
     # qcm_nb est la row venant du dropdown choix du qcm
-    new_row=app_tables.qcm.add_row(num= int(num_question),
-                                   question = question,
+    new_row=app_tables.qcm.add_row(
+                                   num=num_question,       # num question
+                                   question = question,    
                                    correction = correction,
                                    rep_multi = rep,
                                    bareme = str(bareme),
                                    photo = image,
-                                   qcm_nb = qcm_nb,
+                                   qcm_nb = qcm_nb,        # qcm_row
                                    type = type,
-                                   param = param)
+                                   param = param
+                                   )   
             
     qcm_row = app_tables.qcm.search(qcm_nb = qcm_nb,
                                     num=num_question
@@ -124,7 +126,6 @@ def modif_qcm(qcm_descro_row, num_question, question, rep, bareme, photo, correc
         print("Ligne qcm non trouvée ds fichier qcm")
         return False
     else:   
-        rep_multi = rep
         qcm_row.update(question = question,
                      rep_multi = rep,
                      bareme = str(bareme),

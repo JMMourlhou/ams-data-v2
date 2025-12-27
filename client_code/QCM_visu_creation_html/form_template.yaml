@@ -2,7 +2,11 @@ components:
 - components:
   - components:
     - layout_properties: {}
-      name: label_2
+      name: label_5
+      properties: {font_size: 16, foreground: 'theme:On Primary', text: 'Q° #'}
+      type: Label
+    - layout_properties: {}
+      name: num_question
       properties: {align: center, font_size: 14, foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: '#'}
       type: Label
     - layout_properties: {}
@@ -19,16 +23,8 @@ components:
     type: FlowPanel
   - components:
     - components:
-      - layout_properties: {}
-        name: label_5
-        properties: {font_size: 16, foreground: 'theme:On Primary', text: 'Q° #'}
-        type: Label
-      - layout_properties: {}
-        name: label_2_copy
-        properties: {foreground: 'theme:On Primary', text: ''}
-        type: Label
       - event_bindings: {change: file_loader_photo_change}
-        layout_properties: {width: 94.85434931640626}
+        layout_properties: {width: 187.27785986328124}
         name: file_loader_photo
         properties:
           align: center
@@ -50,7 +46,7 @@ components:
           show_state: true
           spacing_above: none
           spacing_below: none
-          text: Choix de l'Image
+          text: 'Choix de l''Image :'
           tooltip: ''
           underline: false
           visible: true

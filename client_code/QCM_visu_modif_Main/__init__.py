@@ -665,8 +665,10 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
 
     def creation_question_click(self, **event_args):
         """This method is called when the button is clicked"""
+        global liste
+        nb_questions = len(liste)
         from ..QCM_visu_creation_html import QCM_visu_creation_html
-        open_form('QCM_visu_creation_html', self.drop_down_qcm_row.selected_value)
+        open_form('QCM_visu_creation_html', self.drop_down_qcm_row.selected_value, nb_questions)
 
 
 

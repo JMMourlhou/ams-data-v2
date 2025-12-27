@@ -10,11 +10,12 @@ import time
 
 
 class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
-    def __init__(self, qcm_row, question_row=None, nb_questions=0, **properties):
+    def __init__(self, qcm_row, nb_questions=0, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.qcm_row = qcm_row  # QCM descro row
-        self.question_row = question_row  # la question row
+        self.label_nb_questions.text = nb_questions + 1
+        self.num_question.text = nb_questions + 1   # Num ligne à partir du nb lignes déjà créées
         self.type_question = "V/F"
         self.image_1.source = None
         # réponses
@@ -27,9 +28,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rich_text_question.content = ""
         self.rich_text_correction.content = "Correction"
         self.button_question.visible = False
-        # num / nb de quesions
-        self.label_2.text = ""
-        self.label_nb_questions.text = nb_questions
         # Initialisation des drop down nb potions et Barême
         self.drop_down_nb_options.items=([("Vrai/Faux", 1), ("2 options", 2), ("3 options", 3), ("4 options", 4), ("5 options", 5)])
         self.drop_down_bareme.items = ["1", "2", "3", "4", "5", "10"]
@@ -40,7 +38,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         # Bouton Validation caché tant que rien n'est modifié
         self.button_validation.visible = False
         self._editor_ready = False
-
+        # pour vérifier si il y a eu une modif du texte
+        self._last_saved_text = ""
         # 1- Écoute l'état de modification du Word Editor
         self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
 
@@ -199,30 +198,49 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):  # =============  VALIDATION
         """This method is called when the button is clicked"""
+        
+        # type de question 
+        if self.drop_down_nb_options.selected_value == 1:    # type V/F 
+            type = "V/F"       # rep1 ou rep2 peuvent être vrai
+        else:
+            type = "Multi"     # rep1 et rep2 peuvent être vrai 
 
-        mode = self.word_editor_1.param1  # mode 'modif' /  'creation'
-        html = self.word_editor_1.text
+        # param (descro du QCM)
+        param = self.qcm_row ["destination"]
+
+        
+        mode = self.word_editor_1.param1  # mode 'question' / "correction"
+        html = self.word_editor_1.text   # le text édité
+        
         # self.rich_text_correction.scroll_into_view()
-        if mode == "question":
+        if mode == "question": # le texte édité, ds word_editor_1.text est la question
             self.rich_text_correction.visible = True  # display the Correction Rich Text
-            self.rich_text_question.visible = False  # display the Question Rich Text
+            self.rich_text_question.visible = False  # pas besoin d'afficher la question, elle est dans le word editor
             self.rich_text_question.content = html
-        if mode == "correction":
-            self.rich_text_correction.visible = (
-                False  # display the Correction Rich Text
-            )
+        if mode == "correction": # le texte édité, ds word_editor_1.text est la correction
+            self.rich_text_correction.visible = False  # pas besoin d'afficher la correction, elle est dans le word editor
             self.rich_text_question.visible = True  # display the Question Rich Text
             self.rich_text_correction.content = html
+        correction = self.rich_text_correction.content
+        question = self.rich_text_question.content
+        
+        if self.drop_down_nb_options.selected_value is None:
+            alert("Choisissez un type de question !")
+            return
+        if self.drop_down_bareme.selected_value is None:
+            alert("Choisissez un barême !")
+            return
             
-        #"creation":
-        self.button_creer_click(html)
-
         rep_multi_stagiaire = ""  # CUMUL de la codif des réponses du stagiaire
         if self.type_question == "V/F":
             if self.rep1.checked is True:  # question V/F
                 rep_multi_stagiaire = "10"
             else:
-                rep_multi_stagiaire = "01"
+                if self.rep2.checked is True:  # question V/F
+                    rep_multi_stagiaire = "01"
+                else:
+                    alert("Choisissez une réponse v/F !")
+                    return
         else:
             if self.rep1.checked is True:  # question non V/F
                 rep_multi_stagiaire = "1"
@@ -234,62 +252,60 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
+                if rep_multi_stagiaire == "00":
+                    alert("Choisissez une réponse !")
+                    return
 
             if self.nb_options > 2:
                 if self.rep3.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-
+                if rep_multi_stagiaire == "000":
+                    alert("Choisissez une réponse !")
+                    return
+                    
             if self.nb_options > 3:
                 if self.rep4.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
+                if rep_multi_stagiaire == "0000":
+                    alert("Choisissez une réponse !")
+                    return
 
             if self.nb_options > 4:
                 if self.rep5.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-        if sov_auto is True:
-            with anvil.server.no_loading_indicator:
-                result = anvil.server.call(
-                    "modif_qcm",
-                    self.qcm_row,  # qcm descro row
-                    self.question_row["num"],  # num question
-                    self.rich_text_question.content,  # question HTML
-                    rep_multi_stagiaire,  # rep codée ex 10 /  010 ...
-                    self.drop_down_bareme.selected_value,  # Bareme de la question
-                    self.image_1.source,  # photo
-                    self.rich_text_correction.content,  # correction en clair
-                )
-        else:
-            result = anvil.server.call(
-                "modif_qcm",
-                self.qcm_row,  # qcm descro row
-                self.question_row["num"],  # num question
-                self.rich_text_question.content,  # question HTML
-                rep_multi_stagiaire,  # rep codée ex 10 /  010 ...
-                self.drop_down_bareme.selected_value,  # Bareme de la question
-                self.image_1.source,  # photo
-                self.rich_text_correction.content,  # correction en clair
-            )
+                if rep_multi_stagiaire == "00000":
+                    alert("Choisissez une réponse !")
+                    return
+             
+        result = anvil.server.call("add_ligne_qcm",
+            int(self.num_question.text),  # num question (numériqie)
+            question,  # question HTML
+            correction,  # correction HTML               
+            rep_multi_stagiaire,  # rep codée ex 10 /  010 ...
+            self.drop_down_bareme.selected_value,  # Bareme de la question
+            self.image_1.source,  # photo
+            self.qcm_row,  # qcm descro row                  
+            type,                 # "V/F" ou "Multi"
+            param                 # self.qcm_row ["destination"], description du QCM
+        )
+        
         if not result:
-            alert("erreur de modification d'une question QCM")
+            alert("Erreur en ajout d'une question QCM")
             return
             # j'initialise la forme principale
         else:
-            # --- Réinitialisation état ---
-            if sov_auto is False:
-                # Click manuel sur bt validation on quitte
-                # alert('on retourne')
-                self.button_retour_click()
-            else:
-                print("on a sauvé atomatiqt ")
-                # sovegarde auto, on ne fait rien
-                pass
-
+            self.button_retour_click()
+ 
+    def button_retour_click(self, **event_args):  # =============  RETOUR
+        """This method is called when the button is clicked"""
+        qcm_descro_nb = self.qcm_row
+        open_form("QCM_visu_modif_Main", qcm_descro_nb)
     
 
     # ------------------------------------------------------------------
@@ -300,15 +316,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
     def button_creer_click(self, text, **event_args):
         """This method is called when the button is clicked"""
-        if text == "":
-            alert("La question est vide !")
-            return
-        if self.drop_down_bareme.selected_value is None:
-            alert("Choisissez un barême !")
-            return
-        #qst = text
-        #qst = qst.strip()
-        question = text
+        
+        
 
         cor = self.text_box_correction.text
         cor = cor.strip()
@@ -510,8 +519,5 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
 
-    def button_retour_click(self, **event_args):  # =============  RETOUR
-        """This method is called when the button is clicked"""
-        qcm_descro_nb = self.qcm_row
-        open_form("QCM_visu_modif_Main", qcm_descro_nb)
+
 
