@@ -239,7 +239,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 if self.rep2.checked is True:  # question V/F
                     rep_multi_stagiaire = "01"
                 else:
-                    alert("Choisissez une réponse v/F !")
+                    alert("Choisissez une réponse V/F !")
                     return
         else:
             if self.rep1.checked is True:  # question non V/F
@@ -295,12 +295,15 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             param                 # self.qcm_row ["destination"], description du QCM
         )
         
-        if not result:
-            alert("Erreur en ajout d'une question QCM")
-            return
-            # j'initialise la forme principale
+        if result:
+            n = Notification("Création de la question !",
+                             timeout=1)   # par défaut 2 secondes
+            n.show()
+            # raffraichit les lignes qcm en récupérant le choix du qcm ds la dropdown
+            from anvil import open_form       # j'initialise la forme principale avec le choix du qcm ds la dropdown
+            open_form("QCM_visu_modif_Main", self.qcm_row)
         else:
-            self.button_retour_click()
+            alert("erreur de création d'une question QCM")
  
     def button_retour_click(self, **event_args):  # =============  RETOUR
         """This method is called when the button is clicked"""
@@ -314,73 +317,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def load_qcm_content(self, html):
         self.word_editor_1.set_initial_html(html)
 
-    def button_creer_click(self, text, **event_args):
-        """This method is called when the button is clicked"""
-        
-        
-
-        cor = self.text_box_correction.text
-        cor = cor.strip()
-        correction = cor
-        bareme = int(self.drop_down_bareme.selected_value)
-        qcm_nb = self.drop_down_qcm_row.selected_value
-
-        if self.image_1.source != "":
-            image = self.image_1.source
-        else:
-            image = None
-        # creation de la réponse multi en fonction du nb d'options choisies +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        reponse = ""
-        if self.rep1.checked is True:
-            r1 = "1"
-        else: 
-            r1 = "0"
-        if self.rep2.checked is True:
-            r2 = "1"
-        else: 
-            r2 = "0"
-        if self.rep3.checked is True:
-            r3 = "1"
-        else: 
-            r3 = "0"
-        if self.rep4.checked is True:
-            r4 = "1"
-        else: 
-            r4 = "0"
-        if self.rep5.checked is True:
-            r5 = "1"
-        else: 
-            r5 = "0"
-        if self.drop_down_nb_options.selected_value == 1 or self.drop_down_nb_options.selected_value == 2:    
-            reponse = r1 + r2
-        if self.drop_down_nb_options.selected_value == 3:
-            reponse = r1 + r2 + r3
-        if self.drop_down_nb_options.selected_value == 4:
-            reponse = r1 + r2 + r3 + r4
-        if self.drop_down_nb_options.selected_value == 5:
-            reponse = r1 + r2 + r3 + r4 + r5
-        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  NUM question   +++++++++++++++++++++++++++++
-        num = int(self.label_2.text) #je connais le num de question à changer
-        # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  type de question   +++++++++++++++++++++++++++++
-        if self.drop_down_nb_options.selected_value == 1:    # type V/F
-            type = "V/F"       # rep1 ou rep2 peuvent être vrai
-        else:
-            type = "Multi"     # rep1 et rep2 peuvent être vrai 
-            
-        # param (descro du QCM)
-        param = self.drop_down_qcm_row.selected_value["destination"]
-                    
-        # je récupère mes variables globales  question, reponse, bareme
-        result = anvil.server.call("add_ligne_qcm", num, question, correction, reponse, bareme, image, qcm_nb, type, param)         #num du stage  de la ligne
-        if result:
-            n = Notification("Création de la question !",
-                 timeout=1)   # par défaut 2 secondes
-            n.show()
-            # raffraichit les lignes qcm en récupérant le choix du qcm ds la dropdown
-            from anvil import open_form       # j'initialise la forme principale avec le choix du qcm ds la dropdown
-            open_form("QCM_visu_modif_Main", qcm_nb)
-        else:
-            alert("erreur de création d'une question QCM")
 
     def file_loader_photo_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -397,36 +333,17 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rep5.checked = False
         choix = self.drop_down_nb_options.selected_value
         #print(choix, type(choix))
-        question_part1 = """<!-- Question -->
-                            <p
-                            style="
-                                margin-bottom: 10px;
-                                text-align: left;
-                                font-weight: bold;
-                                color: rgb(0, 192, 250);
-                            "
-                            >
-                            <span
-                                style="
-                                background-color: var(--anvil-color-On-Secondary-Container-94f5);
-                                padding: 2px 6px;
-                                border-radius: 4px;
-                                margin-right: 6px;
-                                "
-                                <Question ici>
-                            </span>
-                            
-                            </p>
-                        """
-
+        texte_de_base = "<span style='display:block;color:rgb(0,192,250);font-weight:bold;'>Question :</span>"
+        texte_complet = ""
+        
         if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
-            self.rich_text_question.content = question_part1
+            self.rich_text_question.content = texte_de_base
             self.rep3.visible = False
             self.rep4.visible = False
             self.rep5.visible = False
             self.rep1.text = "Vrai"
             self.rep2.text = "Faux"
-            self.word_editor_1.text = question_part1
+            texte_complet = texte_de_base
 
         if choix > 1:     # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
             self.rep1.text = "A"
@@ -434,13 +351,9 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rep3.visible = False
             self.rep4.visible = False
             self.rep5.visible = False
-            self.rich_text_question.content  = "titre\n\nA  .\n\nB  ."
-            self.word_editor_1.text = question_part1 + """
-                                        <ul>
-                                        <li>A</li>
-                                        <li>B</li>
-                                        </ul>
-                                    """
+            bloc_add = "<ul><li>A</li><li>B</li></ul>"
+            texte_complet = texte_de_base + bloc_add
+            
 
         if choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
             self.rep3.visible = True
@@ -480,7 +393,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                                     """
 
         # -----------------------------------------------------------------------
-        
+        self.sending_to_word_editor(texte_complet, "question")
         self.button_modif_color()
 
     def rep1_change(self, **event_args):
