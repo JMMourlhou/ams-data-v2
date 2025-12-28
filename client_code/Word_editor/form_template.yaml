@@ -9,6 +9,11 @@ components:
   name: timer_2
   properties: {interval: 1}
   type: Timer
+- event_bindings: {tick: timer_4_tick}
+  layout_properties: {grid_position: 'QEGDAD,OBKSAS'}
+  name: timer_4
+  properties: {interval: 0.1}
+  type: Timer
 - components:
   - event_bindings: {tick: timer_3_tick}
     layout_properties: {grid_position: 'PIBQMR,CNOVYQ'}
@@ -110,10 +115,6 @@ components:
       properties: {align: center, gap: tiny, spacing_below: none, visible: true}
       type: FlowPanel
     - components:
-      - layout_properties: {grid_position: 'USVZAP,STDHKS'}
-        name: plot_1
-        properties: {}
-        type: Plot
       - components:
         - components:
           - event_bindings: {click: button_red_click}

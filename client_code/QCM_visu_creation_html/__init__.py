@@ -173,7 +173,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         # Text to be modified by Word_Editor
         self.word_editor_1.remove_on_exit = False
         self.word_editor_1.param1 = type_text  # 'question' or 'correction'
-        #self.word_editor_1.param2 = 'creation'  # 'question' or 'correction'
+        self.word_editor_1.param2 = 'creation'  # 'question' or 'correction'
         self.word_editor_1.text = html_text
         self.word_editor_1.form_show()  # will execute the show event in Word_Editor form
         self.word_editor_1.visible = True  # 'Word_Editor' component display
@@ -283,6 +283,11 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 if rep_multi_stagiaire == "00000":
                     alert("Choisissez une réponse !")
                     return
+        # supprime les lignes vides ajoutées par contenteditable
+        question = question.replace("<div><br></div>", "")
+        question = question.replace("<br>", "")
+        question = question.strip()
+
              
         result = anvil.server.call("add_ligne_qcm",
             int(self.num_question.text),  # num question (numériqie)
@@ -334,10 +339,16 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rep5.checked = False
         choix = self.drop_down_nb_options.selected_value
         #print(choix, type(choix))
-        texte_de_base = texte_de_base = (
-            "<span style='color:rgb(0,192,250);font-weight:bold;'>Question&nbsp;:&nbsp;</span>"
-            "<span id='qcm-editable'>Saisissez la question ici</span>"
+        #texte_de_base="<span style='display:block;color:rgb(0,192,250);font-weight:bold;'>Question&nbsp;:&nbsp;</span>"
+
+        
+        texte_de_base = (
+            "<span id='qcm-editable' "
+            "style='display:block;color:rgb(0,192,250);font-weight:bold;'>"
+            "Saisissez la question ici"
+            "</span>"
         )
+        
         texte_complet = ""
         
         if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques

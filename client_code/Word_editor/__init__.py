@@ -1,6 +1,5 @@
 from ._anvil_designer import Word_editorTemplate
 from anvil import *
-import plotly.graph_objects as go
 import anvil.js
 from anvil.js import window
 from datetime import datetime
@@ -25,7 +24,6 @@ class Word_editor(Word_editorTemplate):
         """ ===============================================================
         Parameteres passed through the 'Word_Editor' properties
         """
-        
         # Titles used for PDF export
         self.top_ligne_1 = self.top_ligne_1
         self.top_ligne_2 = self.top_ligne_2
@@ -57,7 +55,7 @@ class Word_editor(Word_editorTemplate):
             self.column_panel_menu1_left.visible = False
             self.column_panel_menu2_right.visible = False
         #alert(window.innerWidth)
-        
+
         # ====================================================================================
         # 1) CLEAN HTML (removes useless spans, empty paragraphs, redundant wrappers, etc.)
         # ====================================================================================
@@ -219,7 +217,6 @@ class Word_editor(Word_editorTemplate):
     # DISPLAY INITIAL CONTENT
     # ====================================================================================
     def form_show(self, **event_args):
-        
         editor = anvil.js.window.document.getElementById("editor")
         editor.innerHTML = self.text or ""
         self._initial_text = editor.innerHTML
@@ -227,9 +224,10 @@ class Word_editor(Word_editorTemplate):
         self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)
 
-        print(self.text)
-        
-        
+        if self.param2 == "creation":
+            self.timer_4.interval = 0.1
+            
+
     # ====================================================================================
     # BASIC FORMATTING ACTIONS
     # ====================================================================================
@@ -363,16 +361,16 @@ class Word_editor(Word_editorTemplate):
     # TIMER 2 — auto-save backup every 1 second
     # ====================================================================================
     def timer_2_tick(self, **event_args):
-        
+
         if not self._ready_emitted:
             self._ready_emitted = True
             self.raise_event("x-editor-ready")
             return
-            
+
         # toutes les secondes self.text proriété est mise àjour    
         editor = anvil.js.window.document.getElementById("editor")    
         self.text = editor.innerHTML
-        
+
         if not self._text_is_modified:  # on ne redétecte jamais cat Bt validation visible en forme mère
             # -------- text modified pour la 1ere fois, pour afficher le bt_validation? --------
             if self.text != self._initial_text:
@@ -381,7 +379,7 @@ class Word_editor(Word_editorTemplate):
                 # Event raised and must be caught in mother form by:
                 #    self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
                 self.raise_event("x-text-changed-state", has_changes=True)  
-            
+
         # Envoie le texte au parent toutes les secondes pour backup
         #    ou pour maj du texte à sauver lors du bt_validation click 
         self.raise_event("x-timer_text_backup", text=self.text)
@@ -411,9 +409,9 @@ class Word_editor(Word_editorTemplate):
         else:
             self.button_valid.foreground = "theme:On Primary"
             self.button_validation_copy.foreground = "theme:On Primary"
-            
-    
-            
+
+
+
     # ====================================================================================
     # PDF EXPORT using uplink "render_pdf"
     # ====================================================================================
@@ -519,25 +517,25 @@ class Word_editor(Word_editorTemplate):
         else:
             alert("Erreur lors de la génération du PDF")
 
-   
+
 
     def button_link_click(self, **event_args):
         """Insert a hyperlink around the currently selected text inside the contenteditable editor."""
         js = anvil.js.window
-    
+
         # 1) Save the current selection BEFORE opening the alert.
         # Opening an Anvil alert removes focus from the editor and destroys
         # the selection/range, so we must store it now.
         saved_range = js.saveSelection()
-    
+
         # If no selection exists, we cannot insert a link.
         if not saved_range or js.getSelection().toString().strip() == "":
             alert("Sélectionne d'abord un texte à transformer en lien.")  # French alert per your requirement
             return
-    
+
         # 2) Create a TextBox where the user can input the URL.
         tb = TextBox(placeholder="https://example.com")
-    
+
         # Show the alert (large=True ensures the TextBox is editable).
         # IMPORTANT: While the alert is open, the selection is lost — but we have saved it.
         res = alert(
@@ -546,17 +544,17 @@ class Word_editor(Word_editorTemplate):
             large=True,
             buttons=[("OK", True), ("Cancel", False)]
         )
-    
+
         # If the user pressed Cancel or entered an empty URL, stop here.
         if not res or not tb.text.strip():
             return
-    
+
         link_url = tb.text.strip()
-    
+
         # 3) Restore the text selection INSIDE the editor.
         # Without this step, execCommand() would have no range to apply the link to.
         js.restoreSelection(saved_range)
-    
+
         # 4) Insert the hyperlink using execCommand().
         # This automatically wraps the selected text in:
         #     <a href="URL">selected text</a>
@@ -584,11 +582,28 @@ class Word_editor(Word_editorTemplate):
         anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
         self.raise_event('x-fin_saisie')
-        
+
         # If propriety remove_on_exit is True, remove_from_parent()
         if self.remove_on_exit is True:  
             self.remove_from_parent()
 
-   
+
+    def timer_4_tick(self, **event_args):
+        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        self.timer_4.interval = 0
+        editor = anvil.js.window.document.getElementById("editor")
+        if not editor:
+            return
+    
+        target = editor.querySelector("#qcm-editable")
+        if not target:
+            return
+    
+        r = anvil.js.window.document.createRange()
+        r.selectNodeContents(target)
+    
+        s = anvil.js.window.getSelection()
+        s.removeAllRanges()
+        s.addRange(r)
 
 
