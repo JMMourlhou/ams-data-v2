@@ -213,17 +213,25 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         mode = self.word_editor_1.param1  # mode 'question' / "correction"
         html = self.word_editor_1.text   # le text édité
         
-        # self.rich_text_correction.scroll_into_view()
-        if mode == "question": # le texte édité, ds word_editor_1.text est la question
-            self.rich_text_correction.visible = True  # display the Correction Rich Text
-            self.rich_text_question.visible = False  # pas besoin d'afficher la question, elle est dans le word editor
-            self.rich_text_question.content = html
-        if mode == "correction": # le texte édité, ds word_editor_1.text est la correction
-            self.rich_text_correction.visible = False  # pas besoin d'afficher la correction, elle est dans le word editor
-            self.rich_text_question.visible = True  # display the Question Rich Text
-            self.rich_text_correction.content = html
-        correction = self.rich_text_correction.content
-        question = self.rich_text_question.content
+        if mode == "question":
+            # Affichage
+            self.rich_text_correction.visible = True
+            self.rich_text_question.visible = False
+            self.rich_text_question.content = html  # affichage seulement
+        
+            # Sauvegarde : on prend la source propre
+            question = html
+            correction = self.rich_text_correction.content  # l'autre champ (pas modifié ici)
+        
+        elif mode == "correction":
+            # Affichage
+            self.rich_text_correction.visible = False
+            self.rich_text_question.visible = True
+            self.rich_text_correction.content = html  # affichage seulement
+        
+            # Sauvegarde : on prend la source propre
+            correction = html
+            question = self.rich_text_question.content  # l'autre champ (pas modifié ici)
         
         if self.drop_down_nb_options.selected_value is None:
             alert("Choisissez un type de question !")
