@@ -9,11 +9,6 @@ components:
   name: timer_2
   properties: {interval: 1}
   type: Timer
-- event_bindings: {tick: timer_4_tick}
-  layout_properties: {grid_position: 'QEGDAD,OBKSAS'}
-  name: timer_4
-  properties: {interval: 0.1}
-  type: Timer
 - components:
   - event_bindings: {tick: timer_3_tick}
     layout_properties: {grid_position: 'PIBQMR,CNOVYQ'}
@@ -263,7 +258,7 @@ components:
             italic: true
             role: null
             spacing:
-              margin: ['0', null, '30', null]
+              margin: ['0', null, '10', null]
             text: ''
           type: Button
         - event_bindings: {click: button_align_center_click}
@@ -310,7 +305,7 @@ components:
             font_size: 18
             icon: fa:align-justify
             spacing:
-              margin: ['0', '5', '30', null]
+              margin: ['0', '5', '10', null]
               padding: [null, '15', null, null]
             text: ''
           type: Button
@@ -433,18 +428,6 @@ components:
             spacing:
               margin: ['20', null, '0', null]
             text: ''
-          type: Button
-        - event_bindings: {click: button_validation_click}
-          layout_properties: {grid_position: 'TOKGWS,RCAFQR'}
-          name: button_validation_copy
-          properties:
-            background: theme:Error
-            foreground: theme:On Primary
-            icon: fa:check
-            spacing:
-              margin: ['20', null, '15', null]
-            text: ''
-            visible: false
           type: Button
         layout_properties: {width: 71.2774955078125}
         name: column_panel_menu2_right

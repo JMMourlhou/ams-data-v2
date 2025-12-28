@@ -15,7 +15,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-        self.word_editor_1.visible = False   # Pour ne pas afficher tout de suite le Word processor
+        #self.word_editor_1.visible = False   # Pour ne pas afficher tout de suite le Word processor
         # ----------------------------------------------------A mettre en BG task: Vérif des qcm_sources en table Qcm desco
         liste_sources = app_tables.qcm_description.search()
         for qcm in liste_sources:
@@ -41,7 +41,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
                         alert(f"Erreur en MAJ du source du Qcm {cle}")
                         return
         # initialisations
-        self.column_panel_question.visible = False
+        #self.column_panel_question.visible = False
         # initilisation du drop down menu (voir lignes 500)
         self.drop_down_menu.items=([("Créer un nouveau QCM 'standard'", 0),
                                     ("Créer un nouveau QCM 'examen'", 1),
@@ -51,11 +51,11 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
                                    ])
     
         #initialisation des drop down des qcm créés et barêmes
-        self.image_1.source = None
+        #self.image_1.source = None
         self.drop_down_qcm_row.items = [(r['destination'], r) for r in app_tables.qcm_description.search(tables.order_by("destination", ascending=True))]
-        self.drop_down_bareme.items=["1","2","3","4","5","10"]
-        self.drop_down_bareme.selected_value = "1"
-        self.drop_down_nb_options.items=([("Vrai/Faux", 1), ("2 options", 2), ("3 options", 3), ("4 options", 4), ("5 options", 5)])
+        #self.drop_down_bareme.items=["1","2","3","4","5","10"]
+        #self.drop_down_bareme.selected_value = "1"
+        #self.drop_down_nb_options.items=([("Vrai/Faux", 1), ("2 options", 2), ("3 options", 3), ("4 options", 4), ("5 options", 5)])
         # ______________________________________________________________________________________________________________
         #initialisation drop down owner,  propriétaires potentiels, tous sauf "S",
         liste = app_tables.users.search(
@@ -115,9 +115,9 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         global liste
         liste = list(app_tables.qcm.search(qcm_nb=self.qcm_row))
         nb_questions = len(liste)
-        print("nb questions: ", nb_questions)
+        #print("nb questions: ", nb_questions)
         #num_question = str(nb_questions + 1)
-        self.label_2.text = nb_questions + 1  # Num ligne à partir du nb lignes déjà créées
+        #self.label_2.text = nb_questions + 1  # Num ligne à partir du nb lignes déjà créées
 
         # modif du user's temp (nb de questions de son qcm)
         
@@ -136,7 +136,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         if  self.qcm_row["exam"] is not True:  
             # affiches les lignes du qcm
             self.label_3.text = "Mise à jour du Q.C.M " + self.qcm_row["destination"]
-            self.column_panel_question.visible = True
+            #self.column_panel_question.visible = True
             self.affiche_lignes_qcm(liste)
         else: # QCM exam: je n'affiche pas de lignes questions qcm mais les qcm enfants potentiels
             self.column_panel_question.visible = False
@@ -468,7 +468,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
     def creation(self, **event_args):
         """This method is called when the button is clicked"""
         self.column_panel_creation_qcm.visible = True
-        self.column_panel_question.visible = False
+        self.creation_question.visible = False
         self.column_panel_content.visible = False
         self.button_del.visible = False
         self.drop_down_qcm_row.visible = False

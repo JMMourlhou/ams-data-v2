@@ -111,20 +111,8 @@ class Word_editor(Word_editorTemplate):
                     previousEmpty = true;
                 }
                 else previousEmpty = false;
-            });
-
-            // 5) Remove ALL empty paragraphs at the beginning (critical)
-            while (root.firstChild && root.firstChild.tagName === "P") {
-                const p = root.firstChild;
-                const txt = (p.textContent || "").replace(/\u00A0/g, "").trim();
-                if (txt === "") {
-                    root.removeChild(p);
-                } else {
-                    break;
-                }
-                }
-
-              };
+                });
+            };
         """
         anvil.js.window.eval(js_clean_html)
 
@@ -230,15 +218,15 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
-        anvil.js.window.cleanEditorHTML(editor)
-        editor.innerHTML = self.text or ""
-        self._initial_text = editor.innerHTML
+        #anvil.js.window.cleanEditorHTML(editor)
+        if self.text is not None:   # if creation None
+            editor.innerHTML = self.text or ""
+            self._initial_text = editor.innerHTML
+        
         self._text_is_modified = False
         self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)
 
-        if self.param2 == "creation":
-            self.timer_4.interval = 0.1
             
 
     # ====================================================================================
@@ -382,7 +370,7 @@ class Word_editor(Word_editorTemplate):
 
         # toutes les secondes self.text proriété est mise àjour    
         editor = anvil.js.window.document.getElementById("editor")  
-        anvil.js.window.cleanEditorHTML(editor)
+        #anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
 
         if not self._text_is_modified:  # on ne redétecte jamais cat Bt validation visible en forme mère
@@ -419,10 +407,8 @@ class Word_editor(Word_editorTemplate):
 
         if self.button_valid.foreground == "theme:On Primary":
             self.button_valid.foreground = "theme:On Primary Container"
-            self.button_validation_copy.foreground = "theme:On Primary Container"
         else:
             self.button_valid.foreground = "theme:On Primary"
-            self.button_validation_copy.foreground = "theme:On Primary"
 
 
 
@@ -602,22 +588,6 @@ class Word_editor(Word_editorTemplate):
             self.remove_from_parent()
 
 
-    def timer_4_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        self.timer_4.interval = 0
-        editor = anvil.js.window.document.getElementById("editor")
-        if not editor:
-            return
     
-        target = editor.querySelector("#qcm-editable")
-        if not target:
-            return
-    
-        r = anvil.js.window.document.createRange()
-        r.selectNodeContents(target)
-    
-        s = anvil.js.window.getSelection()
-        s.removeAllRanges()
-        s.addRange(r)
 
 
