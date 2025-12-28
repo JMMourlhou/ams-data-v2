@@ -112,7 +112,19 @@ class Word_editor(Word_editorTemplate):
                 }
                 else previousEmpty = false;
             });
-        };
+
+            // 5) Remove ALL empty paragraphs at the beginning (critical)
+            while (root.firstChild && root.firstChild.tagName === "P") {
+                const p = root.firstChild;
+                const txt = (p.textContent || "").replace(/\u00A0/g, "").trim();
+                if (txt === "") {
+                    root.removeChild(p);
+                } else {
+                    break;
+                }
+                }
+
+              };
         """
         anvil.js.window.eval(js_clean_html)
 
@@ -218,6 +230,7 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
+        anvil.js.window.cleanEditorHTML(editor)
         editor.innerHTML = self.text or ""
         self._initial_text = editor.innerHTML
         self._text_is_modified = False
@@ -368,7 +381,8 @@ class Word_editor(Word_editorTemplate):
             return
 
         # toutes les secondes self.text proriété est mise àjour    
-        editor = anvil.js.window.document.getElementById("editor")    
+        editor = anvil.js.window.document.getElementById("editor")  
+        anvil.js.window.cleanEditorHTML(editor)
         self.text = editor.innerHTML
 
         if not self._text_is_modified:  # on ne redétecte jamais cat Bt validation visible en forme mère

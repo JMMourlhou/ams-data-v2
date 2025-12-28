@@ -283,15 +283,11 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 if rep_multi_stagiaire == "00000":
                     alert("Choisissez une réponse !")
                     return
-        # supprime les lignes vides ajoutées par contenteditable
-        question = question.replace("<div><br></div>", "")
-        question = question.replace("<br>", "")
-        question = question.strip()
-
+        
              
         result = anvil.server.call("add_ligne_qcm",
             int(self.num_question.text),  # num question (numériqie)
-            question,  # question HTML
+            question,    # question HTML
             correction,  # correction HTML               
             rep_multi_stagiaire,  # rep codée ex 10 /  010 ...
             self.drop_down_bareme.selected_value,  # Bareme de la question
