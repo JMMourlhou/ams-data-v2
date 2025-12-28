@@ -407,5 +407,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         thumb_pic = anvil.image.generate_thumbnail(file, 640)
         self.image_1.source = thumb_pic
         self.button_modif_color()
+
+ 
         
    

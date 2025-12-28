@@ -95,7 +95,7 @@ components:
     name: cp_options
     properties: {col_spacing: tiny}
     type: ColumnPanel
-  - event_bindings: {show: text_area_question_show}
+  - event_bindings: {}
     layout_properties: {grid_position: 'LQGWBG,GEMQRU'}
     name: rich_text_question
     properties:
@@ -107,12 +107,12 @@ components:
         padding: [null, null, null, '5']
       visible: false
     type: RichText
-  - event_bindings: {show: text_area_question_show}
+  - event_bindings: {}
     layout_properties: {grid_position: 'ORXDES,PBOZIO'}
     name: rich_text_correction
     properties:
       background: theme:Tertiary
-      content: Question
+      content: Correction
       foreground: theme:On Secondary Container
       format: restricted_html
       spacing:
