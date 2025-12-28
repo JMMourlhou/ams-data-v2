@@ -1,5 +1,6 @@
 from ._anvil_designer import Word_editorTemplate
 from anvil import *
+import plotly.graph_objects as go
 import anvil.js
 from anvil.js import window
 from datetime import datetime
@@ -24,6 +25,7 @@ class Word_editor(Word_editorTemplate):
         """ ===============================================================
         Parameteres passed through the 'Word_Editor' properties
         """
+        
         # Titles used for PDF export
         self.top_ligne_1 = self.top_ligne_1
         self.top_ligne_2 = self.top_ligne_2
@@ -217,12 +219,15 @@ class Word_editor(Word_editorTemplate):
     # DISPLAY INITIAL CONTENT
     # ====================================================================================
     def form_show(self, **event_args):
+        
         editor = anvil.js.window.document.getElementById("editor")
         editor.innerHTML = self.text or ""
         self._initial_text = editor.innerHTML
         self._text_is_modified = False
         self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)
+
+        print(self.text)
         
         
     # ====================================================================================
@@ -406,8 +411,8 @@ class Word_editor(Word_editorTemplate):
         else:
             self.button_valid.foreground = "theme:On Primary"
             self.button_validation_copy.foreground = "theme:On Primary"
-
-   
+            
+    
             
     # ====================================================================================
     # PDF EXPORT using uplink "render_pdf"
@@ -583,5 +588,7 @@ class Word_editor(Word_editorTemplate):
         # If propriety remove_on_exit is True, remove_from_parent()
         if self.remove_on_exit is True:  
             self.remove_from_parent()
+
+   
 
 

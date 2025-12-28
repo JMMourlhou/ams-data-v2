@@ -173,6 +173,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         # Text to be modified by Word_Editor
         self.word_editor_1.remove_on_exit = False
         self.word_editor_1.param1 = type_text  # 'question' or 'correction'
+        #self.word_editor_1.param2 = 'creation'  # 'question' or 'correction'
         self.word_editor_1.text = html_text
         self.word_editor_1.form_show()  # will execute the show event in Word_Editor form
         self.word_editor_1.visible = True  # 'Word_Editor' component display
@@ -333,7 +334,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rep5.checked = False
         choix = self.drop_down_nb_options.selected_value
         #print(choix, type(choix))
-        texte_de_base = "<span style='display:block;color:rgb(0,192,250);font-weight:bold;'>Question :</span>"
+        texte_de_base = texte_de_base = (
+            "<span style='color:rgb(0,192,250);font-weight:bold;'>Question&nbsp;:&nbsp;</span>"
+            "<span id='qcm-editable'>Saisissez la question ici</span>"
+        )
         texte_complet = ""
         
         if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
@@ -351,46 +355,26 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rep3.visible = False
             self.rep4.visible = False
             self.rep5.visible = False
-            bloc_add = "<ul><li>A</li><li>B</li></ul>"
+            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
-
         if choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
             self.rep3.visible = True
             self.rep4.visible = False
             self.rep5.visible = False
-            self.rich_text_question.content  = "titre\n\nA  .\nB  .\nC  ."
-            self.word_editor_1.text = question_part1 + """
-                                        <ul>
-                                        <li>A</li>
-                                        <li>B</li>
-                                        <li>C</li>
-                                        </ul>
-                                    """
+            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li></ul>"
+            texte_complet = texte_de_base + bloc_add
+            
         if choix > 3:     # au moins 4 options possibles, rep1 et rep4 peuvent être identiques  ex  1111
             self.rep4.visible = True
             self.rep5.visible = False
-            self.rich_text_question.content  = "titre\n\nA  .\nB  .\nC  .\nD  ."
-            self.word_editor_1.text = question_part1 + """
-                                        <ul>
-                                        <li>A</li>
-                                        <li>B</li>
-                                        <li>C</li>
-                                        <li>D</li>
-                                        </ul>
-                                    """
+            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li><li>D&nbsp;</li></ul>"
+            texte_complet = texte_de_base + bloc_add
+            
         if choix > 4:     # 5 options possibles, rep1 à rep2 peuvent être identiques
             self.rep5.visible = True
-            self.rich_text_question.content = "titre\n\nA  .\nB  .\nC  .\nD  .\nE  ."
-            self.word_editor_1.text = question_part1 + """
-                                        <ul>
-                                        <li>A</li>
-                                        <li>B</li>
-                                        <li>C</li>
-                                        <li>D</li>
-                                        <li>E</li>
-                                        </ul>
-                                    """
+            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li><li>D&nbsp;</li><li>E&nbsp;</li></ul>"
+            texte_complet = texte_de_base + bloc_add
 
         # -----------------------------------------------------------------------
         self.sending_to_word_editor(texte_complet, "question")
@@ -425,9 +409,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def rep5_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
-    
-    
-    
+
     def drop_down_bareme_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()

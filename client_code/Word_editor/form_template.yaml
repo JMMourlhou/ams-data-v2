@@ -110,6 +110,10 @@ components:
       properties: {align: center, gap: tiny, spacing_below: none, visible: true}
       type: FlowPanel
     - components:
+      - layout_properties: {grid_position: 'USVZAP,STDHKS'}
+        name: plot_1
+        properties: {}
+        type: Plot
       - components:
         - components:
           - event_bindings: {click: button_red_click}
@@ -501,4 +505,5 @@ properties:
 - {default_value: false, description: 'Button Exit visible ?', important: true, name: bt_exit_visible, type: boolean}
 - {default_value: '', description: Bt exit text, important: true, name: bt_exit_text, type: string}
 - {default_value: true, description: Should the Word_Editor be removed from parent when bt valid is clicked, important: true, name: remove_on_exit, type: boolean}
+- {default_value: '', description: 'used to pass a 2d param, ex: ''creation'' / ''modif'' when param1 is used  ', important: true, name: param2, type: string}
 toolbox_item: {hidden: false, title: Word-editor}
