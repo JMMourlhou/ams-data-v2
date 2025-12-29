@@ -14,44 +14,44 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.init_components(**properties)
         #=========================================================================================
         # POUR AUTO SAUVEGARDE DU TEXTE:
-        
+
         # Bouton Validation caché tant que rien n'est modifié
         self.button_validation.visible = False
         self._editor_ready = False
-        
+
         # Écoute l'état de modification du Word Editor
         self.word_editor_1.set_event_handler("x-text-changed-state", self._on_text_changed_state)
-        
+
         # 1 --- Anti-spam ---
         self._last_saved_text = ""
         self._last_save_ts = 0
         self._min_delay_sec = 10   # 1 écriture max toutes les 10 s
-        
+
         # 2- handler sur l'INSTANCE word_editor_1  raised each sec to get the updated text
         self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
         # =========================================================================================
         # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
         self.word_editor_1.set_event_handler("x-editor-ready", self._arm_editor_ready)
-        
+
         self.qcm_row = qcm_row              # QCM descro row
         self.question_row = question_row    # la question row
 
         # num / nb de quesions
         self.label_2.text = self.question_row['num']
         self.label_nb_questions.text = nb_questions
-        
-        
-        
+
+
+
         self.drop_down_bareme.items=["1","2","3","4","5","10"]
         self.drop_down_bareme.selected_value = self.question_row['bareme']                 
-       
+
         if self.question_row['photo'] is not None:
             self.image_1.source = self.question_row['photo']
         else:
             self.image_1.source = None
             self.cp_img.visible = False
             self.image_1.visible = False
-            
+
         self.type_question = self.question_row['type']  
         self.nb_options = len(self.question_row['rep_multi'])     # je sais combien d'options j'utilise pour cette question
         if self.nb_options > 1:     
@@ -61,7 +61,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             else:                   # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
                 self.rep1.text = "A"
                 self.rep2.text = "B"
-                
+
             if self.question_row['rep_multi'][0:1]  == "1":
                 self.rep1.checked = True      
             else:
@@ -97,11 +97,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                 self.rep5.checked = True      
             else:
                 self.rep5.checked = False
-                
+
         # on affiche la correction en init, la question est ds le word editor
         self.rich_text_correction.content = self.question_row['correction']
         self.rich_text_correction.visible = True      # display the Correction Rich Text
-        
+
         #self.rich_text_question.content = self.question_row['question']
         self.rich_text_question.visible = False
         #self.word_editor_1.scroll_into_view()
@@ -112,22 +112,22 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         html = e.get("text")
         if not html:
             return
-    
+
         # --- 1) rien n'a changé ---
         if html == self._last_saved_text:
             return
-    
+
         # --- 2) anti-spam temporel ---
         now = time.time()
         if now - self._last_save_ts < self._min_delay_sec:
             return
-    
+
         # --- 3) sauvegarde ---
         self._last_saved_text = html
         self._last_save_ts = now
-    
+
         self.word_editor_1.text = html
-    
+
         # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas 
         self.button_validation_click(True)  
 
@@ -141,7 +141,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def button_modif_color(self):
         self.button_validation.visible = True
-        
+
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
         
@@ -407,7 +407,5 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         thumb_pic = anvil.image.generate_thumbnail(file, 640)
         self.image_1.source = thumb_pic
         self.button_modif_color()
-
- 
         
    
