@@ -13,11 +13,18 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def __init__(self, qcm_row, nb_questions=0, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        self.first_correction = True  # indiquera si 1ere press on bt correction
         self.qcm_row = qcm_row  # QCM descro row
         self.label_nb_questions.text = nb_questions + 1
         self.num_question.text = nb_questions + 1   # Num ligne à partir du nb lignes déjà créées
         self.type_question = ""
         self.image_1.source = None
+
+        self.rep1.visible = False
+        self.rep2.visible = False
+        self.rep3.visible = False
+        self.rep4.visible = False
+        self.rep5.visible = False
         # réponses
         self.rep1.checked = False
         self.rep2.checked = False
@@ -30,7 +37,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.button_question.visible = False
         # Initialisation des drop down nb potions et Barême
         self.drop_down_nb_options.items=([("Vrai/Faux", 1), ("2 options", 2), ("3 options", 3), ("4 options", 4), ("5 options", 5)])
+
+        self.drop_down_bareme.visible = False
         self.drop_down_bareme.items = ["1", "2", "3", "4", "5", "10"]
+        self.drop_down_bareme.selected_value = "1"
         
         #self.drop_down_bareme.selected_value = None
         # =========================================================================================
@@ -49,7 +59,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
         self.word_editor_1.set_event_handler("x-editor-ready", self._arm_editor_ready)
 
-        
         # on affiche la correction en init, la question est ds le word editor
         self.rich_text_correction.content = "Correction"
         self.rich_text_correction.visible = True  # display the Correction Rich Text
@@ -69,7 +78,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             return
 
         self.word_editor_1.text = html
-
+        self.button_validation.visible = True
         # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas
         #self.button_validation_click(True)
 
@@ -88,56 +97,52 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
 
-        #self.type_question = "V/F"
-        #self.nb_options = 1
-        if self.choix == 1:   # "V/F"
-            self.rep1.text = "V"
-            self.rep2.text = "F"
-            
-        if self.choix > 1:
-            self.rep1.text = "A"
-            self.rep2.text = "B"
-
-        if self.choix > 2:
-            
-            self.rep3.visible = True
-            
-
-        if self.choix > 3:
-            self.rep1.text = "A"
-            self.rep2.text = "B"
-            self.rep3.text = "C"
-            self.rep4.text = "D"
-            self.rep4.visible = True
-            
-
-        if self.choix > 4:
-            self.rep1.text = "A"
-            self.rep2.text = "B"
-            self.rep3.text = "C"
-            self.rep4.text = "D"
-            self.rep5.text = "E"
-            self.rep5.visible = True
-            
         self.button_validation.visible = False
         self.rich_text_correction.visible = True  # Hiding the Correction text
         self.rich_text_question.visible = False
-        
+        self.button_question.visible = False
+        self.button_correction.visible = True
         text_not_html = self.rich_text_question.content
         self.sending_to_word_editor(text_not_html, "question")
-        self.button_question.visible = False
-        self
+        
         
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
-        
+        if self.first_correction is True:
+            # 1ere entrée en correction, je préforme la correction en fonction des réponses
+            texte_de_base = (
+                "<span id='qcm-editable' "
+                "style='display:block;color:rgb(0,192,250);font-weight:bold;'>"
+                "Correction: :"
+                "</span>"
+            )
+            if self.choix == 1: # V/F
+                if self.rep1.checked is True:
+                    text_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li><li>B Faux :&nbsp&nbsp;</li></ul>"
+                else:
+                    text_correction = "<ul><li>A Faux :&nbsp&nbsp;</li><li>B Vrai :&nbsp&nbsp;</li></ul>"
+            if self.choix == 2: # V/F
+                if self.rep1.checked is True:
+                    text_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li>"
+                else:
+                    text_correction = "<ul><li>A Faux :&nbsp&nbsp;</li>"
+            
+                    
+            texte_correction = texte_de_base + text_correction
+            
         self.button_validation.visible = False
         self.rich_text_correction.visible = True  # Hiding the Correction text
         self.rich_text_question.visible = False
-        text_not_html = self.rich_text_correction.content
-        self.sending_to_word_editor(text_not_html, "correction")
+        self.button_question.visible = True
+        self.button_correction.visible = False
         
-        self.button_question.visible = False
+        
+        if self.first_correction is False: # pas le 1er click sur le bt correction 
+            text_not_html = self.rich_text_correction.content
+            self.sending_to_word_editor(text_not_html, "correction")
+        else: # 1er click
+            self.sending_to_word_editor(texte_correction, "correction")
+        self.first_correction = False   # entrée pour la première fois effectuée
         
     def sending_to_word_editor(self, text_not_html, type_text, **event_args):
         # ajout des sauts de ligne HTML (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
@@ -183,11 +188,9 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rich_text_question.visible = True  # display the Question Rich Text
             self.rich_text_correction.content = html_text
 
-    # handler por afficher le bouton validation uniqt qd text est modifié
+    # handler pour afficher le bouton validation uniqt qd text est modifié
     def _arm_editor_ready(self, **e):
         self._editor_ready = True
-
-   
 
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):  # =============  VALIDATION
@@ -234,7 +237,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             return
             
         rep_multi_stagiaire = ""  # CUMUL de la codif des réponses du stagiaire
-        if self.type_question == "V/F":
+        if self.choix == 1: #V/F":
             if self.rep1.checked is True:  # question V/F
                 rep_multi_stagiaire = "10"
             else:
@@ -249,7 +252,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             else:
                 rep_multi_stagiaire = "0"
 
-            if self.nb_options > 1:
+            if self.choix > 1:
                 if self.rep2.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
@@ -258,7 +261,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     alert("Choisissez une réponse !")
                     return
 
-            if self.nb_options > 2:
+            if self.choix > 2:
                 if self.rep3.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
@@ -267,7 +270,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     alert("Choisissez une réponse !")
                     return
                     
-            if self.nb_options > 3:
+            if self.choix > 3:
                 if self.rep4.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
@@ -276,7 +279,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     alert("Choisissez une réponse !")
                     return
 
-            if self.nb_options > 4:
+            if self.choix > 4:
                 if self.rep5.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
@@ -329,6 +332,14 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
     def drop_down_nb_options_change(self, **event_args):
         """This method is called when an item is selected"""
+        self.drop_down_bareme.visible = True
+        
+        self.rep1.visible = True
+        self.rep2.visible = True
+        self.rep3.visible = True
+        self.rep4.visible = True
+        self.rep5.visible = True
+        
         self.rep1.checked = False
         self.rep2.checked = False
         self.rep3.checked = False
@@ -337,12 +348,11 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.choix = self.drop_down_nb_options.selected_value
         print(self.choix, type(self.choix))
         #texte_de_base="<span style='display:block;color:rgb(0,192,250);font-weight:bold;'>Question&nbsp;:&nbsp;</span>"
-
-        
+        # 
         texte_de_base = (
             "<span id='qcm-editable' "
-            "style='display:block;color:rgb(0,192,250);font-weight:bold;'>"
-            "Saisissez la question ici"
+                "style='display:block;color:rgb(0,192,250);font-weight:bold;'>"
+                "Saisissez la question ici"
             "</span>"
         )
         
@@ -363,25 +373,25 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rep3.visible = False
             self.rep4.visible = False
             self.rep5.visible = False
-            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li></ul>"
+            bloc_add = "<ul><li>A&nbsp&nbsp;</li><li>B&nbsp&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
         if self.choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
             self.rep3.visible = True
             self.rep4.visible = False
             self.rep5.visible = False
-            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li></ul>"
+            bloc_add = "<ul><li>A&nbsp&nbsp;</li><li>B&nbsp&nbsp;</li><li>C&nbsp&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
         if self.choix > 3:     # au moins 4 options possibles, rep1 et rep4 peuvent être identiques  ex  1111
             self.rep4.visible = True
             self.rep5.visible = False
-            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li><li>D&nbsp;</li></ul>"
+            bloc_add = "<ul><li>A&nbsp&nbsp;</li><li>B&nbsp&nbsp;</li><li>C&nbsp&nbsp;</li><li>D&nbsp&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
         if self.choix > 4:     # 5 options possibles, rep1 à rep2 peuvent être identiques
             self.rep5.visible = True
-            bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li><li>D&nbsp;</li><li>E&nbsp;</li></ul>"
+            bloc_add = "<ul><li>A&nbsp&nbsp;</li><li>B&nbsp&nbsp;</li><li>C&nbsp&nbsp;</li><li>D&nbsp&nbsp;</li><li>E&nbsp&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
 
         # -----------------------------------------------------------------------
@@ -390,7 +400,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
     def rep1_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        if self.type_question == "V/F":
+        if self.choix == 1: # "V/F"
             if self.rep1.checked is True:  # question V/F
                 self.rep2.checked = False
             else:
@@ -399,7 +409,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
     def rep2_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        if self.type_question == "V/F":
+        if self.choix == 1: # "V/F"
             if self.rep2.checked is True:  # question V/F
                 self.rep1.checked = False
             else:

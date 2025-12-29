@@ -143,11 +143,12 @@ components:
         spacing_above: none
         spacing_below: none
         text: V
+        visible: false
       type: CheckBox
     - event_bindings: {change: rep2_change}
       layout_properties: {grid_position: 'YEFAGY,IYUETY'}
       name: rep2
-      properties: {align: center, background: '', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: F}
+      properties: {align: center, background: '', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: F, visible: false}
       type: CheckBox
     - event_bindings: {change: rep3_change}
       layout_properties: {grid_position: 'UNTKDO,VKZZDN'}
