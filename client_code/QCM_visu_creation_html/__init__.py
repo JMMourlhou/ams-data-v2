@@ -79,8 +79,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
         self.word_editor_1.text = html
         self.button_validation.visible = True
-        # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas
-        #self.button_validation_click(True)
 
     # ------------------------------------------------------------------
     # Réaction aux modifications du texte : on affiche le bt Validation
@@ -113,35 +111,56 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             texte_de_base = (
                 "<span id='qcm-editable' "
                 "style='display:block;color:rgb(0,192,250);font-weight:bold;'>"
-                "Correction: :"
+                "Correction: "
                 "</span>"
             )
             if self.choix == 1: # V/F
                 if self.rep1.checked is True:
-                    text_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li><li>B Faux :&nbsp&nbsp;</li></ul>"
+                    texte_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li><li>B Faux :&nbsp&nbsp;</li></ul>"
                 else:
-                    text_correction = "<ul><li>A Faux :&nbsp&nbsp;</li><li>B Vrai :&nbsp&nbsp;</li></ul>"
-            if self.choix == 2: # V/F
-                if self.rep1.checked is True:
-                    text_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li>"
-                else:
-                    text_correction = "<ul><li>A Faux :&nbsp&nbsp;</li>"
-            
+                    texte_correction = "<ul><li>A Faux :&nbsp&nbsp;</li><li>B Vrai :&nbsp&nbsp;</li></ul>"
                     
-            texte_correction = texte_de_base + text_correction
+            if self.choix > 1: # V/F
+                texte_correction = (
+                    "<ul style='margin:0;padding-left:24px;list-style-position:inside;"
+                    "color:#fff905;'>"
+                )
+                
+                # A
+                texte_correction += f"<li>A {'Vrai ' if self.rep1.checked else 'Faux '} :&nbsp </li>"
+                
+                # B
+                if self.choix > 1:
+                    texte_correction += f"<li>B {'Vrai ' if self.rep2.checked else 'Faux '} :&nbsp </li>"
+                
+                # C
+                if self.choix > 2:
+                    texte_correction += f"<li>C {'Vrai ' if self.rep3.checked else 'Faux '} :&nbsp </li>"
+                
+                # D
+                if self.choix > 3:
+                    texte_correction += f"<li>D {'Vrai ' if self.rep4.checked else 'Faux '} :&nbsp </li>"
+                
+                # E
+                if self.choix > 4:
+                    texte_correction += f"<li>E {'Vrai ' if self.rep5.checked else 'Faux '} :&nbsp </li>"
+                
+                texte_correction += "</ul>"
+                
+            texte_correction_final = texte_de_base + texte_correction
             
         self.button_validation.visible = False
-        self.rich_text_correction.visible = True  # Hiding the Correction text
-        self.rich_text_question.visible = False
+        self.rich_text_correction.visible = False  # hidding the Correction text
+        self.rich_text_question.visible = True
         self.button_question.visible = True
         self.button_correction.visible = False
-        
+        self.rich_text_question.content = self.word_editor_1.text 
         
         if self.first_correction is False: # pas le 1er click sur le bt correction 
             text_not_html = self.rich_text_correction.content
             self.sending_to_word_editor(text_not_html, "correction")
         else: # 1er click
-            self.sending_to_word_editor(texte_correction, "correction")
+            self.sending_to_word_editor(texte_correction_final, "correction")
         self.first_correction = False   # entrée pour la première fois effectuée
         
     def sending_to_word_editor(self, text_not_html, type_text, **event_args):
@@ -182,9 +201,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rich_text_question.content = html_text
 
         if self.word_editor_1.param1 == "correction":
-            self.rich_text_correction.visible = (
-                False  # display the Correction Rich Text
-            )
+            self.rich_text_correction.visible = False  # display the Correction Rich Text
             self.rich_text_question.visible = True  # display the Question Rich Text
             self.rich_text_correction.content = html_text
 
@@ -204,8 +221,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
         # param (descro du QCM)
         param = self.qcm_row ["destination"]
-
-        
         mode = self.word_editor_1.param1  # mode 'question' / "correction"
         html = self.word_editor_1.text   # le text édité
         
@@ -291,12 +306,12 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
              
         result = anvil.server.call("add_ligne_qcm",
             int(self.num_question.text),  # num question (numériqie)
-            question,    # question HTML
-            correction,  # correction HTML               
-            rep_multi_stagiaire,  # rep codée ex 10 /  010 ...
+            question,                     # question HTML
+            correction,                   # correction HTML               
+            rep_multi_stagiaire,          # rep codée ex 10 /  010 ...
             self.drop_down_bareme.selected_value,  # Bareme de la question
             self.image_1.source,  # photo
-            self.qcm_row,  # qcm descro row                  
+            self.qcm_row,         # qcm descro row                  
             type,                 # "V/F" ou "Multi"
             param                 # self.qcm_row ["destination"], description du QCM
         )

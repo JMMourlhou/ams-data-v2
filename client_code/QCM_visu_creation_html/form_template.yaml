@@ -186,9 +186,9 @@ components:
     layout_properties: {grid_position: 'ORXDES,PBOZIO'}
     name: rich_text_correction
     properties:
-      background: theme:Tertiary
+      background: theme:On Primary Container
       content: Correction
-      foreground: theme:On Secondary Container
+      foreground: theme:On Primary
       format: restricted_html
       spacing:
         padding: [null, null, null, '5']
