@@ -32,7 +32,7 @@ class Word_editor(Word_editorTemplate):
         # self.button_exit.text = self.bt_exit_text
         # self.button_exit.visible = self.bt_exit_visible
         """ ===============================================================
-        End of Parameteres 
+        End of Parameters 
         """
         # Responsive UI (small screens → menus on sides)
         if window.innerWidth < 450:
@@ -212,14 +212,17 @@ class Word_editor(Word_editorTemplate):
         anvil.js.window.eval(js_clean_color)
 
 
-
     # ====================================================================================
     # DISPLAY INITIAL CONTENT
     # ====================================================================================
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
-        editor.innerHTML = self.text or ""
-        self._initial_text = editor.innerHTML
+        try:
+            editor.innerHTML = self.text or ""
+            self._initial_text = editor.innerHTML
+        except Exception as e:
+            alert(e)
+            
         self._text_is_modified = False
         self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)

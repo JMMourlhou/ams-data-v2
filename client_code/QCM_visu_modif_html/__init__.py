@@ -40,8 +40,6 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.label_2.text = self.question_row['num']
         self.label_nb_questions.text = nb_questions
 
-
-
         self.drop_down_bareme.items=["1","2","3","4","5","10"]
         self.drop_down_bareme.selected_value = self.question_row['bareme']                 
 
@@ -107,7 +105,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         #self.word_editor_1.scroll_into_view()
         self.button_question_click() # on affiche la question
 
-    # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2 
+    # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2
     def _backup_word_editor(self, **e):
         html = e.get("text")
         if not html:
@@ -117,19 +115,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         if html == self._last_saved_text:
             return
 
-        # --- 2) anti-spam temporel ---
-        now = time.time()
-        if now - self._last_save_ts < self._min_delay_sec:
-            return
-
-        # --- 3) sauvegarde ---
-        self._last_saved_text = html
-        self._last_save_ts = now
-
         self.word_editor_1.text = html
-
-        # Appel EXACTEMENT comme si l'utilisateur cliquait MAIS en mode sov_auto True, on ne sortira pas 
-        self.button_validation_click(True)  
+        self.button_validation.visible = True
 
     # ------------------------------------------------------------------
     # Réaction aux modifications du texte : on affiche le bt Validation
@@ -137,71 +124,81 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def _on_text_changed_state(self, **e):
         if not self._editor_ready:
             return  # on ignore les events de chargement
-        self.button_modif_color()  #affiche bt valid
+
+            self.button_modif_color()  #affiche bt valid
 
     def button_modif_color(self):
         self.button_validation.visible = True
 
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
-        
-        self.type_question = self.question_row['type']  
-        self.nb_options = len(self.question_row['rep_multi'])     # je sais combien d'options j'utilise pour cette question
-        if self.nb_options > 1:     
-            if self.type_question == "V/F":
-                self.rep1.text = "V"
-                self.rep2.text = "F"
-            else:                   # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
-                self.rep1.text = "A"
-                self.rep2.text = "B"
 
-            if self.question_row['rep_multi'][0:1]  == "1":
-                self.rep1.checked = True      
-            else:
-                self.rep1.checked = False
-
-            if self.question_row['rep_multi'][1:2]  == "1":
-                self.rep2.checked = True      
-            else:
-                self.rep2.checked = False
-
-        if self.nb_options > 2:
-            self.rep1.text = "A"
-            self.rep2.text = "B"
-            self.rep3.text = "C"
-            self.rep3.visible = True
-            if self.question_row['rep_multi'][2:3]  == "1":
-                self.rep3.checked = True      
-            else:
-                self.rep3.checked = False
-
-        if self.nb_options > 3:        
-            self.rep4.text = "D"
-            self.rep4.visible = True
-            if self.question_row['rep_multi'][3:4]  == "1":
-                self.rep4.checked = True      
-            else:
-                self.rep4.checked = False
-
-        if self.nb_options > 4:
-            self.rep5.text = "E"
-            self.rep5.visible = True
-            if self.question_row['rep_multi'][4:5]  == "1":
-                self.rep5.checked = True      
-            else:
-                self.rep5.checked = False
-        
-        text_not_html = self.question_row['question']
-        self.rich_text_correction.visible = False      # Hiding the Correction text
-        self.sending_to_word_editor(text_not_html, "question")
         self.button_validation.visible = False
+        self.rich_text_correction.visible = True  # Hiding the Correction text
+        self.rich_text_question.visible = False
+        self.button_question.visible = False
+        self.button_correction.visible = True
+        text_not_html = self.rich_text_question.content
+        self.sending_to_word_editor(text_not_html, "question")
 
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
-        text_not_html = self.question_row['correction']
-        self.rich_text_question.visible = False      # Hiding the question text
-        self.sending_to_word_editor(text_not_html, "correction")
+        if self.first_correction is True:
+            # 1ere entrée en correction, je préforme la correction en fonction des réponses
+            texte_de_base = (
+                "<span id='qcm-editable' "
+                "style='display:block;color:rgb(0,192,250);font-weight:bold;'>"
+                "Correction: "
+                "</span>"
+            )
+            if self.choix == 1: # V/F
+                if self.rep1.checked is True:
+                    texte_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li><li>B Faux :&nbsp&nbsp;</li></ul>"
+                else:
+                    texte_correction = "<ul><li>A Faux :&nbsp&nbsp;</li><li>B Vrai :&nbsp&nbsp;</li></ul>"
+
+            if self.choix > 1: # V/F
+                texte_correction = (
+                    "<ul style='margin:0;padding-left:24px;list-style-position:inside;"
+                    "color:#fff905;'>"
+                )
+
+                # A
+                texte_correction += f"<li>A {'Vrai ' if self.rep1.checked else 'Faux '} :&nbsp </li>"
+
+                # B
+                if self.choix > 1:
+                    texte_correction += f"<li>B {'Vrai ' if self.rep2.checked else 'Faux '} :&nbsp </li>"
+
+                # C
+                if self.choix > 2:
+                    texte_correction += f"<li>C {'Vrai ' if self.rep3.checked else 'Faux '} :&nbsp </li>"
+
+                # D
+                if self.choix > 3:
+                    texte_correction += f"<li>D {'Vrai ' if self.rep4.checked else 'Faux '} :&nbsp </li>"
+
+                # E
+                if self.choix > 4:
+                    texte_correction += f"<li>E {'Vrai ' if self.rep5.checked else 'Faux '} :&nbsp </li>"
+
+                texte_correction += "</ul>"
+
+            texte_correction_final = texte_de_base + texte_correction
+
         self.button_validation.visible = False
+        self.rich_text_correction.visible = False  # hidding the Correction text
+        self.rich_text_question.visible = True
+        self.button_question.visible = True
+        self.button_correction.visible = False
+        self.rich_text_question.content = self.word_editor_1.text 
+
+        if self.first_correction is False: # pas le 1er click sur le bt correction 
+            text_not_html = self.rich_text_correction.content
+            self.sending_to_word_editor(text_not_html, "correction")
+        else: # 1er click
+            self.sending_to_word_editor(texte_correction_final, "correction")
+        self.first_correction = False   # entrée pour la première fois effectuée
 
     def sending_to_word_editor(self, text_not_html, type_text, **event_args):
         # ajout des sauts de ligne HTML (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
@@ -215,33 +212,34 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         # Word_Editor buttons parameters: (through form 'Word_Editor' proprieties)
         self.word_editor_1.bt_exit_visible = False
         if window.innerWidth > 800:
-            self.word_editor_1.bt_valid_text = "Validation de la Question"   
+            self.word_editor_1.bt_valid_text = "Validation de la Question"
             self.word_editor_1.bt_exit_text = "Sortie"
         elif window.innerWidth < 450:
-            self.word_editor_1.bt_valid_text = ""   
+            self.word_editor_1.bt_valid_text = ""
             self.word_editor_1.bt_exit_text = ""
-        else :
-            self.word_editor_1.bt_valid_text = "Validat°"   
+        else:
+            self.word_editor_1.bt_valid_text = "Validat°"
             self.word_editor_1.bt_exit_text = "Sortie"
         # Word_Editor PDF download titles parameters:
-        self.word_editor_1.top_ligne_2 = f"Question N° {self.question_row['num']} "
+        self.word_editor_1.top_ligne_2 = "Nouvelle Question"
         self.top_ligne_2 = self.top_ligne_1 = f"QCM {self.qcm_row['destination']} "
-        
+
         # Text to be modified by Word_Editor
         self.word_editor_1.remove_on_exit = False
-        self.word_editor_1.param1 = type_text   # 'question' or 'correction'
+        self.word_editor_1.param1 = type_text  # 'question' or 'correction'
+        self.word_editor_1.param2 = 'creation'  # 'question' or 'correction'
         self.word_editor_1.text = html_text
-        self.word_editor_1.form_show() # will execute the show event in Word_Editor form
+        self.word_editor_1.form_show()  # will execute the show event in Word_Editor form
         self.word_editor_1.visible = True  # 'Word_Editor' component display
 
         if self.word_editor_1.param1 == "question":
-            self.rich_text_correction.visible = True      # display the Correction Rich Text
-            self.rich_text_question.visible = False       # display the Question Rich Text
+            self.rich_text_correction.visible = True  # display the Correction Rich Text
+            self.rich_text_question.visible = False  # display the Question Rich Text
             self.rich_text_question.content = html_text
-            
+
         if self.word_editor_1.param1 == "correction":
-            self.rich_text_correction.visible = False      # display the Correction Rich Text
-            self.rich_text_question.visible = True       # display the Question Rich Text
+            self.rich_text_correction.visible = False  # display the Correction Rich Text
+            self.rich_text_question.visible = True  # display the Question Rich Text
             self.rich_text_correction.content = html_text
 
     # handler por afficher le bouton validation uniqt qd text est modifié
@@ -261,18 +259,17 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def rep1_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        if self.type_question == "V/F":
-            if self.rep1.checked is True:   # question V/F
+        if self.choix == 1: # "V/F"
+            if self.rep1.checked is True:  # question V/F
                 self.rep2.checked = False
             else:
                 self.rep2.checked = True
         self.button_modif_color()
-        
 
     def rep2_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        if self.type_question == "V/F":
-            if self.rep2.checked is True:   # question V/F
+        if self.choix == 1: # "V/F"
+            if self.rep2.checked is True:  # question V/F
                 self.rep1.checked = False
             else:
                 self.rep1.checked = True
@@ -290,22 +287,19 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
 
+    def drop_down_bareme_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
+
     def text_box_correction_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
         self.button_modif_color()
-
-    def drop_down_bareme_change(self, **event_args):                             
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
-        
 
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):                                         # =============  VALIDATION
         """This method is called when the button is clicked"""
         
-        
-        
-        mode = self.word_editor_1.param1       # mode 'modif' /  'creation' 
+        mode = self.word_editor_1.param1       # mode 'question'  /  'correction' 
         html = self.word_editor_1.text
         #self.rich_text_correction.scroll_into_view()
         if mode == "question":
