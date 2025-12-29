@@ -111,8 +111,8 @@ class Word_editor(Word_editorTemplate):
                     previousEmpty = true;
                 }
                 else previousEmpty = false;
-                });
-            };
+            });
+        };
         """
         anvil.js.window.eval(js_clean_html)
 
@@ -218,16 +218,12 @@ class Word_editor(Word_editorTemplate):
     # ====================================================================================
     def form_show(self, **event_args):
         editor = anvil.js.window.document.getElementById("editor")
-        anvil.js.window.cleanEditorHTML(editor)
         editor.innerHTML = self.text or ""
-            
-        self._initial_text = self.text or ""
+        self._initial_text = editor.innerHTML
         self._text_is_modified = False
         self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)
 
-        
-        
 
     # ====================================================================================
     # BASIC FORMATTING ACTIONS
@@ -362,14 +358,14 @@ class Word_editor(Word_editorTemplate):
     # TIMER 2 — auto-save backup every 1 second
     # ====================================================================================
     def timer_2_tick(self, **event_args):
+
         if not self._ready_emitted:
             self._ready_emitted = True
             self.raise_event("x-editor-ready")
             return
 
         # toutes les secondes self.text proriété est mise àjour    
-        editor = anvil.js.window.document.getElementById("editor")  
-        #anvil.js.window.cleanEditorHTML(editor)
+        editor = anvil.js.window.document.getElementById("editor")    
         self.text = editor.innerHTML
 
         if not self._text_is_modified:  # on ne redétecte jamais cat Bt validation visible en forme mère
@@ -406,8 +402,10 @@ class Word_editor(Word_editorTemplate):
 
         if self.button_valid.foreground == "theme:On Primary":
             self.button_valid.foreground = "theme:On Primary Container"
+            self.button_validation_copy.foreground = "theme:On Primary Container"
         else:
             self.button_valid.foreground = "theme:On Primary"
+            self.button_validation_copy.foreground = "theme:On Primary"
 
 
 
@@ -585,8 +583,5 @@ class Word_editor(Word_editorTemplate):
         # If propriety remove_on_exit is True, remove_from_parent()
         if self.remove_on_exit is True:  
             self.remove_from_parent()
-
-
-    
 
 
