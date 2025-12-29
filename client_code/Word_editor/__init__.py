@@ -402,10 +402,10 @@ class Word_editor(Word_editorTemplate):
 
         if self.button_valid.foreground == "theme:On Primary":
             self.button_valid.foreground = "theme:On Primary Container"
-            self.button_validation_copy.foreground = "theme:On Primary Container"
+            #self.button_validation_copy.foreground = "theme:On Primary Container"
         else:
             self.button_valid.foreground = "theme:On Primary"
-            self.button_validation_copy.foreground = "theme:On Primary"
+            #self.button_validation_copy.foreground = "theme:On Primary"
 
 
 

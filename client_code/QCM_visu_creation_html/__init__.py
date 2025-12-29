@@ -16,7 +16,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.qcm_row = qcm_row  # QCM descro row
         self.label_nb_questions.text = nb_questions + 1
         self.num_question.text = nb_questions + 1   # Num ligne à partir du nb lignes déjà créées
-        self.type_question = "V/F"
+        self.type_question = ""
         self.image_1.source = None
         # réponses
         self.rep1.checked = False
@@ -88,64 +88,57 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
 
-        self.type_question = "V/F"
-        self.nb_options = 1
-        if self.nb_options > 1:
-            if self.type_question == "V/F":
-                self.rep1.text = "V"
-                self.rep2.text = "F"
-            else:  # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11
-                self.rep1.text = "A"
-                self.rep2.text = "B"
+        #self.type_question = "V/F"
+        #self.nb_options = 1
+        if self.choix == 1:   # "V/F"
+            self.rep1.text = "V"
+            self.rep2.text = "F"
+            
+        if self.choix > 1:
+            self.rep1.text = "A"
+            self.rep2.text = "B"
 
-            if self.question_row["rep_multi"][0:1] == "1":
-                self.rep1.checked = True
-            else:
-                self.rep1.checked = False
+        if self.choix > 2:
+            
+            self.rep3.visible = True
+            
 
-            if self.question_row["rep_multi"][1:2] == "1":
-                self.rep2.checked = True
-            else:
-                self.rep2.checked = False
-
-        if self.nb_options > 2:
+        if self.choix > 3:
             self.rep1.text = "A"
             self.rep2.text = "B"
             self.rep3.text = "C"
-            self.rep3.visible = True
-            if self.question_row["rep_multi"][2:3] == "1":
-                self.rep3.checked = True
-            else:
-                self.rep3.checked = False
-
-        if self.nb_options > 3:
             self.rep4.text = "D"
             self.rep4.visible = True
-            if self.question_row["rep_multi"][3:4] == "1":
-                self.rep4.checked = True
-            else:
-                self.rep4.checked = False
+            
 
-        if self.nb_options > 4:
+        if self.choix > 4:
+            self.rep1.text = "A"
+            self.rep2.text = "B"
+            self.rep3.text = "C"
+            self.rep4.text = "D"
             self.rep5.text = "E"
             self.rep5.visible = True
-            if self.question_row["rep_multi"][4:5] == "1":
-                self.rep5.checked = True
-            else:
-                self.rep5.checked = False
-
-        text_not_html = ""
-        self.rich_text_correction.visible = False  # Hiding the Correction text
-        self.sending_to_word_editor(text_not_html, "question")
+            
         self.button_validation.visible = False
-
+        self.rich_text_correction.visible = True  # Hiding the Correction text
+        self.rich_text_question.visible = False
+        
+        text_not_html = self.rich_text_question.content
+        self.sending_to_word_editor(text_not_html, "question")
+        self.button_question.visible = False
+        self
+        
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
-        text_not_html = self.question_row["correction"]
-        self.rich_text_question.visible = False  # Hiding the question text
-        self.sending_to_word_editor(text_not_html, "correction")
+        
         self.button_validation.visible = False
-
+        self.rich_text_correction.visible = True  # Hiding the Correction text
+        self.rich_text_question.visible = False
+        text_not_html = self.rich_text_correction.content
+        self.sending_to_word_editor(text_not_html, "correction")
+        
+        self.button_question.visible = False
+        
     def sending_to_word_editor(self, text_not_html, type_text, **event_args):
         # ajout des sauts de ligne HTML (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
         paragraphs = text_not_html.split("\n\n")
@@ -341,8 +334,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rep3.checked = False
         self.rep4.checked = False
         self.rep5.checked = False
-        choix = self.drop_down_nb_options.selected_value
-        #print(choix, type(choix))
+        self.choix = self.drop_down_nb_options.selected_value
+        print(self.choix, type(self.choix))
         #texte_de_base="<span style='display:block;color:rgb(0,192,250);font-weight:bold;'>Question&nbsp;:&nbsp;</span>"
 
         
@@ -355,7 +348,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         
         texte_complet = ""
         
-        if choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
+        if self.choix == 1:   # Vrai/ Faux    l'1 ou l'autre, rep1 et rep2 ne peuvent pas  être identiques
             self.rich_text_question.content = texte_de_base
             self.rep3.visible = False
             self.rep4.visible = False
@@ -364,7 +357,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.rep2.text = "Faux"
             texte_complet = texte_de_base
 
-        if choix > 1:     # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
+        if self.choix > 1:     # 2 options possibles, rep1 et rep2 peuvent être identiques  ex 11 
             self.rep1.text = "A"
             self.rep2.text = "B"
             self.rep3.visible = False
@@ -373,20 +366,20 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
-        if choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
+        if self.choix > 2:     # au moins 3 options possibles, rep1 à rep3 peuvent être identiques  ex 111
             self.rep3.visible = True
             self.rep4.visible = False
             self.rep5.visible = False
             bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
-        if choix > 3:     # au moins 4 options possibles, rep1 et rep4 peuvent être identiques  ex  1111
+        if self.choix > 3:     # au moins 4 options possibles, rep1 et rep4 peuvent être identiques  ex  1111
             self.rep4.visible = True
             self.rep5.visible = False
             bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li><li>D&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
             
-        if choix > 4:     # 5 options possibles, rep1 à rep2 peuvent être identiques
+        if self.choix > 4:     # 5 options possibles, rep1 à rep2 peuvent être identiques
             self.rep5.visible = True
             bloc_add = "<ul><li>A&nbsp;</li><li>B&nbsp;</li><li>C&nbsp;</li><li>D&nbsp;</li><li>E&nbsp;</li></ul>"
             texte_complet = texte_de_base + bloc_add
