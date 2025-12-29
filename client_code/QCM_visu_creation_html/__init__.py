@@ -361,7 +361,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rep4.checked = False
         self.rep5.checked = False
         self.choix = self.drop_down_nb_options.selected_value
-        print(self.choix, type(self.choix))
+        #print(self.choix, type(self.choix))
         #texte_de_base="<span style='display:block;color:rgb(0,192,250);font-weight:bold;'>Question&nbsp;:&nbsp;</span>"
         # 
         texte_de_base = (

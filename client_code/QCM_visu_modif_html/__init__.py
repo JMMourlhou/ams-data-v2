@@ -12,6 +12,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def __init__(self, qcm_row, question_row, nb_questions, **properties):  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        self.first_correction = True
         #=========================================================================================
         # POUR AUTO SAUVEGARDE DU TEXTE:
 
@@ -31,7 +32,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.word_editor_1.set_event_handler("x-timer_text_backup", self._backup_word_editor)
         # =========================================================================================
         # pour afficher le bt validation uniqt qd le texte est modifié en INSTANCE word_editor_1
-        self.word_editor_1.set_event_handler("x-editor-ready", self._arm_editor_ready)
+        self.word_editor_1.set_event_handler("x-editor-ready", self._arm_editor_ready)         # ligne 255
 
         self.qcm_row = qcm_row              # QCM descro row
         self.question_row = question_row    # la question row
@@ -47,8 +48,6 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             self.image_1.source = self.question_row['photo']
         else:
             self.image_1.source = None
-            self.cp_img.visible = False
-            self.image_1.visible = False
 
         self.type_question = self.question_row['type']  
         self.nb_options = len(self.question_row['rep_multi'])     # je sais combien d'options j'utilise pour cette question
@@ -100,32 +99,38 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.rich_text_correction.content = self.question_row['correction']
         self.rich_text_correction.visible = True      # display the Correction Rich Text
 
-        #self.rich_text_question.content = self.question_row['question']
+        self.rich_text_question.content = self.question_row['question']
         self.rich_text_question.visible = False
         #self.word_editor_1.scroll_into_view()
         self.button_question_click() # on affiche la question
+
+
+    def _on_editor_ready(self, **e):
+        editor = anvil.js.window.document.getElementById("editor")
+        if not editor:
+            return
+    
+        editor.innerHTML = self.word_editor_1.text or ""
 
     # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2
     def _backup_word_editor(self, **e):
         html = e.get("text")
         if not html:
             return
-
-        # --- 1) rien n'a changé ---
+    
+            # --- 1) rien n'a changé ---
         if html == self._last_saved_text:
             return
-
+    
         self.word_editor_1.text = html
-        self.button_validation.visible = True
-
+        
     # ------------------------------------------------------------------
     # Réaction aux modifications du texte : on affiche le bt Validation
     # ------------------------------------------------------------------
     def _on_text_changed_state(self, **e):
         if not self._editor_ready:
             return  # on ignore les events de chargement
-
-            self.button_modif_color()  #affiche bt valid
+        self.button_modif_color()  #affiche bt valid
 
     def button_modif_color(self):
         self.button_validation.visible = True
@@ -151,48 +156,53 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                 "Correction: "
                 "</span>"
             )
-            if self.choix == 1: # V/F
+            """
+            en init, lecture du row de la table qcm:
+            self.type_question = self.question_row['type']  
+            self.nb_options = len(self.question_row['rep_multi'])     # je sais combien d'options j'utilise pour cette question
+            """
+            if self.type_question == "V/F":
                 if self.rep1.checked is True:
                     texte_correction = "<ul><li>A Vrai :&nbsp&nbsp;</li><li>B Faux :&nbsp&nbsp;</li></ul>"
                 else:
                     texte_correction = "<ul><li>A Faux :&nbsp&nbsp;</li><li>B Vrai :&nbsp&nbsp;</li></ul>"
-
-            if self.choix > 1: # V/F
+            else: # non V/F
+                
                 texte_correction = (
                     "<ul style='margin:0;padding-left:24px;list-style-position:inside;"
                     "color:#fff905;'>"
                 )
-
+    
                 # A
                 texte_correction += f"<li>A {'Vrai ' if self.rep1.checked else 'Faux '} :&nbsp </li>"
-
+    
                 # B
-                if self.choix > 1:
+                if self.nb_options > 1:
                     texte_correction += f"<li>B {'Vrai ' if self.rep2.checked else 'Faux '} :&nbsp </li>"
-
-                # C
-                if self.choix > 2:
+    
+                    # C
+                if self.nb_options > 2:
                     texte_correction += f"<li>C {'Vrai ' if self.rep3.checked else 'Faux '} :&nbsp </li>"
-
-                # D
-                if self.choix > 3:
+    
+                    # D
+                if self.nb_options > 3:
                     texte_correction += f"<li>D {'Vrai ' if self.rep4.checked else 'Faux '} :&nbsp </li>"
-
-                # E
-                if self.choix > 4:
+    
+                    # E
+                if self.nb_options > 4:
                     texte_correction += f"<li>E {'Vrai ' if self.rep5.checked else 'Faux '} :&nbsp </li>"
-
+    
                 texte_correction += "</ul>"
-
+    
             texte_correction_final = texte_de_base + texte_correction
-
+    
         self.button_validation.visible = False
         self.rich_text_correction.visible = False  # hidding the Correction text
         self.rich_text_question.visible = True
         self.button_question.visible = True
         self.button_correction.visible = False
         self.rich_text_question.content = self.word_editor_1.text 
-
+    
         if self.first_correction is False: # pas le 1er click sur le bt correction 
             text_not_html = self.rich_text_correction.content
             self.sending_to_word_editor(text_not_html, "correction")
@@ -200,6 +210,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             self.sending_to_word_editor(texte_correction_final, "correction")
         self.first_correction = False   # entrée pour la première fois effectuée
 
+
+    #                                text           question / correction
     def sending_to_word_editor(self, text_not_html, type_text, **event_args):
         # ajout des sauts de ligne HTML (les anciens questions en table peuvent encore contenir \n au lieu de <br>)
         paragraphs = text_not_html.split("\n\n")
@@ -246,7 +258,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def _arm_editor_ready(self, **e):
         self._editor_ready = True    
 
-   
+
 
     def file_loader_photo_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -255,11 +267,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.image_photo.source = thumb_pic
         self.button_modif_color()
 
-    
+
 
     def rep1_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        if self.choix == 1: # "V/F"
+        if self.type_question == "V/F": 
             if self.rep1.checked is True:  # question V/F
                 self.rep2.checked = False
             else:
@@ -268,7 +280,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def rep2_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        if self.choix == 1: # "V/F"
+        if self.type_question == "V/F": 
             if self.rep2.checked is True:  # question V/F
                 self.rep1.checked = False
             else:
@@ -278,19 +290,19 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def rep3_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
-
-    def rep4_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
-
+    
+        def rep4_change(self, **event_args):
+            """This method is called when this checkbox is checked or unchecked"""
+            self.button_modif_color()
+    
     def rep5_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
-
-    def drop_down_bareme_change(self, **event_args):
-        """This method is called when this checkbox is checked or unchecked"""
-        self.button_modif_color()
-
+    
+        def drop_down_bareme_change(self, **event_args):
+            """This method is called when this checkbox is checked or unchecked"""
+            self.button_modif_color()
+    
     def text_box_correction_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
         self.button_modif_color()
@@ -298,7 +310,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     # Button validation, auto=True qd sauv auto du timer2 de Word_Editor (voir l'init de cette forme)
     def button_validation_click(self, sov_auto=False, **event_args):                                         # =============  VALIDATION
         """This method is called when the button is clicked"""
-        
+
         mode = self.word_editor_1.param1       # mode 'question'  /  'correction' 
         html = self.word_editor_1.text
         #self.rich_text_correction.scroll_into_view()
@@ -312,7 +324,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             self.rich_text_correction.content = html
         if mode == "creation":
             self.button_creer_click(self.text)
-            
+
         rep_multi_stagiaire = ""                              # CUMUL de la codif des réponses du stagiaire
         if self.type_question == "V/F":
             if self.rep1.checked is True:   # question V/F
@@ -330,7 +342,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-            
+
             if self.nb_options > 2: 
                 if self.rep3.checked is True:
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
@@ -351,14 +363,14 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         if sov_auto is True:            
             with anvil.server.no_loading_indicator:               
                 result = anvil.server.call('modif_qcm',
-                                        self.qcm_row,                          # qcm descro row
-                                        self.question_row['num'],              # num question
-                                        self.rich_text_question.content,       # question HTML
-                                        rep_multi_stagiaire,                   # rep codée ex 10 /  010 ...
-                                        self.drop_down_bareme.selected_value,  # Bareme de la question
-                                        self.image_1.source,                   # photo
-                                        self.rich_text_correction.content      # correction en clair
-                                        ) 
+                                           self.qcm_row,                          # qcm descro row
+                                           self.question_row['num'],              # num question
+                                           self.rich_text_question.content,       # question HTML
+                                           rep_multi_stagiaire,                   # rep codée ex 10 /  010 ...
+                                           self.drop_down_bareme.selected_value,  # Bareme de la question
+                                           self.image_1.source,                   # photo
+                                           self.rich_text_correction.content      # correction en clair
+                                          ) 
         else:
             result = anvil.server.call('modif_qcm',
                                        self.qcm_row,                          # qcm descro row
@@ -383,7 +395,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                 print("on a sauvé atomatiqt ")
                 # sovegarde auto, on ne fait rien
                 pass
-                
+
     def button_retour_click(self, **event_args):                                        # =============  RETOUR
         """This method is called when the button is clicked"""
         qcm_descro_nb = self.qcm_row
@@ -395,11 +407,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def load_qcm_content(self, html):
         self.word_editor_1.set_initial_html(html)
 
-    
+
     def file_loader_1_change(self, file, **event_args):                         # image a changé (en création QCM)
         """This method is called when a new file is loaded into this FileLoader"""
         thumb_pic = anvil.image.generate_thumbnail(file, 640)
         self.image_1.source = thumb_pic
         self.button_modif_color()
-        
-   
+
+
