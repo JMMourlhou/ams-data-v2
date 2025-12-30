@@ -497,15 +497,36 @@ class ItemTemplate4(ItemTemplate4Template):
 
             #cumul de nb bonnes rep et des points si bonne réponse à partir des tags du combo False
             max_points = max_points + int(bareme)   # cumul du max de points possible
-            if rep_multi_stagiaire == self.item["rep_multi"]:
+            if rep_multi_stagiaire == self.item["rep_multi"]:    # Réussite
+                texte_base = (
+                    "<span id='qcm-editable' "
+                    "style='color:#00FF00;"
+                    "background-color:#21005E;"
+                    "font-size:28px;"
+                    "font-weight:700;"
+                    "border-radius:6px;"
+                    "padding:2px 6px;'>"
+                    "✔"
+                    "</span>"
+                )
                 nb_bonnes_rep += 1
                 points = points + int(bareme)
-                self.text_box_correction.background = "Green"
-                self.text_box_correction.foreground = "White"
-            else:
-                self.text_box_correction.background = "yellow"
-                self.text_box_correction.foreground = "Black"
-            
+                #self.text_box_correction.background = "Green"
+                #self.text_box_correction.foreground = "White"
+            else:                                                         # Echec
+                texte_base = (
+                    "<span id='qcm-editable' "
+                    "style='color:#d32f2f;font-size:28px;font-weight:700;'>"
+                    "background-color:#21005E;"    # "theme:On Primary Container"  
+                    "border-radius:6px;"
+                    "padding:2px 6px;"
+                    "❌"
+                    "</span>"
+                )
+            self.text_box_correction.background = "theme:On Primary Container"    
+            self.text_box_correction.foreground = "theme:On Primary"
+                
+            self.text_box_correction.content = texte_base + self.text_box_correction.content
             if num == int(self.label_nb_questions.text):
                 self.button_fin_qcm.visible = True
 
