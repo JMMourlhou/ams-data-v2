@@ -414,7 +414,7 @@ db_schema:
       name: qcm_nb
       target: qcm_description
       type: link_single
-    - admin_ui: {order: 0, width: 363}
+    - admin_ui: {order: 0, width: 251}
       name: photo
       type: media
     - admin_ui: {order: 0.375, width: 88}
@@ -437,6 +437,9 @@ db_schema:
       type: string
     - admin_ui: {order: 6, width: 232}
       name: param
+      type: string
+    - admin_ui: {order: 0.1875, width: 200}
+      name: video_url
       type: string
     server: full
     title: Qcm
