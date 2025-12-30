@@ -33,7 +33,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rep5.checked = False
 
         self.rich_text_question.content = ""
-        self.rich_text_correction.content = "Correction"
+        self.rich_text_correction.content = "Correct°"
         self.button_question.visible = False
         # Initialisation des drop down nb potions et Barême
         self.drop_down_nb_options.items=([("Vrai/Faux", 1), ("2 options", 2), ("3 options", 3), ("4 options", 4), ("5 options", 5)])

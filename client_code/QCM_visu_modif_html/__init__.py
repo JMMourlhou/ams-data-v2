@@ -137,7 +137,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
-
+        self.rich_text_correction.content = self.word_editor_1.text 
         self.button_validation.visible = False
         self.rich_text_correction.visible = True  # Hiding the Correction text
         self.rich_text_question.visible = False
@@ -148,7 +148,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
-        if self.first_correction is True:
+        if self.first_correction is True :
             # 1ere entrée en correction, je préforme la correction en fonction des réponses
             texte_de_base = (
                 "<span id='qcm-editable' "
@@ -202,12 +202,20 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.button_question.visible = True
         self.button_correction.visible = False
         self.rich_text_question.content = self.word_editor_1.text 
-    
-        if self.first_correction is False: # pas le 1er click sur le bt correction 
-            text_not_html = self.rich_text_correction.content
-            self.sending_to_word_editor(text_not_html, "correction")
-        else: # 1er click
-            self.sending_to_word_editor(texte_correction_final, "correction")
+
+        alert(f"indicateur à false: {self.first_correction}")
+        alert(len(self.rich_text_correction.content))
+        # pas le 1er click sur le bt correction ET correction vide
+        texte_correction_initial = self.rich_text_correction.content
+        if self.first_correction is False:
+                self.sending_to_word_editor(texte_correction_initial, "correction")
+        if self.first_correction is True:                    # 1er click sur modif de la correction
+            if len(self.rich_text_correction.content)<10: # ET le texte est vide, donc il n'y a pas eu de modifs sur une autre session 
+                alert("j'écrase le texte ")
+                self.sending_to_word_editor(texte_correction_final, "correction")
+            else: 
+                self.sending_to_word_editor(texte_correction_initial, "correction")
+        # On passe l'indicateur de la modif de la correction à False, pour ne pas écraser le texte de la correction    
         self.first_correction = False   # entrée pour la première fois effectuée
 
 
