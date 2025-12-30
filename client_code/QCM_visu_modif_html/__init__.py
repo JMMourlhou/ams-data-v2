@@ -203,15 +203,13 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.button_correction.visible = False
         self.rich_text_question.content = self.word_editor_1.text 
 
-        alert(f"indicateur à false: {self.first_correction}")
-        alert(len(self.rich_text_correction.content))
+       
         # pas le 1er click sur le bt correction ET correction vide
         texte_correction_initial = self.rich_text_correction.content
         if self.first_correction is False:
                 self.sending_to_word_editor(texte_correction_initial, "correction")
         if self.first_correction is True:                    # 1er click sur modif de la correction
             if len(self.rich_text_correction.content)<10: # ET le texte est vide, donc il n'y a pas eu de modifs sur une autre session 
-                alert("j'écrase le texte ")
                 self.sending_to_word_editor(texte_correction_final, "correction")
             else: 
                 self.sending_to_word_editor(texte_correction_initial, "correction")
