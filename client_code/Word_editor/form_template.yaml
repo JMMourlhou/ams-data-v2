@@ -215,9 +215,15 @@ components:
       name: column_panel_4
       properties: {}
       type: ColumnPanel
-    layout_properties: {grid_position: 'TNEKNW,YULENK'}
+    layout_properties: {full_width_row: false, grid_position: 'TNEKNW,YULENK'}
     name: flow_panel_menu
-    properties: {align: center, background: '', gap: small, vertical_align: middle}
+    properties:
+      align: center
+      background: ''
+      gap: small
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
     type: FlowPanel
   - components:
     - components:
@@ -232,8 +238,8 @@ components:
             italic: true
             role: null
             spacing:
-              margin: ['5', '0', '0', '0']
-              padding: [null, '5', null, '5']
+              margin: ['0', '0', '0', '0']
+              padding: ['0', '5', '0', '5']
             text: ''
           type: Button
         - event_bindings: {click: button_bold_click}
@@ -246,6 +252,7 @@ components:
             role: null
             spacing:
               margin: ['0', null, '0', null]
+              padding: ['0', '5', '0', '5']
             text: ''
           type: Button
         - event_bindings: {click: button_underlined_click}
@@ -320,7 +327,7 @@ components:
               margin: ['0', null, '0', null]
             text: ''
           type: Button
-        layout_properties: {width: 52.10440261230468}
+        layout_properties: {expand: false, width: 49.022087841796875}
         name: column_panel_menu1_left
         properties:
           background: theme:On Primary Container
@@ -453,12 +460,28 @@ components:
     - event_bindings: {click: button_valid_click}
       layout_properties: {grid_position: 'UQHSSU,RNMUEQ'}
       name: button_valid
-      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', icon: 'fa:check', text: Validation, visible: false}
+      properties:
+        background: theme:Olive
+        font_size: 16
+        foreground: theme:On Primary
+        icon: fa:check
+        spacing:
+          margin: ['0', null, '0', null]
+        text: Validation
+        visible: false
       type: Button
     - event_bindings: {click: button_exit_click}
       layout_properties: {grid_position: 'UQHSSU,FTIEII'}
       name: button_exit
-      properties: {background: 'theme:Error', font_size: 16, foreground: 'theme:On Primary', icon: 'fa:sign-out', text: '', visible: false}
+      properties:
+        background: theme:Error
+        font_size: 16
+        foreground: theme:On Primary
+        icon: fa:sign-out
+        spacing:
+          margin: ['0', null, '0', null]
+        text: ''
+        visible: false
       type: Button
     layout_properties: {grid_position: 'PPDAPA,IITIPA'}
     name: column_panel_1
