@@ -28,30 +28,23 @@ components:
         name: drop_down_videos_list
         properties: {align: center, background: 'theme:On Primary Container', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Choisir une vidéo}
         type: DropDown
-      - layout_properties: {grid_position: 'LSIOOU,RDHPAR'}
-        name: spacer_2_copy
-        properties: {height: 19.035064697265625}
-        type: Spacer
       - components:
         - layout_properties: {grid_position: 'YDLHUN,BFDZDS'}
           name: video_player_1
           properties: {}
           type: form:Video_Player
         layout_properties: {grid_position: 'LSIOOU,DYFEDJ'}
-        name: column_panel_2
+        name: column_panel_video_player
         properties:
           background: theme:Primary
           role: tonal-card
           spacing:
-            padding: ['10', '10', '5', '10']
+            padding: ['30', '10', '20', '10']
+          visible: false
         type: ColumnPanel
-      - layout_properties: {grid_position: 'LSIOOU,KQPYHZ'}
-        name: spacer_1_copy
-        properties: {height: 50.965576171875}
-        type: Spacer
-      layout_properties: {width: 440.3882421875}
+      layout_properties: {expand: true, width: 440.3882421875}
       name: column_panel_video
-      properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":50,"KQPYHZ":15,"RDHPAR":15}', role: outlined-card, visible: true}
+      properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":50,"KQPYHZ":15}', role: outlined-card, visible: true}
       type: ColumnPanel
     - components:
       - event_bindings: {change: file_loader_photo_change}
@@ -82,10 +75,6 @@ components:
           underline: false
           visible: true
         type: FileLoader
-      - layout_properties: {grid_position: 'LSIOOU,RDHPAR'}
-        name: spacer_2
-        properties: {height: 47.76983642578125}
-        type: Spacer
       - components:
         - data_bindings: []
           layout_properties: {grid_position: 'XYSAXI,ATDROB'}
@@ -93,20 +82,17 @@ components:
           properties: {background: 'theme:On Primary Container', display_mode: shrink_to_fit, height: 40.4754638671875, role: null, spacing_above: small, spacing_below: medium}
           type: Image
         layout_properties: {grid_position: 'LSIOOU,DYFEDJ'}
-        name: column_panel_1
+        name: column_panel_image
         properties:
           background: theme:Primary
           role: tonal-card
           spacing:
             padding: ['10', '10', '5', '10']
+          visible: false
         type: ColumnPanel
-      - layout_properties: {grid_position: 'LSIOOU,KQPYHZ'}
-        name: spacer_1
-        properties: {height: 60.458770751953125}
-        type: Spacer
       layout_properties: {width: 442.2481635742187}
       name: column_panel_img
-      properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":50,"KQPYHZ":15,"RDHPAR":15}', role: outlined-card, visible: true}
+      properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":50,"KQPYHZ":15}', role: outlined-card, visible: true}
       type: ColumnPanel
     layout_properties: {grid_position: 'FWPATK,ENWSHL'}
     name: flow_panel_medias

@@ -90,5 +90,6 @@ class Video_Player(Video_PlayerTemplate):
             self.clear()
             return
 
-        url = media.get_url()
+        # url = media.get_url()
+        url = media
         self.load(url, **kwargs)

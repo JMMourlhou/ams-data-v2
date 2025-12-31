@@ -32,6 +32,12 @@ class ItemTemplate4(ItemTemplate4Template):
     def __init__(self, **properties):               
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        # Gestion video_player:
+        self.item['video_url']
+
+
+
+        
         # Any code you write here will run before the form opens.
         self.f = get_open_form()   # pour arrêter le timer 1  ou atteindre le propriétaire du qcm en QCM_visu_modif_main
         global max_points

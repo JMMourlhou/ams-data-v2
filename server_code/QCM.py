@@ -91,7 +91,7 @@ def qcm_enfant_del(qcm_parent_row, qcm_enfant_nb):
     return result
 
 @anvil.server.callable
-def add_ligne_qcm(num_question, question, correction, rep, bareme, image, qcm_nb, type, param):
+def add_ligne_qcm(num_question, question, correction, rep, bareme, image, qcm_nb, type, param, video_url):
     # qcm_nb est la row venant du dropdown choix du qcm
     new_row=app_tables.qcm.add_row(
                                    num=num_question,       # num question
@@ -102,7 +102,8 @@ def add_ligne_qcm(num_question, question, correction, rep, bareme, image, qcm_nb
                                    photo = image,
                                    qcm_nb = qcm_nb,        # qcm_row
                                    type = type,
-                                   param = param
+                                   param = param,
+                                   video_url= video_url    # url de la vidéo
                                    )   
             
     qcm_row = app_tables.qcm.search(qcm_nb = qcm_nb,

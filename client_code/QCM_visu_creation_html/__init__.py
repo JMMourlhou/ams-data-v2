@@ -16,6 +16,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         """-------------------------------------------------------------------------------------------
         GESTION en INIT du VIDEO PLAYER
         """
+        # 0 - Initialisation del'url à None pour sauver en table
+        self.url_video = None
         # 1 - Initilisation du component de cette form Video_player_1
         self.init_video_player()  # appel fonction dans cette forme
         
@@ -28,7 +30,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 (r["path"], r) for r in app_tables.files.search(tables.order_by("path", ascending=True)
                                                                                                       )
                                                 ]
+        # test avec la video de test en assets   
+        self.drop_down_videos_list.items = ["https://amsdata-v2.anvil.app/_/theme/Videos_test/Essai1_stream.mp4"]  
         self.drop_down_videos_list.visible = True
+        
         # Plus tard, quand le Pi5 est OK, ce sera la même logique mais alimentée en uplink par scan du répertoire Pi5 avec:
         """
         -----  Ds l'app, ide qcm ici:
@@ -122,7 +127,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rich_text_question.content = ""
         self.rich_text_question.visible = False
         
-    """-------------------------------------------------------------------------------------------
+    """---------------------------------------------------------------------------------------------------------------------------
     Fonctions de GESTION du VIDEO PLAYER
     """
 
@@ -140,12 +145,15 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.video_player_1.visible = False
             return
     
-        # Cas 1 : vidéo stockée en Media dans files["file"]
+        # Cas 1 : vidéo stockée en Media dans files["file"] (temporaire)
 
         # colonnes de files, par exemple :
         #    video["file"] → Media Anvil (mp4 stockée chez Anvil)
         #    r["path"] → chemin lisible
-        media = video_row['file']  # récupère la colonne Media appelée file
+
+        self.column_panel_img.visible = False
+        #media = video_row['file']  # récupère la colonne Media appelée file
+        media = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
         if media:
             self.video_player_1.visible = True
             self.video_player_1.load_media(
@@ -155,6 +163,11 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 controls=True,
                 allow_download=False
             )
+            # affiche le cp video
+            self.column_panel_video_player.visible = True
+            # pour sauver l'url en table 
+            #self.url_video = media.get_url()    # ----------------------------------- video url Sauvée en table qcm
+            self.url_video = media    # ----------------------------------- video url Sauvée en table qcm (temp)
             return
         """
         # Cas 2 : tu as une URL dans la row (plus tard)
@@ -179,6 +192,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     """-------------------------------------------------------------------------------------------
     Fin des Fonctions de GESTION du VIDEO PLAYER
     """
+
+    
     # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2
     def _backup_word_editor(self, **e):
         html = e.get("text")
@@ -425,7 +440,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.image_1.source,  # photo
             self.qcm_row,         # qcm descro row                  
             type,                 # "V/F" ou "Multi"
-            param                 # self.qcm_row ["destination"], description du QCM
+            param,                 # self.qcm_row ["destination"], description du QCM
+            self.url_video              # text: url de la vidéo (None si pas de video)         
         )
         
         if result:
@@ -455,6 +471,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         """This method is called when a new file is loaded into this FileLoader"""
         thumb_pic = anvil.image.generate_thumbnail(file, 640)
         self.image_1.source = thumb_pic
+        self.column_panel_video.visible = False
+        self.column_panel_image.visible = True
         self.button_modif_color()
 
     def drop_down_nb_options_change(self, **event_args):
