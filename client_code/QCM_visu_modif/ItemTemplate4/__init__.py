@@ -33,11 +33,23 @@ class ItemTemplate4(ItemTemplate4Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Gestion video_player:
-        self.item['video_url']
-
-
-
-        
+        url = self.item['video_url']  # récup de l'url en table
+        # C'est une vidéo ? 
+        if url is not None:  #                                         VIDEO
+            self.column_panel_video_player.visible = True
+            self.column_panel_video_player.visible = True
+            self.cp_img.visible = False
+            self.video_player_1.load_media(
+                url,
+                autoplay=True,
+                muted=False,
+                controls=True,
+                allow_download=False
+            )          
+        else:   #                                                       Image
+            self.column_panel_video_player.visible = False
+            self.cp_img.visible = True
+            
         # Any code you write here will run before the form opens.
         self.f = get_open_form()   # pour arrêter le timer 1  ou atteindre le propriétaire du qcm en QCM_visu_modif_main
         global max_points
@@ -78,6 +90,7 @@ class ItemTemplate4(ItemTemplate4Template):
         self.cp_father.tag.nom = "cp_father"
         self.cp_quest_rep.tag.nom = "cp_quest_rep"
         self.cp_options.tag.nom = "cp_options"
+        self.column_panel_video_player.tag.nom ="cp_video"
         self.cp_img.tag.nom = "cp_img"
         self.fp_modif.tag.nom = "fp_modif"
         self.fp_vf_barem.tag.nom = "fp_vrai/faux_bareme"
