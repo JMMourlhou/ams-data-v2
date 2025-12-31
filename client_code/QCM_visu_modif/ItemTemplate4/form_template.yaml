@@ -108,7 +108,7 @@ components:
       format: restricted_html
       spacing:
         margin: ['2', null, '2', null]
-        padding: ['2', null, '2', '10']
+        padding: ['2', '5', '2', '10']
       visible: false
     type: RichText
   - components:
