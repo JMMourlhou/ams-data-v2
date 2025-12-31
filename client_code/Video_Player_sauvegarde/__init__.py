@@ -1,13 +1,19 @@
-from ._anvil_designer import Video_PlayerTemplate
+from ._anvil_designer import Video_Player_sauvegardeTemplate
 from anvil import *
+import anvil.server
+import anvil.users
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.js
 
-class Video_Player(Video_PlayerTemplate):
 
+class Video_Player_sauvegarde(Video_Player_sauvegardeTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
     def _ensure_css(self):
+        # Ajoute le style UNE SEULE FOIS dans <head>
         doc = anvil.js.window.document
         if doc.getElementById("video-player-css"):
             return
@@ -24,12 +30,17 @@ class Video_Player(Video_PlayerTemplate):
         """
         doc.head.appendChild(style)
 
-    # ================================
-    # LOAD VIA URL (Pi5 ou Media URL)
-    # ================================
-    def load(self, url: str, autoplay=False, muted=False, controls=True,
-             v_width="100%", v_height="360px", allow_download=False):
-
+    def load(
+        self,
+        url: str,
+        autoplay=False,
+        muted=False,
+        controls=True,
+        v_width="100%",
+        v_height="360px",
+        allow_download=False,
+    ):
+        alert(url)
         self._ensure_css()
 
         root = anvil.js.get_dom_node(self.video_html_1)
@@ -40,13 +51,14 @@ class Video_Player(Video_PlayerTemplate):
         autoplay_attr = "autoplay" if autoplay else ""
         muted_attr = "muted" if muted else ""
         controls_attr = "controls" if controls else ""
-        controlslist_attr = "" if allow_download else 'controlslist="nodownload noplaybackrate"'
+        controlslist_attr = (
+            "" if allow_download else 'controlslist="nodownload noplaybackrate"'
+        )
 
         container.innerHTML = f"""
             <video
                 id="qcm-video"
                 class="video-player-blue"
-                src="{url}"
                 {autoplay_attr}
                 {muted_attr}
                 {controls_attr}
@@ -60,12 +72,12 @@ class Video_Player(Video_PlayerTemplate):
                     display:block;
                     margin:auto;
                 "
-            ></video>
+            >
+                <source src="{url}" type="video/mp4">
+            </video>
         """
 
         video = container.querySelector("#qcm-video")
-        video.load()
-
         video.addEventListener("contextmenu", lambda e: e.preventDefault())
 
         def on_video_ended(evt):
@@ -73,22 +85,4 @@ class Video_Player(Video_PlayerTemplate):
 
         video.addEventListener("ended", on_video_ended)
 
-    # ================================
-    # CLEAR
-    # ================================
-    def clear(self):
-        root = anvil.js.get_dom_node(self.video_html_1)
-        container = root.querySelector("#video-container")
-        if container:
-            container.innerHTML = ""
 
-    # ================================
-    # MODE MEDIA ANVIL (temp IDE)
-    # ================================
-    def load_media(self, media: Media, **kwargs):
-        if not media:
-            self.clear()
-            return
-
-        url = media.get_url()
-        self.load(url, **kwargs)

@@ -22,60 +22,96 @@ components:
     properties: {align: center, spacing_above: none, spacing_below: none, vertical_align: middle}
     type: FlowPanel
   - components:
-    - layout_properties: {grid_position: 'LSIOOU,RDHPAR'}
-      name: spacer_2
-      properties: {height: 158.9381103515625}
-      type: Spacer
     - components:
-      - data_bindings: []
-        layout_properties: {grid_position: 'XYSAXI,ATDROB'}
-        name: image_1
-        properties: {background: 'theme:On Primary Container', display_mode: shrink_to_fit, height: 137.44625854492188, role: null, spacing_above: small, spacing_below: medium}
-        type: Image
-      layout_properties: {grid_position: 'LSIOOU,DYFEDJ'}
-      name: column_panel_1
-      properties:
-        background: theme:Primary
-        role: tonal-card
-        spacing:
-          padding: ['10', '10', '5', '10']
+      - event_bindings: {change: drop_down_videos_list_change}
+        layout_properties: {grid_position: 'ALJCSQ,MZKWJP'}
+        name: drop_down_videos_list
+        properties: {align: center, background: 'theme:On Primary Container', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Choisir une vidéo}
+        type: DropDown
+      - layout_properties: {grid_position: 'LSIOOU,RDHPAR'}
+        name: spacer_2_copy
+        properties: {height: 19.035064697265625}
+        type: Spacer
+      - components:
+        - layout_properties: {grid_position: 'YDLHUN,BFDZDS'}
+          name: video_player_1
+          properties: {}
+          type: form:Video_Player
+        layout_properties: {grid_position: 'LSIOOU,DYFEDJ'}
+        name: column_panel_2
+        properties:
+          background: theme:Primary
+          role: tonal-card
+          spacing:
+            padding: ['10', '10', '5', '10']
+        type: ColumnPanel
+      - layout_properties: {grid_position: 'LSIOOU,KQPYHZ'}
+        name: spacer_1_copy
+        properties: {height: 50.965576171875}
+        type: Spacer
+      layout_properties: {width: 440.3882421875}
+      name: column_panel_video
+      properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":50,"KQPYHZ":15,"RDHPAR":15}', role: outlined-card, visible: true}
       type: ColumnPanel
-    - layout_properties: {grid_position: 'LSIOOU,KQPYHZ ELIGTE,ICIEJA'}
-      name: spacer_1
-      properties: {height: 50.965576171875}
-      type: Spacer
-    - event_bindings: {change: file_loader_photo_change}
-      layout_properties: {grid_position: 'LSIOOU,KQPYHZ TQCDMX,GMQLBN'}
-      name: file_loader_photo
-      properties:
-        align: center
-        background: theme:On Primary Container
-        bold: false
-        border: ''
-        enabled: true
-        file: null
-        file_types: null
-        files: []
-        font: ''
-        font_size: null
-        foreground: theme:On Primary
-        icon: fa:upload
-        icon_align: left
-        italic: false
-        multiple: false
-        role: elevated-button
-        show_state: true
-        spacing_above: none
-        spacing_below: none
-        text: 'Choix de l''Image :'
-        tooltip: ''
-        underline: false
-        visible: true
-      type: FileLoader
-    layout_properties: {grid_position: 'WQHDVU,QTQMWN'}
-    name: column_panel_img
-    properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":28,"KQPYHZ":26,"RDHPAR":26}', role: outlined-card, visible: true}
-    type: ColumnPanel
+    - components:
+      - event_bindings: {change: file_loader_photo_change}
+        layout_properties: {grid_position: 'RAVYGU,WAZOVH'}
+        name: file_loader_photo
+        properties:
+          align: center
+          background: theme:On Primary Container
+          bold: false
+          border: ''
+          enabled: true
+          file: null
+          file_types: null
+          files: []
+          font: ''
+          font_size: null
+          foreground: theme:On Primary
+          icon: fa:upload
+          icon_align: left
+          italic: false
+          multiple: false
+          role: elevated-button
+          show_state: true
+          spacing_above: none
+          spacing_below: none
+          text: 'Choix d''une Image :'
+          tooltip: ''
+          underline: false
+          visible: true
+        type: FileLoader
+      - layout_properties: {grid_position: 'LSIOOU,RDHPAR'}
+        name: spacer_2
+        properties: {height: 47.76983642578125}
+        type: Spacer
+      - components:
+        - data_bindings: []
+          layout_properties: {grid_position: 'XYSAXI,ATDROB'}
+          name: image_1
+          properties: {background: 'theme:On Primary Container', display_mode: shrink_to_fit, height: 40.4754638671875, role: null, spacing_above: small, spacing_below: medium}
+          type: Image
+        layout_properties: {grid_position: 'LSIOOU,DYFEDJ'}
+        name: column_panel_1
+        properties:
+          background: theme:Primary
+          role: tonal-card
+          spacing:
+            padding: ['10', '10', '5', '10']
+        type: ColumnPanel
+      - layout_properties: {grid_position: 'LSIOOU,KQPYHZ'}
+        name: spacer_1
+        properties: {height: 60.458770751953125}
+        type: Spacer
+      layout_properties: {width: 442.2481635742187}
+      name: column_panel_img
+      properties: {background: 'theme:On Primary Container', col_widths: '{"DYFEDJ":50,"KQPYHZ":15,"RDHPAR":15}', role: outlined-card, visible: true}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'FWPATK,ENWSHL'}
+    name: flow_panel_medias
+    properties: {align: center, background: 'theme:Primary'}
+    type: FlowPanel
   - components:
     - components:
       - event_bindings: {change: drop_down_nb_options_change}
@@ -206,11 +242,6 @@ components:
       visible: true
     type: RichText
   - components:
-    - components: []
-      layout_properties: {grid_position: 'BXQBTQ,SLPNNT'}
-      name: fp_vf_barem
-      properties: {align: center, spacing: tiny, vertical_align: middle}
-      type: FlowPanel
     - components:
       - event_bindings: {click: button_validation_click}
         layout_properties: {}

@@ -9,6 +9,7 @@ class Video_test(Video_testTemplate):
 
         # Any code you write here will run before the form opens.
         self.video_player_1.load(
+            #url="https://jmweb34.net/videos/Essai1_stream.mp4",
             url="https://jmweb34.net/videos/Essai1_stream.mp4",
             autoplay=True,
             muted=False,

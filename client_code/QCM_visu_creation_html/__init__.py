@@ -13,6 +13,62 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def __init__(self, qcm_row, nb_questions=0, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        """-------------------------------------------------------------------------------------------
+        GESTION en INIT du VIDEO PLAYER
+        """
+        # 1 - Initilisation du component de cette form Video_player_1
+        self.init_video_player()  # appel fonction dans cette forme
+        
+        # 2 - initialisation liste des videos pour drop_down_videos_list
+        
+        list_videos = None
+        list_videos = app_tables.files.search()
+        if list_videos is not None:
+            self.drop_down_videos_list.items = [
+                (r["path"], r) for r in app_tables.files.search(tables.order_by("path", ascending=True)
+                                                                                                      )
+                                                ]
+        self.drop_down_videos_list.visible = True
+        # Plus tard, quand le Pi5 est OK, ce sera la même logique mais alimentée en uplink par scan du répertoire Pi5 avec:
+        """
+        -----  Ds l'app, ide qcm ici:
+        videos = anvil.server.call("get_snv_video_urls")
+
+        self.drop_down_video.items = [
+            (v["name"], v["url"]) for v in videos
+        ]
+
+        *****  Ds l'app, server side:
+        @anvil.server.callable
+        def get_snv_video_urls():
+            return list_videos()
+        # ----------------------------
+        En uplink, coté pi5:
+        
+        from pathlib import Path
+
+        BASE_URL = "https://media.jmweb34.net/snv"
+        BASE_DIR = Path("/mnt/videos/snv")
+        
+        def list_videos():
+            videos = []
+        
+            for mp4 in BASE_DIR.rglob("*.mp4"):
+                rel = mp4.relative_to(BASE_DIR)
+                url = f"{BASE_URL}/{rel.as_posix()}"
+                videos.append({
+                    "name": mp4.stem,
+                    "url": url
+                })
+        
+            return videos
+
+        """
+        
+        """---------------------------------------------------------------------------------------------
+        FIN GESTION en Init du VIDEO PLAYER
+        """
+        
         self.first_correction = True  # indiquera si 1ere press on bt correction
         self.qcm_row = qcm_row  # QCM descro row
         self.label_nb_questions.text = nb_questions + 1
@@ -66,7 +122,63 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.rich_text_question.content = ""
         self.rich_text_question.visible = False
         
+    """-------------------------------------------------------------------------------------------
+    Fonctions de GESTION du VIDEO PLAYER
+    """
 
+    # appelé en init
+    def init_video_player(self):
+        self.video_player_1.clear()
+        self.video_player_1.visible = False
+
+    # handler change sur drop_down_videos_list
+    def drop_down_videos_list_change(self, **event_args):
+        """This method is called when an item is selected"""
+        video_row = self.drop_down_videos_list.selected_value  # ici c'est la row 'files'
+        if not video_row:
+            self.video_player_1.clear()
+            self.video_player_1.visible = False
+            return
+    
+        # Cas 1 : vidéo stockée en Media dans files["file"]
+
+        # colonnes de files, par exemple :
+        #    video["file"] → Media Anvil (mp4 stockée chez Anvil)
+        #    r["path"] → chemin lisible
+        media = video_row['file']  # récupère la colonne Media appelée file
+        if media:
+            self.video_player_1.visible = True
+            self.video_player_1.load_media(
+                media,
+                autoplay=False,
+                muted=False,
+                controls=True,
+                allow_download=False
+            )
+            return
+        """
+        # Cas 2 : tu as une URL dans la row (plus tard)
+        url = media.get("video_url", None)
+        if url:
+            self.video_player_1.visible = True
+            self.video_player_1.load(
+                url,
+                autoplay=False,
+                muted=False,
+                controls=True,
+                allow_download=False
+            )
+            return
+        """
+        # Sinon : rien d’utilisable
+        self.video_player_1.clear()
+        self.video_player_1.visible = False
+
+        
+        self.button_modif_color()
+    """-------------------------------------------------------------------------------------------
+    Fin des Fonctions de GESTION du VIDEO PLAYER
+    """
     # appelé par l'init de cette forme ET l'event du Word_Editor module / timer2
     def _backup_word_editor(self, **e):
         html = e.get("text")
@@ -446,6 +558,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def drop_down_bareme_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
+
+    
+
+
 
 
 
