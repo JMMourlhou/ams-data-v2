@@ -22,7 +22,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.init_video_player()  # appel fonction dans cette forme
         
         # 2 - initialisation liste des videos pour drop_down_videos_list
-        
+        """
         list_videos = None
         list_videos = app_tables.files.search()
         if list_videos is not None:
@@ -33,25 +33,23 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         # test avec la video de test en assets   
         self.drop_down_videos_list.items = ["https://amsdata-v2.anvil.app/_/theme/Videos_test/Essai1_stream.mp4"]  
         self.drop_down_videos_list.visible = True
-        
-        # Plus tard, quand le Pi5 est OK, ce sera la même logique mais alimentée en uplink par scan du répertoire Pi5 avec:
         """
-        -----  Ds l'app, ide qcm ici:
-        videos = anvil.server.call("get_snv_video_urls")
+        # Pi5 est OK, ce sera la même logique mais alimentée en uplink par scan du répertoire Pi5 avec:
+        
+        #-----  Ds l'app, ide qcm ici:
+        list_videos = anvil.server.call("get_video_urls")
 
         self.drop_down_video.items = [
-            (v["name"], v["url"]) for v in videos
+            (v["name"], v["url"]) for v in list_videos
         ]
 
-        *****  Ds l'app, server side:
-        @anvil.server.callable
-        def get_snv_video_urls():
-            return list_videos()
+        """
         # ----------------------------
         En uplink, coté pi5:
         
         from pathlib import Path
-
+        
+        
         BASE_URL = "https://media.jmweb34.net/snv"
         BASE_DIR = Path("/mnt/videos/snv")
         
@@ -67,8 +65,8 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 })
         
             return videos
-
-        """
+            """
+        
         
         """---------------------------------------------------------------------------------------------
         FIN GESTION en Init du VIDEO PLAYER
