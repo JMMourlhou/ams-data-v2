@@ -151,11 +151,11 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
 
         self.column_panel_img.visible = False
         #media = video_row['file']  # récupère la colonne Media appelée file
-        media = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
+        media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
         if media:
             self.video_player_1.visible = True
             self.video_player_1.load_media(
-                media,
+                media_url,
                 autoplay=False,
                 muted=False,
                 controls=True,
@@ -165,7 +165,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             self.column_panel_video_player.visible = True
             # pour sauver l'url en table 
             #self.url_video = media.get_url()    # ----------------------------------- video url Sauvée en table qcm
-            self.url_video = media    # ----------------------------------- video url Sauvée en table qcm (temp)
+            self.url_video = media_url    # ----------------------------------- video url Sauvée en table qcm (temp)
             return
         """
         # Cas 2 : tu as une URL dans la row (plus tard)
