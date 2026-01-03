@@ -38,7 +38,6 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         
         #-----  Ds l'app, ide qcm ici:
         list_videos = anvil.server.call("get_video_urls")
-
         self.drop_down_videos_list.items = [
             (v["name"], v["url"]) for v in list_videos
         ]

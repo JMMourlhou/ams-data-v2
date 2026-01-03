@@ -29,7 +29,6 @@ class Video_Player(Video_PlayerTemplate):
     # ================================
     def load(self, url: str, autoplay=False, muted=False, controls=True,
              v_width="100%", v_height="360px", allow_download=False):
-
         self._ensure_css()
 
         root = anvil.js.get_dom_node(self.video_html_1)
