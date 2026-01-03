@@ -152,7 +152,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         self.column_panel_img.visible = False
         #media = video_row['file']  # récupère la colonne Media appelée file
         media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
-        if media:
+        if media_url:
             self.video_player_1.visible = True
             self.video_player_1.load_media(
                 media_url,
@@ -164,28 +164,13 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             # affiche le cp video
             self.column_panel_video_player.visible = True
             # pour sauver l'url en table 
-            #self.url_video = media.get_url()    # ----------------------------------- video url Sauvée en table qcm
-            self.url_video = media_url    # ----------------------------------- video url Sauvée en table qcm (temp)
+            self.url_video = media_url           # ----------------------------------- video url Sauvée en table qcm 
             return
-        """
-        # Cas 2 : tu as une URL dans la row (plus tard)
-        url = media.get("video_url", None)
-        if url:
-            self.video_player_1.visible = True
-            self.video_player_1.load(
-                url,
-                autoplay=False,
-                muted=False,
-                controls=True,
-                allow_download=False
-            )
-            return
-        """
+        
         # Sinon : rien d’utilisable
         self.video_player_1.clear()
         self.video_player_1.visible = False
 
-        
         self.button_modif_color()
     """-------------------------------------------------------------------------------------------
     Fin des Fonctions de GESTION du VIDEO PLAYER
