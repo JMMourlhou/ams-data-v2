@@ -4,5 +4,5 @@ import anvil.server
 #         pour le chargement par dropdown des videos (QCM_visu_creation) 
 @anvil.server.callable
 def get_video_urls():
-    videos_list = list_videos()
+    videos_list = anvil.server.call("list_videos")
     return videos_list

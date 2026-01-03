@@ -83,7 +83,7 @@ class Video_Player(Video_PlayerTemplate):
             container.innerHTML = ""
 
     # ================================
-    # MODE MEDIA ANVIL (temp IDE)
+    # MODE MEDIA ANVIL (temp video ds asset)
     # ================================
     def load_media(self, media: Media, **kwargs):
         if not media:

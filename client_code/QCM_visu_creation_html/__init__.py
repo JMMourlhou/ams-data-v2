@@ -39,35 +39,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         #-----  Ds l'app, ide qcm ici:
         list_videos = anvil.server.call("get_video_urls")
 
-        self.drop_down_video.items = [
+        self.drop_down_videos_list.items = [
             (v["name"], v["url"]) for v in list_videos
         ]
-
-        """
-        # ----------------------------
-        En uplink, coté pi5:
-        
-        from pathlib import Path
-        
-        
-        BASE_URL = "https://media.jmweb34.net/snv"
-        BASE_DIR = Path("/mnt/videos/snv")
-        
-        def list_videos():
-            videos = []
-        
-            for mp4 in BASE_DIR.rglob("*.mp4"):
-                rel = mp4.relative_to(BASE_DIR)
-                url = f"{BASE_URL}/{rel.as_posix()}"
-                videos.append({
-                    "name": mp4.stem,
-                    "url": url
-                })
-        
-            return videos
-            """
-        
-        
+               
         """---------------------------------------------------------------------------------------------
         FIN GESTION en Init du VIDEO PLAYER
         """
@@ -137,24 +112,19 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     # handler change sur drop_down_videos_list
     def drop_down_videos_list_change(self, **event_args):
         """This method is called when an item is selected"""
-        video_row = self.drop_down_videos_list.selected_value  # ici c'est la row 'files'
-        if not video_row:
+        media_url = self.drop_down_videos_list.selected_value  # ici c'est la row 'files'
+        print(media_url)
+        if not media_url:
             self.video_player_1.clear()
             self.video_player_1.visible = False
             return
-    
-        # Cas 1 : vidéo stockée en Media dans files["file"] (temporaire)
-
-        # colonnes de files, par exemple :
-        #    video["file"] → Media Anvil (mp4 stockée chez Anvil)
-        #    r["path"] → chemin lisible
 
         self.column_panel_img.visible = False
         #media = video_row['file']  # récupère la colonne Media appelée file
         media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
         if media_url:
             self.video_player_1.visible = True
-            self.video_player_1.load_media(
+            self.video_player_1.load(
                 media_url,
                 autoplay=False,
                 muted=False,
