@@ -80,7 +80,7 @@ components:
         - data_bindings: []
           layout_properties: {grid_position: 'XYSAXI,ATDROB'}
           name: image_1
-          properties: {background: 'theme:On Primary Container', display_mode: fill_width, height: 41.404541015625, role: null, spacing_above: small, spacing_below: medium}
+          properties: {background: 'theme:On Primary Container', display_mode: fill_width, height: 51.637237548828125, role: null, spacing_above: small, spacing_below: medium}
           type: Image
         layout_properties: {grid_position: 'LSIOOU,DYFEDJ'}
         name: column_panel_image
@@ -91,20 +91,20 @@ components:
             padding: ['10', '10', '5', '10']
           visible: false
         type: ColumnPanel
-      layout_properties: {width: 442.2481635742187}
+      layout_properties: {width: 369.3776166992188}
       name: column_panel_img
       properties:
         background: theme:On Primary Container
         col_widths: '{"DYFEDJ":50,"KQPYHZ":15}'
         role: outlined-card
         spacing:
-          margin: [null, '5', null, '5']
-          padding: [null, '5', null, '5']
+          margin: [null, '5', '15', '5']
+          padding: [null, '5', '5', '5']
         visible: true
       type: ColumnPanel
     layout_properties: {grid_position: 'FWPATK,ENWSHL'}
     name: flow_panel_medias
-    properties: {align: center, background: 'theme:On Primary Container'}
+    properties: {align: center, background: 'theme:On Primary Container', vertical_align: middle}
     type: FlowPanel
   - components:
     - components:

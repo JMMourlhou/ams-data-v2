@@ -26,31 +26,26 @@ components:
     - data_bindings: []
       layout_properties: {grid_position: 'NJZSBG,MVJVXU'}
       name: image_1
-      properties: {display_mode: fill_width, height: 145.99758911132812, role: null, spacing_above: small, spacing_below: medium}
+      properties: {display_mode: shrink_to_fit, height: 179.92660522460938, role: null, spacing_above: small, spacing_below: medium}
       type: Image
     layout_properties: {grid_position: 'HWSCUQ,YYYUYU'}
     name: cp_img
     properties:
-      background: theme:Primary
+      background: theme:On Primary Container
       role: tonal-card
       spacing:
         padding: ['2', '5', '0', '5']
       visible: true
     type: ColumnPanel
   - components:
-    - layout_properties: {grid_position: 'YDLHUN,BFDZDS'}
+    - layout_properties: {expand: false, width: 693.63794921875}
       name: video_player_1
       properties: {}
       type: form:Video_Player
-    layout_properties: {grid_position: 'AEOKZZ,UTIHCP'}
-    name: column_panel_video_player
-    properties:
-      background: theme:Primary
-      role: tonal-card
-      spacing:
-        padding: ['30', '10', '20', '10']
-      visible: true
-    type: ColumnPanel
+    layout_properties: {full_width_row: true, grid_position: 'KWSABG,IJZSHG'}
+    name: flow_panel_video_player
+    properties: {align: center, background: 'theme:On Primary Container', vertical_align: middle}
+    type: FlowPanel
   - components:
     - event_bindings: {show: text_area_question_show}
       layout_properties: {full_width_row: false, grid_position: 'JRGWCO,EAZFGY FOUCBR,CHORNJ'}

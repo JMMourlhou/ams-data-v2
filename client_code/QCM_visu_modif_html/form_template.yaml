@@ -17,43 +17,60 @@ components:
     name: flow_panel_num
     properties: {align: center, spacing_above: none, spacing_below: none, vertical_align: middle}
     type: FlowPanel
+  - components:
+    - event_bindings: {change: drop_down_videos_list_change}
+      layout_properties: {grid_position: 'VDDPPT,JRNXIO'}
+      name: drop_down_videos_list
+      properties: {align: center, background: 'theme:On Primary Container', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Choisir une vidéo}
+      type: DropDown
+    - event_bindings: {change: file_loader_1_change}
+      layout_properties: {grid_position: 'VDDPPT,LEECBH'}
+      name: file_loader_1
+      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: Choix de l'image, visible: true}
+      type: FileLoader
+    layout_properties: {grid_position: 'JGBNNA,NMKLEG'}
+    name: column_panel_1
+    properties: {}
+    type: ColumnPanel
   layout_properties: {grid_position: 'IKDQHX,TDKNTP'}
   name: column_panel_modif_qcm
   properties: {}
   type: ColumnPanel
 - components:
   - components:
-    - layout_properties: {grid_position: 'NJZSBG,EAWKPG'}
-      name: spacer_2
-      properties: {height: 158.9381103515625}
-      type: Spacer
     - components:
-      - data_bindings: []
-        layout_properties: {grid_position: 'XYSAXI,ATDROB'}
-        name: image_1
-        properties: {background: 'theme:On Primary Container', display_mode: zoom_to_fill, height: 137.44625854492188, role: null, spacing_above: small, spacing_below: medium}
-        type: Image
-      layout_properties: {grid_position: 'NJZSBG,LPPEPK'}
-      name: column_panel_1
+      - layout_properties: {grid_position: 'YDLHUN,BFDZDS'}
+        name: video_player_1
+        properties: {}
+        type: form:Video_Player
+      layout_properties: {width: 536.31905078125}
+      name: column_panel_video_player
       properties:
         background: theme:Primary
         role: tonal-card
         spacing:
+          margin: [null, '5', null, '5']
+          padding: ['30', '5', '20', '5']
+        visible: false
+      type: ColumnPanel
+    - components:
+      - data_bindings: []
+        layout_properties: {grid_position: 'XYSAXI,ATDROB'}
+        name: image_1
+        properties: {background: 'theme:On Primary Container', display_mode: shrink_to_fit, height: 213.21102905273438, role: null, spacing_above: small, spacing_below: medium}
+        type: Image
+      layout_properties: {expand: true, width: 259.4419169921875}
+      name: column_panel_image
+      properties:
+        background: theme:On Primary Container
+        role: outlined-card
+        spacing:
           padding: ['10', '10', '5', '10']
       type: ColumnPanel
-    - layout_properties: {grid_position: 'NJZSBG,LTWPGS TPDBLO,URIRRX'}
-      name: spacer_1
-      properties: {height: 50.965576171875}
-      type: Spacer
-    - event_bindings: {change: file_loader_1_change}
-      layout_properties: {grid_position: 'NJZSBG,LTWPGS XMFJYF,VANOHT'}
-      name: file_loader_1
-      properties: {background: 'theme:On Primary Container', foreground: 'theme:On Primary', role: null, spacing_above: none, spacing_below: none, text: Choix de l'image, visible: true}
-      type: FileLoader
-    layout_properties: {grid_position: 'HWSCUQ,YYYUYU'}
-    name: cp_img
-    properties: {background: 'theme:On Primary Container', col_widths: '{"LTWPGS":20,"EAWKPG":20,"LPPEPK":20}', role: outlined-card}
-    type: ColumnPanel
+    layout_properties: {full_width_row: true, grid_position: 'IFVCJV,RCJINX'}
+    name: flow_panel_medias
+    properties: {align: center, vertical_align: middle}
+    type: FlowPanel
   - layout_properties: {grid_position: 'VWBXEW,TNYCOV'}
     name: word_editor_1
     properties: {}
@@ -192,7 +209,7 @@ components:
     type: ColumnPanel
   layout_properties: {grid_position: 'EWFOJA,VHIKZI'}
   name: cp_father
-  properties: {border: '', col_widths: '{"ALPISY":2,"TNYCOV":33}', spacing_above: none, spacing_below: none}
+  properties: {border: '', col_widths: '{"ALPISY":2,"TNYCOV":33,"RCJINX":23}', spacing_above: none, spacing_below: none}
   type: ColumnPanel
 container:
   properties: {background: 'theme:On Primary Container', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}

@@ -5,6 +5,8 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from ...AlertHTML import AlertHTML
+from ...AlertConfirmHTML import AlertConfirmHTML
 
 global ancien_num_ligne    # pour pouvoir rendre un bt inactif si perte de focus  
 ancien_num_ligne = 0
@@ -36,9 +38,10 @@ class ItemTemplate4(ItemTemplate4Template):
         url = self.item['video_url']  # récup de l'url en table
         # C'est une vidéo ? 
         if url is not None:  #                                         VIDEO
-            self.column_panel_video_player.visible = True
-            self.column_panel_video_player.visible = True
+            self.flow_panel_video_player.visible = True
+            self.flow_panel_video_player.visible = True
             self.cp_img.visible = False
+            # si test avec video en asset appeler : self.video_player_1.load_media(
             self.video_player_1.load_media(
                 url,
                 autoplay=True,
@@ -47,7 +50,7 @@ class ItemTemplate4(ItemTemplate4Template):
                 allow_download=False
             )          
         else:   #                                                       Image
-            self.column_panel_video_player.visible = False
+            self.flow_panel_video_player.visible = False
             self.cp_img.visible = True
             
         # Any code you write here will run before the form opens.
@@ -90,7 +93,7 @@ class ItemTemplate4(ItemTemplate4Template):
         self.cp_father.tag.nom = "cp_father"
         self.cp_quest_rep.tag.nom = "cp_quest_rep"
         self.cp_options.tag.nom = "cp_options"
-        self.column_panel_video_player.tag.nom ="cp_video"
+        self.flow_panel_video_player.tag.nom ="fp_video"
         self.cp_img.tag.nom = "cp_img"
         self.fp_modif.tag.nom = "fp_modif"
         self.fp_vf_barem.tag.nom = "fp_vrai/faux_bareme"
@@ -219,11 +222,9 @@ class ItemTemplate4(ItemTemplate4Template):
         
         self.button_modif.tag.numero = self.item['num']          #Je sauve le NUMERO de question ds le tag      
         self.button_modif.tag.nom = "button"
-        if self.item['photo'] != None:
+        if self.item['photo'] is not None:
             self.image_1.source = self.item['photo']
-            #print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
         else:
-            #print("--------------------------------------------------------------------------------------------------img ",self.item['photo'])
             self.image_1.source = None
             self.cp_img.visible = False
             self.image_1.visible = False
@@ -384,7 +385,7 @@ class ItemTemplate4(ItemTemplate4Template):
                     if cpnt1.tag.nom =="photo":
                         #print(cpnt, cpnt.tag.nom)
                         #print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ img: ",cpnt1.source)
-                        if cpnt1.source == None:
+                        if cpnt1.source is None:
                             photo = None
                         else:
                             photo = cpnt1.source           # j'ai la photo

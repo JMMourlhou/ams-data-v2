@@ -7,7 +7,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil.js import window
 import time
-
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
     def __init__(self, qcm_row, nb_questions=0, **properties):
@@ -36,7 +37,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         """
         # Pi5 est OK, ce sera la même logique mais alimentée en uplink par scan du répertoire Pi5 avec:
         
-        #-----  Ds l'app, ide qcm ici:
+        #----- Init du drop down des videos dispo en Pi5
         list_videos = anvil.server.call("get_video_urls")
         self.drop_down_videos_list.items = [
             (v["name"], v["url"]) for v in list_videos
@@ -123,12 +124,13 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
         if media_url:
             self.video_player_1.visible = True
+            # si test avec video en asset appeler : self.video_player_1.load_media(
             self.video_player_1.load(
                 media_url,
                 autoplay=False,
                 muted=False,
                 controls=True,
-                allow_download=False
+                allow_download=True
             )
             # affiche le cp video
             self.column_panel_video_player.visible = True
@@ -185,6 +187,16 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
+
+        # Au moins une réponse de Vrai
+        if self.rep1.checked is False and \
+            self.rep2.checked is False and \
+            self.rep3.checked is False and \
+            self.rep4.checked is False and \
+            self.rep5.checked is False :
+            alert("Entrez les Réponses !")
+            return
+            
         if self.first_correction is True:
             # 1ere entrée en correction, je préforme la correction en fonction des réponses
             texte_de_base = (
@@ -381,7 +393,16 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                 if rep_multi_stagiaire == "00000":
                     alert("Choisissez une réponse !")
                     return
-        
+                    
+        if len(self.rich_text_correction.content) < 14:
+            r = AlertConfirmHTML.ask(
+                "La correction est vide !",
+                "<p>Voulez-vous vraiment quitter ?</p>",
+                style="info",
+                large = True
+            )
+            if not r :   # non 
+                return
              
         result = anvil.server.call("add_ligne_qcm",
             int(self.num_question.text),  # num question (numériqie)

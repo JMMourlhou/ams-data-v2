@@ -118,7 +118,7 @@ def add_ligne_qcm(num_question, question, correction, rep, bareme, image, qcm_nb
 # =================================================================================================================
 # MODIF du QCM (en maj d'un qcm)
 @anvil.server.callable           #modif d'une ligne de Qcm
-def modif_qcm(qcm_descro_row, num_question, question, rep, bareme, photo, correction):
+def modif_qcm(qcm_descro_row, num_question, question, rep, bareme, photo, correction, url_video):
 
     # lecture de la ligne à modifier par son numéro             
     qcm_row = app_tables.qcm.get(num=num_question,
@@ -131,7 +131,8 @@ def modif_qcm(qcm_descro_row, num_question, question, rep, bareme, photo, correc
                      rep_multi = rep,
                      bareme = str(bareme),
                      photo = photo,
-                     correction= correction
+                     correction= correction,
+                     video_url= url_video
                     )
         return True
 

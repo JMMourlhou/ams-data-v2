@@ -7,15 +7,27 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil.js import window
 import time
+from ..AlertHTML import AlertHTML
+from ..AlertConfirmHTML import AlertConfirmHTML
 
 class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def __init__(self, qcm_row, question_row, nb_questions, **properties):  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.first_correction = True
+        self.media_url = None
+        self.image_1.source = None
+        #Initilisation du component de cette form Video_player_1
+        self.video_player_1.clear() 
+        
+        #----- Init du drop down des videos dispo en Pi5
+        list_videos = anvil.server.call("get_video_urls")
+        self.drop_down_videos_list.items = [
+            (v["name"], v["url"]) for v in list_videos
+        ]
+        
         #=========================================================================================
         # POUR AUTO SAUVEGARDE DU TEXTE:
-
         # Bouton Validation caché tant que rien n'est modifié
         self.button_validation.visible = False
         self._editor_ready = False
@@ -42,13 +54,30 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.label_nb_questions.text = nb_questions
 
         self.drop_down_bareme.items=["1","2","3","4","5","10"]
-        self.drop_down_bareme.selected_value = self.question_row['bareme']                 
-
-        if self.question_row['photo'] is not None:
-            self.image_1.source = self.question_row['photo']
-        else:
+        self.drop_down_bareme.selected_value = self.question_row['bareme']    
+        
+        # Gestion video_player:
+        self.media_url = self.question_row['video_url']  # récup de l'url en table
+        # C'est une vidéo ? 
+        if self.media_url is not None:  #                                         VIDEO
             self.image_1.source = None
-
+            self.column_panel_video_player.visible = True
+            self.column_panel_video_player.visible = True
+            self.column_panel_image.visible = False
+            # si test avec video en asset appeler : self.video_player_1.load_media(
+            self.video_player_1.load(
+                self.media_url,
+                autoplay=False,
+                muted=False,
+                controls=True,
+                allow_download=True
+            )          
+        else:   #                                                       Image
+            self.image_1.source = self.question_row['photo']
+            self.column_panel_video_player.visible = False
+            self.column_panel_image.visible = True
+            self.url_video = None
+        
         self.type_question = self.question_row['type']  
         self.nb_options = len(self.question_row['rep_multi'])     # je sais combien d'options j'utilise pour cette question
         if self.nb_options > 1:     
@@ -98,7 +127,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         # on affiche la correction en init, la question est ds le word editor
         self.rich_text_correction.content = self.question_row['correction']
         self.rich_text_correction.visible = True      # display the Correction Rich Text
-
+        
+        
         self.rich_text_question.content = self.question_row['question']
         self.rich_text_question.visible = False
         #self.word_editor_1.scroll_into_view()
@@ -137,9 +167,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def button_question_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.rich_text_correction.content = self.word_editor_1.text 
+        if self.first_correction is False: # pas en init
+            self.rich_text_correction.content = self.word_editor_1.text 
+            
         self.button_validation.visible = False
-        self.rich_text_correction.visible = True  # Hiding the Correction text
+        self.rich_text_correction.visible = True  # Hiding the question text
         self.rich_text_question.visible = False
         self.button_question.visible = False
         self.button_correction.visible = True
@@ -148,6 +180,14 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
 
     def button_correction_click(self, **event_args):
         """This method is called when the button is clicked"""
+        if self.rep1.checked is False and \
+            self.rep2.checked is False and \
+            self.rep3.checked is False and \
+            self.rep4.checked is False and \
+            self.rep5.checked is False :
+            alert("Entrez les Réponses !")
+            return
+            
         if self.first_correction is True :
             # 1ere entrée en correction, je préforme la correction en fonction des réponses
             texte_de_base = (
@@ -214,7 +254,7 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             else: 
                 self.sending_to_word_editor(texte_correction_initial, "correction")
         # On passe l'indicateur de la modif de la correction à False, pour ne pas écraser le texte de la correction    
-        self.first_correction = False   # entrée pour la première fois effectuée
+        self.first_correction = False   # entrée en correction pour la première fois effectuée
 
 
     #                                text           question / correction
@@ -264,8 +304,6 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def _arm_editor_ready(self, **e):
         self._editor_ready = True    
 
-
-
     def file_loader_photo_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
         # self.image_photo.source = file
@@ -297,17 +335,17 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
     
-        def rep4_change(self, **event_args):
-            """This method is called when this checkbox is checked or unchecked"""
-            self.button_modif_color()
+    def rep4_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
     
     def rep5_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         self.button_modif_color()
     
-        def drop_down_bareme_change(self, **event_args):
-            """This method is called when this checkbox is checked or unchecked"""
-            self.button_modif_color()
+    def drop_down_bareme_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif_color()
     
     def text_box_correction_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
@@ -366,6 +404,18 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
+                    
+        if len(self.rich_text_correction.content) < 14:
+            r = AlertConfirmHTML.ask(
+                "La correction est vide !",
+                "<p>Voulez-vous vraiment quitter ?</p>",
+                style="info",
+                large = True
+            )
+            if not r :   # non 
+                return
+            
+                
         if sov_auto is True:            
             with anvil.server.no_loading_indicator:               
                 result = anvil.server.call('modif_qcm',
@@ -375,7 +425,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                                            rep_multi_stagiaire,                   # rep codée ex 10 /  010 ...
                                            self.drop_down_bareme.selected_value,  # Bareme de la question
                                            self.image_1.source,                   # photo
-                                           self.rich_text_correction.content      # correction en clair
+                                           self.rich_text_correction.content,      # correction en clair
+                                           self.media_url                         # text: url de la vidéo (None si pas de video)
                                           ) 
         else:
             result = anvil.server.call('modif_qcm',
@@ -385,7 +436,8 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
                                        rep_multi_stagiaire,                   # rep codée ex 10 /  010 ...
                                        self.drop_down_bareme.selected_value,  # Bareme de la question
                                        self.image_1.source,                   # photo
-                                       self.rich_text_correction.content      # correction en clair
+                                       self.rich_text_correction.content,      # correction en clair
+                                       self.media_url                         # text: url de la vidéo (None si pas de video)
                                       ) 
         if not result:
             alert("erreur de modification d'une question QCM")
@@ -418,6 +470,49 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         """This method is called when a new file is loaded into this FileLoader"""
         thumb_pic = anvil.image.generate_thumbnail(file, 640)
         self.image_1.source = thumb_pic
+        self.column_panel_image.visible = True
+        self.column_panel_video_player.visible = False
+        self.drop_down_videos_list.selected_value = None
+        #Initilisation du component de cette form Video_player_1
+        self.video_player_1.clear() 
+        self.media_url = None
         self.button_modif_color()
+
+    def drop_down_videos_list_change(self, **event_args):
+        """This method is called when an item is selected"""
+        media_url = self.drop_down_videos_list.selected_value  # ici c'est la row 'files'
+        print(media_url)
+        if not media_url:
+            self.video_player_1.clear()
+            self.video_player_1.visible = False
+            return
+
+        self.column_panel_image.visible = False
+        self.image_1.source = None
+        self.file_loader_1.clear()
+        #media = video_row['file']  # récupère la colonne Media appelée file
+        media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
+        if media_url:
+            self.video_player_1.visible = True
+            # si test avec video en asset appeler : self.video_player_1.load_media(
+            self.video_player_1.load(
+                media_url,
+                autoplay=False,
+                muted=False,
+                controls=True,
+                allow_download=False
+            )
+            # affiche le cp video
+            self.column_panel_video_player.visible = True
+            self.button_modif_color()
+            # pour sauver l'url en table 
+            self.media_url = media_url           # ----------------------------------- video url Sauvée en table qcm 
+            return
+
+        # Sinon : rien d’utilisable
+        self.video_player_1.clear()
+        self.video_player_1.visible = False
+
+        
 
 
