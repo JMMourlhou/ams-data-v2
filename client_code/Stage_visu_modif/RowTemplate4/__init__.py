@@ -43,7 +43,7 @@ class RowTemplate4(RowTemplate4Template):
             tel = "Vérifier le tel"
 
         # Affichage reussite au stage et couleur  SI c'est un stage de type "S"
-        if self.item['stage']['type_stage'] == "S":
+        if self.item['stage']['type_stage'] == "S" or self.item['stage']['type_stage'] == "F":
             self.check_box_reussite.checked = self.item['reussite']
         else:
             self.check_box_reussite.visible = False
