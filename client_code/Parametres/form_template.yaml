@@ -192,7 +192,7 @@ components:
     - event_bindings: {click: button_lieux_click}
       layout_properties: {grid_position: 'TJWBZJ,QQRCNT'}
       name: button_lieux
-      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Lieux, visible: true}
+      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Centres, visible: true}
       type: Button
     - event_bindings: {click: button_types_evenements_click}
       layout_properties: {grid_position: 'TJWBZJ,XIYRYR'}

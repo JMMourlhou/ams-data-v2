@@ -540,6 +540,11 @@ class Main(MainTemplate):
         from ..Mail_subject_attach_txt import Mail_subject_attach_txt
         open_form("Mail_subject_attach_txt")
 
+    def button_nb_diplomes_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..Diplomes_nb import Diplomes_nb
+        open_form("Diplomes_nb")
+
     
 
 

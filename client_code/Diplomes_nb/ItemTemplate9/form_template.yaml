@@ -1,0 +1,148 @@
+components:
+- components:
+  - event_bindings: {focus: text_box_tel_focus}
+    layout_properties: {expand: false, width: 91.89046655273438}
+    name: text_box_pv
+    properties:
+      align: center
+      background: theme:Primary
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {focus: text_box_tel_focus}
+    layout_properties: {width: 72.79129223632812}
+    name: text_box_num
+    properties:
+      align: center
+      background: theme:Primary
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {focus: text_box_tel_focus}
+    layout_properties: {width: 119.62226147460939}
+    name: text_box_date
+    properties:
+      align: center
+      background: theme:Primary
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {focus: text_box_tel_focus}
+    layout_properties: {width: 127.98545117187501}
+    name: text_box_nom
+    properties:
+      align: center
+      background: theme:Primary
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {focus: text_box_tel_focus}
+    layout_properties: {width: 49.25907177734376}
+    name: text_box_nb_diplomes
+    properties:
+      align: center
+      background: theme:Primary
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: ''
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  layout_properties: {grid_position: 'OGKIIM,AFHGSI'}
+  name: flow_panel_1
+  properties:
+    align: center
+    background: theme:Primary
+    border: ''
+    foreground: ''
+    gap: tiny
+    role: null
+    spacing:
+      margin: [null, null, '4', null]
+    spacing_above: none
+    spacing_below: small
+    tooltip: ''
+    vertical_align: middle
+    visible: true
+  type: FlowPanel
+container:
+  properties: {col_widths: '{"AFHGSI":60}'}
+  type: ColumnPanel
+is_package: true

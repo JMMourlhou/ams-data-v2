@@ -13,7 +13,7 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-        self.text_box_1.placeholder = "Lieu"
+        self.text_box_1.placeholder = "Centre"
         self.text_box_2.placeholder = "Adresse"
         self.text_box_3.placeholder = "Commentaires"
 
@@ -37,9 +37,9 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
     def button_valid_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Text_box_1 non vide
-        if self.text_box_1.text == "" or len(self.text_box_1.text) < 5:
-            #alert("Entrez un lieu valide!")
-            AlertHTML.error("Erreur :", "Entrez un lieu valide (Plus de 4 caractères) !")
+        if self.text_box_1.text == "" or len(self.text_box_1.text) < 3:
+            #alert("Entrez un nom de centre valide!")
+            AlertHTML.error("Erreur :", "Entrez un nom de centre valide (3 caractères mini) !")
             self.text_box_1.focus()
             return
         # Text_box_2 non vide
@@ -54,13 +54,13 @@ class Lieux_MAJ_table(Lieux_MAJ_tableTemplate):
         row = app_tables.pre_requis.get(code_pre_requis=self.text_box_1.text)
         if row:
             #alert("Ce lieu existe déjà !")
-            AlertHTML.error("Erreur :", "Ce lieu existe déjà !")
+            AlertHTML.error("Erreur :", "Ce centre existe déjà !")
             self.text_box_1.focus()
             return
 
         r = AlertConfirmHTML.ask(
-            "Ajout d'un lieu :",
-            "Voulez-vous ajouter ce lieu ?",
+            "Ajout d'un centre:",
+            "Voulez-vous ajouter ce centre ?",
             style="info",
             large = True
         )
