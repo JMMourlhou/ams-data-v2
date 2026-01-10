@@ -15,15 +15,16 @@ class Diplomes_nb(Diplomes_nbTemplate):
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
         # search de tous les stages existants et affichage
-        liste = app_tables.stages.search(
+        liste0 = app_tables.stages.search(
             tables.order_by("num_pv", ascending=True),
-            #nb_stagiaires_diplomes=q.not_(0),
-            q.not_(q.any_of(
-                nb_stagiaires_diplomes=0,
-                nb_stagiaires_diplomes=None
-            ))
+            nb_stagiaires_diplomes=q.not_(0),
         )
-        self.repeating_panel_1.items = liste
+        liste1=[]
+        for stage in liste0:
+            if stage['nb_stagiaires_diplomes'] is not None and stage['date_debut'] < date:
+                liste1.append(stage)
+            
+        self.repeating_panel_1.items = liste1
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
