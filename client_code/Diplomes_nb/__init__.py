@@ -22,6 +22,9 @@ class Diplomes_nb(Diplomes_nbTemplate):
         self.date_picker_to.date = now
         self.date_fin = now
 
+        # Drop down codes Centres
+        self.drop_down_lieux.items = [(r['lieu'], r) for r in app_tables.lieux.search()]
+
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.display()
@@ -29,7 +32,15 @@ class Diplomes_nb(Diplomes_nbTemplate):
     def button_pdf_click(self, **event_args):
         """This method is called when the button is clicked"""
         pass
-
+        
+    def drop_down_lieux_change(self, **event_args):
+        """This method is called when an item is selected"""
+        self.centre_formation_row = self.drop_down_lieux.selected_value
+        self.date_picker_from.visible= True
+        self.date_picker_to.visible= True
+        self.centre_formation_nom = self.centre_formation_row['lieu']
+        self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}"
+            
     def date_picker_from_change(self, **event_args):
         """This method is called when the selected date changes"""
         self.button_validation.visible = True   
@@ -41,20 +52,18 @@ class Diplomes_nb(Diplomes_nbTemplate):
             AlertHTML.error("Erreur :","La date de fin est inférieure à la date de début !")
             self.date_picker_from.focus()
         self.date_picker_to.visible = True
-        self.column_panel_1.visible = False
+        self.repeating_panel_1.visible = False
         
 
     def date_picker_to_change(self, **event_args):
         """This method is called when the selected date changes"""
         self.button_validation.visible = True   
         self.date_fin = self.date_picker_to.date
-        print()
-        print(f"Date_deb: {self.date_deb}")
-        print(f"Date_fin: {self.date_fin}")
+        
         if self.date_fin < self.date_deb:
             AlertHTML.error("Erreur :","La date de fin est inférieure à la date de début !")
             self.date_picker_to.focus()
-        self.column_panel_1.visible = False
+        self.repeating_panel_1.visible = False
     
     def display(self):
         # search de tous les stages existants et affichage
@@ -66,18 +75,24 @@ class Diplomes_nb(Diplomes_nbTemplate):
         print(f"nb stages liste0: {len(liste0)}")
 
         liste1=[]
+        nb_diplomes = 0
         for stage in liste0:
             if stage['nb_stagiaires_diplomes'] is not None:
-                alert()
                 if stage['date_debut'] >= self.date_deb and stage['date_debut'] <= self.date_fin :
-                    print(f"ajout: {stage['date_debut']}")
-                    liste1.append(stage)
+                    if stage['lieu'] ==self.centre_formation_row:
+                        print(f"ajout: {stage['date_debut']}")
+                        liste1.append(stage)
+                        nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
+                        self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"
                     
-        self.column_panel_1.visible = True
+        alert(nb_diplomes)         
+        self.repeating_panel_1.visible = True
         self.repeating_panel_1.items = liste1
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Main import Main
         open_form('Main',99) 
+
+   
 
