@@ -1,6 +1,6 @@
 components:
 - components:
-  - event_bindings: {focus: text_box_tel_focus}
+  - event_bindings: {}
     layout_properties: {expand: false, width: 91.89046655273438}
     name: text_box_pv
     properties:
@@ -25,7 +25,7 @@ components:
       underline: false
       visible: true
     type: TextBox
-  - event_bindings: {focus: text_box_tel_focus}
+  - event_bindings: {}
     layout_properties: {width: 72.79129223632812}
     name: text_box_num
     properties:
@@ -50,7 +50,7 @@ components:
       underline: false
       visible: true
     type: TextBox
-  - event_bindings: {focus: text_box_tel_focus}
+  - event_bindings: {}
     layout_properties: {width: 119.62226147460939}
     name: text_box_date
     properties:
@@ -75,7 +75,7 @@ components:
       underline: false
       visible: true
     type: TextBox
-  - event_bindings: {focus: text_box_tel_focus}
+  - event_bindings: {}
     layout_properties: {width: 127.98545117187501}
     name: text_box_nom
     properties:
@@ -100,7 +100,7 @@ components:
       underline: false
       visible: true
     type: TextBox
-  - event_bindings: {focus: text_box_tel_focus}
+  - event_bindings: {}
     layout_properties: {width: 49.25907177734376}
     name: text_box_nb_diplomes
     properties:
