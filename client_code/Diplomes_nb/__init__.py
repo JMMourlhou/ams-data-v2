@@ -59,15 +59,18 @@ class Diplomes_nb(Diplomes_nbTemplate):
             data = grouped[centre_name]
             stages = data["stages"]
             total_centre = data["total"]
-    
-            centre_name_safe = self._esc(centre_name)
-            subtitle = f"Diplômes édités pour {centre_name_safe} ({periode_txt})"
+
+            # Titre
+            title = f"Diplômes édités pour {centre_name}"
+            centre_name_safe = self._esc(title)
+            # Sous titre
+            subtitle = f"Période: {periode_txt}"
             subtitle_safe = self._esc(subtitle)
             
-            # <h1 class="doc-title">{centre_name_safe}</h1>
+            
             body_html.append(f"""
                 <section class="centre-section">
-                
+                <h1 class="doc-title">{centre_name_safe}</h1>
                 <h2 class="doc-subtitle">{subtitle_safe}</h2>
     
                 <div class="section-visible-title">
@@ -86,11 +89,11 @@ class Diplomes_nb(Diplomes_nbTemplate):
                     </thead>
                     <tbody>
             """)
-    
+            # stage_txt
             for st in stages:
                 date_debut = st.get("date_debut_txt", "")
                 num_pv = st.get("num_pv_txt", "")
-                code_txt = st.get("stage_txt", "")
+                code_txt = st.get("code_txt", "")
                 nb = st.get("nb", 0)
     
                 body_html.append(f"""
@@ -263,7 +266,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
             grouped[centre_name]["stages"].append({
                 "date_debut_txt": d.strftime("%d/%m/%Y") if hasattr(d, "strftime") else str(d),
                 "num_pv_txt": str(stage['num_pv'] or ""),
-                "stage_txt": str(stage.get('stage_txt', "") or ""),
+                "code_txt": str(stage.get('code_txt', "") or ""),
                 "nb": int(nb),
             })
 
