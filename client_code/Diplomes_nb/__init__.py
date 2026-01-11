@@ -28,8 +28,9 @@ class Diplomes_nb(Diplomes_nbTemplate):
         self.display()
         
 
+
     def button_pdf_click(self, **event_args):
-    # ---- garde-fous ----
+        # ---- garde-fous ----
         if not self.date_deb or not self.date_fin:
             AlertHTML.error("Erreur :", "Choisis d'abord une date de début et une date de fin.")
             return
@@ -37,40 +38,41 @@ class Diplomes_nb(Diplomes_nbTemplate):
         if self.date_fin < self.date_deb:
             AlertHTML.error("Erreur :", "La date de fin est inférieure à la date de début !")
             return
-    
+
         # ---- 1) récupérer + grouper ----
         grouped, total_global = self._get_diplomes_grouped_by_centre(self.date_deb, self.date_fin)
-        alert(total_global)
-    
+
         if total_global == 0:
             AlertHTML.error("Info :", "Aucun diplôme édité sur cette période.")
             return
-    
+
         # ---- 2) construire HTML + CSS ----
         periode_txt = f"du {self.date_deb.strftime('%d/%m/%Y')} au {self.date_fin.strftime('%d/%m/%Y')}"
         print_date = French_zone.french_zone_time().strftime("%d/%m/%Y à %H:%M")
-    
+
         css = self._pdf_css()
-    
+
         body_html = []
         centres = sorted(grouped.keys(), key=lambda s: (s or "").lower())
-    
+
         for idx, centre_name in enumerate(centres):
             data = grouped[centre_name]
             stages = data["stages"]
             total_centre = data["total"]
 
             # Titre
-            title = f"Diplômes édités pour {centre_name}"
-            centre_name_safe = self._esc(title)
+            title = f"Nb d'attestations éditées pour {centre_name}"
+            title_safe = self._esc(title)
+            # Centre
+            centre_name_safe = self._esc(centre_name)
             # Sous titre
-            subtitle = f"Période: {periode_txt}"
+            subtitle = f"{periode_txt}"
             subtitle_safe = self._esc(subtitle)
-            
-            
+
+
             body_html.append(f"""
                 <section class="centre-section">
-                <h1 class="doc-title">{centre_name_safe}</h1>
+                <h1 class="doc-title">{title_safe}</h1>
                 <h2 class="doc-subtitle">{subtitle_safe}</h2>
     
                 <div class="section-visible-title">
@@ -89,13 +91,13 @@ class Diplomes_nb(Diplomes_nbTemplate):
                     </thead>
                     <tbody>
             """)
-            # stage_txt
+
             for st in stages:
                 date_debut = st.get("date_debut_txt", "")
                 num_pv = st.get("num_pv_txt", "")
                 code_txt = st.get("code_txt", "")
                 nb = st.get("nb", 0)
-    
+
                 body_html.append(f"""
                     <tr>
                     <td>{self._esc(date_debut)}</td>
@@ -104,7 +106,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
                     <td class="num">{int(nb) if nb else 0}</td>
                     </tr>
                 """)
-    
+
             body_html.append(f"""
                     </tbody>
                 </table>
@@ -114,16 +116,16 @@ class Diplomes_nb(Diplomes_nbTemplate):
                 </div>
                 </section>
             """)
-    
+
             if idx < len(centres) - 1:
                 body_html.append('<div class="page-break"></div>')
-    
+
         body_html.append(f"""
             <div class="total-global">
             Total global sur la période ({self._esc(periode_txt)}) : <b>{int(total_global)}</b>
             </div>
         """)
-    
+
         html_doc = f"""
         <html>
         <head>
