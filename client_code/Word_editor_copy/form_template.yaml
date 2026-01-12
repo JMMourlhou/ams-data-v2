@@ -345,7 +345,7 @@ components:
         type: form:Word_editor.HTML_part
       - components:
         - event_bindings: {click: button_link_click}
-          layout_properties: {grid_position: 'FHOMYI,RGSFUK'}
+          layout_properties: {grid_position: 'BWZGLX,HVKFDS'}
           name: button_link_copy
           properties:
             icon: fa:link
@@ -355,7 +355,7 @@ components:
             text: ''
           type: Button
         - event_bindings: {change: drop_down_font_size_change}
-          layout_properties: {grid_position: 'TNLOYI,PYWDIH'}
+          layout_properties: {grid_position: 'DYEQGM,VIOHJD'}
           name: drop_down_font_size_copy
           properties:
             align: center
@@ -433,7 +433,7 @@ components:
             foreground: theme:Primary
             icon: fa:download
             spacing:
-              margin: ['40', null, '0', null]
+              margin: ['20', null, '0', null]
             text: ''
           type: Button
         layout_properties: {width: 71.2774955078125}
@@ -450,14 +450,11 @@ components:
         type: ColumnPanel
       layout_properties: {grid_position: 'YUAOHO,NFXANV'}
       name: flow_panel_4
-      properties:
-        align: center
-        spacing:
-          margin: [null, null, '0', null]
+      properties: {align: center}
       type: FlowPanel
     layout_properties: {grid_position: 'KLFBTN,DGKQFQ'}
     name: column_panel_2
-    properties: {visible: true, wrap_on: never}
+    properties: {wrap_on: never}
     type: ColumnPanel
   - components:
     - event_bindings: {click: button_valid_click}
@@ -470,7 +467,6 @@ components:
         icon: fa:check
         spacing:
           margin: ['0', null, '0', null]
-          padding: ['0', null, null, null]
         text: Validation
         visible: false
       type: Button
@@ -484,7 +480,6 @@ components:
         icon: fa:sign-out
         spacing:
           margin: ['0', null, '0', null]
-          padding: ['0', null, null, null]
         text: ''
         visible: false
       type: Button
