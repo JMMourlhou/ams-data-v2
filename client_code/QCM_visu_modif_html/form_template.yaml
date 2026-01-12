@@ -75,13 +75,9 @@ components:
     name: word_editor_1
     properties: {}
     type: form:Word_editor
-  - layout_properties: {grid_position: 'VWBXEW,ALPISY KSFGVG,ZXDFNL'}
-    name: spacer_3
-    properties: {height: 116.60800170898438}
-    type: Spacer
   - components:
     - event_bindings: {change: rep1_change}
-      layout_properties: {full_width_row: false, grid_position: 'JSZRDP,EICFQK'}
+      layout_properties: {}
       name: rep1
       properties:
         align: center
@@ -92,36 +88,86 @@ components:
         foreground: theme:On Primary
         spacing:
           margin: ['0', null, null, null]
+          padding: [null, null, '0', null]
         spacing_above: none
         spacing_below: none
         text: V
         visible: true
       type: CheckBox
     - event_bindings: {change: rep2_change}
-      layout_properties: {grid_position: 'YEFAGY,IYUETY'}
+      layout_properties: {}
       name: rep2
-      properties: {align: center, background: '', bold: true, checked: false, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: F, visible: true}
+      properties:
+        align: center
+        background: ''
+        bold: true
+        checked: false
+        font_size: 10
+        foreground: theme:On Primary
+        spacing:
+          padding: [null, null, '0', null]
+        spacing_above: none
+        spacing_below: none
+        text: F
+        visible: true
       type: CheckBox
     - event_bindings: {change: rep3_change}
-      layout_properties: {grid_position: 'UNTKDO,VKZZDN'}
+      layout_properties: {}
       name: rep3
-      properties: {align: center, background: '', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: C, visible: false}
+      properties:
+        align: center
+        background: ''
+        bold: true
+        font_size: 10
+        foreground: theme:On Primary
+        spacing:
+          padding: [null, null, '0', null]
+        spacing_above: none
+        spacing_below: none
+        text: C
+        visible: false
       type: CheckBox
     - event_bindings: {change: rep4_change}
-      layout_properties: {grid_position: 'EIBGWA,IJOGUK'}
+      layout_properties: {}
       name: rep4
-      properties: {align: center, background: '', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: D, visible: false}
+      properties:
+        align: center
+        background: ''
+        bold: true
+        font_size: 10
+        foreground: theme:On Primary
+        spacing:
+          padding: [null, null, '0', null]
+        spacing_above: none
+        spacing_below: none
+        text: D
+        visible: false
       type: CheckBox
     - event_bindings: {change: rep5_change}
-      layout_properties: {grid_position: 'PPWLBL,TJKTNJ'}
+      layout_properties: {}
       name: rep5
-      properties: {align: center, background: '', bold: true, font_size: 10, foreground: 'theme:On Primary', spacing_above: none, spacing_below: none, text: E, visible: false}
+      properties:
+        align: center
+        background: ''
+        bold: true
+        font_size: 10
+        foreground: theme:On Primary
+        spacing:
+          padding: [null, null, '0', null]
+        spacing_above: none
+        spacing_below: none
+        text: E
+        visible: false
       type: CheckBox
-    data_bindings: []
-    layout_properties: {grid_position: 'VWBXEW,ALPISY AQPUJL,PYNSCN'}
-    name: cp_options
-    properties: {border: '', col_spacing: tiny}
-    type: ColumnPanel
+    layout_properties: {grid_position: 'HGVATR,LMPIMM'}
+    name: flow_panel_2
+    properties:
+      align: center
+      background: theme:On Primary Container
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
   - event_bindings: {}
     layout_properties: {grid_position: 'LQGWBG,GEMQRU'}
     name: rich_text_question
@@ -209,7 +255,7 @@ components:
     type: ColumnPanel
   layout_properties: {grid_position: 'EWFOJA,VHIKZI'}
   name: cp_father
-  properties: {border: '', col_widths: '{"ALPISY":2,"TNYCOV":33,"RCJINX":23}', spacing_above: none, spacing_below: none}
+  properties: {border: '', col_widths: '{"ALPISY":2,"TNYCOV":35,"RCJINX":23}', spacing_above: none, spacing_below: none}
   type: ColumnPanel
 container:
   properties: {background: 'theme:On Primary Container', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
