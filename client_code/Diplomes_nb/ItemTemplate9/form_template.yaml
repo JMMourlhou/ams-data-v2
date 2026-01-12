@@ -1,7 +1,7 @@
 components:
 - components:
   - event_bindings: {}
-    layout_properties: {expand: false, width: 91.89046655273438}
+    layout_properties: {expand: false, width: 78.06081640625}
     name: text_box_pv
     properties:
       align: center
@@ -26,7 +26,7 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {}
-    layout_properties: {width: 72.79129223632812}
+    layout_properties: {width: 58.93407534179687}
     name: text_box_num
     properties:
       align: center
@@ -51,7 +51,7 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {}
-    layout_properties: {width: 119.62226147460939}
+    layout_properties: {width: 104.948879296875}
     name: text_box_date
     properties:
       align: center
@@ -76,7 +76,7 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {}
-    layout_properties: {width: 127.98545117187501}
+    layout_properties: {width: 74.8627373046875}
     name: text_box_nom
     properties:
       align: center
@@ -101,10 +101,10 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {}
-    layout_properties: {width: 49.25907177734376}
+    layout_properties: {width: 60.6502447265625}
     name: text_box_nb_diplomes
     properties:
-      align: center
+      align: left
       background: theme:Primary
       bold: true
       border: ''
@@ -125,7 +125,7 @@ components:
       underline: false
       visible: true
     type: TextBox
-  layout_properties: {grid_position: 'OGKIIM,AFHGSI'}
+  layout_properties: {full_width_row: true, grid_position: 'OGKIIM,AFHGSI'}
   name: flow_panel_1
   properties:
     align: center

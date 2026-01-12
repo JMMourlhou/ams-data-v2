@@ -101,7 +101,8 @@ components:
           col_widths: '{"FSKSTQ":9,"FUZKJW":9,"ZYYGVC":7,"MWPNDN":12,"GYYXJZ":13,"DENREJ":12,"FWIZXZ":12,"NWQJKV":15}'
           role: outlined-card
           spacing:
-            padding: ['5', '10', '5', '10']
+            margin: [null, null, '0', null]
+            padding: ['5', '10', '0', '10']
           visible: true
           wrap_on: never
         type: ColumnPanel
@@ -202,7 +203,7 @@ components:
             col_widths: '{"BVABPF":5,"JKQXRI":5,"NXKMZC":6,"OHMNJP":6,"WTRFYJ":5,"YQFUJN":11,"QXMYJU":22,"VRTOJJ":9}'
             role: outlined-card
             spacing:
-              margin: ['6', null, null, null]
+              margin: ['6', null, '0', null]
               padding: ['0', '10', '0', '10']
             visible: true
             wrap_on: never

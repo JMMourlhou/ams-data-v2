@@ -17,6 +17,7 @@ class ItemTemplate9(ItemTemplate9Template):
         self.text_box_num.text = self.item['numero']
         self.text_box_date.text = self.item['date_debut']
         self.text_box_nom.text = self.item['code_txt']
+       
         self.text_box_nb_diplomes.text = self.item['nb_stagiaires_diplomes']
-        
+        print(self.text_box_nb_diplomes.text)
         
