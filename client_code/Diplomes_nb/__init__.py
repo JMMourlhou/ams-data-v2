@@ -163,9 +163,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
         """This method is called when the selected date changes"""
         self.button_validation.visible = True   
         self.date_deb = self.date_picker_from.date
-        print()
-        print(f"Date_deb: {self.date_deb}")
-        print(f"Date_fin: {self.date_fin}")
+        
         if self.date_fin < self.date_deb:
             AlertHTML.error("Erreur :","La date de fin est inférieure à la date de début !")
             self.date_picker_from.focus()
@@ -197,7 +195,6 @@ class Diplomes_nb(Diplomes_nbTemplate):
             if stage['nb_stagiaires_diplomes'] is not None:
                 if stage['date_debut'] >= self.date_deb and stage['date_debut'] <= self.date_fin :
                     if stage['lieu'] ==self.centre_formation_row:
-                        print(f"ajout: {stage['date_debut']}")
                         liste1.append(stage)
                         nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
                         self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"

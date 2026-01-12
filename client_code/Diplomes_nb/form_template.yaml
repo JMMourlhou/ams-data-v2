@@ -11,7 +11,7 @@ components:
     type: ColumnPanel
   - components:
     - event_bindings: {change: drop_down_lieux_change}
-      layout_properties: {width: 202.29715966796874}
+      layout_properties: {width: 200}
       name: drop_down_lieux
       properties:
         align: full
@@ -35,12 +35,12 @@ components:
         visible: true
       type: DropDown
     - event_bindings: {change: date_picker_from_change}
-      layout_properties: {width: 240.181265625}
+      layout_properties: {width: 200}
       name: date_picker_from
       properties: {align: left, background: 'theme:Primary', bold: false, border: '', date: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: 01 01 2030, min_date: 01 01 2023, pick_time: false, placeholder: JJMMAAAA, role: outlined, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: false}
       type: DatePicker
     - event_bindings: {change: date_picker_to_change}
-      layout_properties: {width: 231.957208984375}
+      layout_properties: {width: 200}
       name: date_picker_to
       properties: {align: left, background: 'theme:Primary', bold: false, border: '', date: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: 01 01 2030, min_date: 01 01 2023, pick_time: false, placeholder: JJMMAAAA, role: outlined, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: false}
       type: DatePicker
@@ -61,17 +61,176 @@ components:
       type: Button
     layout_properties: {grid_position: 'WWFRLO,QWIUMR'}
     name: flow_panel_1
-    properties: {align: center, spacing: huge}
+    properties:
+      align: center
+      spacing:
+        margin: ['2', null, '0', null]
     type: FlowPanel
   layout_properties:
     col_widths: {}
     grid_position: DGXGMW,VQVVNA
   name: column_panel_header
-  properties: {background: '', border: '', col_spacing: medium, col_widths: '{"LDPRBH":49}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  properties:
+    background: ''
+    border: ''
+    col_spacing: medium
+    col_widths: '{"LDPRBH":49}'
+    foreground: ''
+    role: outlined-card
+    spacing:
+      padding: [null, null, '3', null]
+    spacing_above: small
+    spacing_below: small
+    tooltip: ''
+    visible: true
+    wrap_on: mobile
   type: ColumnPanel
+- components:
+  - event_bindings: {}
+    layout_properties: {expand: false, width: 78.06081640625}
+    name: text_box_pv
+    properties:
+      align: center
+      background: theme:On Primary Container
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: PV
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {}
+    layout_properties: {width: 58.93407534179687}
+    name: text_box_num
+    properties:
+      align: center
+      background: theme:On Primary Container
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: N°
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {}
+    layout_properties: {width: 104.948879296875}
+    name: text_box_date
+    properties:
+      align: center
+      background: theme:On Primary Container
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: Date déb.
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {}
+    layout_properties: {width: 74.8627373046875}
+    name: text_box_nom
+    properties:
+      align: center
+      background: theme:On Primary Container
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: Stage
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  - event_bindings: {}
+    layout_properties: {width: 60.6502447265625}
+    name: text_box_nb_diplomes
+    properties:
+      align: left
+      background: theme:On Primary Container
+      bold: true
+      border: ''
+      enabled: true
+      font: ''
+      font_size: 11
+      foreground: theme:Tertiary
+      hide_text: false
+      italic: false
+      margin: ['2', null, null, null]
+      placeholder: ''
+      role: null
+      spacing_above: small
+      spacing_below: none
+      text: 'Nb '
+      tooltip: ''
+      type: text
+      underline: false
+      visible: true
+    type: TextBox
+  layout_properties: {grid_position: 'RSLTHF,DGIBVO'}
+  name: flow_panel_1_copy
+  properties:
+    align: center
+    background: theme:On Primary Container
+    border: ''
+    foreground: ''
+    gap: tiny
+    role: null
+    spacing:
+      margin: [null, null, '1', null]
+    spacing_above: none
+    spacing_below: small
+    tooltip: ''
+    vertical_align: middle
+    visible: true
+  type: FlowPanel
 - layout_properties: {grid_position: 'YWIPRK,BOPFXJ'}
   name: repeating_panel_1
-  properties: {item_template: Diplomes_nb.ItemTemplate9, visible: false}
+  properties: {background: '', item_template: Diplomes_nb.ItemTemplate9, spacing_above: none, spacing_below: none, visible: false}
   type: RepeatingPanel
 - event_bindings: {click: button_annuler_click}
   layout_properties: {grid_position: 'AFYKCH,ZPGXHB'}

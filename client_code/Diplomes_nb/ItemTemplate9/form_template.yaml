@@ -135,7 +135,7 @@ components:
     gap: tiny
     role: null
     spacing:
-      margin: [null, null, '4', null]
+      margin: [null, null, '1', null]
     spacing_above: none
     spacing_below: small
     tooltip: ''
@@ -143,6 +143,9 @@ components:
     visible: true
   type: FlowPanel
 container:
-  properties: {col_widths: '{"AFHGSI":60}'}
+  properties:
+    col_widths: '{"AFHGSI":60}'
+    spacing:
+      margin: ['1', null, '1', null]
   type: ColumnPanel
 is_package: true
