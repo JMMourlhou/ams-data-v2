@@ -21,20 +21,26 @@ class RowTemplate4(RowTemplate4Template):
         #print("screen: ", screen_size)
 
         if screen_size >= 650:
-            self.text_box_3.font_size = 18
-            self.text_box_tel.font_size = 1
+            self.text_box_nom_p.font_size = 18
+            self.text_box_tel.font_size = 18
             self.text_box_mail.font_size = 18
         else:
-            self.text_box_3.font_size = 10
+            self.text_box_nom_p.font_size = 10
+            self.text_box_nom_p.width = 140
+            
             self.text_box_tel.font_size = 10
+            self.text_box_tel.width = 140
+            
             self.text_box_mail.font_size = 8
+            self.text_box_mail.width = 140
         try:    
-            self.text_box_3.text = self.item['name'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
+            self.text_box_nom_p.text = self.item['name'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
         except: # prénom encore inexistant 
-            self.text_box_3.text = self.item['name'].capitalize()
+            self.text_box_nom_p.text = self.item['name'].capitalize()
             
         self.text_box_mail.text = self.item['user_email']['email']
         tel = self.item['user_email']['tel']
+        
         try:
             if len(tel) == 10 and tel.isdigit():
                 tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
@@ -65,22 +71,6 @@ class RowTemplate4(RowTemplate4Template):
         self.check_box_form_suivi.checked = self.item['enquete_suivi']
         self.init_drop_down_mode_fi()  
    
-    def text_box_3_focus(self, **event_args):
-        """This method is called when the text area gets focus"""
-        mel = self.item['user_email']['email']  
-        num_stage = self.item["stage"]['numero']
-        from ...Saisie_info_apres_visu import Saisie_info_apres_visu
-        open_form('Saisie_info_apres_visu', mel, num_stage, intitule="")
-
-    def text_box_mail_focus(self, **event_args):
-        """This method is called when the TextBox gets focus"""
-        self.text_box_3_focus()
-
-    def text_box_tel_focus(self, **event_args):
-        """This method is called when the TextBox gets focus"""
-        self.text_box_3_focus()
-
-
     def check_box_form_satis_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         # Sauvegarde du check box au cas ou l'utilisateur répond 'non'
@@ -244,7 +234,20 @@ class RowTemplate4(RowTemplate4Template):
             id=self.item['stage'].get_id()
             open_form('Stage_visu_modif', self.item['numero'], id) # réinitialisation de la fenêtre
 
+    def text_box_nom_p_focus(self, **event_args):
+        """This method is called when the TextBox gets focus"""
+        mel = self.item['user_email']['email']  
+        num_stage = self.item["stage"]['numero']
+        from ...Saisie_info_apres_visu import Saisie_info_apres_visu
+        open_form('Saisie_info_apres_visu', mel, num_stage, intitule="")
 
+    def text_box_mail_focus(self, **event_args):
+        """This method is called when the TextBox gets focus"""
+        self.text_box_nom_p_focus()
+
+    def text_box_tel_focus(self, **event_args):
+        """This method is called when the TextBox gets focus"""
+        self.text_box_nom_p_focus()
         
 
 

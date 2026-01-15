@@ -1,18 +1,43 @@
 components:
 - components:
   - components:
-    - event_bindings: {focus: text_box_3_focus}
-      layout_properties: {expand: true, width: 161.711474609375}
-      name: text_box_3
-      properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: 12, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: '', role: null, spacing_above: small, spacing_below: none, text: '', tooltip: '', type: text, underline: false, visible: true}
+    - event_bindings: {focus: text_box_nom_p_focus}
+      layout_properties: {width: 190}
+      name: text_box_nom_p
+      properties: {background: 'theme:Primary', bold: true, font_size: 14, foreground: 'theme:On Primary'}
       type: TextBox
-    - event_bindings: {focus: text_box_mail_focus}
-      layout_properties: {expand: true, width: 142.86102612304688}
-      name: text_box_mail
+    - event_bindings: {focus: text_box_tel_focus}
+      layout_properties: {width: 190}
+      name: text_box_tel
       properties:
         align: center
         background: theme:Primary
-        bold: false
+        bold: true
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 14
+        foreground: theme:On Primary
+        hide_text: false
+        italic: false
+        margin: ['2', null, null, null]
+        placeholder: ''
+        role: null
+        spacing_above: small
+        spacing_below: none
+        text: ''
+        tooltip: ''
+        type: text
+        underline: false
+        visible: true
+      type: TextBox
+    - event_bindings: {focus: text_box_mail_focus}
+      layout_properties: {expand: true, width: 140}
+      name: text_box_mail
+      properties:
+        align: left
+        background: theme:Primary
+        bold: true
         border: ''
         enabled: true
         font: ''
@@ -31,42 +56,17 @@ components:
         underline: false
         visible: true
       type: TextBox
-    - event_bindings: {focus: text_box_tel_focus}
-      layout_properties: {expand: true, width: 122.2170029296875}
-      name: text_box_tel
-      properties:
-        align: center
-        background: theme:Primary
-        bold: true
-        border: ''
-        enabled: true
-        font: ''
-        font_size: 11
-        foreground: theme:Tertiary
-        hide_text: false
-        italic: false
-        margin: ['2', null, null, null]
-        placeholder: ''
-        role: null
-        spacing_above: small
-        spacing_below: none
-        text: ''
-        tooltip: ''
-        type: text
-        underline: false
-        visible: true
-      type: TextBox
-    layout_properties: {grid_position: 'WFEVYJ,FDUTKB'}
+    layout_properties: {full_width_row: true, grid_position: 'WFEVYJ,FDUTKB'}
     name: flow_panel_1
     properties:
-      align: justify
+      align: center
       background: theme:Primary
       border: ''
       foreground: ''
       gap: tiny
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: [null, null, '0', null]
       spacing_above: none
       spacing_below: small
       tooltip: ''
@@ -186,7 +186,15 @@ components:
       type: Button
     layout_properties: {grid_position: 'TKRZFU,DKNEQR'}
     name: flow_panel_2
-    properties: {align: center, background: 'theme:Primary', border: '', gap: tiny, spacing_above: none, spacing_below: large}
+    properties:
+      align: center
+      background: theme:Primary
+      border: ''
+      gap: tiny
+      spacing:
+        margin: [null, null, '5', null]
+      spacing_above: none
+      spacing_below: large
     type: FlowPanel
   layout_properties: {column: 'null'}
   name: column_panel_1
@@ -195,6 +203,7 @@ components:
     role: tonal-card
     spacing:
       margin: [null, null, '4', null]
+      padding: [null, null, '15', null]
   type: ColumnPanel
 container:
   properties: {border: ''}
