@@ -113,8 +113,8 @@ components:
         font_size: 10
         foreground: theme:Tertiary
         margin: [null, null, '15', null]
-        placeholder: pv
-        text: pv
+        placeholder: ''
+        text: 034-2026-
       type: TextBox
     layout_properties: {grid_position: 'HZPFKU,ZFCYSD'}
     name: column_panel_10
