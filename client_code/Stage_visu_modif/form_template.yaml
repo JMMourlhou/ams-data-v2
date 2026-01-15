@@ -72,7 +72,7 @@ components:
         border: ''
         enabled: true
         font: ''
-        font_size: 18
+        font_size: 13
         foreground: theme:Tertiary
         include_placeholder: true
         italic: false
@@ -87,7 +87,7 @@ components:
       type: DropDown
     - layout_properties: {grid_position: 'KDUGGB,WLRLRI'}
       name: text_box_intitule
-      properties: {align: left, background: 'theme:Primary', bold: true, border: '', enabled: false, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Intitulé, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+      properties: {align: left, background: 'theme:Primary', bold: true, border: '', enabled: false, font: '', font_size: 10, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: Intitulé, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
       type: TextBox
     layout_properties: {grid_position: 'HZPFKU,BFJTNT'}
     name: column_panel_9
@@ -102,12 +102,19 @@ components:
     - event_bindings: {change: text_box_num_stage_change}
       layout_properties: {grid_position: 'KYPKXT,BACZJE'}
       name: text_box_num_stage
-      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: num, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+      properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 10, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: num, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
       type: TextBox
     - event_bindings: {change: text_box_pv_change}
       layout_properties: {grid_position: 'KYPKXT,FDPFTS'}
       name: text_box_pv
-      properties: {align: center, background: 'theme:Primary', foreground: 'theme:Tertiary', placeholder: pv, text: pv}
+      properties:
+        align: left
+        background: theme:Primary
+        font_size: 10
+        foreground: theme:Tertiary
+        margin: [null, null, '15', null]
+        placeholder: pv
+        text: pv
       type: TextBox
     layout_properties: {grid_position: 'HZPFKU,ZFCYSD'}
     name: column_panel_10
