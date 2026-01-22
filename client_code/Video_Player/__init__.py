@@ -82,13 +82,14 @@ class Video_Player(Video_PlayerTemplate):
             container.innerHTML = ""
 
     # ================================
-    # MODE MEDIA ANVIL (temp video ds asset)
+    # MODE MEDIA ANVIL (sur Pi5)
     # ================================
     def load_media(self, media: Media, **kwargs):
         if not media:
             self.clear()
             return
-
+        # pour video dans assets
         # url = media.get_url()
         url = media
+        print(f"Video_Player,urpl de la vidéo: {url}")
         self.load(url, **kwargs)

@@ -123,6 +123,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         #media = video_row['file']  # récupère la colonne Media appelée file
         media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
         if media_url:
+            print(media_url)
             self.video_player_1.visible = True
             # si test avec video en asset appeler : self.video_player_1.load_media(
             self.video_player_1.load(
