@@ -36,8 +36,10 @@ class ItemTemplate4(ItemTemplate4Template):
         self.init_components(**properties)
         # Gestion video_player:
         url = self.item['video_url']  # récup de l'url en table
+        
         # C'est une vidéo ? 
-        if url is not None:  #                                         VIDEO
+        if url is not None:  #      VIDEO
+            print(f"url vidéo en QCM_visu_modif:{url}")
             self.flow_panel_video_player.visible = True
             self.flow_panel_video_player.visible = True
             self.cp_img.visible = False

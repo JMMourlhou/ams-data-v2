@@ -91,5 +91,10 @@ class Video_Player(Video_PlayerTemplate):
         # pour video dans assets
         # url = media.get_url()
         url = media
-        print(f"Video_Player,urpl de la vidéo: {url}")
+        url = (self.drop_down_videos_list.selected_value or "").strip()
+
+        # Corrige les URLs pour qu'elles pointent vers /videos/ sur https://media.jmweb34.net/  (cloudflare)
+        url = url.replace("https://jmweb34.net/videos/", "https://media.jmweb34.net/")
+        url = url.replace("https://www.jmweb34.net/videos/", "https://media.jmweb34.net/")
+        print(f"Video_Player,url de la vidéo: {url}")
         self.load(url, **kwargs)
