@@ -39,6 +39,9 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         
         #----- Init du drop down des videos dispo en Pi5
         list_videos = anvil.server.call("get_video_urls")
+        for v in list_videos:
+            print(v["name"], v["url"])
+            
         self.drop_down_videos_list.items = [
             (v["name"], v["url"]) for v in list_videos
         ]
@@ -120,10 +123,10 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
             return
 
         self.column_panel_img.visible = False
-        #media = video_row['file']  # récupère la colonne Media appelée file
+        #media = video_row['file']  # récupère la colonne Media appelée file (si video en assets)
         media_url = self.drop_down_videos_list.selected_value  # récupère la colonne Media appelée file
         if media_url:
-            print(media_url)
+            print(f"URL de la vidéo choisie: {media_url}")
             self.video_player_1.visible = True
             # si test avec video en asset appeler : self.video_player_1.load_media(
             self.video_player_1.load(
