@@ -46,7 +46,7 @@ class ItemTemplate4(ItemTemplate4Template):
             # si test avec video en asset appeler : self.video_player_1.load_media(
             self.video_player_1.load_media(
                 url,
-                autoplay=True,
+                autoplay=False,
                 muted=False,
                 controls=True,
                 allow_download=False
