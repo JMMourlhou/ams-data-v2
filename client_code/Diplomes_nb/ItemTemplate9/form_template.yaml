@@ -4,7 +4,7 @@ components:
     layout_properties: {expand: false, width: 135.19415673828127}
     name: text_box_pv
     properties:
-      align: center
+      align: left
       background: theme:Primary
       bold: true
       border: ''
