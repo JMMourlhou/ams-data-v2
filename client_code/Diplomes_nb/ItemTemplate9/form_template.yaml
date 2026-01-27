@@ -1,7 +1,7 @@
 components:
 - components:
   - event_bindings: {}
-    layout_properties: {expand: false, width: 78.06081640625}
+    layout_properties: {expand: false, width: 135.19415673828127}
     name: text_box_pv
     properties:
       align: center
