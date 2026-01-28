@@ -91,9 +91,10 @@ class Video_Player(Video_PlayerTemplate):
         # pour video dans assets
         # url = media.get_url()
         url = media
+        print(f"Video_Player, URL de la vidéo: {url}")
         try:
-            url = (self.drop_down_videos_list.selected_value or "").strip()
-            print(f"Video_Player, URL de la vidéo: {url}")
+            #url = (self.drop_down_videos_list.selected_value or "").strip()
             self.load(url, **kwargs)
-        except:
-            print("Erreur de lecture de l'url")
+        except Exception as e:
+            print(f"Erreur de lecture de l'url: {e}")
+

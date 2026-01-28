@@ -38,7 +38,7 @@ components:
       visible: true
     type: ColumnPanel
   - components:
-    - layout_properties: {expand: false, width: 693.63794921875}
+    - layout_properties: {width: 618.0301948242187}
       name: video_player_1
       properties: {}
       type: form:Video_Player
