@@ -317,8 +317,8 @@ class Word_editor(Word_editorTemplate):
     def button_red_click(self, **e):    self.color_change("#FA0000")
     def button_green_click(self, **e):  self.color_change("#60FA00")
     def button_blue_click(self, **e):   self.color_change("#00C0FA")
-    def button_orange_click(self, **e): self.color_change("#FAA300")
-    def button_yellow_click(self, **e): self.color_change("#F2FA00")
+    def button_orange_click(self, **e): self.color_change("#FF7B22")
+    def button_yellow_click(self, **e): self.color_change("#fff905")
 
 
     # ====================================================================================

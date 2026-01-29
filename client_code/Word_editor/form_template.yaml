@@ -378,12 +378,12 @@ components:
               margin: [null, '2', null, null]
             text: ''
           type: Button
-        - event_bindings: {click: button_orange_click}
+        - event_bindings: {click: button_yellow_click}
           layout_properties: {grid_position: 'RSCXEN,NXKMZC'}
-          name: button_orange_copy
+          name: button_yellow_copy
           properties:
             align: left
-            background: '#FAA300'
+            background: theme:Tertiary
             spacing:
               margin: [null, null, null, '2']
             text: ''
