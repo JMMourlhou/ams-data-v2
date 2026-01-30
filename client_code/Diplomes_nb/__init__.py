@@ -120,12 +120,58 @@ class Diplomes_nb(Diplomes_nbTemplate):
             if idx < len(centres) - 1:
                 body_html.append('<div class="page-break"></div>')
 
+        # ------------------------------------------------------------
+        # Page récap finale
+        # ------------------------------------------------------------
         body_html.append('<div class="page-break"></div>')
+
+        # En-têtes (pour le header WeasyPrint via string-set)
+        recap_title = self._esc("Récapitulatif par centre")
+        recap_subtitle = self._esc(f"{periode_txt}")
+
         body_html.append(f"""
-            <div class="total-global">
-            Total global sur la période ({self._esc(periode_txt)}) : <b>{int(total_global)}</b>
-            </div>
+            <section class="centre-section">
+              <h1 class="doc-title">{recap_title}</h1>
+              <h2 class="doc-subtitle">{recap_subtitle}</h2>
+
+              <div class="section-visible-title">
+                <div class="centre">Récapitulatif</div>
+                <div class="periode">{self._esc(periode_txt)}</div>
+              </div>
+
+              <table class="tbl recap">
+                <thead>
+                  <tr>
+                    <th>Centre</th>
+                    <th class="num">Diplômes</th>
+                  </tr>
+                </thead>
+                <tbody>
         """)
+
+        # Dernière page Recap / Lignes par centre (dans le même ordre que ton tri)
+        for centre_name in centres:
+            total_centre = grouped[centre_name]["total"]
+            body_html.append(f"""
+                <tr>
+                  <td>{self._esc(centre_name)}</td>
+                  <td class="num">{int(total_centre) if total_centre else 0}</td>
+                </tr>
+            """)
+
+        # Trait + cumul
+        body_html.append(f"""
+                </tbody>
+              </table>
+
+              <div class="recap-sep"></div>
+
+              <div class="total-global">
+                Total global sur la période ({self._esc(periode_txt)}) : <b>{int(total_global)}</b>
+              </div>
+            </section>
+        """)
+
 
         html_doc = f"""
         <html>
@@ -371,6 +417,25 @@ class Diplomes_nb(Diplomes_nbTemplate):
         .page-break {
             page-break-after: always;
         }
+      
+
+        table.tbl.recap td, table.tbl.recap th {
+            font-size: 11pt;
+        }
+
+        .recap-sep {
+            margin: 12pt 0 8pt 0;
+        border-top: 2px solid #000;
+        }
+        
+        .total-global {
+            margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+        text-align: right;
+        font-size: 12pt;
+        }
+
         """
 
    
