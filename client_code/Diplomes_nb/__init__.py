@@ -120,6 +120,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
             if idx < len(centres) - 1:
                 body_html.append('<div class="page-break"></div>')
 
+        body_html.append('<div class="page-break"></div>')
         body_html.append(f"""
             <div class="total-global">
             Total global sur la période ({self._esc(periode_txt)}) : <b>{int(total_global)}</b>
@@ -198,6 +199,10 @@ class Diplomes_nb(Diplomes_nbTemplate):
                         liste1.append(stage)
                         nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
                         self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"
+                        self.label_total.text = nb_diplomes
+                        self.label_total_txt.text = f"Total {self.centre_formation_nom}"
+                        self.label_total.visible = True
+                        self.label_total_txt.visible = True
                         self.button_pdf.visible = True  
         self.repeating_panel_1.visible = True
         self.repeating_panel_1.items = liste1

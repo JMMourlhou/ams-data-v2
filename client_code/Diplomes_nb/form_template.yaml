@@ -232,6 +232,19 @@ components:
   name: repeating_panel_1
   properties: {background: '', item_template: Diplomes_nb.ItemTemplate9, spacing_above: none, spacing_below: none, visible: false}
   type: RepeatingPanel
+- components:
+  - layout_properties: {grid_position: 'MKTXZZ,QTWXIJ'}
+    name: label_total_txt
+    properties: {align: right, background: '', foreground: 'theme:Error', visible: false}
+    type: Label
+  - layout_properties: {grid_position: 'MKTXZZ,WMGUPU'}
+    name: label_total
+    properties: {align: left, background: '', bold: true, foreground: 'theme:Error', visible: false}
+    type: Label
+  layout_properties: {grid_position: 'GFTIKB,OHKJHO'}
+  name: column_panel_2
+  properties: {}
+  type: ColumnPanel
 - event_bindings: {click: button_annuler_click}
   layout_properties: {grid_position: 'AFYKCH,ZPGXHB'}
   name: button_annuler

@@ -118,10 +118,10 @@ def add_stage(code_stage,     # row codes_stage concernée
                                 numero = numero,
                                 lieu = lieu_stage,
                                 date_debut = date_debut,
-                                nb_stagiaires_deb = 0,
+                                nb_stagiaires_deb = nb_stagiaires_deb,
                                 date_fin = date_fin,
-                                nb_stagiaires_fin = None,
-                                nb_stagiaires_diplomes = None,
+                                nb_stagiaires_fin = nb_stagiaires_fin,
+                                nb_stagiaires_diplomes = nb_stagiaires_diplomes,
                                 commentaires = commentaires,
                                 allow_bgt_generation = False,
                                 saisie_satisf_ok = False,     # Ne pas saisir le form de stisfaction
