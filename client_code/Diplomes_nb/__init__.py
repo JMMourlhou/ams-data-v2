@@ -15,6 +15,8 @@ class Diplomes_nb(Diplomes_nbTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        #self.label_total.visible = False
+        #self.label_total_txt.visible = False
         now=French_zone.french_zone_time()   # now est le jour/h actuelle (datetime object)
         now=now.date()                       # extraction de la date, format yyyy-mm-dd
         self.date_picker_to.date = now
@@ -205,6 +207,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
         self.date_picker_to.visible= True
         self.centre_formation_nom = self.centre_formation_row['lieu']
         self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}"
+        self.display()
             
     def date_picker_from_change(self, **event_args):
         """This method is called when the selected date changes"""
@@ -240,18 +243,30 @@ class Diplomes_nb(Diplomes_nbTemplate):
         nb_diplomes = 0
         for stage in liste0:
             if stage['nb_stagiaires_diplomes'] is not None:
-                if stage['date_debut'] >= self.date_deb and stage['date_debut'] <= self.date_fin :
-                    if stage['lieu'] ==self.centre_formation_row:
-                        liste1.append(stage)
-                        nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
-                        self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"
-                        self.label_total.text = nb_diplomes
-                        self.label_total_txt.text = f"Total {self.centre_formation_nom}"
-                        self.label_total.visible = True
-                        self.label_total_txt.visible = True
-                        self.button_pdf.visible = True  
-        self.repeating_panel_1.visible = True
-        self.repeating_panel_1.items = liste1
+                try:  # si les dates sont exactes
+                    if stage['date_debut'] >= self.date_deb and stage['date_debut'] <= self.date_fin :
+                        if stage['lieu'] ==self.centre_formation_row:
+                            liste1.append(stage)
+                            nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
+                            self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"
+                            self.label_total.text = nb_diplomes
+                            self.label_total_txt.text = f"Nb d'attestations pour {self.centre_formation_nom} :"
+                            self.label_total.visible = True
+                            self.label_total_txt.visible = True
+                            self.button_pdf.visible = True  
+                except:
+                    pass
+        if nb_diplomes > 0:
+            self.label_total.visible = True
+            self.label_total_txt.visible = True
+            self.repeating_panel_1.visible = True
+            self.repeating_panel_1.items = liste1
+        else:
+            self.label_total.visible = False
+            self.label_total_txt.visible = False
+            self.repeating_panel_1.visible = False
+                
+        
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""

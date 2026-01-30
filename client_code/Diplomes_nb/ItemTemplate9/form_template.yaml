@@ -26,7 +26,7 @@ components:
       visible: true
     type: TextBox
   - event_bindings: {}
-    layout_properties: {width: 58.93407534179687}
+    layout_properties: {width: 55.159433544921875}
     name: text_box_num
     properties:
       align: center
@@ -54,7 +54,7 @@ components:
     layout_properties: {width: 104.948879296875}
     name: text_box_date
     properties:
-      align: center
+      align: left
       background: theme:Primary
       bold: true
       border: ''
@@ -79,7 +79,7 @@ components:
     layout_properties: {width: 74.8627373046875}
     name: text_box_nom
     properties:
-      align: center
+      align: left
       background: theme:Primary
       bold: true
       border: ''
