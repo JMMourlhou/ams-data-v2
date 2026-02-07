@@ -125,7 +125,7 @@ components:
       underline: false
       visible: true
     type: TextBox
-  layout_properties: {full_width_row: true, grid_position: 'OGKIIM,AFHGSI'}
+  layout_properties: {}
   name: flow_panel_1
   properties:
     align: center
@@ -143,10 +143,8 @@ components:
     visible: true
   type: FlowPanel
 container:
-  properties:
-    col_widths: '{"AFHGSI":60}'
-    spacing:
-      margin: ['1', null, '1', null]
-    wrap_on: never
-  type: ColumnPanel
+  data_bindings:
+  - {code: 'self.item['''']', property: item, writeback: false}
+  properties: {auto_display_data: false}
+  type: DataRowPanel
 is_package: true
