@@ -28,8 +28,6 @@ class Diplomes_nb(Diplomes_nbTemplate):
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.display()
-        
-
 
     def button_pdf_click(self, **event_args):
         # ---- garde-fous ----
@@ -250,7 +248,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
                             nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
                             self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"
                             self.label_total.text = nb_diplomes
-                            self.label_total_txt.text = f"Nb d'attestations pour {self.centre_formation_nom} :"
+                            self.label_total_txt.text = f"Nb d'attestations pour {self.centre_formation_nom}: "
                             self.label_total.visible = True
                             self.label_total_txt.visible = True
                             self.button_pdf.visible = True  
@@ -259,15 +257,14 @@ class Diplomes_nb(Diplomes_nbTemplate):
         if nb_diplomes > 0:
             self.label_total.visible = True
             self.label_total_txt.visible = True
+            self.data_grid_1.visible = True
             self.repeating_panel_1.visible = True
             self.repeating_panel_1.items = liste1
         else:
             self.label_total.visible = False
             self.label_total_txt.visible = False
-            self.repeating_panel_1.visible = False
+            self.data_grid_1.visible = False
                 
-        
-
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Main import Main
