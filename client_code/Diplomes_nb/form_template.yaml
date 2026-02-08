@@ -102,11 +102,11 @@ components:
     properties:
       background: theme:Primary
       columns:
-      - {data_key: num_pv, expand: false, id: JKSDUP, title: PV, width: 120.77981567382812}
-      - {data_key: numero, expand: false, id: VJQQOR, title: N°, width: 55.889923095703125}
-      - {data_key: date_debut, expand: false, id: OJLQEN, title: Date Début, width: 91.2293701171875}
-      - {data_key: code_txt, expand: false, id: XGMZGV, title: Stage, width: 73.74310302734375}
-      - {data_key: nb_stagiaires_diplomes, expand: false, id: WWANHM, title: Nb, width: 40.61468505859375}
+      - {data_key: num_pv, expand: false, id: JKSDUP, title: PV, width: 105.09173583984375}
+      - {data_key: numero, expand: false, id: VJQQOR, title: N°, width: 40.715606689453125}
+      - {data_key: date_debut, expand: false, id: OJLQEN, title: Date Déb., width: 80.39453125}
+      - {data_key: code_txt, expand: false, id: XGMZGV, title: Stage, width: 60.0091552734375}
+      - {data_key: nb_stagiaires_diplomes, expand: false, id: WWANHM, title: Nb, width: 29.31195068359375}
       role: null
       show_page_controls: false
       visible: false
