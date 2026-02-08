@@ -258,7 +258,6 @@ class Diplomes_nb(Diplomes_nbTemplate):
                     pass
         if nb_diplomes > 0:
             self.label_total_txt.visible = True
-            self.date
             self.data_grid_1.visible = True
             self.repeating_panel_1.visible = True
             self.repeating_panel_1.items = liste1
