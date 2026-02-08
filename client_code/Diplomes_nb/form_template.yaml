@@ -103,10 +103,10 @@ components:
       background: theme:Primary
       columns:
       - {data_key: num_pv, expand: false, id: JKSDUP, title: PV, width: 120.77981567382812}
-      - {data_key: numero, expand: false, id: VJQQOR, title: N°, width: 67.80734252929688}
-      - {data_key: date_debut, expand: false, id: OJLQEN, title: Date Début, width: 98.587158203125}
-      - {data_key: code_txt, expand: false, id: XGMZGV, title: Stage, width: 91.52294921875}
-      - {data_key: nb_stagiaires_diplomes, expand: false, id: WWANHM, title: Nb, width: 61.7523193359375}
+      - {data_key: numero, expand: false, id: VJQQOR, title: N°, width: 55.889923095703125}
+      - {data_key: date_debut, expand: false, id: OJLQEN, title: Date Début, width: 91.2293701171875}
+      - {data_key: code_txt, expand: false, id: XGMZGV, title: Stage, width: 73.74310302734375}
+      - {data_key: nb_stagiaires_diplomes, expand: false, id: WWANHM, title: Nb, width: 40.61468505859375}
       role: null
       show_page_controls: false
       visible: false
