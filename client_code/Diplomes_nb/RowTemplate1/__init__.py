@@ -14,5 +14,9 @@ class RowTemplate1(RowTemplate1Template):
 
         # Any code you write here will run before the form opens.
         """
-        Pas besoin d'initialiser ds l
+        Pas besoin d'initialiser ds l'init
+        Aller ds l'entête des colonnes et rentrer num_pv (le nom de la colonne ds la table)
+        c'est tout.
+        bien sûr, initiliser la liste comme d'habitude:
+        self.repeating_panel_1.items = liste1
         """
