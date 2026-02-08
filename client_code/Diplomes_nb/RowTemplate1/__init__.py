@@ -14,9 +14,5 @@ class RowTemplate1(RowTemplate1Template):
 
         # Any code you write here will run before the form opens.
         """
-        self.text_box_pv.text = self.item['num_pv']
-        self.text_box_num.text = self.item['numero']
-        self.text_box_date.text = self.item['date_debut'].strftime("%d/%m/%Y") 
-        self.text_box_nom.text = self.item['code_txt']
-        self.text_box_nb_diplomes.text = self.item['nb_stagiaires_diplomes']
+        Pas besoin d'initialiser ds l
         """
