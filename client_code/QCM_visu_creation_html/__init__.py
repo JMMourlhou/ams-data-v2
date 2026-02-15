@@ -367,7 +367,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-                if rep_multi_stagiaire == "00":
+                if rep_multi_stagiaire == "00" and self.choix == 2:
                     alert("Choisissez une réponse !")
                     return
 
@@ -376,7 +376,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-                if rep_multi_stagiaire == "000":
+                if rep_multi_stagiaire == "000" and self.choix == 3:
                     alert("Choisissez une réponse !")
                     return
                     
@@ -385,7 +385,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-                if rep_multi_stagiaire == "0000":
+                if rep_multi_stagiaire == "0000" and self.choix == 4:
                     alert("Choisissez une réponse !")
                     return
 
@@ -394,7 +394,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
                     rep_multi_stagiaire = rep_multi_stagiaire + "1"
                 else:
                     rep_multi_stagiaire = rep_multi_stagiaire + "0"
-                if rep_multi_stagiaire == "00000":
+                if rep_multi_stagiaire == "00000" and self.choix == 5:
                     alert("Choisissez une réponse !")
                     return
                     
