@@ -10,6 +10,7 @@ import time
 from ..AlertHTML import AlertHTML
 from ..AlertConfirmHTML import AlertConfirmHTML
 
+
 class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
     def __init__(self, qcm_row, question_row, nb_questions, **properties):  
         # Set Form properties and Data Bindings.
@@ -64,6 +65,11 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
             self.column_panel_video_player.visible = True
             self.column_panel_video_player.visible = True
             self.column_panel_image.visible = False
+            
+            # pour afficher le nom de la vidéo utilisée:
+            nom_video = self.video_name_from_url(self.media_url)
+            self.drop_down_videos_list.selected_value = self.media_url
+            
             # si test avec video en asset appeler : self.video_player_1.load_media(
             self.video_player_1.load(
                 self.media_url,
@@ -513,6 +519,21 @@ class QCM_visu_modif_html(QCM_visu_modif_htmlTemplate):
         self.video_player_1.clear()
         self.video_player_1.visible = False
 
-        
+    # extraction du nom de la vidéo à partir de l'url enregistrée en table
+    def video_name_from_url(self, url: str) -> str:
+        if not url:
+            return ""
+
+        # 1) garder la dernière partie après "/"
+        filename = url.rsplit("/", 1)[-1]     # ex: "Essai1_stream.mp4"
+    
+        # 2) enlever les paramètres éventuels ?x=y
+        filename = filename.split("?", 1)[0]
+    
+        # 3) enlever l’extension .mp4 (ou autre)
+        stem = filename.rsplit(".", 1)[0]     # "Essai1_stream"
+    
+        # 4) rendre “joli”
+        return stem.replace("_", " ").capitalize()
 
 
