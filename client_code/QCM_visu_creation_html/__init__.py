@@ -401,7 +401,7 @@ class QCM_visu_creation_html(QCM_visu_creation_htmlTemplate):
         if len(self.rich_text_correction.content) < 14:
             r = AlertConfirmHTML.ask(
                 "La correction est vide !",
-                "<p>Voulez-vous vraiment quitter ?</p>",
+                "<p>Voulez-vous sortir ?</p>",
                 style="info",
                 large = True
             )
