@@ -480,6 +480,9 @@ db_schema:
     - admin_ui: {order: 1.125, width: 125}
       name: exam
       type: bool
+    - admin_ui: {order: 9, width: 200}
+      name: no_display_randomized
+      type: bool
     server: full
     title: Qcm_description
   qcm_result:

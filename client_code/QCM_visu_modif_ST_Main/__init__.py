@@ -68,6 +68,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
     
     def drop_down_qcm_row_change(self, **event_args):
         """This method is called when an item is selected"""
+        
         qcm_row = self.drop_down_qcm_row.selected_value          #qcm description row
         print(f"{self.user['prenom']} {self.user['nom']} a sélectionné le QCM nb {qcm_row['qcm_nb']}, {qcm_row['destination']} ")
         if qcm_row is None:
@@ -78,6 +79,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
         #print("dropD change :",qcm_row["qcm_nb"],qcm_row["qcm_source"])
         # Pour les lignes QCM déjà crée du qcm choisi
         global liste  
+        alert(qcm_row["qcm_source"])
         if qcm_row["qcm_source"] is None:                                  # si source est null : Qcm unique, non sous élement d'un QCM master
             liste = list(app_tables.qcm.search(qcm_nb=qcm_row))
         else:                                                              # si source non null : QCM master, créer à partir de qcm enfants
@@ -132,13 +134,17 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
         #extraction du nb de questions pour le qcm Master
         qcm_row = app_tables.qcm_description.get(qcm_nb=qcm_nb)
         if qcm_row:
-            liste_entierre = app_tables.qcm.search(qcm_nb=qcm_row )
+            liste_entierre = app_tables.qcm.search(tables.order_by("num", ascending=True),
+                                                   qcm_nb=qcm_row)
             nb_total_questions = len(liste_entierre)
-            #print(f"nb question ds qcm_nb {qcm_nb}: {nb_total_questions}" )
+            print(f"nb question ds qcm_nb {qcm_nb}: {nb_total_questions}" )
         else:
             print(f"pb accès table qcm n° {qcm_nb} (enfant d'un qcm master)")
             return
+            
+           
         dict = {}
+        # SI OPTION AFFICHAGE QUESTIONS ORDRE ALEATOIRE 
         while len(dict) < nb_max:
             num_question =   random.randrange(1, nb_total_questions+1)  
             question_row = app_tables.qcm.get(qcm_nb=qcm_row,
@@ -148,7 +154,14 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
             valeur = question_row
             #print("clef: ",clef)
             dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
-        
+        """    
+        # SINON: Lecture normale de la table entierre, triée sur le num de question
+        for r in liste_entierre:
+            clef = r['num']
+            valeur = r['question']
+            dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
+        """    
+        # Creation de la liste
         for cle, valeur in dict.items():
             liste.append(valeur)
         
