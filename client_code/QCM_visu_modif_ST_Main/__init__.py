@@ -27,7 +27,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                self.label_3.text = "Q.C.M"
         
         #initialisation du drop down des qcm créés et barêmes, n'affiche que les qcm visibles ET ds dict d'autorisations du stagiaire (table 'stagiaires inscrits')
-        dict = {}  # dict contenant en clef le num qcm autorisé 
+        dict_qcm = {}  # dict contenant en clef le num qcm autorisé 
         
         #lecture du ou des dictionaires du stagiaire (il peut être inscrit à plusieurs stages)
         liste_temp_dictionaires = app_tables.stagiaires_inscrits.search(user_email=user)
@@ -40,13 +40,15 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                     for clef, valeur in droits_stagiaire.items():   #clef=numqcm   valeur=("intitulé", "TRUE/False")   True si on le montre
                         #print(f"clé: {clef},valeur: {valeur[1]}")
                         if valeur[1]=="True":
-                            dict[clef]= valeur  # num_qcm:intitulé 
+                            dict_qcm[clef]= valeur  # num_qcm:intitulé 
                             #print(f"Mise en dico de : {clef}")
+        # tri du dict sur l'intitulé du qcm
+        dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1]))
                     
         # J'initialise la liste en transformant le "dict" des qcm authorisés en liste
         # boucle de "dict"
         liste_qcm_rows=[]   # liste des qcm lus
-        for clef, valeur in dict.items():
+        for clef, valeur in dict_qcm_trie.items():
             #print(clef)
             # lecture sur la clef
             qcm_row = app_tables.qcm_description.get(qcm_nb=int(clef))
@@ -157,12 +159,8 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                 dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
         else:
             # SINON: Lecture normale de la table entierre, triée sur le num de question
-            while len(dict) < nb_max:
-                num_question =   range(1, nb_total_questions + 1)
-                
-                question_row = app_tables.qcm.get(qcm_nb=qcm_row,
-                                                  num=num_question
-                                                 )
+            for num_question in range(1, min(nb_max, nb_total_questions) + 1):
+                question_row = app_tables.qcm.get(qcm_nb=qcm_row, num=num_question)
                 clef = num_question           # clé du dict de questions     Comme il ne peut y avoir 2 même clé, si random prend 2 fois la même question, elle écrase l'autre
                 valeur = question_row
                 #print("clef: ",clef)
