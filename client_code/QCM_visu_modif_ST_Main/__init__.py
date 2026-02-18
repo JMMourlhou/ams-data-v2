@@ -79,7 +79,7 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
         #print("dropD change :",qcm_row["qcm_nb"],qcm_row["qcm_source"])
         # Pour les lignes QCM déjà crée du qcm choisi
         global liste  
-        alert(qcm_row["qcm_source"])
+        #alert(qcm_row["qcm_source"])
         if qcm_row["qcm_source"] is None:                                  # si source est null : Qcm unique, non sous élement d'un QCM master
             liste = list(app_tables.qcm.search(qcm_nb=qcm_row))
         else:                                                              # si source non null : QCM master, créer à partir de qcm enfants
@@ -144,23 +144,30 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
             
            
         dict = {}
-        # SI OPTION AFFICHAGE QUESTIONS ORDRE ALEATOIRE 
-        while len(dict) < nb_max:
-            num_question =   random.randrange(1, nb_total_questions+1)  
-            question_row = app_tables.qcm.get(qcm_nb=qcm_row,
-                                             num=num_question
-                                             )
-            clef = num_question           # clé du dict de questions     Comme il ne peut y avoir 2 même clé, si random prend 2 fois la même question, elle écrase l'autre
-            valeur = question_row
-            #print("clef: ",clef)
-            dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
-        """    
-        # SINON: Lecture normale de la table entierre, triée sur le num de question
-        for r in liste_entierre:
-            clef = r['num']
-            valeur = r['question']
-            dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
-        """    
+        if qcm_nb != 28: # tous qcm non SNV: questions triées aléatoirement 
+            # SI OPTION AFFICHAGE QUESTIONS ORDRE ALEATOIRE 
+            while len(dict) < nb_max:
+                num_question =   random.randrange(1, nb_total_questions+1)  
+                question_row = app_tables.qcm.get(qcm_nb=qcm_row,
+                                                num=num_question
+                                                )
+                clef = num_question           # clé du dict de questions     Comme il ne peut y avoir 2 même clé, si random prend 2 fois la même question, elle écrase l'autre
+                valeur = question_row
+                #print("clef: ",clef)
+                dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
+        else:
+            # SINON: Lecture normale de la table entierre, triée sur le num de question
+            while len(dict) < nb_max:
+                num_question =   range(1, nb_total_questions + 1)
+                
+                question_row = app_tables.qcm.get(qcm_nb=qcm_row,
+                                                  num=num_question
+                                                 )
+                clef = num_question           # clé du dict de questions     Comme il ne peut y avoir 2 même clé, si random prend 2 fois la même question, elle écrase l'autre
+                valeur = question_row
+                #print("clef: ",clef)
+                dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
+        
         # Creation de la liste
         for cle, valeur in dict.items():
             liste.append(valeur)
