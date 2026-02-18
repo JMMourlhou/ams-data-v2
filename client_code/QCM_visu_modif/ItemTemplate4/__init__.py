@@ -550,8 +550,9 @@ class ItemTemplate4(ItemTemplate4Template):
             # propriétés pour erreur et réussite
             self.text_box_correction.background = "theme:On Primary Container"    
             self.text_box_correction.foreground = "theme:On Primary"
-              
-            self.text_box_correction.content = texte_base + self.text_box_correction.content
+
+            if self.text_box_correction.content is not None:
+                self.text_box_correction.content = texte_base + self.text_box_correction.content
             if num == int(self.label_nb_questions.text):
                 self.button_fin_qcm.visible = True
 
