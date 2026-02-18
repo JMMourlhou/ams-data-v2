@@ -139,7 +139,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
             #self.column_panel_question.visible = True
             self.affiche_lignes_qcm(liste)
         else: # QCM exam: je n'affiche pas de lignes questions qcm mais les qcm enfants potentiels
-            self.column_panel_question.visible = False
+            #self.column_panel_question.visible = False
             self.dict = self.qcm_row["qcm_source"]
             
             # Tous les qcm qui ne sont pas exam
