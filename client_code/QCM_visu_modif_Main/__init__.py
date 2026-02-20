@@ -101,7 +101,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         # Si je suis l'admin, je peux MAJ le num du qcm, au cas où ...
         if self.user["role"] == "A":
             self.text_box_num_qcm.enabled = True
-        # __________________________________________________________ CREATION QCM   /   MODIF INTITULE, owner, visible, examen
+        # __________________________________________________________ CREATION QCM   /   MODIF INTITULE, owner, visible, examen, random
         self.text_box_num_qcm.text = self.qcm_row["qcm_nb"]
         self.sov_num_qcm = self.qcm_row["qcm_nb"]
         self.text_box_destination.text = self.qcm_row["destination"]
@@ -109,6 +109,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         self.drop_down_owner.selected_value = self.qcm_row["qcm_owner"]
         self.check_box_visible.checked = self.qcm_row["visible"]
         self.check_box_examen.checked = self.qcm_row["exam"]           # EXAM ? si oui ne pas afficher le colomn panel question, afficher col panel des enfants qcm exam
+        self.check_box_visu_not_random.checked = self.qcm_row["no_display_randomized"]
         self.column_panel_creation_qcm.visible = True
         # _______________________________________________________________________________
         # Pour les lignes QCM déjà crées du qcm choisi
@@ -554,7 +555,8 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
                                                                     self.text_box_destination.text,
                                                                     self.drop_down_owner.selected_value,   # user row
                                                                     self.check_box_visible.checked,
-                                                                    self.check_box_examen.checked
+                                                                    self.check_box_examen.checked,
+                                                                    self.check_box_visu_not_random
                                                 )
                 if result is not True:
                     alert("Création du Qcm non effectué !")
@@ -576,7 +578,8 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
                                                         self.text_box_destination.text,
                                                         self.drop_down_owner.selected_value,   # user row
                                                         self.check_box_visible.checked,
-                                                        self.check_box_examen.checked
+                                                        self.check_box_examen.checked,
+                                                        self.check_box_visu_not_random.checked
                                                 )
                 if result is not True:
                     alert("Modification du Qcm non effectuée !")
@@ -669,6 +672,10 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
         nb_questions = len(liste)
         from ..QCM_visu_creation_html import QCM_visu_creation_html
         open_form('QCM_visu_creation_html', self.drop_down_qcm_row.selected_value, nb_questions)
+
+    def check_box_visu_not_random_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_valid.visible = True
 
 
 

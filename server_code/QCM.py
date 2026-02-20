@@ -10,13 +10,14 @@ from anvil.pdf import PDFRenderer
 
 # Création d'un QCM
 @anvil.server.callable
-def qcm_création(qcm_nb, destination, qcm_owner, visible, examen):                # qcm_owner: user row     qcm_nb text
+def qcm_création(qcm_nb, destination, qcm_owner, visible, examen, visu_random):                # qcm_owner: user row     qcm_nb text
     new_row=app_tables.qcm_description.add_row(
                                                 qcm_nb=int(qcm_nb),
                                                 destination=destination,
                                                 qcm_owner=qcm_owner,   # user row
                                                 visible=visible,
-                                                exam=examen
+                                                exam=examen,
+                                                no_display_randomized=visu_random
                                                     )
     qcm_row = app_tables.qcm_description.search(qcm_nb = new_row["qcm_nb"])
     if qcm_row:
@@ -27,13 +28,14 @@ def qcm_création(qcm_nb, destination, qcm_owner, visible, examen):             
 
 # modif description d'un QCM
 @anvil.server.callable
-def qcm_modif(qcm_row, qcm_nb, destination, qcm_owner, visible, examen):                # qcm_owner: user row     qcm_nb text
+def qcm_modif(qcm_row, qcm_nb, destination, qcm_owner, visible, examen, visu_random):                # qcm_owner: user row     qcm_nb text
     qcm_row.update(
                     qcm_nb=int(qcm_nb),
                     destination=destination,
                     qcm_owner=qcm_owner,   # user row
                     visible=visible,
-                    exam=examen
+                    exam=examen,
+                    no_display_randomized=visu_random
                         )
     qcm_row = app_tables.qcm_description.search(qcm_nb = int(qcm_nb))
     if qcm_row:

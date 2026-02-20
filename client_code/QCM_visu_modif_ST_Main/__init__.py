@@ -42,9 +42,11 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                         if valeur[1]=="True":
                             dict_qcm[clef]= valeur  # num_qcm:intitulé 
                             #print(f"Mise en dico de : {clef}")
-        # tri du dict sur l'intitulé du qcm
-        dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1]))
-                    
+                            
+        # tri du dict sur l'intitulé du qcm, insensible à la casse
+        #dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1]))
+        dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1].casefold()))  
+        
         # J'initialise la liste en transformant le "dict" des qcm authorisés en liste
         # boucle de "dict"
         liste_qcm_rows=[]   # liste des qcm lus
@@ -129,11 +131,11 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                 liste.append(liste_temp[i])
         return liste
 
-    def liste_qcm_partie_x(self, qcm_nb, nb_max, **event_args):
+    def liste_qcm_partie_x(self, qcm_nb, nb_max, **event_args):    #nb_max : col qcm_source ds table Qcm_decription
         liste = []
         
         #print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ nb max: ", nb_max)
-        #extraction du nb de questions pour le qcm Master
+        #extraction du nb de questions à inclure pour le qcm Master
         qcm_row = app_tables.qcm_description.get(qcm_nb=qcm_nb)
         if qcm_row:
             liste_entierre = app_tables.qcm.search(tables.order_by("num", ascending=True),
@@ -143,11 +145,12 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
         else:
             print(f"pb accès table qcm n° {qcm_nb} (enfant d'un qcm master)")
             return
-            
-           
+        
         dict = {}
-        if qcm_nb != 28: # tous qcm non SNV: questions triées aléatoirement 
-            # SI OPTION AFFICHAGE QUESTIONS ORDRE ALEATOIRE 
+        # tous qcm non SNV: questions triées aléatoirement 
+        if qcm_row['no_display_randomized'] is not True:
+        #if qcm_nb != 28: 
+            # AFFICHAGE QUESTIONS EN ORDRE ALEATOIRE
             while len(dict) < nb_max:
                 num_question =   random.randrange(1, nb_total_questions+1)  
                 question_row = app_tables.qcm.get(qcm_nb=qcm_row,
@@ -159,7 +162,8 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                 dict[clef] = valeur   # je mets à jour la liste dictionaire des questions
         else:
             # SINON: Lecture normale de la table entierre, triée sur le num de question
-            for num_question in range(1, min(nb_max, nb_total_questions) + 1):
+            for num_question in range(1, nb_total_questions + 1):
+            #for num_question in range(1, min(nb_max, nb_total_questions) + 1):
                 question_row = app_tables.qcm.get(qcm_nb=qcm_row, num=num_question)
                 clef = num_question           # clé du dict de questions     Comme il ne peut y avoir 2 même clé, si random prend 2 fois la même question, elle écrase l'autre
                 valeur = question_row
