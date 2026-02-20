@@ -43,9 +43,9 @@ class QCM_visu_modif_ST_Main(QCM_visu_modif_ST_MainTemplate):
                             dict_qcm[clef]= valeur  # num_qcm:intitulé 
                             #print(f"Mise en dico de : {clef}")
                             
-        # tri du dict sur l'intitulé du qcm, insensible à la casse
-        #dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1]))
-        dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1].casefold()))  
+        # tri du dict sur l'intitulé du qcm
+        dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1]))
+        #dict_qcm_trie = dict(sorted(dict_qcm.items(), key=lambda item: item[1].casefold()))  
         
         # J'initialise la liste en transformant le "dict" des qcm authorisés en liste
         # boucle de "dict"
