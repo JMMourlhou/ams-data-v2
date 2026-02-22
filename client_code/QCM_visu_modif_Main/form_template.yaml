@@ -54,7 +54,7 @@ components:
     - event_bindings: {change: text_box_num_qcm_change, lost_focus: text_box_num_lost_focus}
       layout_properties: {grid_position: 'PQGVAN,BGUNAP'}
       name: text_box_num_qcm
-      properties: {background: 'theme:Vert Foncé', bold: false, enabled: false, foreground: 'theme:On Primary', italic: false, placeholder: Num, role: outlined}
+      properties: {align: center, background: 'theme:Vert Foncé', bold: false, enabled: false, foreground: 'theme:On Primary', italic: false, placeholder: Num, role: outlined}
       type: TextBox
     - event_bindings: {change: text_box_destination_change, pressed_enter: text_box_destination_change}
       layout_properties: {grid_position: 'PQGVAN,PIWKPF'}
@@ -68,23 +68,23 @@ components:
       type: DropDown
     layout_properties: {grid_position: 'ODTQFK,LKVGAN'}
     name: column_panel_1
-    properties: {col_widths: '{"BGUNAP":8,"PIWKPF":35,"ANQJRO":37}', wrap_on: never}
+    properties: {col_widths: '{"BGUNAP":11,"PIWKPF":32,"ANQJRO":37}', wrap_on: never}
     type: ColumnPanel
   - components:
     - event_bindings: {change: check_box_visible_change}
       layout_properties: {grid_position: 'ZFKTIN,NZBCNV'}
       name: check_box_visible
-      properties: {foreground: 'theme:On Primary', text: Visible aux stagiaires}
-      type: CheckBox
-    - event_bindings: {change: check_box_examen_change}
-      layout_properties: {grid_position: 'ZFKTIN,RBURZW'}
-      name: check_box_examen
-      properties: {foreground: 'theme:On Primary', text: QCM Examen}
+      properties: {foreground: 'theme:On Primary', text: Visible / Stagiaires}
       type: CheckBox
     - event_bindings: {change: check_box_visu_not_random_change}
       layout_properties: {grid_position: 'ZFKTIN,DRBMSC'}
       name: check_box_visu_not_random
-      properties: {foreground: 'theme:On Primary', text: Ordre questions Non Aléatoire}
+      properties: {foreground: 'theme:On Primary', text: 'Q°: Ordre Non Aléatoire'}
+      type: CheckBox
+    - event_bindings: {change: check_box_examen_change}
+      layout_properties: {grid_position: 'ZFKTIN,OTGDCV'}
+      name: check_box_examen
+      properties: {foreground: 'theme:On Primary', text: QCM Examen}
       type: CheckBox
     layout_properties: {grid_position: 'UHZKBT,VSAAFQ'}
     name: column_panel_2
