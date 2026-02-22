@@ -54,7 +54,7 @@ components:
     - event_bindings: {change: text_box_num_qcm_change, lost_focus: text_box_num_lost_focus}
       layout_properties: {grid_position: 'PQGVAN,BGUNAP'}
       name: text_box_num_qcm
-      properties: {align: center, background: 'theme:Vert Foncé', bold: false, enabled: false, foreground: 'theme:On Primary', italic: false, placeholder: Num, role: outlined}
+      properties: {align: left, background: 'theme:Vert Foncé', bold: false, enabled: false, foreground: 'theme:On Primary', italic: false, placeholder: Num, role: outlined}
       type: TextBox
     - event_bindings: {change: text_box_destination_change, pressed_enter: text_box_destination_change}
       layout_properties: {grid_position: 'PQGVAN,PIWKPF'}
@@ -68,7 +68,12 @@ components:
       type: DropDown
     layout_properties: {grid_position: 'ODTQFK,LKVGAN'}
     name: column_panel_1
-    properties: {col_widths: '{"BGUNAP":11,"PIWKPF":32,"ANQJRO":37}', wrap_on: never}
+    properties:
+      col_spacing: tiny
+      col_widths: '{"BGUNAP":11,"PIWKPF":32,"ANQJRO":37}'
+      spacing:
+        margin: [null, null, '0', null]
+      wrap_on: never
     type: ColumnPanel
   - components:
     - event_bindings: {change: check_box_visible_change}

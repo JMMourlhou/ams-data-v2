@@ -65,7 +65,7 @@ class QCM_visu_modif_Main(QCM_visu_modif_MainTemplate):
                                         )
         liste2 = []
         for qcm_owner in liste:
-            liste2.append((qcm_owner["prenom"]+" "+qcm_owner["nom"],qcm_owner))    # doit renvoyer user row pour la création du qcm
+            liste2.append((qcm_owner["nom"]+" "+qcm_owner["prenom"],qcm_owner))    # doit renvoyer user row pour la création du qcm
         self.drop_down_owner.items=liste2
         try:
             user=anvil.users.get_user()
