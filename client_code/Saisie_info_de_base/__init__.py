@@ -104,7 +104,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             pn = pn.strip()
             self.text_box_prenom.text =  pn  
         
-        if self.text_box_nom.text == "" :           # dates vides ?
+        if self.text_box_nom.text == "" :           
             AlertHTML.error("Oublie !", "Entrez votre Nom de Famille !")
             return
         else:
@@ -112,11 +112,11 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             n = n.capitalize()
             n = n.strip()
             self.text_box_nom.text =  n  
-
+        """
         if self.image_photo.source is None:
             AlertHTML.error("Oublie !", "Entrez votre Photo !")
             return
-            
+        """
         if self.text_box_tel.text == "":    # tel vides ou inf à 10 caract ?
             AlertHTML.error("Oublie !", "Entrez votre numéro de Tel !")
             return
@@ -188,10 +188,11 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 return  
                 
             # Stage non type formateur: Si mode de financemt non sélectionné alors que 1ere saisie de la fiche renseignemnt
+            """
             if self.drop_down_fi.selected_value is None and self.first_entry is True: 
                 AlertHTML.error("Mode de Financemnet :", "Entrez le mode de financement !")
                 return
-
+            """
         
         if self.check_box_accept_data_use.checked is not True:
             r = AlertConfirmHTML.ask(
