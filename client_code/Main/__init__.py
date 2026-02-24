@@ -44,7 +44,7 @@ class Main(MainTemplate):
         print("screen: ", screen_size)
         
         # renseignements user 
-        self.user = anvil.users.get_user(q.fetch_only("nom","prenom","role","email","enabled"))
+        self.user = anvil.users.get_user(fetch=q.fetch_only("nom","prenom","role","email","enabled"))
         
         if self.user:
             time = French_zone.french_zone_time()
