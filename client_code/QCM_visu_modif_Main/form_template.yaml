@@ -70,7 +70,7 @@ components:
     name: column_panel_1
     properties:
       col_spacing: tiny
-      col_widths: '{"BGUNAP":11,"PIWKPF":32,"ANQJRO":37}'
+      col_widths: '{"BGUNAP":15,"PIWKPF":28,"ANQJRO":37}'
       spacing:
         margin: [null, null, '0', null]
       wrap_on: never
