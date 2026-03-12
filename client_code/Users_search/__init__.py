@@ -27,8 +27,9 @@ class Users_search(Users_searchTemplate):
             
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from ..Main import Main
-        open_form("Main", 99)
+        from ..Parametres import Parametres
+        open_form("Parametres")  
+
 
     def text_box_role_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""

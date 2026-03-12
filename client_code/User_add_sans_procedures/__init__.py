@@ -75,4 +75,5 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert("Création effectuée !")
         open_form('User_add_sans_procedures')
 
+
     
