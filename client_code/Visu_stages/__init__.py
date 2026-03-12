@@ -19,8 +19,16 @@ class Visu_stages(Visu_stagesTemplate):
         
         # Initialisation de la liste des stages à afficher
         self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
-        
-        liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False))   
+        # si le role du user n'est pas 'O' (CREPS ...), je peux afficher tous les stages
+        user=anvil.users.get_user()
+        if user['role'] != 'O':
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False))   
+        else:
+            # récupération du centre du user
+            centre = user['centre']
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                    lieu=centre
+                                                    )
         self.repeating_panel_1.items = liste_stages
             
     def button_annuler_click(self, **event_args):

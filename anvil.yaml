@@ -932,6 +932,11 @@ db_schema:
     - admin_ui: {order: 1.125, width: 200}
       name: dico_menu
       type: simpleObject
+    - admin_ui: {order: 22.5, width: 200}
+      client_hidden: false
+      name: centre
+      target: lieux
+      type: link_single
     server: full
     title: Users
 dependencies: []

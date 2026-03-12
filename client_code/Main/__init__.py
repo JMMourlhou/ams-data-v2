@@ -240,6 +240,9 @@ class Main(MainTemplate):
                 self.button_create_qcm.visible = True           # créer un qcm
                 self.button_create_recherche.visible = True     # rechercher un stagiaire
 
+            if self.user["role"] == "O":                    # Organisme (CREPS ...):   Juste accès aux stages 
+                self.bt_gestion_stages_2.visible = True
+                
             # Affichage des bouttons de formulaires ---------------------------------------------------------
             satisf, suivi, com, qcm = Test_si_stage_avec_formulaire.test_si_formulaire(self.user)
             
