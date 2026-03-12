@@ -68,4 +68,13 @@ def modify_users_from_parameters(user_row, confirmed, enabled, nb_pw_failure):
                     n_password_failures=nb_pw_failure)
     result = True
     return result
-                    
+
+# Appelé de recherche, modif table users, colonne centre (ex Lionel travaille pour centre )
+@anvil.server.callable
+def modify_users_centre_formation(user_row, lieu_row):  
+    try:
+        user_row.update(centre=lieu_row)
+        result = True
+    except Exception as e:
+        result = e
+    return result

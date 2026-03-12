@@ -57,7 +57,16 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 tables.order_by("code", ascending=True)
             )
         ]
-
+        
+        # drop_down centres de formation pour attribuer à ce user un centre de formation (ex CREPS), ce qui permettra de ne pas visualiser tous les stages
+        # quand le user (ex Lionel) va aller dans stages. Je visualize les stages de ce centre pas les autres.
+        # comme j'utilise le get_open_form() en stage_visu_modif, je dois insérer ici en recherche le drop down des modees de fi
+        self.drop_down_centres.items = [
+            (r["lieu"], r)
+            for r in app_tables.lieux.search(
+                tables.order_by("lieu", ascending=True)
+            )
+        ]
         # ----------------------------------------------------------------------------------------------
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec
@@ -427,7 +436,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
 
-        # lecture de l'historique en table stgiaire inscrit
+        # lecture de l'historique en table stagiaire inscrit
         list =  app_tables.stagiaires_inscrits.search(
             tables.order_by("numero", ascending=False),
             user_email = self.item
@@ -716,9 +725,27 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.button_visu_formulaires.foreground = "yellow"
                 self.column_panel_formulaires_suivis.visible = False
 
-   
-    
+    def button_centre_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.drop_down_centres.visible = True
 
+    def drop_down_centres_change(self, **event_args):
+        """This method is called when an item is selected"""
+        # le centre de formation du user a été sélectionné, mettre à jour la table user avec le row du user recherché
+        centre_row = self.drop_down_centres.selected_value
+        # lecture du user sur le mail sauvé en label_user_email
+        try:
+            user_row = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+        # j'ai le centre et le user sélectionné, envoi en écriture
+        result = anvil.server.call('modify_users_centre_formation', user_row, centre_row)
+        if not result :
+             AlertHTML.error("Erreur :", f"MAJ du centre non effectuée: {result}")
+        else:
+            AlertHTML.success("Succès", f"Centre de format° {centre_row['lieu']} enregistré pour {user_row['prenom']} {user_row['nom']} !")
+        # retour
+        self.button_retour_click()
 
 
 
