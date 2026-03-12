@@ -25,10 +25,10 @@ class RowTemplate3(RowTemplate3Template):
         self.mail = "jmmourlhou@gmail.com"
         # Any code you write here will run before the form opens.
         app_user = anvil.users.get_user()
-        if app_user['role'] == "J":
+        if app_user['role'] == "J" or app_user['role'] == "O":
             self.button_inscription.visible = False
             self.button_del_stage.visible = False
-            
+        
         self.button_qcm.tag.stage = self.item['numero']  #numero de stage en tag du bouton self.button_qcm
         
         # Affichage en fonction largeur écran

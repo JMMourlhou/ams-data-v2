@@ -727,7 +727,21 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_centre_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.drop_down_centres.visible = True
+        # init du drop down sur le centre (si déjà affecté)
+            
+        try:
+            user_row = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+            
+        if user_row['centre'] is not None:
+            self.drop_down_centres.selected_value = user_row['centre']
+            
+        if self.drop_down_centres.visible is True:
+            self.drop_down_centres.visible = False  
+        else:
+            self.drop_down_centres.visible = True
+        
 
     def drop_down_centres_change(self, **event_args):
         """This method is called when an item is selected"""
