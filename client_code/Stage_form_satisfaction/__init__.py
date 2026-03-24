@@ -82,16 +82,18 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
             for row in liste0:
                 #lecture fichier père stage
                 stage=app_tables.stages.get(numero=row['stage']['numero'])
+                print(f"Authorisation du formul de satisf pour {row['stage']['numero']} : {stage['saisie_satisf_ok']} ")
                 if stage["saisie_satisf_ok"] is True:                         # si autorisé à saisir le formulaire, je l'affiche 
+                    
                    # lecture fichier père type de stage
                     type = app_tables.codes_stages.get(q.fetch_only("code"), code=stage["code"]["code"])
-                    if type["type_stage"] == "S":  # Si stagiaire, j'affiche la date
+                    if type["type_stage"] == "S":  # Si stagiaire, j'affiche la date  
                         liste_drop_d.append((type["code"] + "  du " + str(stage["date_debut"]), stage))
                     else:
                         liste_drop_d.append((type["intitulé"], stage))
                    
                     
-            #print(liste_drop_d)
+            print(liste_drop_d)
             self.drop_down_code_stage.items = liste_drop_d
 
     def button_annuler_click(self, **event_args):
