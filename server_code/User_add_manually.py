@@ -10,7 +10,7 @@ import anvil.server
 import bcrypt
 import uuid   # this library generates codes (API keys for exemple)
 
-# Création d'un utilisateur sans procédure (validation par mail)
+# Création d'un utilisateur sans procédure (sans validation par mail)
 # --> ira dans stage 1009 automatiqt en saisie_info_de_base SI PRENOM EST à Vide
 
 @anvil.server.callable
