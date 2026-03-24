@@ -73,11 +73,8 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
         global user_stagiaire
         if user_stagiaire:
             # Drop down stages inscrits du user
-            liste0 = app_tables.stagiaires_inscrits.search(q.fetch_only("user_email","stage"),           # <----------------------  A Modifier? 
-                                                           user_email=user_stagiaire,
-                                                           #enquete_satisf=False                         # Je permets plusieurs saisie
-                                                          )
-            print(f"Formulaire de satisfaction pour {user_stagiaire['nom']}")
+            liste0 = app_tables.stagiaires_inscrits.search(user_email=user_stagiaire)
+            print(f"Formulaire de satisfaction pour {user_stagiaire['nom']}, liste des stages: {str(liste0)}")
             liste_drop_d = []
             for row in liste0:
                 #lecture fichier père stage
