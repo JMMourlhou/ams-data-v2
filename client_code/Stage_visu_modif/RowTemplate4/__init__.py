@@ -34,9 +34,9 @@ class RowTemplate4(RowTemplate4Template):
             self.text_box_mail.font_size = 10
             self.text_box_mail.width = 180
         try:    
-            self.text_box_nom_p.text = self.item['name'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
+            self.text_box_nom_p.text = self.item['user_email']['nom'].capitalize()+" "+ self.item['user_email']["prenom"].capitalize()
         except: # prénom encore inexistant 
-            self.text_box_nom_p.text = self.item['name'].capitalize()
+            self.text_box_nom_p.text = self.item['user_email']['nom'].capitalize()
             
         self.text_box_mail.text = self.item['user_email']['email']
         tel = self.item['user_email']['tel']

@@ -106,7 +106,8 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             if r :   #Non, nom pas correct
                 self.check_box_accept_data_use.checked = True
                 return
-            
+                
+        print(f"user role en 'saisie info apres visu' : {self.user['role']}")    
         if self.user['role'] == "S":
             if self.date_naissance.date is None :           # dateN vide ?
                 AlertHTML.error("Erreur :", "Entrez la date de Naissance !")
@@ -115,10 +116,10 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
                 AlertHTML.error("Erreur :", "Entrez la ville de Naissance !")
                 return
                 
-        # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
-        if self.text_box_cp_naissance.text == "" or len(self.text_box_cp_naissance.text)!=5:
-            AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez le Code Postal de naissance exacte!<br><br> Si vous êtes né à l'étranger, entrez 99999")
-            return
+            # Test sur Code postal NAISSANCE, non vide, 5 caractères numériques.
+            if self.text_box_cp_naissance.text == "" or len(self.text_box_cp_naissance.text)!=5:
+                AlertHTML.error("Code Postal de la Ville de Naissance :", "Entrez le Code Postal de naissance exacte!<br><br> Si vous êtes né à l'étranger, entrez 99999")
+                return
         
         # il y a eu un changement du role de l'admin au cours de la maj de cette fiche         
         if self.user['role'] == "A" and self.stagiaire['role'] == "A" and self.text_box_role.text != "A":    # L'utilisateur est l'admin et il traite sa propre fiche
