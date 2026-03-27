@@ -250,7 +250,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 #alert("Renseignements enregistés !")    # *************************************
                 # insertion du stagiaire automatiqt si num_stage != 0
                 if user and self.first_entry:          # 1ERE ENTREE 
-                    if  user['temp']==0:
+                    if  user['temp']==0 and user['role']="S":
                         AlertHTML.success("Succès", "Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
                         #alert("Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
                         self.button_retour_click()

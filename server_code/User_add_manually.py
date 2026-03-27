@@ -34,8 +34,7 @@ def new_user(nom, prenom, tel, email, role, signed_up):
                                         tel=tel,
                                         password_hash=pwhash,
                                         api_key=api,
-                                        signed_up=signed_up,
-                                        temp=1009,
+                                        signed_up=signed_up
                                        )
         print("création user", user['email'])
     else:  # erreur 
