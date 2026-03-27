@@ -141,7 +141,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             span_years = span.days/365
             #alert(f"écart: {span_years}")
             if span_years < 15:
-                AlertHTML.error("Age trop jeune !", "Erreur sur la date de naissance !")
+                AlertHTML.error("Age trop jeune !", "Erreur probable sur la date de naissance !")
                 return   
 
             if self.text_box_v_naissance.text == "" :    # ville N vide ?
@@ -250,15 +250,18 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 #alert("Renseignements enregistés !")    # *************************************
                 # insertion du stagiaire automatiqt si num_stage != 0
                 if user and self.first_entry:          # 1ERE ENTREE 
-                    if  user['temp']==0 and user['role']="S":
-                        AlertHTML.success("Succès", "Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
+                    if  user['temp']==0 and user['role']=="S":
+                        AlertHTML.success("Succès", "Renseignements enregistés !,\n Vous n'êtes pas encore inscrit à un stage.")
                         #alert("Renseignements enregistés !,\n Vous n'êtes pas inscrit à un stage.")
                         self.button_retour_click()
                     else:
+                        AlertHTML.success("Succès", "Renseignements enregistés !")
+                        
                         code_fi = "???"
                         if user['temp'] < 998:
                             row = self.drop_down_fi.selected_value
                             code_fi=row['code_fi']
+                            
                         if user['temp'] == 1003:       # si tuteur, chercher ds user['temp_for_stage'] pour quel stage travaille le tuteur
                             pour_stage = user['temp_for_stage']
                             #print(f"++++++++++++++++++++++++++ 1003 pour stage: {pour_stage}")
