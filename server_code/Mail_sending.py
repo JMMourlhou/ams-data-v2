@@ -39,13 +39,13 @@ def send_mail(emails_list, subject_txt, rich_text, old_stagiaires=False, attachm
         try:
             anvil.email.send(
                 to=email,
-                from_address = "amsport@amsdata.org",
+                from_address = "jmarc@jmm-formation-et-services.fr",
                 from_name = "AMSport",
                 subject=subject_txt,
                 attachments=attachments,
                 html=f"""
                     <p><img src = {en_tete_address} width="772" height="263"> </p>
-                    <b>{prenom},</b><br>
+                    <b>{prenom.capitalize()},</b><br>
                     <br>
                     {rich_text} <br>
                     <span>Contacter AMSport: {client_mail}</span> 
@@ -99,7 +99,6 @@ def send_mail(emails_list, subject_txt, rich_text, old_stagiaires=False, attachm
 
 @anvil.server.callable
 def run_bg_task_mail(emails_list, subject_txt, rich_text, attachments=[], old_stagiaires=False):
-    print("old_stagiaires 1",old_stagiaires)
     task = anvil.server.launch_background_task('send_mail',emails_list, subject_txt, rich_text, old_stagiaires,attachments)
     return task
     
