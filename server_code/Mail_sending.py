@@ -13,9 +13,7 @@ from . import Variables_globales # importation du module de lecture des variable
 
 
 """Send an email to the specified user"""
-"""
-**************************************************** LECTURE FICHIER CSV EN BGT 
-"""
+
 @anvil.server.background_task
 def send_mail(emails_list, subject_txt, rich_text, old_stagiaires=False, attachments=[]):
     
