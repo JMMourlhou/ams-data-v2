@@ -46,7 +46,7 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             self.text_box_prenom.focus()
             return
         """
-        test_role = ["S","s","F","f","T","t","B","b","A","a","V","v"] # je n'accepte que ces lettres, minuscules accptées car upper ensuite
+        test_role = ["S","s","F","f","T","t","B","b","A","a","V","v"] # je n'accepte que ces lettres, minuscules acceptées car upper ensuite
         if self.text_box_role.text not in test_role:
             alert("Le role doit être soit: S, F, T, B, A, V !")
             self.text_box_role.focus()
