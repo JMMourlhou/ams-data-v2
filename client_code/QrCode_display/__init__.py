@@ -18,6 +18,7 @@ class QrCode_display(QrCode_displayTemplate):
         self.init_components(**properties)
         # Any code you write here will run before the form opens
         self.f = get_open_form()  # form appelante
+        self.num_stage = num_stage
         if log_in is True:
             # si log_in =True, appel du qr_code pour que les stagiaires log in ds l'appli, donc pas de num stage
             self.label_titre.text = "Flashez pour vous connecter à l'appli AMSdata "
@@ -64,14 +65,14 @@ class QrCode_display(QrCode_displayTemplate):
         """This method is called when the button is clicked"""
         open_form(self.f)
 
-    # si stage 1003 pour tuteurs 
+    # si stage tuteur, type "T"
     def drop_down_num_stages_change(self, **event_args):
         """This method is called when an item is selected"""
         pour_stage_row = self.drop_down_num_stages.selected_value
         pour_stage_num = pour_stage_row['numero']
         self.text_area_lien.visible = False
         self.label_titre.text = "Flashez pour inscrire les tuteurs du stage "+ pour_stage_row['code_txt'] + " du " + str(pour_stage_row['date_debut'].strftime("%d/%m/%Y"))
-        self.link_creation(1003, pour_stage_num)
+        self.link_creation(self.num_stage, pour_stage_num)
     
     def link_creation(self, num_stage, pour_stage=0):
         # Lecture de la variable globale "code_app1" ds table variables_globales

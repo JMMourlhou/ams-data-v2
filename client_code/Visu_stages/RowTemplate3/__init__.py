@@ -119,7 +119,7 @@ class RowTemplate3(RowTemplate3Template):
     def button_inscription_click(self, **event_args):
         """This method is called when the button is clicked"""
         num_stage = self.text_box_1.text
-        if num_stage != "1003":
+        if self.item['type_stage'] != "T":
             n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1.5)   # par défaut 2 secondes
         else:
             n = Notification("Recherchez le Tuteur à inscrire", timeout=1.5)   # par défaut 2 secondes
