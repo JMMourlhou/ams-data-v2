@@ -38,7 +38,8 @@ class QrCode_display(QrCode_displayTemplate):
 
             # si num_stage="1003", stage tuteur, il faut savoir pour quel stage les tuteurs seront inscrits
             # l'info sera contenue ds temp_pour_stage ds la table user puis ds table stagiaire inscrit)
-            if int(num_stage) == 1003:
+            #if int(num_stage) == 1003:
+            if stage["type_stage"] == "T":
                 # Initialisation du Drop down num_stages et dates
                 list = app_tables.stages.search(
                                                 tables.order_by("code_txt", ascending=True),
