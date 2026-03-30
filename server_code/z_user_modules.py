@@ -121,7 +121,7 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
         print("création user", user['email'])
         err = None # pas d'erreur
     else:  # erreur 
-        print("existant",user['email']) 
+        print("Existant: ",user['email']) 
         err = "Cet adresse mail est déjà enregistrée par nos services. Essayez plutôt de vous connecter."
     return err
 
