@@ -98,7 +98,6 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                                                         )
                                                    )
                 for stage in liste1:
-                    if stage["saisie_suivi_ok"] is True:  # si autorisé à saisir le formulaire de suivi, je l'affiche
                         liste_drop_d.append((stage["code"]['code'] + " débuté le " + str(stage["date_debut"]), stage))
                 
             # print(liste_drop_d)

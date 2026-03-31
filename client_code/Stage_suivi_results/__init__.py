@@ -29,27 +29,32 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         cpt = 0
 
         # sélection des stages visualisés ds dropdown (si la saisie du formulaire a été authorisée (table 'stages': saisie_suivi_ok=True))
-        liste_stage_drop_down = []
-        liste_stages = app_tables.stages.search(
-            tables.order_by("numero", ascending=False),
-            saisie_suivi_ok=True
+        # initialistaion de la drop down codes suivi des stagiaires
+        liste1 = app_tables.stages.search(
+            tables.order_by("date_debut", ascending=False),
+            q.all_of(
+                q.any_of(type_stage="S"),
+                q.any_of(saisie_suivi_ok=True)
+            )
         )
-        
-        # initialistaion de la drop down codes stagiaires
-        for stage in liste_stages:
-            row_stage = app_tables.stages.get(numero=int(stage["numero"]))
-            if row_stage and row_stage["type_stage"] != 'T':   # ne pas inclure ds drop down stgiaires le 'stage' tuteur
-                    liste_stage_drop_down.append(
-                        (
-                            row_stage["code_txt"] + " du " + str(row_stage["date_debut"]),
-                            row_stage   # stage normal
-                        )
-                    )
-        self.drop_down_code_stagiaires.items = liste_stage_drop_down
+        liste_stage_drop_down_stagiaires = []
+        for stage in liste1:
+            liste_stage_drop_down_stagiaires.append((stage["code"]['code'] + "du " + str(stage["date_debut"]), stage))
+        self.drop_down_code_stagiaires.items = liste_stage_drop_down_stagiaires
         
         # initialistaion de la drop down codes suivi des tuteurs
-        self.drop_down_code_tuteurs.items = liste_stage_drop_down
-
+        liste1 = app_tables.stages.search(
+            tables.order_by("date_debut", ascending=False),
+            q.all_of(
+                q.any_of(type_stage="T"),
+                q.any_of(saisie_suivi_ok=True)
+            )
+        )
+        liste_stage_drop_down_tuteurs = []
+        for stage in liste1:
+            liste_stage_drop_down_tuteurs.append((stage["code"]['code'] + "du " + str(stage["date_debut"]), stage))
+        self.drop_down_code_tuteurs.items = liste_stage_drop_down_tuteurs
+        
         # si génération du pdf, on cache des boutons et on envoi directement en traitement en fonction du type de suivi demandé
         if self.pdf_mode is True:
             self.column_panel_a.visible = False
