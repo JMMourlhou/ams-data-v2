@@ -12,7 +12,6 @@ import anvil.server
 ADD & EFFACEMENT d'1 stagiaire du stage
 """
 
-
 @anvil.server.callable           # ADD d'un nouveau stagiaire ds le stage
 @anvil.tables.in_transaction
 def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None):   # Stage num pas row
@@ -37,9 +36,7 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
         valid="User non trouvé ds fichier users !"
         return valid
 
-    # lecture fichier père mode financemnt (si int(stage) != 1003):
-    
-        
+    # lecture fichier père mode financemnt (si type_stage) != "T"):
     mode_fin = app_tables.mode_financement.get(code_fi=mode_fi)    
     if not mode_fin :
         valid="Mode de financemnt non trouvé ds fichier param mode financemnt !"
@@ -66,18 +63,22 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
             else:
                 dico_droits_qcm = {}
 
-    # Si stage 1003, tuteur, je renseigne la colonne 'pour_stage_num'
-    if int(stage) == 1003:
-        #lecture du stage pour enregistrement de son row
-        pour_stage_n = app_tables.stages.get(numero=pour_stage)
-    else:  # ce n'est pas un stage tuteur
-        pour_stage_n = None
-
+    # si prénom vide
     try:
         prenom = user['prenom'].lower()
     except: # prénom vide
         prenom = ""
-    
+        
+    # Si stage tuteur, je renseigne la colonne 'pour_stage_num'
+    if code_stage["type_stage"] == "T":
+        #lecture du stage pour enregistrement de son row
+        if pour_stage is not None:
+            pour_stage_n = app_tables.stages.get(numero=pour_stage)
+        else:
+            pour_stage_n = None
+    else:  # ce n'est pas un stage tuteur
+        pour_stage_n = None
+
     new_row=app_tables.stagiaires_inscrits.add_row(
                               stage = code_stage,  
                               user_email = user,
@@ -89,7 +90,7 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
                               numero = code_stage['numero'],
                               enquete_satisf=False,         # le stagiaire ou tuteur n'a pas encore rempli le formulaire de satisfaction
                               enquete_suivi=False,          # le stagiaire ou tuteur n'a pas encore rempli le formulaire de suivi
-                              pour_stage_num=pour_stage_n   # voir traitement juste au dessus
+                              pour_stage_num=pour_stage_n   # Pour stage Tuteur, voir traitement juste au dessus
                               )
              
     stagiaire_row = app_tables.stagiaires_inscrits.search(stage=new_row['stage'])

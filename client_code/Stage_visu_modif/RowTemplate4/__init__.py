@@ -106,7 +106,7 @@ class RowTemplate4(RowTemplate4Template):
         sov = self.check_box_form_suivi.checked
         # Si ce n'est pas un formulaire d'un tuteur (un tuteur peur refaire plusieurs années des formulaires)
         stagiaire_row=self.item   # formulaire de suivi rempli T/F
-        if self.item['numero'] != 1003:
+        if self.item['type_stage'] != "T":
             if self.check_box_form_suivi.checked is False: 
                 r = AlertConfirmHTML.ask(
                     "Annulation d'un ou plusieurs formulaires de SUIVI:",
@@ -120,13 +120,14 @@ class RowTemplate4(RowTemplate4Template):
                 else:
                     self.check_box_form_suivi.checked = False
                 return
-            valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, True)   # on effecera le formulaire 
+                
+            valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, True)   # on effacera le formulaire 
             if valid is True:
                 AlertHTML.success("Succès :","Le formulaire a bien été effacé !\n\n Il peut être ré-entré par le stagiaire si nécessaire.")
-        else: # stage 1003, tuteur de MTnoto, je peux effacer le check du formulaire de suivi car chaque année il peut le refaire pour un autre stage
+        else: # stage Tuteur, AAN/MTnoto, je peux effacer le check du formulaire de suivi car chaque année il peut le refaire pour un autre stage
             valid = anvil.server.call("init_formulaire_suivi_stagiaire", stagiaire_row, self.check_box_form_suivi.checked, False)   # False, on n'effacera pas les anciens formulaires
             if valid is True:
-                AlertHTML.success("Succès :","Réinitialisation effectuée au niveau du Tuteur, Le ou les formulaires n'ont pas été effacé(s).")
+                AlertHTML.success("Succès :","Réinitialisation effectuée au niveau du Tuteur, Le ou les formulaires n'ont pas été effacé(s). \n\n Vous pouvez les effacer dans la partie 'Paramètres'")
         
     def init_drop_down_mode_fi(self):
         self.f = get_open_form()   # récupération de la forme mère (Stage_visu_modif) ou (Recherche_stagiaire_v3) pour revenir ds la forme appelante

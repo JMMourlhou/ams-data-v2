@@ -14,7 +14,7 @@ from ..AlertConfirmHTML import AlertConfirmHTML
 
 class z_user_new_account(z_user_new_accountTemplate):
     def __init__(self, h={}, num_stage=0, pour_stage=0, x=0, **properties):
-        # ERREUR SI JE NE METS PAS X=0, nb de param erronés.... à comprendre
+        # ERREUR SI JE NE METS PAS X=0, nb de param erronés.... car situé à la fin de la liste
         # Set Form properties and Data Bindings.
         # Any code you write here will run when the form opens.
 

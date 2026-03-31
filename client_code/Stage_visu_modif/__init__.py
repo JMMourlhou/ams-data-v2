@@ -37,7 +37,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
         
         #lecture du stage à partir de l'id du stage
-        #self.stage_row=app_tables.stages.get(numero=int(num_stage))
         self.stage_row=app_tables.stages.get_by_id(id)      
         
         #lecture des stagiaires inscrits
@@ -335,16 +334,6 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             return
         self.text_box_intitule.text=row['intitulé']
 
-    def button_qr_code_display_copy_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        num_stage = self.text_box_num_stage.text
-        if num_stage != "1003":
-            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1.5)   # par défaut 2 secondes
-        else:
-            n = Notification("Recherchez le Tuteur à inscrire", timeout=1.5)   # par défaut 2 secondes
-        n.show()
-        open_form('Recherche_stagiaire_v3',num_stage)
-
     def text_box_num_stage_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
         self.button_validation.visible = True
@@ -352,6 +341,17 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
     def text_box_pv_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
         self.button_validation.visible = True
+
+    def button_inscription_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        """This method is called when the button is clicked"""
+        num_stage = self.text_box_num_stage.text
+        if self.stage_row['type_stage'] != "T":
+            n = Notification("Recherchez le Stagiaire ou Formateur à inscrire", timeout=1.5)   # par défaut 2 secondes
+        else:
+            n = Notification("Recherchez le Tuteur à inscrire", timeout=1.5)   # par défaut 2 secondes
+        n.show()
+        open_form('Recherche_stagiaire_v3',num_stage)
 
     
         

@@ -626,8 +626,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             
     def button_fiche_click(self, **event_args):
         """This method is called when the button is clicked"""
+        # je peux voir une fiche si: # vient du menu / recherche, mais pas d'inscription 
         print("Mode inscription si stage pas vide: ",self.label_origine.text, self.label_num_stage.text)
-        if self.label_origine.text == "<AMS_Data.Main.Main object>" or self.label_num_stage.text == "":    # vient du menu / recherche, pas d'inscription // 
+        if self.label_origine.text == "<AMS_Data.Main.Main object>" or self.label_num_stage.text == "":    
             # lecture du user sur le mail sauvé en label_user_email
             try:
                 self.item = app_tables.users.get(email=self.label_user_email.text)
@@ -663,7 +664,11 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         print(f"Inscription dans le stage {stage} de {self.label_user_email.text}")
 
         self.content_panel.visible = True
-        if int(stage) != 1003:   # tous stages sauf tuteurs
+        try:
+            stagiaire_row = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+        if stagiaire_row["role"] != "T":   # tous stages sauf tuteurs
             self.content_panel.add_component(Box_types_fi(stagiaire_row, stage), full_width_row=False)
         else:  # Ajout d'un Tuteur   
             self.content_panel.add_component(Box_stages(stagiaire_row, stage), full_width_row=False)

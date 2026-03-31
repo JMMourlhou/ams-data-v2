@@ -100,7 +100,7 @@ def mk_api_key():
 @anvil.server.callable
 @anvil.tables.in_transaction
 def do_signup(email, name, password, num_stage, pour_stage="0"):
-    print(email, name, password, num_stage)
+    print(email, name, num_stage)
     pwhash = hash_password(password, bcrypt.gensalt())
     print("add_user_if_missing email : ", email)  
 
@@ -110,12 +110,15 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
         api = mk_api_key()
         date_heure = French_zone.french_zone_time()
         role_user ="S"  # stagiaire par défaut
-        num = int(num_stage)
         if num_stage is not None or num_stage != "":
-            if num > 999:
-                role_user = "F"
-            if num == 1003:  # Tuteur
-                role_user = "T"
+            # lecture du stage sur son num(numéric)
+            try:
+                stage_row=app_tables.stages.get(numero=num_stage)
+                print("*** Stage lu ***")
+                role_user = stage_row["type_stage"]
+            except Exception as e:
+                print("*** Stage num non lu ***")
+                role_user = "S" # par défaut
                 
         user = app_tables.users.add_row(email=email.lower(),role=role_user, enabled=True, nom=name, password_hash=pwhash, api_key=api, signed_up=date_heure, temp=int(num_stage), temp_for_stage=int(pour_stage))
         print("création user", user['email'])
