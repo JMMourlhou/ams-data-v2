@@ -94,14 +94,9 @@ def add_1_formulaire_suivi( user_stagiaire,              # users row (celui qui 
     if re_read_row:  
         # check sur le formulaire de suivi pour 1 tuteur ou stagiaire pour savoir s'il en a rempli un, pour affichage de ceux qui n'ont pas encore répondu
         if re_read_row:  
-            if user_role == "S":
-                row = app_tables.stagiaires_inscrits.get(   numero =     stage_row['numero'],
-                                                            user_email = user_stagiaire
-                                                        )
-            if user_role == "T":
-                row = app_tables.stagiaires_inscrits.get(   numero =     1003,                       # stage Tuteur 
-                                                            user_email = user_stagiaire
-                                                        )
+            row = app_tables.stagiaires_inscrits.get(   numero =     stage_row['numero'],
+                                                        user_email = user_stagiaire
+                                                    )
             row.update(enquete_suivi=True)
         return(True)
     else:
