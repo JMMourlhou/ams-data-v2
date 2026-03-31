@@ -94,10 +94,15 @@ def add_1_formulaire_suivi( user_stagiaire,              # users row (celui qui 
     if re_read_row:  
         # check sur le formulaire de suivi pour 1 tuteur ou stagiaire pour savoir s'il en a rempli un, pour affichage de ceux qui n'ont pas encore répondu
         if re_read_row:  
-            row = app_tables.stagiaires_inscrits.get(   numero =     stage_row['numero'],
-                                                        user_email = user_stagiaire
-                                                    )
-            row.update(enquete_suivi=True)
+            print(f"stage num: {stage_row['numero']}")
+            print(f"user email: {user_stagiaire}")
+            try:
+                row = app_tables.stagiaires_inscrits.get(   numero =     stage_row['numero'],
+                                                            user_email = user_stagiaire
+                                                        )
+                row.update(enquete_suivi=True)
+            except Exception as e:
+                print(f"Erreur en fin d'écriture/ Check du formulaire du stagiaire: {e}")
         return(True)
     else:
         return(False)

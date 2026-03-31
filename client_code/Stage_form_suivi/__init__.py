@@ -89,14 +89,13 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                             
             # si c'est un tuteur qui a ouvert, il faut savoir pour quel code stage         
             if user_row["role"]=="T":
-                # Drop down stages de BPMotoN 
-                # code_moto = app_tables.codes_stages.get(code="BPMOTO")
+                # Drop down stages Tuteurs, ayant  "saisie_suivi_ok" à True
                 liste1 = app_tables.stages.search(
                                                     tables.order_by("date_debut", ascending=False),
-                                                    q.any_of(
-                                                    q.any_of(code_txt="BPMOTO"),
-                                                    q.any_of(code_txt="BPAAN")
-                                                    )
+                                                        q.all_of(
+                                                            q.any_of(type_stage="T"),
+                                                            q.any_of(saisie_suivi_ok=True)
+                                                        )
                                                    )
                 for stage in liste1:
                     if stage["saisie_suivi_ok"] is True:  # si autorisé à saisir le formulaire de suivi, je l'affiche
