@@ -660,7 +660,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             alert(f"Erreur en re-lecture du user: {e}")
         
         stage = self.label_num_stage.text
-        print(f"stage en inscription: <{stage}>")
+        print(f"Inscription dans le stage {stage} de {self.label_user_email.text}")
 
         self.content_panel.visible = True
         if int(stage) != 1003:   # tous stages sauf tuteurs

@@ -92,7 +92,7 @@ class RowTemplate3(RowTemplate3Template):
 
         # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
         if self.item['diplomes'] is None:
-            self.file_loader_diplomes.visibles = True
+            self.file_loader_diplomes.visible = True
             self.file_loader_diplomes.foreground = "red"
             self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
             self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
@@ -157,6 +157,9 @@ class RowTemplate3(RowTemplate3Template):
                 # acquistion du row id pour éviter les erreurs 
                 row_id = self.item.get_id()
                 result = anvil.server.call('del_stage',row_id, self.item['numero'] )
+            else:
+                return
+                
             if result is True:
                 AlertHTML.success("Succès", "Stage annulé !")
                 open_form('Visu_stages')
@@ -282,7 +285,7 @@ class RowTemplate3(RowTemplate3Template):
 
         # SI LES DIPLOMES NE SONT PAS ENCORE SAUVES EN TABLE STAGE
         if self.item['diplomes'] is None:
-            self.file_loader_diplomes.visibles = True
+            self.file_loader_diplome.visibles = True
             self.button_attestations.visible = False       # on affiche pas bouton envoyer diplomes
             self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
 

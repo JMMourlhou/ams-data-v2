@@ -262,9 +262,11 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                             row = self.drop_down_fi.selected_value
                             code_fi=row['code_fi']
                             
-                        if user['temp'] == 1003:       # si tuteur, chercher ds user['temp_for_stage'] pour quel stage travaille le tuteur
-                            pour_stage = user['temp_for_stage']
-                            #print(f"++++++++++++++++++++++++++ 1003 pour stage: {pour_stage}")
+                        if user['role'] == "T":
+                            if user['temp_for_stage'] is not None:
+                                pour_stage = user['temp_for_stage']
+                            else:
+                                pour_stage = 0
                         else:
                             pour_stage = 0
                         
