@@ -1,5 +1,4 @@
 import anvil.email
-# CREATION 
 import anvil.files
 from anvil.files import data_files
 
@@ -9,6 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 
+# MAJ des infos du USER en création, après validation du mail
 @anvil.server.callable
 @anvil.tables.in_transaction
 def modify_users(user_to_be_modified,

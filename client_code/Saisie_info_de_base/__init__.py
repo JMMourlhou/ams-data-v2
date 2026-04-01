@@ -126,7 +126,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             AlertHTML.error("Erreur !", "Le num de Tel doit avoir 10 caractères !")
             return   
             
-        # Si Inscription ds un stage numéro > 998 : F ou T ou QCM: pas de test sur Naissance et adresse     
+        # Si Inscription ds un stage non "S": F ou T ou QCM: pas de test sur Naissance et adresse     
         if user['role'] == "S":
             # naissance non vide, supérieure à 15 ans
             if self.date_naissance.date is None :           # dateN vide ?
