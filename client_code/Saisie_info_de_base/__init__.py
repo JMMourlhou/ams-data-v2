@@ -22,7 +22,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
     def __init__(self, first_entry=False, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        
+       
         # Any code you write here will run before the form opens.
         self.first_entry = first_entry
         if first_entry is True:
@@ -30,18 +30,20 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             
         global user
         user=anvil.users.get_user()
+        print("-------------------------------------")
+        print(f"'Saisie_info_de_base' pour {user['email']}, role:{user['role']}")
+        print(f"'1ERE entrée: {first_entry}")
+        print("-------------------------------------")
         # Si col temp en table user contient un chiffre, le user sera inscrit dans le stage correspondant ...
         #  ...  qd il entrera dans l'app pour la 1ere fois
         self.stage=str(user['temp'])
 
-        try:
-            if int(self.stage) > 998:
-                self.column_panel_naissance.visible = False
-                self.column_panel_adresse.visible = False
-                self.drop_down_fi.visible = False
-                self.column_panel_mail2_commentaires.visible = False
-        except:
-            pass
+        # Si ce n'est pas un stagiaire, je ne force pas à saisir date de N et adresse
+        if user['role'] != "S":
+            self.column_panel_naissance.visible = False
+            self.column_panel_adresse.visible = False
+            self.drop_down_fi.visible = False
+            self.column_panel_mail2_commentaires.visible = False
         
         # Drop down mode de financemnt
         self.drop_down_fi.items = [(r['intitule_fi'], r) for r in app_tables.mode_financement.search()]
@@ -125,7 +127,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
             return   
             
         # Si Inscription ds un stage numéro > 998 : F ou T ou QCM: pas de test sur Naissance et adresse     
-        if int(self.stage) < 998:
+        if user['role'] == "S":
             # naissance non vide, supérieure à 15 ans
             if self.date_naissance.date is None :           # dateN vide ?
                 AlertHTML.error("Oublie !", "Entrez la date de Naissance !")
@@ -258,7 +260,7 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                         AlertHTML.success("Succès", "Renseignements enregistés !")
                         
                         code_fi = "???"
-                        if user['temp'] < 998:
+                        if user['role'] == "S":
                             row = self.drop_down_fi.selected_value
                             code_fi=row['code_fi']
                             

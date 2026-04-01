@@ -32,7 +32,7 @@ def _send_password_reset(email):
     ams_mail = dict_var_glob["ams_mail"]   # var globale Mail AMS
     code_app1 = dict_var_glob["code_app1"]      # var_globale de l'apli AMS DATA
     en_tete_address = code_app1+"/_/theme/"+ dict_var_glob["ams_en_tete"]
-    nom_app_pour_mail = dict_var_glob["nom_app_pour_mail"]
+    #nom_app_pour_mail = dict_var_glob["nom_app_pour_mail"]
     
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
@@ -103,32 +103,34 @@ def mk_api_key():
 @anvil.server.callable
 @anvil.tables.in_transaction
 def do_signup(email, name, password, num_stage, pour_stage="0"):
-    print(email, name, num_stage)
+    print(f"Module 'z_user_modules / do_sign_up': création du user:{email}, {name}, {num_stage}")
     pwhash = hash_password(password, bcrypt.gensalt())
-    print("add_user_if_missing email : ", email)  
-
     user = app_tables.users.get(email=email)
     if user is None:   # user not created yet
-        print("non existant")   
         api = mk_api_key()
         date_heure = French_zone.french_zone_time()
         role_user ="S"  # stagiaire par défaut
         if num_stage is not None or num_stage != "":
             # lecture du stage sur son num(numéric)
             try:
-                stage_row=app_tables.stages.get(numero=num_stage)
-                print("*** Stage lu ***")
+                stage_row=app_tables.stages.get(numero=int(num_stage))
                 role_user = stage_row["type_stage"]
+                print(f"Module 'z_user_modules / do_sign_up': Stage {num_stage} bien lu ***")
+                print(f"Module 'z_user_modules / do_sign_up': rôle du user: {role_user}")
             except Exception as e:
-                print("*** Stage num non lu ***")
+                print(f"Module 'z_user_modules / do_sign_up': création du user: *** erreur en inscription au stage ({num_stage}) à attribuer pour ce nouvel user *** , role='S' par défaut")
+                print(e)
+                print("------------------------------------")
                 role_user = "S" # par défaut
-                
-        user = app_tables.users.add_row(email=email.lower(),role=role_user, enabled=True, nom=name, password_hash=pwhash, api_key=api, signed_up=date_heure, temp=int(num_stage), temp_for_stage=int(pour_stage))
-        print("création user", user['email'])
-        err = None # pas d'erreur
+        try:        
+            user = app_tables.users.add_row(email=email.lower(),role=role_user, enabled=True, nom=name, password_hash=pwhash, api_key=api, signed_up=date_heure, temp=int(num_stage), temp_for_stage=int(pour_stage))
+            print("création user", user['email'])
+            err = None # pas d'erreur
+        except Exception as e:
+            return e
     else:  # erreur 
-        print("Existant: ",user['email']) 
-        err = "Cet adresse mail est déjà enregistrée par nos services. Essayez plutôt de vous connecter."
+        print(f"Module 'z_user_modules / do_sign_up', en création du user, son adresse mail {user['email']} déjà existante ! ") 
+        err = "Cette adresse mail est déjà connue... Essayez de vous connecter."
     return err
 
 

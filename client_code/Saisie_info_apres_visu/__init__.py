@@ -32,6 +32,10 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             self.stagiaire=app_tables.users.get_by_id(self.row_id)
         
         if self.stagiaire:
+            print("-------------------------------------")
+            print(f"'Saisie_info_apres_visu' pour {self.stagiaire['email']}, role:{self.stagiaire['role']}")
+            print("-------------------------------------")
+            
             self.id_fiche_stagiaire = self.stagiaire.get_id()
             self.text_box_id.text = "Id = "+ str(self.id_fiche_stagiaire)
             self.text_box_mail.text = self.stagiaire['email']
@@ -106,8 +110,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             if r :   #Non, nom pas correct
                 self.check_box_accept_data_use.checked = True
                 return
-                
-        print(f"user role en 'saisie info apres visu' : {self.user['role']}")    
+                   
         if self.user['role'] == "S":
             if self.date_naissance.date is None :           # dateN vide ?
                 AlertHTML.error("Erreur :", "Entrez la date de Naissance !")

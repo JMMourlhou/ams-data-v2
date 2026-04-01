@@ -25,7 +25,6 @@ def confirm_or_pwreset(h, num_stage=0):
     if not isinstance(h, dict):  
         print("URL not a dict type")
         return
-    print("type; ", isinstance(h, dict))
 
     url_purpose=h["a"]  # contient le but du lien: qrcode ou pwrest ou confirm
 
@@ -50,7 +49,6 @@ def confirm_or_pwreset(h, num_stage=0):
 
     """ ***************************** URL du mail de confirmation après sign in  """
     if url_purpose=='confirm':
-        #alert("confirm")
         # Hash password in URL ?
         hpw=h["hpw"]
         if not hpw:

@@ -20,9 +20,9 @@ from . import French_zone
 #test3: is the new user in the users data table (for email validation) ?
 @anvil.server.callable
 def search(to_be_confirmed_email, hpw):
-    print(to_be_confirmed_email)
+    print(f"module z_user_api_sign_in_search, Confirmation du mail: {to_be_confirmed_email}")
     new_user_row=app_tables.users.get(email=to_be_confirmed_email)
-    if new_user_row == None:
+    if new_user_row is None:
         print("user not found")
         return
 
@@ -31,10 +31,11 @@ def search(to_be_confirmed_email, hpw):
         # The naive way (hpw == user['api_key']) would expose a timing vulnerability.
 
     salt = bcrypt.gensalt()
-    print("url hpw; ",hpw)
-    print("salt; ",salt)
+    #print("url hpw; ",hpw)
+    #print("salt; ",salt)
 
     if hash_password(hpw, salt) != hash_password(new_user_row['password_hash'], salt):
+        print("module z_user_api_sign_in_search, Confirmation du mail: Erreur, hpw différents !")
         return
     user=None   
     if new_user_row is not None and not new_user_row['confirmed_email']:  # User table, Column confirmed_email not checked/True
@@ -44,11 +45,9 @@ def search(to_be_confirmed_email, hpw):
         #new_user_row['histo']={}
         # Forcing my new user to login
         user=anvil.users.force_login(new_user_row)
-        print(user["nom"])
     return user
 
 def hash_password(password, salt):
-    print("password; ", password)
     """Hash the password using bcrypt in a way that is compatible with Python 2 and 3."""
     if not isinstance(password, bytes):
         password = password.encode()

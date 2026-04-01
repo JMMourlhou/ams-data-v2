@@ -48,7 +48,7 @@ class Main(MainTemplate):
         
         if self.user:
             time = French_zone.french_zone_time()
-            print(f"Main menu: {time}: {self.user['nom']} {self.user['prenom']} connected as {self.user['role']}.")
+            print(f"Main menu: time:{time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{'email'}, connected as {self.user['role']}.")
         else:
             print('AMSDATA on line, user not connected yet')
         """
@@ -90,7 +90,7 @@ class Main(MainTemplate):
                 # handling buttons display before going to module externe 'sign_in_for_AMS_Data'
                 self.display_bt_mail()                 # Bt de connection
                 self.display_admin_or_other_buttons()  # Autres BT
-                print(f"URL détectée ds Main: {h['a']}")
+                print(f"Menu principal, Main: URL détectée: {h}")
                 # lien actif < à 3 mois ?
                 # url_time_str=""
                 url_time = h["t"]
