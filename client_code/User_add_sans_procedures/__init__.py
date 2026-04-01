@@ -42,6 +42,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
         # pour ne pas répéter la sélection du stage (voir fin du BT validation)
         if stage_init is not None:
             self.drop_down_code_stages.selected_value = stage
+            # initilisation du drop down du stage du tuteur
+            self.init_stage_tuteur()
             self.column_panel_stage_de_travail_du_tuteur.visible = True
         
         
@@ -83,13 +85,6 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert("Le mail n'a pas le bon format !")
             self.text_box_mail.focus()
             return
-            
-        temp_row = self.drop_down_code_stages.selected_value
-        temp = temp_row["numero"]
-        alert(temp)
-
-        temp_for_stage_row=self.drop_down_tuteur_pour_quel_stage.selected_value
-        temp_for_stage = temp_for_stage_row["numero"]
         
         result = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
@@ -98,8 +93,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                                    self.text_box_mail.text,
                                    self.text_box_role.text.upper(),
                                    signed_up = French_zone.french_zone_time(),  # importé en ht de ce script
-                                   temp=temp,
-                                   temp_for_stage = temp_for_stage
+                                   temp=self.drop_down_code_stages.selected_value["numero"],
+                                   temp_for_stage = self.drop_down_tuteur_pour_quel_stage.selected_value["numero"]
                                   )
         if result is not None:
             alert(result)  # user existant
@@ -116,17 +111,21 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
         # si c'est un stage tuteur, je demande sur quel stage il est tuteur
         if stage_row["type_stage"] == "T":
             self.column_panel_stage_de_travail_du_tuteur.visible = True
+        # initilisation du drop down du stage du tuteur
+        self.init_stage_tuteur()
             
-        
+    def init_stage_tuteur(self, **event_args):
         #==========================================================================================================================================================
-        # initialistaion de la drop down codes suivi des stagiaires
+        # initialistaion de la drop down stage du tuteur
         liste1 = app_tables.stages.search(
             tables.order_by("date_debut", ascending=False),
-            q.any_of(
-                q.any_of(code_txt="BPAAN"),
-                q.any_of(code_txt="BPMOTO")
+            q.all_of(
+                # ET
+                q.any_of(q.any_of(code_txt="BPAAN"), q.any_of(code_txt="BPMOTO")), # BPAAN ou BPMOTON
+                q.any_of(q.any_of(saisie_satisf_ok=True), q.any_of(saisie_suivi_ok=True)), # saisie_satisf_ok=True  ou saisie_suivi_ok=True
             )
         )
+        
         liste_stages = []
         for stage in liste1:
             liste_stages.append((stage["code"]['code'] + "  #" + str(stage['numero']) + "  du " + str(stage["date_debut"]), stage))
