@@ -70,7 +70,10 @@ def _send_email_confirm_link(email):
     user = app_tables.users.get(email=email)
     t=recup_time() # t will be text form (module at the end of this server code module)
     if user is not None and not user['confirmed_email']:  # User table, Column confirmed_email not checked/True
-        anvil.email.send(to=user['email'], subject="Confirmation de votre adresse email",
+        anvil.email.send(to=user['email'],
+                         subject="Confirmation de votre adresse email",
+                         from_address = "jmarc@jmm-formation-et-services.fr",
+                         from_name = "AMSport",
                          html=f"""
 <p><img src = {en_tete_address} width="772" height="263"> </p> 
 <b>Mme/Mr {user["nom"]},</b><br>

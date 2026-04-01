@@ -75,7 +75,7 @@ class z_user_new_account(z_user_new_accountTemplate):
             open_form("Main",99)
         else:           #Pas d'erreur, on envoi le mail de confirmation
             if anvil.server.call('_send_email_confirm_link', self.email_box.text):
-                AlertHTML.success(" Confirmation de votre mail :",f"Un email de confirmation a été envoyé à l'adresse {self.email_box.text}. Ouvrez-le svp.<br><br>Cette fenêtre va se fermer.")
+                AlertHTML.success(" Confirmation de votre mail :",f"Un email de confirmation a été envoyé à l'adresse {self.email_box.text}.<br> Ouvrez-le et cliquez sur le lien.")
                 # Déconnecter l'utilisateur 
                 anvil.users.logout()
                 window.close()

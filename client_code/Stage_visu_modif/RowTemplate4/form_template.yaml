@@ -2,12 +2,12 @@ components:
 - components:
   - components:
     - event_bindings: {focus: text_box_nom_p_focus}
-      layout_properties: {width: 190}
+      layout_properties: {width: 209.8105283203125}
       name: text_box_nom_p
-      properties: {background: 'theme:Primary', bold: true, font_size: 14, foreground: 'theme:On Primary'}
+      properties: {align: left, background: 'theme:Primary', bold: true, font_size: 13, foreground: 'theme:On Primary'}
       type: TextBox
     - event_bindings: {focus: text_box_tel_focus}
-      layout_properties: {width: 190}
+      layout_properties: {width: 189.296734375}
       name: text_box_tel
       properties:
         align: center
@@ -16,7 +16,7 @@ components:
         border: ''
         enabled: true
         font: ''
-        font_size: 14
+        font_size: 13
         foreground: theme:On Primary
         hide_text: false
         italic: false
