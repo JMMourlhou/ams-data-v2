@@ -6,9 +6,10 @@ import anvil.tables as tables
 from anvil.tables import app_tables
 from .. import Mail_valideur  # pour button_export_xls_click
 from .. import French_zone # POur acquisition de date et heure Francaise (Browser time)
+import anvil.tables.query as q
 
 class User_add_sans_procedures(User_add_sans_proceduresTemplate):
-    def __init__(self, nom="", prenom="", tel="", mail="" ,**properties):
+    def __init__(self, stage_init=None, nom="", prenom="", tel="", mail="" ,**properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         #self.text_box_role.text = "T"
@@ -18,7 +19,31 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
         self.text_box_mail.text = mail
         if nom != "":
             self.button_valid.visible = True
-        # Any code you write here will run before the form opens.
+
+        #==========================================================================================================================================================    
+        # sélection des stages si la saisie du formulaire a été validée (saisie_satisf_ok=True) ou (saisie_suivi=ok=True)
+        # Permet de ne pas afficher tous les stages
+        # Impose d'avoir créé le stage qui contiendra ce user ET d'avoir authorisé le formulaire de suivi ou de satisf
+        # sélection des stages visualisés ds dropdown (si la saisie du formulaire a été authorisée (table 'stages': saisie_suivi_ok=True) ou saisie_satisf_ok=True)
+        # initialistaion de la drop down codes suivi des stagiaires
+        liste1 = app_tables.stages.search(
+            tables.order_by("date_debut", ascending=False),
+            q.any_of(
+                q.any_of(saisie_suivi_ok=True),
+                q.any_of(saisie_satisf_ok=True)
+            )
+        )
+        liste_stage_drop_down_stages = []
+        for stage in liste1:
+            liste_stage_drop_down_stages.append((stage["code"]['code'] +"  #" + str(stage['numero'])+"  du " + str(stage["date_debut"]), stage))
+        self.drop_down_code_stages.items = liste_stage_drop_down_stages
+        self.drop_down_code_stages.selected_value = None
+        
+        # pour ne pas répéter la sélection du stage (voir fin du BT validation)
+        if stage_init is not None:
+            self.drop_down_code_stages.selected_value = stage
+            self.column_panel_stage_de_travail_du_tuteur.visible = True
+        
         
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -58,7 +83,14 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert("Le mail n'a pas le bon format !")
             self.text_box_mail.focus()
             return
+            
+        temp_row = self.drop_down_code_stages.selected_value
+        temp = temp_row["numero"]
+        alert(temp)
 
+        temp_for_stage_row=self.drop_down_tuteur_pour_quel_stage.selected_value
+        temp_for_stage = temp_for_stage_row["numero"]
+        
         result = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
                                    self.text_box_prenom.text.capitalize(),
@@ -66,6 +98,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                                    self.text_box_mail.text,
                                    self.text_box_role.text.upper(),
                                    signed_up = French_zone.french_zone_time(),  # importé en ht de ce script
+                                   temp=temp,
+                                   temp_for_stage = temp_for_stage
                                   )
         if result is not None:
             alert(result)  # user existant
@@ -73,7 +107,31 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             open_form("Recherche_stagiaire_v3")
         else:
             alert("Création effectuée !")
-        open_form('User_add_sans_procedures')
+        open_form('User_add_sans_procedures',self.drop_down_code_stages.selected_value) # pour ne pas à avoir à resélectionner le stage
 
+    def drop_down_code_stages_change(self, **event_args):
+        """This method is called when an item is selected"""
+        stage_row = self.drop_down_code_stages.selected_value
+        self.text_box_role.text = stage_row["type_stage"]
+        # si c'est un stage tuteur, je demande sur quel stage il est tuteur
+        if stage_row["type_stage"] == "T":
+            self.column_panel_stage_de_travail_du_tuteur.visible = True
+            
+        
+        #==========================================================================================================================================================
+        # initialistaion de la drop down codes suivi des stagiaires
+        liste1 = app_tables.stages.search(
+            tables.order_by("date_debut", ascending=False),
+            q.any_of(
+                q.any_of(code_txt="BPAAN"),
+                q.any_of(code_txt="BPMOTO")
+            )
+        )
+        liste_stages = []
+        for stage in liste1:
+            liste_stages.append((stage["code"]['code'] + "  #" + str(stage['numero']) + "  du " + str(stage["date_debut"]), stage))
+        self.drop_down_tuteur_pour_quel_stage.items = liste_stages
+        #==========================================================================================================================================================
 
+    
     

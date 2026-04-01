@@ -103,7 +103,7 @@ def mk_api_key():
 @anvil.server.callable
 @anvil.tables.in_transaction
 def do_signup(email, name, password, num_stage, pour_stage="0"):
-    print(f"Module 'z_user_modules / do_sign_up': création du user:{email}, {name}, {num_stage}")
+    print(f"Module 'z_user_modules / do_sign_up': création du user:{email}, {name}, stage {num_stage} pour le stage {pour_stage}")
     pwhash = hash_password(password, bcrypt.gensalt())
     user = app_tables.users.get(email=email)
     if user is None:   # user not created yet
@@ -123,7 +123,16 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
                 print("------------------------------------")
                 role_user = "S" # par défaut
         try:        
-            user = app_tables.users.add_row(email=email.lower(),role=role_user, enabled=True, nom=name, password_hash=pwhash, api_key=api, signed_up=date_heure, temp=int(num_stage), temp_for_stage=int(pour_stage))
+            user = app_tables.users.add_row(email=email.lower(),
+                                            role=role_user,
+                                            enabled=True,
+                                            nom=name,
+                                            password_hash=pwhash,
+                                            api_key=api,
+                                            signed_up=date_heure,
+                                            temp=int(num_stage),
+                                            temp_for_stage=int(pour_stage)
+                                           )
             print("création user", user['email'])
             err = None # pas d'erreur
         except Exception as e:

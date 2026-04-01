@@ -41,16 +41,20 @@ class Main(MainTemplate):
         # import anvil.js    # pour screen size: Si tel: 3 data grid 3 rows sinon 8 pour ordinateur
         from anvil.js import window  # to gain access to the window objec
         screen_size = window.innerWidth
-        print("screen: ", screen_size)
+        print("-------------------------Main Menu -------------------------------------")
+        print("screen size: ", screen_size)
         
         # renseignements user 
         self.user = anvil.users.get_user()
         
         if self.user:
             time = French_zone.french_zone_time()
-            print(f"Main menu: time:{time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{'email'}, connected as {self.user['role']}.")
+            print(f"time:{time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{self.user['email']}, connected as {self.user['role']}.")
         else:
             print('AMSDATA on line, user not connected yet')
+        print("-------------------------Fin Main Menu -------------------------------------")
+
+            
         """
         self.bt_se_deconnecter.visible = False
         self.bt_user_mail.enabled = False

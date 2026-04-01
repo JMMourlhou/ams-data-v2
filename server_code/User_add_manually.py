@@ -15,14 +15,14 @@ import uuid   # this library generates codes (API keys for exemple)
 
 @anvil.server.callable
 @anvil.tables.in_transaction
-def new_user(nom, prenom, tel, email, role, signed_up):
+def new_user(nom, prenom, tel, email, role, signed_up, temp=None, temp_for_stage=None):
     err = None
     print(email, nom)
     
     user = app_tables.users.get(email=email)
     if user is None:   # user not created yet
         print("non existant")   
-        pwhash = hash_password("ams34", bcrypt.gensalt())
+        pwhash = hash_password("ams2026", bcrypt.gensalt())
         api = str(uuid.uuid4())   # Création de l'identifiant unique et transformation en chaîne
         
         user = app_tables.users.add_row(email=email.lower(),
@@ -34,7 +34,9 @@ def new_user(nom, prenom, tel, email, role, signed_up):
                                         tel=tel,
                                         password_hash=pwhash,
                                         api_key=api,
-                                        signed_up=signed_up
+                                        signed_up=signed_up,
+                                        temp=int(temp) if temp is not None else None,
+                                        temp_for_stage=int(temp_for_stage) if temp_for_stage is not None else None
                                        )
         print("création user", user['email'])
     else:  # erreur 

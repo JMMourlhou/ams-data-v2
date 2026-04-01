@@ -23,6 +23,70 @@ components:
     name: flow_panel_1
     properties: {align: center}
     type: FlowPanel
+  - components:
+    - layout_properties: {grid_position: 'CQAWUE,FVRPBU'}
+      name: label_1
+      properties: {text: 'Stage auquel appartiendra cet utilisateur :'}
+      type: Label
+    - event_bindings: {change: drop_down_code_stages_change}
+      layout_properties: {grid_position: 'CQAWUE,ISDBWW'}
+      name: drop_down_code_stages
+      properties:
+        align: full
+        background: theme:On Primary Container
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 16
+        foreground: theme:Tertiary
+        include_placeholder: true
+        italic: false
+        items: []
+        placeholder: Sélectionner le stage (facultatif)
+        role: null
+        spacing_above: small
+        spacing_below: small
+        tooltip: ''
+        underline: false
+        visible: true
+      type: DropDown
+    layout_properties: {grid_position: 'HPAGNW,GOPMBU'}
+    name: column_panel_2
+    properties: {col_widths: '{"FVRPBU":17,"ISDBWW":43}'}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'GDSFJY,YZDDFA'}
+      name: label_2
+      properties: {text: Ce tuteur a un stagiaire de ce stage}
+      type: Label
+    - event_bindings: {change: drop_down_code_stages_change}
+      layout_properties: {grid_position: 'GDSFJY,RSKMUN'}
+      name: drop_down_tuteur_pour_quel_stage
+      properties:
+        align: full
+        background: theme:On Primary Container
+        bold: false
+        border: ''
+        enabled: true
+        font: ''
+        font_size: 16
+        foreground: theme:Tertiary
+        include_placeholder: true
+        italic: false
+        items: []
+        placeholder: 'Sélectionner le stage '
+        role: null
+        spacing_above: small
+        spacing_below: small
+        tooltip: ''
+        underline: false
+        visible: true
+      type: DropDown
+    layout_properties: {grid_position: 'WLHFYF,ZVFCWM'}
+    name: column_panel_stage_de_travail_du_tuteur
+    properties: {col_widths: '{"YZDDFA":17,"RSKMUN":43}', visible: false}
+    type: ColumnPanel
   - event_bindings: {change: text_box_nom_change}
     layout_properties: {grid_position: 'EVHQUU,VNKBCQ'}
     name: text_box_nom
@@ -46,7 +110,7 @@ components:
   - event_bindings: {change: text_box_nom_change, pressed_enter: text_box_mail_pressed_enter}
     layout_properties: {grid_position: 'POUMKS,VLAEPT'}
     name: text_box_mail
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: 'Mail      ( mot de passe temp:  am... )', role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', hide_text: false, italic: false, placeholder: 'Mail      ( mot de passe temp:  am***** )', role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
   event_bindings: {}
   layout_properties: {grid_position: 'YJRZCH,SXJUJR'}
