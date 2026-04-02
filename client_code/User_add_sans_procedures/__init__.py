@@ -137,11 +137,11 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             self.column_panel_stage_de_travail_du_tuteur.visible = True
         # initilisation du drop down du stage du tuteur
         self.init_stage_tuteur()
-            
+
+    # initialisation de la drop down tuteur 'pour_stage'
     def init_stage_tuteur(self, **event_args):
-        #==========================================================================================================================================================
-        # initialistaion de la drop down stage du tuteur
         liste1 = app_tables.stages.search(
+            tables.order_by("code_txt", ascending=True),
             tables.order_by("date_debut", ascending=False),
             q.all_of(
                 # ET
@@ -149,7 +149,6 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                 #q.any_of(q.any_of(saisie_satisf_ok=True), q.any_of(saisie_suivi_ok=True)), # saisie_satisf_ok=True  ou saisie_suivi_ok=True
             )
         )
-        
         liste_stages = []
         for stage in liste1:
             liste_stages.append((stage["code"]['code'] + "  #" + str(stage['numero']) + "  du " + str(stage["date_debut"]), stage))
