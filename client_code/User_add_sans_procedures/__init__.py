@@ -14,7 +14,6 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
     def __init__(self, stage_init=None, pour_stage_init=None, role=None, nom="", prenom="", tel="", mail="" ,**properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        alert(role)
         self.text_box_role.text = role
         self.text_box_nom.text = nom
         self.text_box_prenom.text = prenom
@@ -112,9 +111,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert(result)  # user existant
         else:
             alert("Création effectuée !")
-        alert(self.text_box_role.text)
         #                                    Stage du tuteur                            Pour quel stage                                        role du nouveau user 
-        open_form('User_add_sans_procedures',self.drop_down_code_stages.selected_value, self.drop_down_tuteur_pour_quel_stage.selected_value), self.text_box_role.text # pour ne pas à avoir à resélectionner le stage
+        open_form('User_add_sans_procedures',self.drop_down_code_stages.selected_value, self.drop_down_tuteur_pour_quel_stage.selected_value, self.text_box_role.text) # pour ne pas à avoir à resélectionner le stage
 
     def drop_down_code_stages_change(self, **event_args):
         """This method is called when an item is selected"""
