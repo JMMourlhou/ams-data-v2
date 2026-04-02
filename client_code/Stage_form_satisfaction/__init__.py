@@ -71,8 +71,10 @@ class Stage_form_satisfaction(Stage_form_satisfactionTemplate):
        
         
         global user_stagiaire
+        user_stagiaire = anvil.users.get_user()
         if user_stagiaire:
             # Drop down stages inscrits du user
+            print(f"Module Stage_form_satisfaction: user trouvé: {user_stagiaire['email']}")
             liste0 = app_tables.stagiaires_inscrits.search(user_email=user_stagiaire)
             print(f"Formulaire de satisfaction pour {user_stagiaire['nom']}, inscrit dans {len(liste0)} stages")
             liste_drop_d = []

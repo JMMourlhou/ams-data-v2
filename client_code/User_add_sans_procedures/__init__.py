@@ -97,7 +97,7 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             self.text_box_mail.focus()
             return
         
-        result = anvil.server.call("new_user",
+        result, user_row = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
                                    self.text_box_prenom.text.capitalize(),
                                    self.text_box_tel.text,
@@ -111,6 +111,19 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert(result)  # user existant
         else:
             alert("Création effectuée !")
+        # ==========================================================================================================================================   
+        # relecture du user créé
+        user=app_tables.users.get(email=user_row['email'])
+        if not user:
+            alert("User créé non relu en table 'users'")
+            print(f"Module 'User_add_sans_procedurs': User {self.text_box_mail.text.lower()} créé, non relu en table!")
+        # Si j'ai le stage et stage_pour, j'inscris directement le user (tuteur en stage)
+        if (self.drop_down_code_stages.selected_value is not None) and  (self.drop_down_tuteur_pour_quel_stage.selected_value is not None):
+            #                                            row stagiaire       num                                                   code_fi  origine        num stage pour lequel travaille le tuteur  
+            txt_msg = anvil.server.call("add_stagiaire", user,               self.drop_down_code_stages.selected_value["numero"],  'NO',   "bt_recherche", self.drop_down_tuteur_pour_quel_stage.selected_value["numero"])
+            alert(txt_msg)
+        # ==========================================================================================================================================
+       
         #                                    Stage du tuteur                            Pour quel stage                                        role du nouveau user 
         open_form('User_add_sans_procedures',self.drop_down_code_stages.selected_value, self.drop_down_tuteur_pour_quel_stage.selected_value, self.text_box_role.text) # pour ne pas à avoir à resélectionner le stage
 

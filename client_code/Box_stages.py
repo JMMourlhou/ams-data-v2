@@ -19,7 +19,8 @@ class Box_stages(Box_stagesTemplate):
         # Initialisation Drop down des stages que prendra en charge le Tuteur
         self.drop_down_fi.items = [(
                                     r['code_txt']+" / "+str(r['date_debut'])+" / "+str(r['numero']), r) for r in app_tables.stages.search(
-                                    tables.order_by("numero", ascending=False),
+                                    tables.order_by("code_txt", ascending=True),
+                                    tables.order_by("date_debut", ascending=False),
                                     numero = q.less_than(900)
                                    )]
 
@@ -36,7 +37,7 @@ class Box_stages(Box_stagesTemplate):
     def button_ok_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.button_annuler.visible = False
-        #                                            row stagiaire        numero     code_fi     origine      stage pour lequel travaille le tuteur       
+        #                                            row stagiaire       num          code_fi  origine        num stage pour lequel travaille le tuteur       
         txt_msg = anvil.server.call("add_stagiaire", self.stagiaire_row, self.stage,  'NO',   "bt_recherche", self.pour_stage)
         alert(txt_msg)
         open_form('Recherche_stagiaire_v3', self.stage)  # réouvre la forme mère pour mettre à jour l'affichage de l'histo

@@ -42,7 +42,7 @@ def new_user(nom, prenom, tel, email, role, signed_up, temp=None, temp_for_stage
     else:  # erreur 
         print("existant",user['email']) 
         err = "Cet adresse mail est déjà enregistrée !"
-    return err
+    return err, user
 
 def hash_password(password, salt):
     """Hash the password using bcrypt in a way that is compatible with Python 2 and 3."""
