@@ -21,6 +21,7 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
     code_stage = app_tables.stages.get(numero=int(stage))
     if not code_stage :
         valid="Stage non trouvé ds fichier stages !"
+        print("module serveur 'add_stagiaire': Stage non trouvé ds fichier stages !")
         return valid
   
     # lecture fichier père user (lecture différente si vient de création 1ere entrée ou bt_modif en recherche)
@@ -31,9 +32,11 @@ def add_stagiaire(stagiaire_row, stage, mode_fi, type_add="", pour_stage=None): 
     if user:
         if user != stagiaire_row :
             valid="Stagiaire non trouvé ds fichier users !"
+            print("module serveur 'add_stagiaire': Stagiaire différent ds fichier users !")
             return valid
     else:
         valid="User non trouvé ds fichier users !"
+        print("module serveur 'add_stagiaire': Stagiaire non trouvé ds fichier users !")
         return valid
 
     # lecture fichier père mode financemnt (si type_stage) != "T"):

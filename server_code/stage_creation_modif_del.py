@@ -178,13 +178,13 @@ def modif_stage(row_stage,    # row table stages
     # lecture fichier père code stages
     code_stage = app_tables.codes_stages.get(code=row_stage['code']['code'])
     if not code_stage:   
-        alert("Code stage non trouvé ds fichier param Code_stages")
+        print("Code stage non trouvé ds fichier param Code_stages")
         valid=False
         return valid             
     # lecture fichier père lieux
     lieu_stage = app_tables.lieux.get(lieu=lieu)    
     if not lieu_stage :
-        alert("Lieu stage non trouvé ds fichier param lieux")
+        print("Lieu stage non trouvé ds fichier param lieux")
         valid=False
         return valid    
 
