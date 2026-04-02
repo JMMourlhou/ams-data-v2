@@ -29,12 +29,13 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
         # sélection des stages visualisés ds dropdown (si la saisie du formulaire a été authorisée (table 'stages': saisie_suivi_ok=True) ou saisie_satisf_ok=True)
         # initialistaion de la drop down codes suivi des stagiaires
         liste1 = app_tables.stages.search(
-            tables.order_by("date_debut", ascending=False),
-            q.any_of(
-                q.any_of(saisie_suivi_ok=True),
-                q.any_of(saisie_satisf_ok=True)
-            )
-        )
+                                            tables.order_by("code_txt", ascending=True),
+                                            tables.order_by("date_debut", ascending=False),
+                                            q.any_of(
+                                                q.any_of(saisie_suivi_ok=True),
+                                                q.any_of(saisie_satisf_ok=True)
+                                            )
+                                        )
         liste_stage_drop_down_stages = []
         for stage in liste1:
             liste_stage_drop_down_stages.append((stage["code"]['code'] +"  #" + str(stage['numero'])+"  du " + str(stage["date_debut"]), stage))
