@@ -97,7 +97,18 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             alert("Le mail n'a pas le bon format !")
             self.text_box_mail.focus()
             return
-        
+            
+        # Si les drop down ne sont pas utilisées, rique d'erreur en écriture du type ' TypeError: 'NoneType' does not support indexing'
+        if self.drop_down_code_stages.selected_value is not None:
+            content_dropd_code_stages = self.drop_down_code_stages.selected_value["numero"]
+        else:
+            content_dropd_code_stages = None
+            
+        if self.drop_down_tuteur_pour_quel_stage.selected_value is not None:
+            content_dropd_pour_stage = self.drop_down_tuteur_pour_quel_stage.selected_value
+        else:
+            content_dropd_pour_stage = None
+            
         result, user_row = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
                                    self.text_box_prenom.text.capitalize(),
@@ -105,13 +116,14 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                                    self.text_box_mail.text.lower(),
                                    self.text_box_role.text.upper(),
                                    signed_up = French_zone.french_zone_time(),  # importé en ht de ce script
-                                   temp=self.drop_down_code_stages.selected_value["numero"],
-                                   temp_for_stage = self.drop_down_tuteur_pour_quel_stage.selected_value["numero"]
+                                   temp=content_dropd_code_stages,
+                                   temp_for_stage = content_dropd_pour_stage
                                   )
         if result is not None:
             alert(result)  # user existant
         else:
             alert("Création effectuée !")
+            
         # ==========================================================================================================================================   
         # relecture du user créé
         user=app_tables.users.get(email=user_row['email'])

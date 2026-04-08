@@ -1,6 +1,4 @@
-
 import anvil.server
-
 import anvil.tables as tables
 # Pour le calcul de l'heure en France
 from anvil import *  #pour les alertes
@@ -9,7 +7,7 @@ import anvil.tz
 from datetime import datetime
 
 
-#Get the time now, local time FOR CLIENT SIDE (date from browser)
+#Get the time now, local browser time
 def french_zone_time():
     date_time = datetime.now(anvil.tz.tzlocal()) #recup browser time
     #print(type(date_time))
