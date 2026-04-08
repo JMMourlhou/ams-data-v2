@@ -190,11 +190,10 @@ class Saisie_info_de_base(Saisie_info_de_baseTemplate):
                 return  
                 
             # Stage non type formateur: Si mode de financemt non sélectionné alors que 1ere saisie de la fiche renseignemnt
-            """
-            if self.drop_down_fi.selected_value is None and self.first_entry is True: 
+            if self.drop_down_fi.selected_value is None and self.first_entry is True and user['role']=="S": 
                 AlertHTML.error("Mode de Financemnet :", "Entrez le mode de financement !")
                 return
-            """
+            
         
         if self.check_box_accept_data_use.checked is not True:
             r = AlertConfirmHTML.ask(
