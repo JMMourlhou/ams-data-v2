@@ -314,6 +314,6 @@ components:
   type: ColumnPanel
 container:
   event_bindings: {}
-  properties: {background: '', col_widths: '{}'}
+  properties: {background: 'theme:Primary', col_widths: '{}'}
   type: ColumnPanel
 is_package: true
