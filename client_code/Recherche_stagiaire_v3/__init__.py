@@ -202,8 +202,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         if self.drop_down_num_stages.selected_value is not None:  # si drop down date sélectionnée
             liste = self.liste_date
         else:
-            if self.drop_down_code_stage.selected_value == "PSE1":
-                alert(self.drop_down_code_stage.selected_value)
+            row = self.drop_down_code_stage.selected_value
+            if row['code'] == "PSE1":
+                alert("envoi au module de sélection")
             else:
                 liste = self.liste_type_stage  # sinon je prends la liste par type de stage (PSE1, PSE2...)
 
