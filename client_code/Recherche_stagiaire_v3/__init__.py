@@ -199,20 +199,17 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_mail_to_all_click(self, **event_args):
         """This method is called when the button is clicked"""
-        if (
-            self.drop_down_num_stages.selected_value is not None
-        ):  # si drop down date sélectionnée
+        if self.drop_down_num_stages.selected_value is not None:  # si drop down date sélectionnée
             liste = self.liste_date
         else:
-            liste = (
-                self.liste_type_stage
-            )  # sinon je prends la liste par type de stage (PSE1, PSE2...)
+            if self.drop_down_code_stage.selected_value == "PSE1":
+                alert(self.drop_down_code_stage.selected_value)
+            else:
+                liste = self.liste_type_stage  # sinon je prends la liste par type de stage (PSE1, PSE2...)
 
         liste_email = []
         for stagiaire in liste:
-            liste_email.append(
-                (stagiaire["user_email"]["email"], stagiaire["prenom"], "")
-            )  # 3 infos given, "" indique qu'il ny a pas d'id (cas des olds stgiaires)
+            liste_email.append((stagiaire["user_email"]["email"], stagiaire["prenom"], ""))  # 3 infos given, "" indique qu'il ny a pas d'id (cas des olds stgiaires)
 
         # 'formul' indique l'origine, ici 'formulaire de satisfaction'
         open_form("Mail_subject_attach_txt", liste_email, "stagiaire_tous")
