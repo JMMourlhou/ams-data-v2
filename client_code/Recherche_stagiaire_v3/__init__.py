@@ -203,8 +203,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             liste = self.liste_date
         else:
             row = self.drop_down_code_stage.selected_value
-            if row['code'] == "PSE1":
-                alert("envoi au module de sélection")
+            if row['code'] == "PSE1":  # l'utilisateur a choisi les PSE1 pour envoi de mails, je retire ceux qui font parti des PSE2 égalemnt
+                liste=self.selection_pse1_only(self.liste_type_stage)
             else:
                 liste = self.liste_type_stage  # sinon je prends la liste par type de stage (PSE1, PSE2...)
 
@@ -214,7 +214,21 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
         # 'formul' indique l'origine, ici 'formulaire de satisfaction'
         open_form("Mail_subject_attach_txt", liste_email, "stagiaire_tous")
+        
+    def selection_pse1_only(self, liste_pse_a_tester):
+        # l'utilisateur a choisi les PSE1 pour envoi de mails, je retire ceux qui font parti des PSE2 égalemnt
 
+        # je crée la liste des PSE2
+        liste_pse2= [
+            (r["user_email"], r)
+            for r in app_tables.stagiaires_inscrits.search(stage_txt="PSE2")
+        ]
+
+        liste_pse1_only = []
+        for stagiaire_pse1 in liste_pse_a_tester:
+            if stagiaire_pse1[''] not in liste_pse2:
+                liste_pse1_only.append()
+        
     def button_trombi_click(self, **event_args):
         """This method is called when the button is clicked"""
         from ..Visu_trombi import Visu_trombi
