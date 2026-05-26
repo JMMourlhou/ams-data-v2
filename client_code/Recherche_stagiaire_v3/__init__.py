@@ -219,8 +219,6 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # L'utilisateur a choisi les PSE1 pour envoi de mails.
         # On retire ceux qui sont aussi inscrits en PSE2.
     
-        print("selection_pse1_only")
-    
         # Recherche des lignes PSE2 dans la table
         rows_pse2 = app_tables.stagiaires_inscrits.search(stage_txt="PSE2")
         # rows_pse2 n'est pas une liste : c’est un SearchIterator Anvil. Donc je ne peux pas utiliser append mais add
@@ -230,15 +228,15 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             mail = stagiaire_pse2['user_email']['email']
             if mail:
                 mails_pse2.add(mail)
-        
+        """
         print("Mails PSE2 trouvés :")
         for mail in mails_pse2:
             print(mail)
-    
+        """
         # Création de la liste finale : PSE1 seulement, sans ceux qui sont aussi PSE2
         liste_pse1_only = []
         for stagiaire_pse1 in liste_pse_a_tester:
-            mail_pse1 = stagiaire_pse1['user_email'][]
+            mail_pse1 = stagiaire_pse1['user_email']['email']
             if not mail_pse1: # si vide, on passe cette boucle
                 continue 
     
