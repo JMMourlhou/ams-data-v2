@@ -216,18 +216,37 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         open_form("Mail_subject_attach_txt", liste_email, "stagiaire_tous")
         
     def selection_pse1_only(self, liste_pse_a_tester):
-        # l'utilisateur a choisi les PSE1 pour envoi de mails, je retire ceux qui font parti des PSE2 égalemnt
-
-        # je crée la liste des PSE2
-        liste_pse2= [
-            (r["user_email"], r)
-            for r in app_tables.stagiaires_inscrits.search(stage_txt="PSE2")
-        ]
-
+        # L'utilisateur a choisi les PSE1 pour envoi de mails.
+        # On retire ceux qui sont aussi inscrits en PSE2.
+    
+        print("selection_pse1_only")
+    
+        # Recherche des lignes PSE2 dans la table
+        rows_pse2 = app_tables.stagiaires_inscrits.search(stage_txt="PSE2")
+        # rows_pse2 n'est pas une liste : c’est un SearchIterator Anvil. Donc je ne peux pas utiliser append mais add
+        # Création d'une liste/set contenant uniquement les mails des PSE2
+        mails_pse2 = set()
+        for stagiaire_pse2 in rows_pse2:
+            mail = stagiaire_pse2['user_email']['email']
+            if mail:
+                mails_pse2.add(mail)
+        
+        print("Mails PSE2 trouvés :")
+        for mail in mails_pse2:
+            print(mail)
+    
+        # Création de la liste finale : PSE1 seulement, sans ceux qui sont aussi PSE2
         liste_pse1_only = []
         for stagiaire_pse1 in liste_pse_a_tester:
-            if stagiaire_pse1[''] not in liste_pse2:
-                liste_pse1_only.append()
+            mail_pse1 = stagiaire_pse1['user_email'][]
+            if not mail_pse1: # si vide, on passe cette boucle
+                continue 
+    
+            if mail_pse1 not in mails_pse2:
+                liste_pse1_only.append(stagiaire_pse1)
+    
+        print("Nombre de PSE1 uniquement :", len(liste_pse1_only))
+        return liste_pse1_only
         
     def button_trombi_click(self, **event_args):
         """This method is called when the button is clicked"""
