@@ -451,5 +451,42 @@ class Diplomes_nb(Diplomes_nbTemplate):
 
         """
 
+    
+    def button_xls_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if not self.date_deb or not self.date_fin:
+            AlertHTML.error("Erreur :", "Choisis d'abord une date de début et une date de fin.")
+            return
+    
+        if self.date_fin < self.date_deb:
+            AlertHTML.error("Erreur :", "La date de fin est inférieure à la date de début !")
+            return
+    
+        grouped, total_global = self._get_diplomes_grouped_by_centre(
+            self.date_deb,
+            self.date_fin
+        )
+    
+        if total_global == 0:
+            AlertHTML.error("Info :", "Aucun diplôme édité sur cette période.")
+            return
+    
+        date_deb_txt = self.date_deb.strftime("%d/%m/%Y")
+        date_fin_txt = self.date_fin.strftime("%d/%m/%Y")
+    
+        with anvil.server.no_loading_indicator:
+            media_file, file_xls_name, message = anvil.server.call(
+                "export_diplomes_nb_xls",
+                grouped,
+                total_global,
+                date_deb_txt,
+                date_fin_txt
+            )
+    
+        if media_file:
+            anvil.media.download(media_file)
+        else:
+            alert("Erreur lors de la génération du fichier Excel")
+
    
 
