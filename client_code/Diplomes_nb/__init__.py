@@ -260,11 +260,13 @@ class Diplomes_nb(Diplomes_nbTemplate):
             self.label_total_txt.visible = True
             self.data_grid_1.visible = True
             self.button_pdf.visible = True
+            self.button_xls.visible = True
             self.repeating_panel_1.visible = True
             self.repeating_panel_1.items = liste1
         else:
             self.label_total_txt.visible = False
             self.data_grid_1.visible = False
+            self.button_xls.visible = False
                 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
