@@ -263,6 +263,7 @@ class Diplomes_nb(Diplomes_nbTemplate):
             self.button_xls.visible = True
             self.repeating_panel_1.visible = True
             self.repeating_panel_1.items = liste1
+            self.button_validation.visible = False
         else:
             self.label_total_txt.visible = False
             self.data_grid_1.visible = False
@@ -272,7 +273,6 @@ class Diplomes_nb(Diplomes_nbTemplate):
         """This method is called when the button is clicked"""
         from ..Main import Main
         open_form('Main',99) 
-
 
 
 
