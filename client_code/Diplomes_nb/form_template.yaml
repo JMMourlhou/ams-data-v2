@@ -64,6 +64,11 @@ components:
       name: button_annuler
       properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Retour, tooltip: '', underline: false, visible: true}
       type: Button
+    - event_bindings: {click: button_pdf_click}
+      layout_properties: {}
+      name: button_xls
+      properties: {align: center, background: 'theme:On Primary Container', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:Tertiary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: none, spacing_below: none, text: Excel, tooltip: '', underline: false, visible: false}
+      type: Button
     layout_properties: {grid_position: 'WWFRLO,QWIUMR'}
     name: flow_panel_1
     properties:
