@@ -870,7 +870,7 @@ db_schema:
       name: prenom
       type: string
     - admin_ui: {order: 3, width: 138}
-      client_hidden: true
+      client_hidden: false
       name: password_hash
       type: string
     - admin_ui: {order: 3.5, width: 115}
@@ -916,7 +916,7 @@ db_schema:
       name: commentaires
       type: string
     - admin_ui: {order: 22, width: 200}
-      client_hidden: true
+      client_hidden: false
       name: accept_data
       type: bool
     - admin_ui: {width: 200}
