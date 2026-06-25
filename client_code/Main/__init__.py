@@ -6,6 +6,7 @@ import anvil.tables.query as q
 
 from .. import Test_si_stage_avec_formulaire
 from .. import French_zone
+from .. import Test_nb_pw_failures
 from ..Saisie_info_de_base import Saisie_info_de_base
 from ..Stage_creation import Stage_creation
 from ..Visu_stages.RowTemplate3 import RowTemplate3
@@ -46,10 +47,17 @@ class Main(MainTemplate):
         
         # renseignements user 
         self.user = anvil.users.get_user()
-        
+            
         if self.user:
             time = French_zone.french_zone_time()
             print(f"time:{time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{self.user['email']}, connected as {self.user['role']}.")
+            if self.user['role']=='A':
+                result, liste = Test_nb_pw_failures.test_pw_failures()
+                if result is True and len(liste)>0:
+                    alert(f"Attention, {len(liste)} user en login failure !\n Bloqué après 10 essais.\n\nAller en Paramètres/users")
+                    
+                if result is False:
+                    alert(f"Erreur en test nb de pw failures: {str(liste)}")
         else:
             print('AMSDATA on line, user not connected yet')
         print("-------------------------Fin Main Menu -------------------------------------")
