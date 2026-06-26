@@ -18,7 +18,9 @@ def test_pw_failures():
             print(f"ATTENTION: {len(liste)} user(s) blocked:")
             for u in liste:
                 print(f"{u['prenom']} {u['nom']}, mail: {u['email']}")
-                print()
+        else:
+            print("No user blocked !")
+        print()
         return True, liste       
     except Exception as e:
         return False, str(e)
