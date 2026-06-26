@@ -200,10 +200,10 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         self.text_box_date.text = ""
         self.text_box_lieu.text = ""
         
-        c_mot_clef = self.text_box_mot_clef.text
-        c_mot_clef = c_mot_clef + "%"            #  wildcard search on mot clef
+        c_mot_clef = (self.text_box_mot_clef.text or "").strip()
+        c_recherche = f"%{c_mot_clef}%"            #  wildcard search on mot clef
         liste = app_tables.events.search(tables.order_by("mot_clef", ascending=True),
-                                        mot_clef=q.ilike(c_mot_clef),
+                                        mot_clef=q.ilike(c_recherche),
                                         type_event=type_evenement
                                         )
         self.repeating_panel_1.items=liste
@@ -219,10 +219,12 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
             
         self.text_box_date.text = ""
         self.text_box_mot_clef.text = ""
+
         
-        c_lieu = self.text_box_lieu.text + "%"            #  wildcard search on date
+        c_lieu = (self.text_box_lieu.text or "").strip()            #  wildcard search on lieu
+        recherche_lieu = "%" + c_lieu + "%"            #  wildcard search on lieu
         liste = app_tables.events.search(tables.order_by("lieu", ascending=True),
-                                        lieu_text=q.ilike(c_lieu),
+                                        lieu_text=q.ilike(recherche_lieu),
                                         type_event=type_evenement
                                         )
         self.repeating_panel_1.items=liste

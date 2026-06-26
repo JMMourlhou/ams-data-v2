@@ -244,7 +244,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     
     def text_area_commentaires_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
-        #self.button_validation.visible = True
+        # self.button_validation.visible = True
         # self.button_validation_1.visible = True
     
 
