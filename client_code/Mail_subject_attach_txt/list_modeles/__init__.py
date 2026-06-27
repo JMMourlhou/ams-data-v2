@@ -126,7 +126,7 @@ class list_modeles(list_modelesTemplate):
             self.f.button_validation_click("modif",sender.text) 
     
     """
-    
+
 
 
 

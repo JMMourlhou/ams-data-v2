@@ -71,6 +71,6 @@ components:
     wrap_on: never
   type: ColumnPanel
 container:
-  event_bindings: {show: form_show}
+  event_bindings: {}
   type: ColumnPanel
 is_package: true
