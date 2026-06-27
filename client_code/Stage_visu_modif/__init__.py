@@ -353,6 +353,20 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
         n.show()
         open_form('Recherche_stagiaire_v3',num_stage)
 
+
+    def  button_sending_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # Stagiaires ds le stage ?
+        liste_stagiaires = app_tables.stagiaires_inscrits.search(numero=int(self.text_box_num_stage.text))
+        if liste_stagiaires:
+            liste_email = []
+            for stagiaire in liste_stagiaires:
+                liste_email.append((stagiaire["user_email"]["email"], stagiaire["prenom"], ""))   # 3 infos given, "" indique qu'il ny a pas d'id (cas des olds stgiaires)
+
+            # 'formul' indique l'origine, ici 'formulaire de satisfaction'
+            open_form("Mail_subject_attach_txt",  liste_email, 'stagiaire_tous')
+
+
     
         
 

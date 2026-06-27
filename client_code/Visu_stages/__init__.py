@@ -17,6 +17,9 @@ class Visu_stages(Visu_stagesTemplate):
         self.init_components(**properties)
         # Any code you write here will run before the form opens.    
         
+        # Drop down codes stages
+        self.drop_down_code_stage.items = [(r['code'], r) for r in app_tables.codes_stages.search(tables.order_by("code", ascending=True))]
+        
         # Initialisation de la liste des stages à afficher
         self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
         # si le role du user n'est pas 'O' (CREPS ...), je peux afficher tous les stages
@@ -44,6 +47,26 @@ class Visu_stages(Visu_stagesTemplate):
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
         self.column_panel_header.scroll_into_view()
+        
+    def drop_down_code_stage_change(self, **event_args):
+        """This method is called when an item is selected"""
+        # Initialisation de la liste des stages à afficher
+        self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
+        # si le role du user n'est pas 'O' (CREPS ...), je peux afficher tous les stages
+        user=anvil.users.get_user()
+        code_stage = self.drop_down_code_stage.selected_value
+        if code_stage is None:
+            return
+        if user['role'] != 'O':
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                   code=code_stage)   
+        else:
+            # récupération du centre du user
+            centre = user['centre']
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                    lieu=centre
+                                                   )
+        self.repeating_panel_1.items = liste_stages
 
 
 
