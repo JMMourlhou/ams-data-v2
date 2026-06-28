@@ -43,6 +43,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
     def button_add_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.column_panel_add_modif.visible = True
+        self.content_panel_events_rows.visible = False
         self.call_word_editor("Entrer le texte ici", 'creation')
     
 
@@ -252,16 +253,12 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         else:   # non
             pass
         open_form("Evenements_types_MAJ_table_v2")
-
-
-    
+        
     # Retour
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from ..Parametres import Parametres
+        #from ..Parametres import Parametres
         open_form("Parametres")   
-
-    
 
     
  

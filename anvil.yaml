@@ -184,7 +184,8 @@ db_schema:
     - admin_ui: {order: 0.5, width: 200}
       name: msg_0
       type: string
-    - admin_ui: {order: -1, width: 117}
+    - admin_ui: {order: -1, width: 111}
+      client_hidden: false
       name: code
       type: number
     - admin_ui: {order: 3, width: 200}

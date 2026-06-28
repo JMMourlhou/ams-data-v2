@@ -178,10 +178,16 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         self.text_area_notes.text = self.type_row["text_initial"]  # col text_initial table Event_types
         
         self.text_area_mot_clef.text = ""
+        m_clef_debut = self.drop_down_event.selected_value['type'].capitalize()
+        m_clef_fin = ""
+        if self.drop_down_event.selected_value['code'] != 3: # si evnt différent d'une réunion d'équipe
+            m_clef_fin = " avec "
         if self.type_row["mot_clef_setup"] is True:
-            self.text_area_mot_clef.text = f"Réunion du {date}"
+            self.text_area_mot_clef.text = f"{m_clef_debut} du {date} {m_clef_fin}"
         else:
-            self.text_area_mot_clef.text = self.type_row['type'].capitalize()
+            self.text_area_mot_clef.text = f"{m_clef_debut} {m_clef_fin}"
+            
+        self.text_area_mot_clef.focus()
         self.call_word_editor(self.type_row["text_initial"]) # Appel du Word Editor avec texte initial (fonction utilisée aussi pour 'modif')
 
     """
