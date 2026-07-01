@@ -282,6 +282,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         critere = self.text_box_nom.text + "%"  #  wildcard search on date
         liste = app_tables.users.search(
             tables.order_by("nom", ascending=True),
+            tables.order_by("prenom", ascending=True),
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             nom=q.ilike(critere),
         )
@@ -323,6 +324,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         critere = self.text_box_role.text + "%"  #  wildcard search on role
         liste = app_tables.users.search(
             tables.order_by("role", ascending=True),
+            tables.order_by("nom", ascending=True),
             q.fetch_only("role", "nom", "prenom", "tel", "email"),
             role=q.ilike(critere),
         )
