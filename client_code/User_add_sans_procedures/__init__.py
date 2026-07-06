@@ -109,12 +109,13 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
         else:
             content_dropd_pour_stage = None
 
-        tel_striped
-            
+        tel_no_space = self.text_box_tel.text
+        tel_no_space = tel_no_space.replace(" ", "")
+
         result, user_row = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
                                    self.text_box_prenom.text.capitalize(),
-                                   self.text_box_tel.text,
+                                   tel_no_space,
                                    self.text_box_mail.text.lower(),
                                    self.text_box_role.text.upper(),
                                    signed_up = French_zone.french_zone_time(),  # importé en ht de ce script
@@ -123,6 +124,7 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                                   )
         if result is not None:
             alert(result)  # user existant
+            return
         else:
             alert("Création effectuée !")
             
