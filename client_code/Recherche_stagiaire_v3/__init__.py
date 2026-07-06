@@ -169,9 +169,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # from ..Main import Main
-        # open_form('Main',99)
-        open_form(self.f)
+        from ..Main import Main
+        open_form('Main',99)
+        #open_form(self.f)
 
     def button_efface_click(self, **event_args):  # # j'efface les critères
         """This method is called when the button is clicked"""
