@@ -108,6 +108,8 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
             content_dropd_pour_stage = self.drop_down_tuteur_pour_quel_stage.selected_value
         else:
             content_dropd_pour_stage = None
+
+        tel_striped
             
         result, user_row = anvil.server.call("new_user",
                                    self.text_box_nom.text.capitalize(),
