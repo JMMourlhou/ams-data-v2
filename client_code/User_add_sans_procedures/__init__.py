@@ -124,6 +124,7 @@ class User_add_sans_procedures(User_add_sans_proceduresTemplate):
                                   )
         if result is not None:
             alert(result)  # user existant
+            self.text_box_mail.focus()
             return
         else:
             alert("Création effectuée !")
