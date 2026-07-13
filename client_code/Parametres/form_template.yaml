@@ -88,7 +88,7 @@ components:
       - event_bindings: {click: button_gestion_pre_requis_personnel_click}
         layout_properties: {grid_position: 'EJYPOE,YWLHPO'}
         name: button_gestion_pre_requis_personnel
-        properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '... par Utilisateur', tooltip: '', underline: false, visible: true}
+        properties: {align: center, background: 'theme:Primary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: '... par l''utilisateur', tooltip: '', underline: false, visible: true}
         type: Button
       layout_properties: {grid_position: 'TWFRBK,HQEJCA'}
       name: column_panel_9
