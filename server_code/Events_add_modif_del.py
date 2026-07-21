@@ -18,7 +18,9 @@ from anvil import *  #pour les alertes
 # id du row = not None si sauvegarde auto, contient le id_row à modifier (sauf si c'est la 1ere sauvegarde)
 # auto_sov  = # False si bt validation utilisé   /   True si sauvegarde auto lancée par timer2, ts les 15 secondes
 def add_event(id, auto_sov, type_event, row, date_time, lieu_row, lieu_txt, note, img_1, img_2, img_3, writing_date_time, mot_clef):
-    
+    if auto_sov
+    indicator = anvil.server.loading_indicator()
+    indicator.start()
     #   id = None, indique que c'est une premiere sauvegarde, j'utilise .add_row
     if id is None:
         try:
