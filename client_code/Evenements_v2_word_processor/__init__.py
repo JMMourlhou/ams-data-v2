@@ -341,6 +341,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.button_rotation_1.visible = True
             self.button_del_1.visible = True
             self.button_visu_1.visible = True
+            self.button_validation.visible = True
 
     def file_loader_2_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -360,6 +361,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.button_rotation_2.visible = True
             self.button_del_2.visible = True
             self.button_visu_2.visible = True
+            self.button_validation.visible = True
 
     def file_loader_3_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
@@ -379,6 +381,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
             self.button_rotation_3.visible = True
             self.button_del_3.visible = True
             self.button_visu_3.visible = True
+            self.button_validation.visible = True
 
     # POur afficher OK et Retour en FRancais (calendrier)
     # Cette méthode se lance qd le date_picker component s'affiche
