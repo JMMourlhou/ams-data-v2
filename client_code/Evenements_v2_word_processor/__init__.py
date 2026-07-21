@@ -241,17 +241,22 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     def timer_text_backup(self, sender, **event_args):
         """This method is called Every 15 seconds. Does not trigger if [interval] is 0."""
         # Toutes les 15 secondes, sauvegarde auto, self.id contient l'id du row qui est en cours de saisie
+        self.text_sent = sender.text
         with anvil.server.no_loading_indicator:
             self.validation(True, self.id, sender.text)  # auto sov: TRUE
+            
 
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
+        try:
+            text = self.texte_a_sauver
+        except: # si rien n'a été enore modifié dans le texte
+            self.texte_a_sauver = self.text_sent 
         self.validation(False, self.id, self.texte_a_sauver)  # auto sov: TRUE
     
     def text_area_commentaires_change(self, **event_args):
         """This method is called when the text in this text area is edited"""
-        # self.button_validation.visible = True
-        # self.button_validation_1.visible = True
+        self.button_validation.visible = True
     
 
     # validation:   auto_sov True si sauvegarde auto tte les 1", appelé par timer_2_tick
@@ -286,6 +291,9 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         date_sov = str(self.date_picker_1.date)
         date_sov = date_sov[0:16]
         date_sov = date_sov.replace("-", " ")
+        if auto_sov is False:
+            indicator = anvil.server.loading_indicator()
+            indicator.start()   # sauvegarde par clique normal: afficher le loading indicator
         result, self.id = anvil.server.call(
             "add_event",
             self.id,  # row id   pour réécrire le row en auto sov tt les 15"
@@ -310,6 +318,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         if auto_sov is False:
             # sortie normale
             # renvoyer le type d'évenemnt actuel: row event_types
+            indicator.stop()  # ne plus afficher le loading indicator
             from ..Evenements_visu_modif_del import Evenements_visu_modif_del
             open_form("Evenements_visu_modif_del", row)
 
