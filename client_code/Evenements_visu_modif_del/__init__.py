@@ -62,9 +62,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
             open_form('Evenements_v2_word_processor')
             
         # VOIR UN EVENEMNT    
-        #type_evenement = self.type_row['type']
-        type_evenement = str(self.type_row['code'])
-        self.test_non_valid(type_evenement)  # affiche en rouge le check box erreur de validation 
+        self.test_non_valid(self.type_row)  # affiche en rouge le check box erreur de validation 
             
         # Acquisition du check box: Affiche les erreurs de sauvegardes
         # visu_des_erreurs = self.check_box_visu_erreurs.checked
@@ -73,7 +71,6 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         #      ( venant de sorties incontrolées par fermetures defenêtres ou appuis sur la touche gauche du tel)
         liste = app_tables.events.search(tables.order_by("date", ascending=False),
                                         #auto_sov=visu_des_erreurs, # ----------------------------  MODIF pour simplifier
-                                        #type_event=type_evenement
                                         event_typ = self.type_row
                                         )
         self.repeating_panel_1.items=liste
@@ -240,7 +237,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
     def test_non_valid(self, type_evenement):
         liste_rows_non_valide = app_tables.events.search(
                                                         auto_sov=True, 
-                                                        type_event=type_evenement
+                                                        event_typ=type_evenement
                                                         )
         if len(liste_rows_non_valide)>0:
             self.check_box_visu_erreurs.background = "theme:Error"

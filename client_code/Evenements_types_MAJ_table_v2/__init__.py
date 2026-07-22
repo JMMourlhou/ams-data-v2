@@ -13,7 +13,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
     def __init__(self, **properties):  
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        
+        self.ajout = "modif"
         # Any code you write here will run before the form opens.
         self.text_box_1.placeholder = "Nom du nouveau type d'évenement"
         self.text_box_3.placeholder = "1er message ex: 'Nouvel xxx'"
@@ -45,6 +45,7 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         self.column_panel_add_modif.visible = True
         self.content_panel_events_rows.visible = False
         self.call_word_editor("Entrer le texte ici", 'creation')
+        self.ajout = "creation"
     
 
     # ==========================================================================================================
@@ -122,7 +123,11 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form (modif du text de base de l'évènement)
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text
-        mode = self.param1       # mode 'modif' /  'creation' 
+        try:
+            mode = self.param1       # mode 'modif' /  'creation'
+        except:
+            mode = self.ajout
+            
         #self.text = sender.text    # texte html de lévenement
         if mode == "modif":
             self.ecriture_en_modif()
@@ -260,5 +265,17 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         #from ..Parametres import Parametres
         open_form("Parametres")   
 
+    
+    def text_box_1_change(self, **event_args):
+        self.button_validation.visible = True
+
+    def text_box_2_change(self, **event_args):
+        self.button_validation.visible = True
+
+    def text_box_3_change(self, **event_args):
+        self.button_validation.visible = True
+        
+    def text_box_4_change(self, **event_args):
+        self.button_validation.visible = True
     
  
