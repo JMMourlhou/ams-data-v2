@@ -203,7 +203,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         c_recherche = f"%{c_mot_clef}%"            #  wildcard search on mot clef
         liste = app_tables.events.search(tables.order_by("mot_clef", ascending=True),
                                         mot_clef=q.ilike(c_recherche),
-                                        type_event=type_evenement
+                                        =type_evenement
                                         )
         self.repeating_panel_1.items=liste
     
