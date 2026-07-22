@@ -241,6 +241,9 @@ class Main(MainTemplate):
                 self.outlined_card_niv1.visible = True          # ds le panneau priv niveau 1 ...
                 self.column_panel_formulaires.visible = False      
                 self.button_create_qcm.visible = False
+                self.button_mails.visible = False
+                self.button_add_user.visible = False
+                self.button_nb_diplomes.visible = False
                 self.button_create_recherche.visible = True     # faire une recherche
                 self.button_events.visible = True         # Saisir et voir les évenemnts
 
