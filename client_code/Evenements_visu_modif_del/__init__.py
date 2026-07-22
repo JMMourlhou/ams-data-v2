@@ -194,7 +194,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
     # avnt l'écriture du row, Il a fallu faire un strip sur le mot clé pour enlever cet espace !!! 
     def text_box_mot_clef_focus(self, **event_args):
         """This method is called when the TextBox gets focus"""
-        type_evenement = self.type_row['type']
+        #type_evenement = self.type_row['type']
         
         self.text_box_date.text = ""
         self.text_box_lieu.text = ""
@@ -203,7 +203,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         c_recherche = f"%{c_mot_clef}%"            #  wildcard search on mot clef
         liste = app_tables.events.search(tables.order_by("mot_clef", ascending=True),
                                         mot_clef=q.ilike(c_recherche),
-                                        =type_evenement
+                                        event_typ=self.type_row
                                         )
         self.repeating_panel_1.items=liste
     
