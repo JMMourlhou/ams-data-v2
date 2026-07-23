@@ -152,7 +152,7 @@ components:
   - event_bindings: {change: date_naissance_change}
     layout_properties: {grid_position: 'RMUWJH,XVURWU'}
     name: date_naissance
-    properties: {align: left, background: 'theme:Primary', bold: false, border: '', date: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: 01 01 2010, min_date: 01 01 1900, pick_time: false, placeholder: JJMMAAAA, role: outlined, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
+    properties: {align: left, background: 'theme:Primary', bold: false, border: '', date: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Primary', format: '%d %m %Y', italic: false, max_date: 01 01 2015, min_date: 01 01 1900, pick_time: false, placeholder: JJMMAAAA, role: outlined, spacing_above: none, spacing_below: none, tooltip: '', underline: false, visible: true}
     type: DatePicker
   - event_bindings: {change: text_box_ville_naissance_change}
     layout_properties: {grid_position: 'RMUWJH,FOAKZS'}

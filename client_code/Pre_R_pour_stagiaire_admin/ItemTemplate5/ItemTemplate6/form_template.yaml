@@ -71,10 +71,10 @@ components:
         name: button_del
         properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
         type: Button
-      - event_bindings: {change: date_picker_pre_requis_change}
+      - event_bindings: {change: date_picker_1_change, show: date_picker_1_show}
         layout_properties: {}
-        name: date_picker_pre_requis
-        properties: {}
+        name: date_picker_1
+        properties: {format: '%d/%m/%Y', visible: false}
         type: DatePicker
       - event_bindings: {click: button_search_click}
         layout_properties: {}

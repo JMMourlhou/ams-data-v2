@@ -28,6 +28,11 @@ class ItemTemplate6(ItemTemplate6Template):
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
 
+        # lecture de la table Mère Pre_Requis pour afficher ou non la date d'expiration
+        if self.item['item_requis']['Expiration'] is True:
+            self.date_picker_1.visible = True
+            self.date_picker_1.date = self.item['date_expiration']
+
         if self.item['doc1'] is not None:
             self.image_1.source = self.item['doc1']
             self.button_del.visible = True
@@ -284,9 +289,23 @@ class ItemTemplate6(ItemTemplate6Template):
         else:
             alert(f"Pas de doc '{self.item['item_requis']['code_pre_requis'].strip()}' trouvé dans les stages AMS précédents")
 
-    def date_picker_pre_requis_change(self, **event_args):
+
+    # POur afficher OK et Retour en FRancais (calendrier)
+    # Cette méthode se lance qd le date_picker component s'affiche
+    def date_picker_1_show(self, **event_args):
+        from .... import Boutons_Calendriers_Fr
+        Boutons_Calendriers_Fr.traduire_boutons_calendrier()
+        
+    def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
-        pass  # Write Code Here
+        date_selectionnee = self.date_picker_1.date
+        if date_selectionnee is not None:
+            print(date_selectionnee)
+        else:
+            print("Aucune date sélectionnée")
+
+        # Sauvegarde
+        
 
 
 

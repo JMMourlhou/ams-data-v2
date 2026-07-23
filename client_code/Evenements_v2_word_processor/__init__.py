@@ -28,6 +28,7 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        
         self.f = get_open_form()
         # origine n'est pas vide si cette forme a été appelée en modification (click sur une row en Evenements_visu_modif_del)
         #    permet de tester l'origine si BT annuler est cliqué
@@ -395,14 +396,9 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
     # POur afficher OK et Retour en FRancais (calendrier)
     # Cette méthode se lance qd le date_picker component s'affiche
     def date_picker_1_show(self, **event_args):
-        # Change les bt 'apply' en 'Valider'
-        from anvil.js.window import document
-
-        for btn in document.querySelectorAll(".daterangepicker .applyBtn"):
-            btn.textContent = "Ok"
-        for btn in document.querySelectorAll(".daterangepicker .cancelBtn"):
-            btn.textContent = "Retour"
-
+        from .. import Boutons_Calendriers_Fr
+        Boutons_Calendriers_Fr.traduire_boutons_calendrier()
+        
     
     # Initialisation du préfixe du nom du fichier img
     def nom_img(self, num_img_txt):
@@ -478,10 +474,6 @@ class Evenements_v2_word_processor(Evenements_v2_word_processorTemplate):
         #self.button_validation.visible = True
 
     # =================================================================================================  RAISED EVENTS TREATMENTS
-    
-
-            
-   
     # Event raised: BOUTON VALIDATION / Bt 'Fin' was clicked in Word_editor form
     def handle_click_fin_saisie(self, sender, **event_args):
         # sender.text contains the 'Word_editor'form's HTML text

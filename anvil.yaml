@@ -362,6 +362,11 @@ db_schema:
     - admin_ui: {order: 3, width: 200}
       name: order
       type: string
+    - admin_ui: {order: 4, width: 159}
+      client_hidden: false
+      name: Expiration
+      type: bool
+    indexes: []
     server: full
     title: Pre_Requis
   pre_requis_stagiaire:
@@ -394,18 +399,26 @@ db_schema:
       name: item_requis
       target: pre_requis
       type: link_single
-    - admin_ui: {width: 261}
+    - admin_ui: {order: 5.75, width: 185}
+      client_hidden: false
       name: requis_txt
       type: string
     - admin_ui: {order: 6, width: 213}
       name: doc1
       type: media
-    - admin_ui: {order: 8.5, width: 200}
+    - admin_ui: {order: 8.5, width: 121}
+      client_hidden: false
       name: thumb
       type: media
-    - admin_ui: {order: 9.5, width: 200}
+    - admin_ui: {order: 9.5, width: 131}
+      client_hidden: false
       name: size
       type: number
+    - admin_ui: {order: 10.5, width: 136}
+      client_hidden: false
+      name: date_expiration
+      type: date
+    indexes: []
     server: full
     title: Pre_Requis_stagiaire
   qcm:

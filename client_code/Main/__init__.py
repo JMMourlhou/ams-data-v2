@@ -17,19 +17,65 @@ from ..z_user_pw_reset import z_user_pw_reset
 from ..z_user_new_account import z_user_new_account
 from .. import z_user_url_from_mail
 
-#-------------------------------------------------------------------
-# Pour mettre au format Francais les calendriers
+# ---------------------------------------------------------------------------------------------
+# Configuration française des calendriers Anvil
+# --------------------------------------------------------------------------------------------
+# Ce code doit être exécuté avant la création des DatePicker.
+
+# moment :
+# bibliothèque JavaScript déjà utilisée par Anvil pour gérer les dates.
+#
+# document :
+# permet de manipuler la page HTML depuis le code client Anvil.
 from anvil.js.window import moment, document
+
+# sleep :
+# permet d'attendre quelques millisecondes pendant le chargement
+# du fichier de langue française.
 from time import sleep
-script = document.createElement('script')
-script.src = "https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js" 
+
+# Création dynamique d'une balise HTML <script>.
+script = document.createElement("script")
+
+# Adresse du fichier qui contient la traduction française de Moment.js :
+# - noms des mois ;
+# - noms des jours ;
+# - formats français ;
+# - premier jour de la semaine : lundi.
+script.src = (
+    "https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"
+)
+
+# Ajout du script dans la partie <head> de la page.
+# Le navigateur commence alors à télécharger et exécuter fr.js.
 document.head.appendChild(script)
-locale = moment.locale('fr')
-# this doesn't happen instantly so set it and then wait
-while locale != 'fr':
-    sleep(.01)   # voir import plus haut
-    locale = moment.locale()
-#---------------------------------------------------------------------
+
+# Demande à Moment.js d'utiliser la langue française.
+#
+# moment.locale("fr") retourne la langue réellement active.
+# Si fr.js n'est pas encore chargé, la valeur peut rester temporairement "en".
+locale = moment.locale("fr")
+
+# Le chargement du fichier JavaScript est asynchrone :
+# il n'est pas forcément terminé immédiatement.
+# 500 tentatives × 0,01 seconde = 5 secondes maximum
+for tentative in range(500):
+    # On réessaie également d'activer "fr" à chaque passage.
+    if moment.locale("fr") == "fr":
+        break
+    sleep(0.01)
+else:
+    print(
+        "Attention : impossible de charger la langue française "
+        "du calendrier."
+    )
+
+# À partir d'ici, Moment.js utilise la locale française.
+# Les DatePicker créés ensuite utilisent cette configuration.
+
+# !!!  ATTENTION si je dois utiliser une saisie d'heure, les boutons ok, retour seront en anglais
+#      VOIR & UTILISER le Module 'Boutons_Calendriers_fr'
+# ---------------------------------------------------------------------------------------------- 
 
 
 class Main(MainTemplate):

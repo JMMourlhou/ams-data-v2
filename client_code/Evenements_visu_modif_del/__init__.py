@@ -153,16 +153,11 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
             self.image_3.source = file_rezized
             self.button_validation.visible = True
 
-    def date_picker_1_hide(self, **event_args):
-        """This method is called when the DatePicker is removed from the screen"""
-        # Change les bt 'apply' en 'Ok'
-        """
-        from anvil.js.window import document
-        for btn in document.querySelectorAll(".daterangepicker .applyBtn"):
-            btn.textContent = "Ok"
-        for btn in document.querySelectorAll(".daterangepicker .cancelBtn"):
-            btn.textContent = "Retour"
-        """
+    # POur afficher OK et Retour en FRancais (calendrier)
+    # Cette méthode se lance qd le date_picker component s'affiche
+    def date_picker_1_show(self, **event_args):
+        from .. import Boutons_Calendriers_Fr
+        Boutons_Calendriers_Fr.traduire_boutons_calendrier()
         
     # Pour empêcher le msg session expired (suffit pour ordinateur, pas pour tel)
     def timer_1_tick(self, **event_args):
