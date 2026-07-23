@@ -7,6 +7,8 @@ import anvil.server
 import io
 import math
 from PIL import Image
+from datetime import date
+
 
 @anvil.server.callable
 def path_info(file):
@@ -128,6 +130,28 @@ def pr_stagiaire_del(user_email, stage, item_requis, mode="efface"):
         pr_requis_row.delete()
         return True
     return False
-    
+
 
     
+# ===============================================================================================================
+# PRE-REQUIS STAGIAIRES, Ecriture de la date d'expiration du pré requis
+@anvil.server.callable
+def pr_expiration_date_writting(row, date_expiration):
+    try:
+        if row is None:
+            return "Erreur : ligne à modifier non trouvée."
+    
+        if date_expiration is None:
+            return "Erreur : aucune date sélectionnée."
+    
+        if not isinstance(date_expiration, date):
+            return (
+                "Erreur : la valeur reçue n'est pas une date. "
+                f"Type reçu : {type(date_expiration)}"
+            )
+            
+        row.update(date_expiration = date_expiration)
+        print(f"Après écriture: {row['date_expiration']}")
+        return "Ok"
+    except Exception as e:
+        return f"Erreur écriture date d'expiration: {e!r}"

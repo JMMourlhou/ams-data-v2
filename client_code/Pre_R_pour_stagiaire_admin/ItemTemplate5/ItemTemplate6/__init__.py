@@ -32,6 +32,7 @@ class ItemTemplate6(ItemTemplate6Template):
         if self.item['item_requis']['Expiration'] is True:
             self.date_picker_1.visible = True
             self.date_picker_1.date = self.item['date_expiration']
+            
 
         if self.item['doc1'] is not None:
             self.image_1.source = self.item['doc1']
@@ -299,14 +300,14 @@ class ItemTemplate6(ItemTemplate6Template):
     def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
         date_selectionnee = self.date_picker_1.date
-        if date_selectionnee is not None:
-            print(date_selectionnee)
-        else:
-            print("Aucune date sélectionnée")
+        if date_selectionnee is None:
+            alert("Aucune date sélectionnée")
+            return
 
         # Sauvegarde
-        
-
+        result = anvil.server.call('pr_expiration_date_writting', self.item, date_selectionnee)
+        if result != "Ok":
+            alert(result)
 
 
             
