@@ -43,3 +43,12 @@ def del_1pr(clef_a_annuler,code_stage,efface=False):  # efface est TRUE si on ef
                 stagiaire.delete()
             result = True
     return result
+
+# =========================================================================
+@anvil.server.callable           #modif du
+def pr_expiration_date_par_stage_writting(row, check_box_date_expiration):
+    try:
+        row.update(Expiration = check_box_date_expiration)
+        return "Ok"
+    except Exception as e:
+        return f"Erreur écriture date d'expiration: {e!r}"

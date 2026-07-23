@@ -16,10 +16,11 @@ class ItemTemplate1(ItemTemplate1Template):
         #print("form mère atteingnable (en modif): ", self.f) 
         
         # Any code you write here will run before the form opens.
-        row=app_tables.pre_requis.get(code_pre_requis=self.item)
+        self.row=app_tables.pre_requis.get(code_pre_requis=self.item)
         try:
-            self.text_box_1.text = "  " + row['requis']
-            self.button_annuler.tag = row['code_pre_requis']
+            self.text_box_1.text = "  " + self.row['requis']
+            self.button_annuler.tag = self.row['code_pre_requis']
+            self.check_box_1.checked = self.row['Expiration']
         except:
             alert("Un code pré-requis n'existe plus en table pre_requis")
             #msg = (f"Un code pré-requis n'existe plus pour:  {row['requis']}")
@@ -46,3 +47,10 @@ class ItemTemplate1(ItemTemplate1Template):
         # =======================================================       
         # réaffichage complet 
         open_form('Pre_R_pour_type_stage',code_stage)
+
+    def check_box_1_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        # Maj auto transparente
+        result = anvil.server.call('pr_expiration_date_par_stage_writting', self.row, self.check_box_1.checked)
+        if result != "Ok":
+            alert(result)

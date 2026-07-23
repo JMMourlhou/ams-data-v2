@@ -151,7 +151,6 @@ def pr_expiration_date_writting(row, date_expiration):
             )
             
         row.update(date_expiration = date_expiration)
-        print(f"Après écriture: {row['date_expiration']}")
         return "Ok"
     except Exception as e:
         return f"Erreur écriture date d'expiration: {e!r}"
