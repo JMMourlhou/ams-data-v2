@@ -155,13 +155,15 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
 
     def date_picker_1_hide(self, **event_args):
         """This method is called when the DatePicker is removed from the screen"""
-        # Change les bt 'apply' en 'Valider'
+        # Change les bt 'apply' en 'Ok'
+        """
         from anvil.js.window import document
         for btn in document.querySelectorAll(".daterangepicker .applyBtn"):
             btn.textContent = "Ok"
         for btn in document.querySelectorAll(".daterangepicker .cancelBtn"):
             btn.textContent = "Retour"
-
+        """
+        
     # Pour empêcher le msg session expired (suffit pour ordinateur, pas pour tel)
     def timer_1_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
