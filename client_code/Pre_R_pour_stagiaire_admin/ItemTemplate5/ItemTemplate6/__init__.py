@@ -284,6 +284,10 @@ class ItemTemplate6(ItemTemplate6Template):
         else:
             alert(f"Pas de doc '{self.item['item_requis']['code_pre_requis'].strip()}' trouvé dans les stages AMS précédents")
 
+    def date_picker_pre_requis_change(self, **event_args):
+        """This method is called when the selected date changes"""
+        pass  # Write Code Here
+
 
 
             

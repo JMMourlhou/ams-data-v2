@@ -157,7 +157,6 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         """This method is called when the DatePicker is removed from the screen"""
         # Change les bt 'apply' en 'Valider'
         from anvil.js.window import document
-
         for btn in document.querySelectorAll(".daterangepicker .applyBtn"):
             btn.textContent = "Ok"
         for btn in document.querySelectorAll(".daterangepicker .cancelBtn"):

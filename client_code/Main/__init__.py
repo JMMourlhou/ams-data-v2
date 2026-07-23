@@ -19,15 +19,14 @@ from .. import z_user_url_from_mail
 #-------------------------------------------------------------------
 # Pour mettre au format Francais les calendriers
 from anvil.js.window import moment, document
-
+from time import sleep
 script = document.createElement('script')
 script.src = "https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js" 
 document.head.appendChild(script)
 locale = moment.locale('fr')
 # this doesn't happen instantly so set it and then wait
 while locale != 'fr':
-    from time import sleep
-    sleep(.01)
+    sleep(.01)   # voir import plus haut
     locale = moment.locale()
 #---------------------------------------------------------------------
 
