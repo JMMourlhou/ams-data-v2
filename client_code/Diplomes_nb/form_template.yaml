@@ -114,6 +114,7 @@ components:
         - {data_key: code_txt, expand: false, id: XGMZGV, title: Stage, width: 65.26605224609375}
         - {data_key: nb_stagiaires_diplomes, expand: false, id: WWANHM, title: Nb, width: 29.31195068359375}
         role: null
+        rows_per_page: null
         show_page_controls: false
         visible: false
       type: DataGrid
