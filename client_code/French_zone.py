@@ -10,8 +10,6 @@ from datetime import datetime
 #Get the time now, local browser time
 def french_zone_time():
     date_time = datetime.now(anvil.tz.tzlocal()) #recup browser time
-    #print(type(date_time))
-    #print(date_time)
     return date_time
 
 

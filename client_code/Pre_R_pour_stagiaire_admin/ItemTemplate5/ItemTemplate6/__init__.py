@@ -8,12 +8,14 @@ from anvil.tables import app_tables
 from ....import French_zone # pour calcul tps traitement
 from ....import Pre_R_doc_name        # Pour générer un nouveau nom au document chargé
 from ....Pre_Visu_img_Pdf import Pre_Visu_img_Pdf   #pour afficher un document avant de le télécharger
+from datetime import datetime
 
 class ItemTemplate6(ItemTemplate6Template):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        self.date_du_jour = datetime.now(anvil.tz.tzlocal()).date()  # pour comparer avec date d'expiration
         self.f = get_open_form()
         self.row_id = self.item.get_id()  # pour sauver l'image traitée
         self.test_img_just_loaded = False  # pour savoir si l'image vient d'être chargée (voir visu image)
@@ -33,6 +35,12 @@ class ItemTemplate6(ItemTemplate6Template):
             self.date_picker_1.visible = True
             self.date_picker_1.date = self.item['date_expiration']
             
+        if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
+            self.date_picker_1.background = "theme:Error"
+            self.date_picker_1.foreground = "white"
+        else:
+            self.date_picker_1.background = "theme:Vert Clair"
+            self.date_picker_1.foreground = "white"   
 
         if self.item['doc1'] is not None:
             self.image_1.source = self.item['doc1']
@@ -303,7 +311,14 @@ class ItemTemplate6(ItemTemplate6Template):
         if date_selectionnee is None:
             alert("Aucune date sélectionnée")
             return
-
+            
+        if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
+            self.date_picker_1.background = "theme:Error"
+            self.date_picker_1.foreground = "white"
+        else:
+            self.date_picker_1.background = "theme:Vert Clair"
+            self.date_picker_1.foreground = "white" 
+            
         # Sauvegarde
         result = anvil.server.call('pr_expiration_date_writting', self.item, date_selectionnee)
         if result != "Ok":

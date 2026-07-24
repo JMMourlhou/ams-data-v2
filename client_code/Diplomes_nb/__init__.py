@@ -378,58 +378,65 @@ class Diplomes_nb(Diplomes_nbTemplate):
     def _get_diplomes_grouped_by_centre(self, date_deb, date_fin):
         """
         Retour:
-          grouped = {
+        grouped = {
             "AMS": {"stages":[...], "total": 12},
             "MUC": {"stages":[...], "total": 5},
             ...
-          }
-          total_global = 17
+        }
+        total_global = 17
+    
+        Les lignes sont triées par numéro de PV.
         """
-
-        # Requête côté tables (on limite déjà aux stages avec nb != 0)
-        # On filtre les dates ensuite en Python (fiable, sans surprise)
+    
+        # Requête triée par numéro de PV
         rows = app_tables.stages.search(
-            tables.order_by("date_debut", ascending=True),
+            tables.order_by("num_pv", ascending=True),
             nb_stagiaires_diplomes=q.not_(0),
         )
-
+    
         grouped = {}
         total_global = 0
-
+    
         for stage in rows:
-            nb = stage['nb_stagiaires_diplomes'] or 0
+            nb = stage["nb_stagiaires_diplomes"] or 0
             if nb == 0:
                 continue
-
-            d = stage['date_debut']
+    
+            d = stage["date_debut"]
             if not d:
                 continue
-
+    
             if d < date_deb or d > date_fin:
                 continue
-
-            lieu_row = stage['lieu']
-            centre_name = (lieu_row['lieu'] if lieu_row else "Centre inconnu") or "Centre inconnu"
-
+    
+            # Si un centre précis est sélectionné, on filtre ici
+            if not self.tous_les_centres:
+                if stage["lieu"] != self.centre_formation_row:
+                    continue
+    
+            lieu_row = stage["lieu"]
+            centre_name = (lieu_row["lieu"] if lieu_row else "Centre inconnu") or "Centre inconnu"
+    
             if centre_name not in grouped:
                 grouped[centre_name] = {"stages": [], "total": 0}
-
+    
             grouped[centre_name]["stages"].append({
                 "date_debut_txt": d.strftime("%d/%m/%Y") if hasattr(d, "strftime") else str(d),
-                "num_pv_txt": str(stage['num_pv'] or ""),
-                "code_txt": str(stage.get('code_txt', "") or ""),
+                "num_pv_txt": str(stage["num_pv"] or ""),
+                "code_txt": str(stage.get("code_txt", "") or ""),
                 "nb": int(nb),
+                "num_pv_sort": stage["num_pv"] or 0,
             })
-
+    
             grouped[centre_name]["total"] += int(nb)
             total_global += int(nb)
-
-        # tri interne par date + num pv (utile si tu veux stable)
+    
+        # Tri interne de chaque centre par numéro de PV
         for centre_name in grouped:
             grouped[centre_name]["stages"].sort(
-                key=lambda x: (x["date_debut_txt"], x["num_pv_txt"])
+                key=lambda x: x["num_pv_sort"]
             )
-
+    
         return grouped, total_global
 
     def _pdf_css(self):
