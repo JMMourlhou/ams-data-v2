@@ -14,16 +14,36 @@ class Diplomes_nb(Diplomes_nbTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        # Any code you write here will run before the form opens.
-        #self.label_total.visible = False
-        #self.label_total_txt.visible = False
-        now=French_zone.french_zone_time()   # now est le jour/h actuelle (datetime object)
-        now=now.date()                       # extraction de la date, format yyyy-mm-dd
-        self.date_picker_to.date = now
+
+        now = French_zone.french_zone_time()
+        now = now.date()
+
+        # Période par défaut : du 01/01 de l'année courante à aujourd'hui
+        self.date_deb = now.replace(month=1, day=1)
         self.date_fin = now
 
-        # Drop down codes Centres
-        self.drop_down_lieux.items = [(r['lieu'], r) for r in app_tables.lieux.search()]
+        self.date_picker_from.date = self.date_deb
+        self.date_picker_to.date = self.date_fin
+
+        # --------------------------------------- Drop down Centres
+        self.TOUS_CENTRES_VALUE = "__TOUS_LES_CENTRES__"
+
+        # Par défaut
+        self.tous_les_centres = True
+        self.centre_formation_row = None
+        self.centre_formation_nom = "Tous les centres"
+
+        centres = app_tables.lieux.search(
+            tables.order_by("lieu", ascending=True)
+        )
+
+        self.drop_down_lieux.items = (
+            [("Tous les centres", self.TOUS_CENTRES_VALUE)]
+            + [(r["lieu"], r) for r in centres]
+        )
+
+        #self.drop_down_lieux.selected_value = self.TOUS_CENTRES_VALUE
+        # --------------------------------------- fin     Drop down Centres
 
     def button_validation_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -200,16 +220,43 @@ class Diplomes_nb(Diplomes_nbTemplate):
         
     def drop_down_lieux_change(self, **event_args):
         """This method is called when an item is selected"""
-        self.centre_formation_row = self.drop_down_lieux.selected_value
-        self.date_picker_from.visible= True
-        self.date_picker_to.visible= True
-        try:  # si on met à None le centre de formation
-            self.centre_formation_nom = self.centre_formation_row['lieu']
-            self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}"
-            self.display()
-        except:
-            self.data_grid_1.visible = False
-            self.label_total_txt.visible = False
+    
+        selected = self.drop_down_lieux.selected_value
+    
+        self.date_picker_from.visible = True
+        self.date_picker_to.visible = True
+        self.button_validation.visible = True
+    
+        # On efface l'ancien résultat affiché, car le filtre a changé
+        #self.repeating_panel_1.visible = False
+        self.repeating_panel_1.items = []
+        self.data_grid_1.visible = False
+        self.label_total_txt.visible = False
+        self.button_pdf.visible = False
+        self.button_xls.visible = False
+    
+        if selected == self.TOUS_CENTRES_VALUE:
+            self.tous_les_centres = True
+            self.centre_formation_row = None
+            self.centre_formation_nom = "Tous les centres"
+            self.flow_panel_2.visible = True
+    
+            self.label_result.text = "Critère sélectionné : tous les centres"
+            return
+    
+        if selected is None:
+            self.tous_les_centres = False
+            self.centre_formation_row = None
+            self.centre_formation_nom = None
+    
+            self.label_result.text = "Sélectionne un centre, puis clique sur Validation."
+            return
+    
+        self.tous_les_centres = False
+        self.centre_formation_row = selected
+        self.centre_formation_nom = selected["lieu"]
+    
+        self.label_result.text = f"Critère sélectionné : {self.centre_formation_nom}"
             
     def date_picker_from_change(self, **event_args):
         """This method is called when the selected date changes"""
@@ -220,9 +267,11 @@ class Diplomes_nb(Diplomes_nbTemplate):
             AlertHTML.error("Erreur :","La date de fin est inférieure à la date de début !")
             self.date_picker_from.focus()
         self.date_picker_to.visible = True
-        self.repeating_panel_1.visible = False
+        self.column_panel_3.visible = False
+        self.button_pdf.visible = False
+        self.button_xls.visible = False
+        self.label_total_txt.visible = False
         
-
     def date_picker_to_change(self, **event_args):
         """This method is called when the selected date changes"""
         self.button_validation.visible = True   
@@ -231,43 +280,80 @@ class Diplomes_nb(Diplomes_nbTemplate):
         if self.date_fin < self.date_deb:
             AlertHTML.error("Erreur :","La date de fin est inférieure à la date de début !")
             self.date_picker_to.focus()
-        self.repeating_panel_1.visible = False
+        self.column_panel_3.visible = False
+        self.button_pdf.visible = False
+        self.button_xls.visible = False
+        self.label_total_txt.visible = False
     
     def display(self):
-        # search de tous les stages existants et affichage
-        liste0 = []
+        # Search de tous les stages existants, triés par numéro de PV
         liste0 = app_tables.stages.search(
             tables.order_by("num_pv", ascending=True),
             nb_stagiaires_diplomes=q.not_(0),
         )
-
-        liste1=[]
+    
+        liste1 = []
         nb_diplomes = 0
+    
         for stage in liste0:
-            if stage['nb_stagiaires_diplomes'] is not None:
-                try:  # si les dates sont exactes
-                    if stage['date_debut'] >= self.date_deb and stage['date_debut'] <= self.date_fin :
-                        if stage['lieu'] ==self.centre_formation_row:
-                            liste1.append(stage)
-                            nb_diplomes = nb_diplomes + stage['nb_stagiaires_diplomes']
-                            self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom}: {nb_diplomes}"
-                            self.label_total_txt.text = f"Nb d'attestations pour {self.centre_formation_nom}: {nb_diplomes}"
-                            self.label_total.visible = True
-                            self.button_pdf.visible = True  
-                except:
-                    pass
+            nb_stage = stage["nb_stagiaires_diplomes"] or 0
+    
+            if nb_stage == 0:
+                continue
+    
+            date_debut = stage["date_debut"]
+    
+            if not date_debut:
+                continue
+    
+            if not self.date_deb or not self.date_fin:
+                continue
+    
+            if date_debut < self.date_deb or date_debut > self.date_fin:
+                continue
+    
+            # Cas 1 : tous les centres
+            if self.tous_les_centres:
+                liste1.append(stage)
+                nb_diplomes += nb_stage
+                continue
+    
+            # Cas 2 : un centre précis
+            if stage["lieu"] == self.centre_formation_row:
+                liste1.append(stage)
+                nb_diplomes += nb_stage
+    
         if nb_diplomes > 0:
+            if self.tous_les_centres:
+                self.label_result.text = f"Nb de diplômes édités pour tous les centres : {nb_diplomes}"
+                self.label_total_txt.text = f"Nb d'attestations pour tous les centres : {nb_diplomes}"
+            else:
+                self.label_result.text = f"Nb de diplômes édités pour {self.centre_formation_nom} : {nb_diplomes}"
+                self.label_total_txt.text = f"Nb d'attestations pour {self.centre_formation_nom} : {nb_diplomes}"
+    
             self.label_total_txt.visible = True
             self.data_grid_1.visible = True
             self.button_pdf.visible = True
             self.button_xls.visible = True
             self.repeating_panel_1.visible = True
+            self.column_panel_3.visible = True
+    
+            # Liste déjà triée par num_pv grâce au search initial
             self.repeating_panel_1.items = liste1
-            self.button_validation.visible = False
+    
         else:
+            if self.tous_les_centres:
+                self.label_result.text = "Aucun diplôme édité pour tous les centres sur cette période."
+            else:
+                self.label_result.text = f"Aucun diplôme édité pour {self.centre_formation_nom} sur cette période."
+    
             self.label_total_txt.visible = False
             self.data_grid_1.visible = False
+            self.button_pdf.visible = False
             self.button_xls.visible = False
+            self.column_panel_3.visible = False
+            self.repeating_panel_1.items = []
+            self.label_total_txt.visible = False
                 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""

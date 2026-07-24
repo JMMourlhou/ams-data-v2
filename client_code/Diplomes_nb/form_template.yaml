@@ -26,7 +26,7 @@ components:
         italic: false
         items: []
         margin: ['0', null, null, null]
-        placeholder: Centre de F°
+        placeholder: Centres de F°
         role: null
         spacing_above: none
         spacing_below: none
@@ -103,7 +103,7 @@ components:
         name: repeating_panel_1
         properties: {background: 'theme:Primary', item_template: Diplomes_nb.RowTemplate1, role: tonal-card, visible: true}
         type: RepeatingPanel
-      layout_properties: {width: 384.12700439453124}
+      layout_properties: {width: 373.1641845703125}
       name: data_grid_1
       properties:
         background: theme:Primary
