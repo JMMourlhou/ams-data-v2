@@ -311,11 +311,14 @@ class ItemTemplate6(ItemTemplate6Template):
         if date_selectionnee is None:
             alert("Aucune date sélectionnée")
             return
-            
-        if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
+        print(f"Date entrée: {date_selectionnee}")
+        print(f"Date du jour: {self.date_du_jour}")
+        if self.item['date_expiration']is not None and date_selectionnee < self.date_du_jour: 
+            print("Erreur")
             self.date_picker_1.background = "theme:Error"
             self.date_picker_1.foreground = "white"
         else:
+            print("ok")
             self.date_picker_1.background = "theme:Vert Clair"
             self.date_picker_1.foreground = "white" 
             
