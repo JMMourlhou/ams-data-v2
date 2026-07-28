@@ -20,7 +20,6 @@ class Word_editor(Word_editorTemplate):
 
         # Anvil initialisation
         self.init_components(**properties)
-
         """ ===============================================================
         Parameteres passed through the 'Word_Editor' properties
         """
@@ -234,7 +233,10 @@ class Word_editor(Word_editorTemplate):
         self._text_is_modified = False
         self._ready_emitted = False # (pour afficher le button_validation de la forme merer uniqt qd text est modifié - voir timer_2)
         self.raise_event("x-text-changed-state", has_changes=False)
-
+        if self.param1 == "creation":
+            self.button_download.visible = False
+        else:
+            self.button_download.visible = True
 
     # ====================================================================================
     # BASIC FORMATTING ACTIONS

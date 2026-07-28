@@ -46,7 +46,8 @@ class Evenements_types_MAJ_table_v2(Evenements_types_MAJ_table_v2Template):
         self.content_panel_events_rows.visible = False
         self.call_word_editor("Entrer le texte ici", 'creation')
         self.ajout = "creation"
-    
+        self.button_add.visible = False
+        self.text_box_1.focus()
 
     # ==========================================================================================================
     # EVENT RAISED;

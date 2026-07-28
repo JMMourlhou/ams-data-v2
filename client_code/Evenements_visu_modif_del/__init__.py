@@ -31,7 +31,7 @@ class Evenements_visu_modif_del(Evenements_visu_modif_delTemplate):
         
         # initilisation Drop down codes type évenements
         liste_event = []
-        for r in app_tables.event_types.search(tables.order_by("code", ascending=True)):
+        for r in app_tables.event_types.search(tables.order_by("type", ascending=True)):
             liste_event.append((r['msg_1'],r))   # on prend tous les msg: nouvel evnt, voir ...
         self.drop_down_event.items = liste_event
         """

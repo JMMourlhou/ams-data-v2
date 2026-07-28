@@ -33,6 +33,7 @@ class Evenements_MAJ_table(Evenements_MAJ_tableTemplate):
     def button_add_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.column_panel_add.visible = True
+        self.button_add.visible = False
 
     def button_valid_click(self, **event_args):
         """This method is called when the button is clicked"""
