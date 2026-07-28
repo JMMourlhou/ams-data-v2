@@ -9,7 +9,7 @@ components:
     - event_bindings: {click: retour_click}
       layout_properties: {grid_position: 'LSXOEP,WHUOGR'}
       name: retour
-      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Retour, visible: true}
+      properties: {background: 'theme:Primary', foreground: 'theme:Tertiary', text: Fermer, visible: true}
       type: Button
     layout_properties: {grid_position: 'NHBMTC,WPLHEV'}
     name: column_panel_1

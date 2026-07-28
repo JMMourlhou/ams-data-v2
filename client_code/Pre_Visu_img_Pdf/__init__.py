@@ -22,8 +22,10 @@ class Pre_Visu_img_Pdf(Pre_Visu_img_PdfTemplate):
 
     def retour_click(self, **event_args):
         """This method is called when the button is clicked"""
-        open_form(self.f)
-
+        if self.origine == "pre-requis-admin":
+            self.remove_from_parent()
+        else:
+            open_form(self.f)
     
     def download_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -37,6 +39,7 @@ class Pre_Visu_img_Pdf(Pre_Visu_img_PdfTemplate):
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
         self.download.scroll_into_view()
+        #self.scroll_into_view(align="start")
 
             
 

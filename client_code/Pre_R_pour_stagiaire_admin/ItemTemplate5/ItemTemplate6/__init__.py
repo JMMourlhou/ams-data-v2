@@ -113,7 +113,9 @@ class ItemTemplate6(ItemTemplate6Template):
         file=row["doc1"]
         # nouveau nom doc
         new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse
-        open_form('Pre_Visu_img_Pdf', file, new_file_name, self.stage_num, self.email, self.item_requis, origine="admin")
+        self.column_panel_content.add_component(Pre_Visu_img_Pdf(file, new_file_name, self.stage_num, self.email, self.item_requis, origine="pre-requis-admin"))
+        self.scroll_into_view(align="start")
+        #self.column_panel_2.scroll_into_view(align="start")
 
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
