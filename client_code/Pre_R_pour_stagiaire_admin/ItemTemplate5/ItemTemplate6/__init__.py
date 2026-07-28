@@ -34,7 +34,11 @@ class ItemTemplate6(ItemTemplate6Template):
         if self.item['item_requis']['Expiration'] is True:
             self.date_picker_1.visible = True
             self.date_picker_1.date = self.item['date_expiration']
-            
+
+            if self.item['doc1'] is None:  # le pré-requis absent
+                self.date_picker_1.background = "theme:Error"
+                self.date_picker_1.foreground = "white"
+    
         if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
             self.date_picker_1.background = "theme:Error"
             self.date_picker_1.foreground = "white"
@@ -315,8 +319,8 @@ class ItemTemplate6(ItemTemplate6Template):
         print(f"Date du jour: {self.date_du_jour}")
         if self.item['date_expiration']is not None and date_selectionnee < self.date_du_jour: 
             print("Erreur")
-            self.date_picker_1.background = "theme:Error"
-            self.date_picker_1.foreground = "white"
+            self.date_picker_1.background = "theme:Jaune Orange"
+            self.date_picker_1.foreground = "dark"
         else:
             print("ok")
             self.date_picker_1.background = "theme:Vert Clair"
