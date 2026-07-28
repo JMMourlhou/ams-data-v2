@@ -32,19 +32,26 @@ class ItemTemplate6(ItemTemplate6Template):
 
         # lecture de la table Mère Pre_Requis pour afficher ou non la date d'expiration
         if self.item['item_requis']['Expiration'] is True:
-            self.date_picker_1.visible = True
-            self.date_picker_1.date = self.item['date_expiration']
+            # on affiche l'élément date_picker_1 et son contenu
+            self.date_picker_1.visible = True   
+            self.date_picker_1.date = self.item['date_expiration']  
 
-            if self.item['doc1'] is None:  # le pré-requis absent
-                self.date_picker_1.background = "theme:Error"
-                self.date_picker_1.foreground = "white"
-    
-        if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
-            self.date_picker_1.background = "theme:Error"
-            self.date_picker_1.foreground = "white"
-        else:
-            self.date_picker_1.background = "theme:Vert Clair"
-            self.date_picker_1.foreground = "white"   
+            if self.item['doc1'] is None:  # le pré-requis absent: erreur
+                self.date_picker_1.background = "theme:Jaune Orange"
+                self.date_picker_1.foreground = "dark"
+            else:  # pré-Requis affiché, test sur la date d'expiration
+                if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
+                    self.date_picker_1.background = "theme:Jaune Orange"
+                    self.date_picker_1.foreground = "dark"
+                else:
+                    self.date_picker_1.background = "theme:Vert Clair"
+                    self.date_picker_1.foreground = "white"   
+
+            # Si le pré requis est affiché, mais pas la date d'expiration : Erreur
+            if self.item['doc1'] is not None and self.date_picker_1.date is None: 
+
+                self.date_picker_1.background = "theme:Jaune Vert"
+                self.date_picker_1.foreground = "dark"
 
         if self.item['doc1'] is not None:
             self.image_1.source = self.item['doc1']
