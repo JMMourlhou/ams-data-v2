@@ -123,7 +123,8 @@ def pr_stagiaire_del(user_email, stage, item_requis, mode="efface"):
         pr_requis_row.update(check=False,               
                                 doc1 = None,
                                 thumb = None,
-                                size = None
+                                size = None,
+                                date_expiration=None,
                                 )
         return True
     if pr_requis_row and mode=="destruction":

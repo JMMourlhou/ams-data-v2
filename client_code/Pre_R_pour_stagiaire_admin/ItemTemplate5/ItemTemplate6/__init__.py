@@ -89,7 +89,7 @@ class ItemTemplate6(ItemTemplate6Template):
                 self.image_1.source = file
                 # result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
                 #self.image_1.source = anvil.server.call('scan_and_compress_media',file, self.row_id)  # appel uplink fonction pre_requis sur Pi5
-                result = anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
+                anvil.server.call('pre_requis',self.item, file)  # appel uplink fonction pre_requis sur Pi5
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
@@ -102,6 +102,8 @@ class ItemTemplate6(ItemTemplate6Template):
                 self.traitement_pdf(file)
             else:  # erreur: le format choisit n'est pas un fichierimage ou pdf
                 alert(f"le type de fichier doit être un de ces types : {list_possible}")
+            self.date_picker_1.background = "theme:Jaune Vert"
+            self.date_picker_1.foreground = "dark"
 
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -130,6 +132,8 @@ class ItemTemplate6(ItemTemplate6Template):
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
             self.date_picker_1.date = None
+            self.date_picker_1.background = "theme:Jaune Orange"
+            self.date_picker_1.foreground = "dark"
         else:
             alert("Pré Requis non enlevé")
     """
