@@ -30,7 +30,7 @@ class ItemTemplate6(ItemTemplate6Template):
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
 
-        # lecture de la table Mère Pre_Requis pour afficher ou non la date d'expiration
+        # lecture de la table Mère Pre_Requis pour afficher ou non la date d'expiration et déterminer les couleurs
         if self.item['item_requis']['Expiration'] is True:
             # on affiche l'élément date_picker_1 et son contenu
             self.date_picker_1.visible = True   
