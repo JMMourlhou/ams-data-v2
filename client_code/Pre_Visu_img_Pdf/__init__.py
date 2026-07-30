@@ -19,8 +19,7 @@ class Pre_Visu_img_Pdf(Pre_Visu_img_PdfTemplate):
         self.label_1.text = self.new_file_name
         self.origine = origine
 
-
-    def retour_click(self, **event_args):
+    def button_fermer_click(self, **event_args):
         """This method is called when the button is clicked"""
         if self.origine == "pre-requis-admin":
             self.remove_from_parent()
@@ -38,8 +37,13 @@ class Pre_Visu_img_Pdf(Pre_Visu_img_PdfTemplate):
 
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
-        self.download.scroll_into_view()
-        #self.scroll_into_view(align="start")
+        #self.download.scroll_into_view()
+        self.image_1.scroll_into_view(align="end")
+
+    
+    def image_1_mouse_down(self, x, y, button, keys, **event_args):
+        """This method is called when a mouse button is pressed on this component"""
+        self.button_fermer_click()
 
             
 

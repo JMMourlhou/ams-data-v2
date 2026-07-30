@@ -37,12 +37,12 @@ class ItemTemplate6(ItemTemplate6Template):
             self.date_picker_1.date = self.item['date_expiration']  
 
             if self.item['doc1'] is None:  # le pré-requis absent: erreur
-                self.date_picker_1.background = "theme:Jaune Orange"
-                self.date_picker_1.foreground = "dark"
+                self.date_picker_1.background = "theme:Error"
+                self.date_picker_1.foreground = "white"
             else:  # pré-Requis affiché, test sur la date d'expiration
                 if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
-                    self.date_picker_1.background = "theme:Jaune Orange"
-                    self.date_picker_1.foreground = "dark"
+                    self.date_picker_1.background = "theme:Error"
+                    self.date_picker_1.foreground = "white"
                 else:
                     self.date_picker_1.background = "theme:Vert Clair"
                     self.date_picker_1.foreground = "white"   
@@ -114,10 +114,10 @@ class ItemTemplate6(ItemTemplate6Template):
         )
         file=row["doc1"]
         # nouveau nom doc
+        self.label_en_tete_pr.scroll_into_view(align="start")
         new_file_name = Pre_R_doc_name.doc_name_creation(self.stage_num, self.item_requis, self.email)   # extension non incluse
         self.column_panel_content.add_component(Pre_Visu_img_Pdf(file, new_file_name, self.stage_num, self.email, self.item_requis, origine="pre-requis-admin"))
-        self.scroll_into_view(align="start")
-        #self.column_panel_2.scroll_into_view(align="start")
+        self.label_en_tete_pr.scroll_into_view(align="start")
 
     def button_del_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -329,14 +329,10 @@ class ItemTemplate6(ItemTemplate6Template):
         if date_selectionnee is None:
             alert("Aucune date sélectionnée")
             return
-        print(f"Date entrée: {date_selectionnee}")
-        print(f"Date du jour: {self.date_du_jour}")
-        if self.item['date_expiration']is not None and date_selectionnee < self.date_du_jour: 
-            print("Erreur")
-            self.date_picker_1.background = "theme:Jaune Orange"
-            self.date_picker_1.foreground = "dark"
+        if date_selectionnee is not None and date_selectionnee < self.date_du_jour: 
+            self.date_picker_1.background = "theme:Error"
+            self.date_picker_1.foreground = "white"
         else:
-            print("ok")
             self.date_picker_1.background = "theme:Vert Clair"
             self.date_picker_1.foreground = "white" 
             

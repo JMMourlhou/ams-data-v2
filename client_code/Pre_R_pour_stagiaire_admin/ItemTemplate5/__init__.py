@@ -21,6 +21,7 @@ class ItemTemplate5(ItemTemplate5Template):
 
         if self.button_nom.background == "theme:Tertiary":
             self.button_nom.background = "red"
+            self.button_nom.foreground = "white"
         
         liste_pr = app_tables.pre_requis_stagiaire.search(
             tables.order_by("requis_txt", ascending=True),
