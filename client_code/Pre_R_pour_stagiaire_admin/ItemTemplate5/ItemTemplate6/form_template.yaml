@@ -76,6 +76,11 @@ components:
         name: date_picker_1
         properties: {background: 'theme:Error', foreground: 'theme:White', format: '%d/%m/%Y', visible: false}
         type: DatePicker
+      - event_bindings: {click: button_efface_date_expiration_click}
+        layout_properties: {}
+        name: button_efface_date_expiration
+        properties: {background: 'theme:Tertiary', foreground: 'theme:Error', icon: 'fa:calendar-times-o', text: '', visible: false}
+        type: Button
       - event_bindings: {click: button_search_click}
         layout_properties: {}
         name: button_search

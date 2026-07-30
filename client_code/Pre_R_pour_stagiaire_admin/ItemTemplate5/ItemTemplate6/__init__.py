@@ -33,9 +33,11 @@ class ItemTemplate6(ItemTemplate6Template):
         # lecture de la table Mère Pre_Requis pour afficher ou non la date d'expiration et déterminer les couleurs
         if self.item['item_requis']['Expiration'] is True:
             # on affiche l'élément date_picker_1 et son contenu
-            self.date_picker_1.visible = True   
+            self.date_picker_1.visible = True 
             self.date_picker_1.date = self.item['date_expiration']  
-
+            if self.date_picker_1.date is not None:
+                self.button_efface_date_expiration.visible = True
+                
             if self.item['doc1'] is None:  # le pré-requis absent: erreur
                 self.date_picker_1.background = "theme:Error"
                 self.date_picker_1.foreground = "white"
@@ -132,8 +134,8 @@ class ItemTemplate6(ItemTemplate6Template):
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
             self.date_picker_1.date = None
-            self.date_picker_1.background = "theme:Jaune Orange"
-            self.date_picker_1.foreground = "dark"
+            self.date_picker_1.background = "theme:Error"
+            self.date_picker_1.foreground = "white"
         else:
             alert("Pré Requis non enlevé")
     """
@@ -326,7 +328,7 @@ class ItemTemplate6(ItemTemplate6Template):
     def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
         date_selectionnee = self.date_picker_1.date
-        if date_selectionnee is None:
+        if date_selectionnee is None :
             alert("Aucune date sélectionnée")
             return
         if date_selectionnee is not None and date_selectionnee < self.date_du_jour: 
@@ -341,6 +343,15 @@ class ItemTemplate6(ItemTemplate6Template):
         if result != "Ok":
             alert(result)
 
+
+    def button_efface_date_expiration_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.date_picker_1.date = None
+
+        # Sauvegarde la date_d'exp vide, effacement à True 
+        result = anvil.server.call('pr_expiration_date_writting', self.item, None, True) 
+        if result != "Ok":
+            alert(result)
 
             
         
