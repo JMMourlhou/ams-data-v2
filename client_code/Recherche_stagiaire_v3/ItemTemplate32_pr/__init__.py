@@ -7,6 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from ...import French_zone # pour calcul tps traitement
 from ...import Pre_R_doc_name        # Pour générer un nouveau nom au document chargé
+from ... import Boutons_Calendriers_Fr
 from ...Pre_Visu_img_Pdf import Pre_Visu_img_Pdf   #pour afficher un document avant de le télécharger
 from datetime import datetime
 
@@ -334,7 +335,6 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
     # POur afficher OK et Retour en FRancais (calendrier)
     # Cette méthode se lance qd le date_picker component s'affiche
     def date_picker_1_show(self, **event_args):
-        from .... import Boutons_Calendriers_Fr
         Boutons_Calendriers_Fr.traduire_boutons_calendrier()
 
     def date_picker_1_change(self, **event_args):
