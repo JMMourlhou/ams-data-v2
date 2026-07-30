@@ -1,4 +1,4 @@
-from ._anvil_designer import ItemTemplate32_prTemplate
+from ._anvil_designer import ItemTemplate9_prTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -11,7 +11,8 @@ from ... import Boutons_Calendriers_Fr
 from ...Pre_Visu_img_Pdf import Pre_Visu_img_Pdf   #pour afficher un document avant de le télécharger
 from datetime import datetime
 
-class ItemTemplate32_pr(ItemTemplate32_prTemplate):
+
+class ItemTemplate9_pr(ItemTemplate9_prTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -364,12 +365,4 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         result = anvil.server.call('pr_expiration_date_writting', self.item, None, True) 
         if result != "Ok":
             alert(result)
-
-
-
-
-
-
-
-
 

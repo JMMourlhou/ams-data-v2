@@ -278,10 +278,6 @@ components:
       name: repeating_panel_histo
       properties: {background: 'theme:Primary', item_template: Recherche_stagiaire_v3.ItemTemplate25_histo, role: outlined-card, visible: false}
       type: RepeatingPanel
-    - layout_properties: {grid_position: 'ENMRBR,GEYBRO'}
-      name: repeating_panel_pr
-      properties: {item_template: Recherche_stagiaire_v3.ItemTemplate32_pr, visible: true}
-      type: RepeatingPanel
     - layout_properties: {grid_position: 'XUUPYB,ADSJNX'}
       name: repeating_panel_qcm
       properties: {background: 'theme:Primary', item_template: Recherche_stagiaire_v3.ItemTemplate10_qcm, role: outlined-card, spacing_above: small, spacing_below: small, visible: false}
@@ -315,6 +311,10 @@ components:
       - layout_properties: {grid_position: 'ONDHKG,MQFRXY'}
         name: repeating_panel_formul_suivi_questions_fermees
         properties: {item_template: Recherche_stagiaire_v3.Item_formul_suivi_ferm, visible: false}
+        type: RepeatingPanel
+      - layout_properties: {grid_position: 'QQHNAP,DGUYOH'}
+        name: repeating_panel_pr
+        properties: {item_template: AMS_Data.Recherche_stagiaire_v3.ItemTemplate9_pr, visible: true}
         type: RepeatingPanel
       layout_properties: {grid_position: 'FARTIN,BGMQWR'}
       name: column_panel_formulaires_suivis
