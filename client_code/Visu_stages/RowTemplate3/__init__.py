@@ -98,6 +98,9 @@ class RowTemplate3(RowTemplate3Template):
             self.check_box_diplomes_sent.visible = False   #            pas check box envoyé
         # Num de PV FPMNS
         self.text_box_pv.text = self.item['num_pv']
+        # si type de stage 'F'
+        if self.item['type_stage'] == "F":
+            self.text_box_3.visible = False
 
     # récupération par l'event:
     def text_box_3_click(self, **event_args):   # Click sur date

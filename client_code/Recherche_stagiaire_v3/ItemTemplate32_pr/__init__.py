@@ -8,6 +8,7 @@ from anvil.tables import app_tables
 import time
 from ... import French_zone # calcul tps traitement
 from ... import Pre_R_doc_name
+from datetime import datetime
 
 class ItemTemplate32_pr(ItemTemplate32_prTemplate):
     def __init__(self, **properties):
@@ -23,8 +24,10 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 "doc1":              img 
                 "date_stage":        date du stage
                 "requis_txt":        intitulé en clair du PR
+                "date_expiration":   date_expiration
         """
         # Any code you write here will run before the form opens.
+        self.date_du_jour = datetime.now(anvil.tz.tzlocal()).date()  # pour comparer avec date d'expiration
         self.test_img_just_loaded = False
 
         #self.email = self.item['stagiaire_email']
@@ -36,8 +39,41 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
 
+        # Affichage et couleurs de la date d'expiration
+        self.date_picker_1.date = self.item['date_expiration']
+        
+        # -------------------------------------------------
+        # lecture de la table Mère Pre_Requis pour afficher ou non la date d'expiration et déterminer les couleurs
+        if self.item['item_requis']['Expiration'] is True:
+            # on affiche l'élément date_picker_1 et son contenu
+            self.date_picker_1.visible = True 
+            self.date_picker_1.date = self.item['date_expiration']  
+            if self.date_picker_1.date is not None:
+                self.button_efface_date_expiration.visible = True
+
+            if self.item['doc1'] is None:  # le pré-requis absent: erreur
+                self.date_picker_1.background = "theme:Error"
+                self.date_picker_1.foreground = "white"
+            else:  # pré-Requis affiché, test sur la date d'expiration
+                if self.item['date_expiration']is not None and self.item['date_expiration'] < self.date_du_jour: 
+                    self.date_picker_1.background = "theme:Error"
+                    self.date_picker_1.foreground = "white"
+                else:
+                    self.date_picker_1.background = "theme:Vert Clair"
+                    self.date_picker_1.foreground = "white"   
+
+            # Si le pré requis est affiché, mais pas la date d'expiration : Erreur
+            if self.item['doc1'] is not None and self.date_picker_1.date is None: 
+
+                self.date_picker_1.background = "theme:Jaune Vert"
+                self.date_picker_1.foreground = "dark"
+        else:
+            self.date_picker_1.visible = False
+            self.button_efface_date_expiration.visible = False
+        # -------------------------------------------------
         if self.item['doc1'] is not None:
-            self.image_1.source = self.item['doc1']           
+            self.image_1.source = self.item['doc1']        
+            
             self.button_del.visible = True
             self.button_visu.visible = True
             self.file_loader_1.visible = False
@@ -74,8 +110,10 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             alert(f"Erreur de relecture du row pre_requis_stagiaire: {e}")
             return
         # nouveau nom doc
+        self.label_en_tete_pr.scroll_into_view(align="start")
         new_file_name = Pre_R_doc_name.doc_name_creation(row['stage_num'], row['requis_txt'], row['stagiaire_email'])   # extension non incluse
-        open_form('Pre_Visu_img_Pdf', row['doc1'], new_file_name, self.stage_num, row['stagiaire_email'], row['item_requis'], origine="admin")
+        open_form('Pre_Visu_img_Pdf', row['doc1'], new_file_name, self.stage_num, row['stagiaire_email'], row['item_requis'], origine="pre-requis-admin")
+        self.label_en_tete_pr.scroll_into_view(align="start")
 
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
@@ -289,4 +327,14 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         end = French_zone.french_zone_time()
         temps = f"Temps de traitement image: {end-start}"
         print(temps)
-        
+
+
+    def button_efface_date_expiration_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.date_picker_1.date = None
+    
+        # Sauvegarde la date_d'exp vide, effacement à True 
+        result = anvil.server.call('pr_expiration_date_writting', self.item, None, True) 
+        if result != "Ok":
+            alert(result)
+            

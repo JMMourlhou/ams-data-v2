@@ -547,7 +547,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 valeur = None
                 clef = f"{pr['requis_txt']}_{str(pr['numero'])}"
                 
-                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'], pr['stage_num']['date_debut'], pr['requis_txt'])
+                valeur = (pr['stage_num'], pr['item_requis'], pr['code_txt'], pr['stagiaire_email'], pr['doc1'], pr['stage_num']['date_debut'], pr['requis_txt'], pr['date_expiration'])
                 # Si la clé n'existe pas encore, ou si la valeur actuelle est None et la nouvelle non None
                 if clef not in dico_pre_requis  or  (dico_pre_requis[clef][1] is None and pr['doc1'] is not None):
                     dico_pre_requis[clef] = valeur
@@ -568,8 +568,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # -----------------------------------------------------------
         # Transformation en liste pour affichage dans le RepeatingPanel
         liste_affichage = []
-        #         n° stage   pr_row        PSC / PSE1 ..    user_row   objet_img   date du stage   intitul du PR
-        for clef, (stage_row,   requis_row,   type_stage_txt,  email,     doc1,       date_stage,     requis_txt ) in dico_pre_requis_trié.items():
+        #         n° stage   pr_row        PSC / PSE1 ..    user_row   objet_img   date du stage   intitul du PR   date_expiration 
+        for clef, (stage_row,   requis_row,   type_stage_txt,  email,     doc1,       date_stage,     requis_txt,   date_expiration ) in dico_pre_requis_trié.items():
             liste_affichage.append({
                 "clef": clef,
                 "item_requis": requis_row,
@@ -578,7 +578,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 "stage_row": stage_row,
                 "doc1": doc1,
                 "date_stage": date_stage,
-                "requis_txt": requis_txt
+                "requis_txt": requis_txt,
+                "date_expiration": date_expiration
             })
 
         # Affectation au RepeatingPanel pour affichage

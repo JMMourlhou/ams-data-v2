@@ -66,10 +66,19 @@ components:
         name: button_del
         properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
         type: Button
+      - layout_properties: {}
+        name: date_picker_1
+        properties: {}
+        type: DatePicker
       - event_bindings: {click: button_search_click}
         layout_properties: {}
         name: button_search
         properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:search-plus', text: ''}
+        type: Button
+      - event_bindings: {click: button_efface_date_expiration_click}
+        layout_properties: {}
+        name: button_efface_date_expiration
+        properties: {background: 'theme:Tertiary', foreground: 'theme:Error', icon: 'fa:calendar-times-o', text: '', visible: false}
         type: Button
       name: flow_panel_2_copy
       properties: {align: center, background: 'theme:Primary'}
