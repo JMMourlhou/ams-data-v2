@@ -133,6 +133,7 @@ class ItemTemplate6(ItemTemplate6Template):
             self.file_loader_1.visible = True
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
+            self.b
             self.date_picker_1.date = None
             self.date_picker_1.background = "theme:Error"
             self.date_picker_1.foreground = "white"

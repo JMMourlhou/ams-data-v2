@@ -27,6 +27,14 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 "requis_txt":        intitulé en clair du PR
                 "date_expiration":   date_expiration
         """
+        #import anvil.js    # pour screen size
+        from anvil.js import window # to gain access to the window object
+        screen_size = window.innerWidth
+        if screen_size < 800:
+            self.button_visu.text = "Téléchargt"
+        else:
+            self.button_visu.text = "Voir / PDF"
+            
         # Any code you write here will run before the form opens.
         self.date_du_jour = datetime.now(anvil.tz.tzlocal()).date()  # pour comparer avec date d'expiration
         self.test_img_just_loaded = False
@@ -40,7 +48,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         txt2 = self.item['requis_txt']  # l'intitulé
         self.label_en_tete_pr.text = txt0 +txt1 + txt2
 
-        # Affichage et couleurs de la date d'expiration
+        # Affichage et couleurs de la date d'expiration et bt efface
         self.date_picker_1.date = self.item['date_expiration']
         
         # -------------------------------------------------
@@ -80,6 +88,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             self.file_loader_1.visible = False
             self.button_del_pour_ce_stagiaire.visible = False
             self.button_rotation.visible = True
+            self.button_download.visible = True
         else:
             self.image_1.source = None       # permet de tester le click sur l'image
             self.button_del.visible = False
@@ -87,6 +96,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             self.file_loader_1.visible = True
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
+            self.button_download.visible = False
             
         #print(f"<{self.item['item_requis']['code_pre_requis'][0:6].strip()}>")
         #print(f"<{self.item['item_requis']['code_pre_requis'].strip()}>")
@@ -147,6 +157,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
+                self.button_download.visible = True
                 self.button_visu.visible = True  
                 self.button_del.visible = True 
             elif file_extension == ".pdf":      
@@ -175,6 +186,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             self.button_visu.visible = False
             self.button_del.visible = False
             self.button_rotation.visible = False
+            self.button_download.visible = False
 
             self.file_loader_1.text = ""
             self.file_loader_1.font_size = 18
@@ -359,4 +371,13 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         result = anvil.server.call('pr_expiration_date_writting', self.item, date_selectionnee)
         if result != "Ok":
             alert(result)
+
+    def button_download_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        new_file_name = Pre_R_doc_name.doc_name_creation(self.item['stage_row'], self.item['requis_txt'], self.item['stagiaire_email'])   # extension non incluse
+        new_file_named = anvil.BlobMedia("image/jpg", self.image_1.source.get_bytes(), name=new_file_name+".jpg")
+        anvil.media.download(new_file_named)
+        n = Notification("Téléchargement effectué !",
+                         timeout=1)   # par défaut 2 secondes
+        n.show()
             

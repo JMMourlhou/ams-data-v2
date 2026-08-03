@@ -10,94 +10,135 @@ components:
         event_bindings: {mouse_down: image_1_mouse_down}
         layout_properties: {full_width_row: true, grid_position: 'LSIOOU,UOWYNL'}
         name: image_1
-        properties: {display_mode: original_size, height: '50', role: null, spacing_above: small, spacing_below: medium}
+        properties: {display_mode: shrink_to_fit, height: 258.7553405761719, role: null, spacing_above: small, spacing_below: medium}
         type: Image
-      - event_bindings: {click: button_rotation_click}
-        layout_properties: {grid_position: 'OHXNCT,MMXWJX'}
-        name: button_rotation
-        properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
-        type: Button
-      layout_properties: {expand: false, width: 210.978}
+      - components:
+        - event_bindings: {click: button_rotation_click}
+          layout_properties: {grid_position: 'DUCREI,EQPVWV'}
+          name: button_rotation
+          properties: {font_size: 20, icon: 'fa:rotate-right', text: ''}
+          type: Button
+        - event_bindings: {click: button_download_click}
+          layout_properties: {grid_position: 'DUCREI,NBCMQO'}
+          name: button_download
+          properties: {icon: 'fa:download', text: ''}
+          type: Button
+        layout_properties: {grid_position: 'XLXFCG,XCNHVF'}
+        name: column_panel_6
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {grid_position: 'KQTORU,TQRXZG'}
       name: column_panel_2
-      properties: {background: 'theme:On Primary Container', role: tonal-card, spacing_above: medium}
+      properties:
+        background: theme:On Primary Container
+        role: tonal-card
+        spacing:
+          margin: [null, null, null, '10']
+        spacing_above: medium
       type: ColumnPanel
     - components:
-      - event_bindings: {change: file_loader_1_change}
-        name: file_loader_1
-        properties:
-          align: center
-          background: theme:Primary
-          bold: false
-          border: ''
-          enabled: true
-          file: null
-          file_types: ''
-          files: []
-          font: ''
-          font_size: 14
-          foreground: theme:On Primary
-          icon: fa:upload
-          icon_align: left
-          italic: false
-          multiple: false
-          role: outlined-button
-          show_state: true
-          spacing_above: small
-          spacing_below: small
-          text: Choisir
-          tooltip: ''
-          underline: false
-          visible: false
-        type: FileLoader
-      - data_bindings: []
-        event_bindings: {click: button_del_pour_ce_stagiaire_click}
-        layout_properties: {}
-        name: button_del_pour_ce_stagiaire
-        properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:Tertiary', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
-        type: Button
-      - event_bindings: {click: button_visu_click}
-        layout_properties: {}
-        name: button_visu
-        properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:binoculars', icon_align: left, role: filled-button, text: '   Voir / PDF', visible: false}
-        type: Button
-      - data_bindings: []
-        event_bindings: {click: button_del_click}
-        layout_properties: {}
-        name: button_del
-        properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
-        type: Button
-      - event_bindings: {change: date_picker_1_change}
-        layout_properties: {}
-        name: date_picker_1
+      - components:
+        - components:
+          - event_bindings: {change: file_loader_1_change}
+            name: file_loader_1
+            properties:
+              align: center
+              background: theme:Primary
+              bold: false
+              border: ''
+              enabled: true
+              file: null
+              file_types: ''
+              files: []
+              font: ''
+              font_size: 14
+              foreground: theme:On Primary
+              icon: fa:upload
+              icon_align: left
+              italic: false
+              multiple: false
+              role: outlined-button
+              show_state: true
+              spacing_above: small
+              spacing_below: small
+              text: Choisir
+              tooltip: ''
+              underline: false
+              visible: false
+            type: FileLoader
+          - data_bindings: []
+            event_bindings: {click: button_del_pour_ce_stagiaire_click}
+            layout_properties: {}
+            name: button_del_pour_ce_stagiaire
+            properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 13, foreground: 'theme:Tertiary', icon: 'fa:minus', icon_align: left, italic: false, role: outlined-button, spacing_above: small, spacing_below: small, text: PR pour ce stagiaire, tooltip: '', underline: false, visible: false}
+            type: Button
+          - event_bindings: {click: button_visu_click}
+            layout_properties: {}
+            name: button_visu
+            properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:binoculars', icon_align: left, role: filled-button, text: '   Voir / PDF', visible: false}
+            type: Button
+          - event_bindings: {click: button_search_click}
+            layout_properties: {}
+            name: button_search
+            properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:search-plus', text: ''}
+            type: Button
+          - data_bindings: []
+            event_bindings: {click: button_del_click}
+            layout_properties: {}
+            name: button_del
+            properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:Error', icon: 'fa:remove', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '   Effacer', tooltip: '', underline: false, visible: false}
+            type: Button
+          name: flow_panel_1
+          properties: {align: center, background: 'theme:Primary'}
+          type: FlowPanel
+        layout_properties: {grid_position: 'MJJCUV,DCHFTJ'}
+        name: flow_panel_2
+        properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}
+        type: FlowPanel
+      - components:
+        - components:
+          - event_bindings: {change: date_picker_1_change}
+            layout_properties: {}
+            name: date_picker_1
+            properties:
+              align: left
+              margin: ['4', null, null, null]
+            type: DatePicker
+          - event_bindings: {click: button_efface_date_expiration_click}
+            layout_properties: {}
+            name: button_efface_date_expiration
+            properties: {background: 'theme:Tertiary', foreground: 'theme:Error', icon: 'fa:calendar-times-o', text: '', visible: false}
+            type: Button
+          layout_properties: {grid_position: 'YYKDOX,YGSJNT'}
+          name: flow_panel_date_exp
+          properties: {align: center, background: 'theme:Primary'}
+          type: FlowPanel
+        layout_properties: {grid_position: 'WPDJWY,COILKI'}
+        name: column_panel_5
         properties: {}
-        type: DatePicker
-      - event_bindings: {click: button_search_click}
-        layout_properties: {}
-        name: button_search
-        properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:search-plus', text: ''}
-        type: Button
-      - event_bindings: {click: button_efface_date_expiration_click}
-        layout_properties: {}
-        name: button_efface_date_expiration
-        properties: {background: 'theme:Tertiary', foreground: 'theme:Error', icon: 'fa:calendar-times-o', text: '', visible: false}
-        type: Button
-      name: flow_panel_2_copy
-      properties: {align: center, background: 'theme:Primary'}
-      type: FlowPanel
-    layout_properties: {grid_position: 'CMSCBX,VQAHRE'}
-    name: flow_panel_2
-    properties: {align: center, background: 'theme:Primary', spacing_above: none, spacing_below: none}
-    type: FlowPanel
+        type: ColumnPanel
+      layout_properties: {grid_position: 'KQTORU,XNGMEI'}
+      name: column_panel_4
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'KEOIEB,CHYPCE'}
+    name: column_panel_3
+    properties: {col_widths: '{"TQRXZG":17,"XNGMEI":43}'}
+    type: ColumnPanel
   - layout_properties: {grid_position: 'UMGAQK,RVBKHA'}
     name: column_panel_content
-    properties: {}
+    properties:
+      spacing:
+        margin: [null, null, '0', null]
     type: ColumnPanel
   layout_properties: {grid_position: 'FWEMXE,YDBKIW'}
   name: column_panel_1
   properties:
+    background: theme:Primary
+    col_spacing: tiny
     role: outlined-card
     spacing:
-      padding: ['10', '5', '10', '5']
+      padding: ['10', '5', '20', '5']
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true
