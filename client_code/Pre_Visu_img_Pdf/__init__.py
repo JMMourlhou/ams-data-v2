@@ -43,7 +43,11 @@ class Pre_Visu_img_Pdf(Pre_Visu_img_PdfTemplate):
     
     def image_1_mouse_down(self, x, y, button, keys, **event_args):
         """This method is called when a mouse button is pressed on this component"""
-        self.button_fermer_click()
+        from anvil.js import window # pour screen size
+        screen_size = window.innerWidth
+        # non Vide et pas tel, je peux cliquer sur l'image
+        if screen_size > 800:       
+            self.button_fermer_click()
 
             
 

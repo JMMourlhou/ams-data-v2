@@ -10,7 +10,13 @@ components:
         event_bindings: {mouse_down: image_1_mouse_down}
         layout_properties: {full_width_row: true, grid_position: 'LSIOOU,UOWYNL'}
         name: image_1
-        properties: {display_mode: shrink_to_fit, height: 258.7553405761719, role: null, spacing_above: small, spacing_below: medium}
+        properties:
+          display_mode: fill_width
+          height: 375.279296875
+          margin: [null, '15', null, null]
+          role: null
+          spacing_above: small
+          spacing_below: medium
         type: Image
       - components:
         - event_bindings: {click: button_rotation_click}
@@ -25,7 +31,7 @@ components:
           type: Button
         layout_properties: {grid_position: 'XLXFCG,XCNHVF'}
         name: column_panel_6
-        properties: {}
+        properties: {wrap_on: never}
         type: ColumnPanel
       layout_properties: {grid_position: 'KQTORU,TQRXZG'}
       name: column_panel_2
@@ -123,7 +129,7 @@ components:
       type: ColumnPanel
     layout_properties: {grid_position: 'KEOIEB,CHYPCE'}
     name: column_panel_3
-    properties: {col_widths: '{"TQRXZG":17,"XNGMEI":43}'}
+    properties: {col_widths: '{"TQRXZG":22,"XNGMEI":38}'}
     type: ColumnPanel
   - layout_properties: {grid_position: 'UMGAQK,RVBKHA'}
     name: column_panel_content

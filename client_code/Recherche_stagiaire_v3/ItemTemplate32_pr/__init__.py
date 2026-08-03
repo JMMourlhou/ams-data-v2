@@ -10,6 +10,7 @@ from ... import French_zone # calcul tps traitement
 from ... import Pre_R_doc_name
 from ...Pre_Visu_img_Pdf import Pre_Visu_img_Pdf   #pour afficher un document avant de le télécharger
 from datetime import datetime
+from anvil.js import window # pour screen size
 
 class ItemTemplate32_pr(ItemTemplate32_prTemplate):
     def __init__(self, **properties):
@@ -27,13 +28,11 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 "requis_txt":        intitulé en clair du PR
                 "date_expiration":   date_expiration
         """
-        #import anvil.js    # pour screen size
-        from anvil.js import window # to gain access to the window object
         screen_size = window.innerWidth
-        if screen_size < 800:
-            self.button_visu.text = "Téléchargt"
+        if self.image_1.source is not None and  screen_size < 800:    
+            self.button_visu.visible = False
         else:
-            self.button_visu.text = "Voir / PDF"
+            self.button_visu.visible = True
             
         # Any code you write here will run before the form opens.
         self.date_du_jour = datetime.now(anvil.tz.tzlocal()).date()  # pour comparer avec date d'expiration
@@ -226,8 +225,12 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def image_1_mouse_down(self, x, y, button, keys, **event_args):
         """This method is called when a mouse button is pressed on this component"""
-        if self.image_1.source is not None:        # non Vide
+        screen_size = window.innerWidth
+         # non Vide et pas tel, je peux cliquer sur l'image
+        if self.image_1.source is not None and  screen_size > 800:       
             self.button_visu_click()
+        else:
+            pass
 
     def button_del_pour_ce_stagiaire_click(self, **event_args):
         """This method is called when the button is clicked"""
