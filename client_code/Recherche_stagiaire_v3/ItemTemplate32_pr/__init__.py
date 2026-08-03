@@ -105,14 +105,16 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         else:
             self.button_search.visible = False
 
-        if self.image_1.source is not None and  self.screen_size > 800 and not self.column_panel_content.get_components():       
+        if self.image_1.source is not None and not self.column_panel_content.get_components():       
             self.button_visu.visible = True
+        else:
+            self.button_visu.visible = False
 
             
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
-        if self.image_1.source is not None and  self.screen_size > 800 and not self.column_panel_content.get_components():
+        if self.image_1.source is not None and not self.column_panel_content.get_components():
             try:
                 row = app_tables.pre_requis_stagiaire.get(
                     stage_num=self.item['stage_row'],
@@ -225,9 +227,8 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
 
     def image_1_mouse_down(self, x, y, button, keys, **event_args):
         """This method is called when a mouse button is pressed on this component"""
-        screen_size = window.innerWidth
         # non Vide et pas tel, et l'image non déjà affichée ds column_panel_content je peux cliquer sur l'image
-        if self.image_1.source is not None and  screen_size > 800 and not self.column_panel_content.get_components():       
+        if self.image_1.source is not None and not self.column_panel_content.get_components():       
             self.button_visu_click()
   
 

@@ -15,7 +15,15 @@ components:
         event_bindings: {mouse_down: image_1_mouse_down}
         layout_properties: {grid_position: 'VTTKFP,XTKJOS'}
         name: image_1
-        properties: {background: '', display_mode: original_size, height: 72.80029296875, role: null, spacing_above: small, spacing_below: none, visible: true}
+        properties:
+          background: ''
+          display_mode: original_size
+          height: 72.80029296875
+          margin: [null, '20', null, '20']
+          role: null
+          spacing_above: small
+          spacing_below: none
+          visible: true
         type: Image
       - components:
         - event_bindings: {click: button_rotation_click}
@@ -32,7 +40,7 @@ components:
         name: column_panel_6
         properties: {wrap_on: never}
         type: ColumnPanel
-      layout_properties: {width: 423.44195458984376}
+      layout_properties: {width: 246.47798779296875}
       name: column_panel_1
       properties: {background: 'theme:On Primary Container', role: tonal-card, spacing_above: medium}
       type: ColumnPanel

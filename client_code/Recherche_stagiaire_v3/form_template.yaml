@@ -184,20 +184,20 @@ components:
               name: button_fiche
               properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', icon: 'fa:drivers-license', role: elevated-button, spacing_above: none, spacing_below: none, text: ''}
               type: Button
-            - event_bindings: {click: button_qcm_click}
+            - event_bindings: {click: button_pr_click}
               layout_properties: {}
-              name: button_qcm
-              properties: {align: full, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', role: elevated-button, spacing_above: none, spacing_below: none, text: Qcm}
+              name: button_pr
+              properties: {background: 'theme:On Primary Container', font_size: 11, foreground: 'theme:Tertiary', role: elevated-button, text: P.R.}
               type: Button
             - event_bindings: {click: button_histo_click}
               layout_properties: {}
               name: button_histo
               properties: {align: center, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', role: elevated-button, spacing_above: none, spacing_below: none, text: Hist}
               type: Button
-            - event_bindings: {click: button_pr_click}
+            - event_bindings: {click: button_qcm_click}
               layout_properties: {}
-              name: button_pr
-              properties: {background: 'theme:On Primary Container', font_size: 11, foreground: 'theme:Tertiary', role: elevated-button, text: P.R.}
+              name: button_qcm
+              properties: {align: full, background: 'theme:On Primary Container', font_size: 10, foreground: 'theme:Tertiary', role: elevated-button, spacing_above: none, spacing_below: none, text: Qcm}
               type: Button
             - event_bindings: {click: button_visu_formulaires_click}
               layout_properties: {}
