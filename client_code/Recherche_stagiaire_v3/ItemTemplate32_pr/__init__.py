@@ -28,8 +28,8 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                 "requis_txt":        intitulé en clair du PR
                 "date_expiration":   date_expiration
         """
-        screen_size = window.innerWidth
-        if self.image_1.source is not None and  screen_size < 800:    
+        self.screen_size = window.innerWidth
+        if self.screen_size < 800:    
             self.button_visu.visible = False
         else:
             self.button_visu.visible = True
@@ -105,28 +105,28 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
         else:
             self.button_search.visible = False
 
+        if self.image_1.source is not None and  self.screen_size > 800 and not self.column_panel_content.get_components():       
+            self.button_visu.visible = True
+
             
     def button_visu_click(self, **event_args):
         """This method is called when the button is clicked"""
         # Relecture du row de la table pre_requis_stagiaire: (self.item nest pas le row du pre requis)
-        try:
-            row = app_tables.pre_requis_stagiaire.get(
-                stage_num=self.item['stage_row'],
-                stagiaire_email=self.item['stagiaire_email'],
-                item_requis=self.item['item_requis']
-            )
-            #alert(f"ok: {row['requis_txt']} pour {row['nom']} {row['prenom']}")
-        except Exception as e:
-            alert(f"Erreur de relecture du row pre_requis_stagiaire: {e}")
-            return
-        # nouveau nom doc
-        self.label_en_tete_pr.scroll_into_view(align="start")
-        new_file_name = Pre_R_doc_name.doc_name_creation(row['stage_num'], row['requis_txt'], row['stagiaire_email'])   # extension non incluse
-
-        #self.column_panel_content.add_component(Pre_Visu_img_Pdf(file, new_file_name, self.stage_num, self.email, self.item_requis, origine="pre-requis-admin"))
-        
-        self.column_panel_content.add_component(Pre_Visu_img_Pdf(row['doc1'], new_file_name, self.stage_num, row['stagiaire_email'], row['item_requis'], origine="pre-requis-admin"))
-        self.label_en_tete_pr.scroll_into_view(align="start")
+        if self.image_1.source is not None and  self.screen_size > 800 and not self.column_panel_content.get_components():
+            try:
+                row = app_tables.pre_requis_stagiaire.get(
+                    stage_num=self.item['stage_row'],
+                    stagiaire_email=self.item['stagiaire_email'],
+                    item_requis=self.item['item_requis']
+                )
+            except Exception as e:
+                alert(f"Erreur de relecture du row pre_requis_stagiaire: {e}")
+                return
+            # nouveau nom doc
+            self.label_en_tete_pr.scroll_into_view(align="start")
+            new_file_name = Pre_R_doc_name.doc_name_creation(row['stage_num'], row['requis_txt'], row['stagiaire_email'])   # extension non incluse
+            self.column_panel_content.add_component(Pre_Visu_img_Pdf(row['doc1'], new_file_name, self.stage_num, row['stagiaire_email'], row['item_requis'], origine="pre-requis-admin"))
+            self.label_en_tete_pr.scroll_into_view(align="start")
 
     def file_loader_1_change(self, file, **event_args):
         if file is not None:  #pas d'annulation en ouvrant choix de fichier
@@ -226,11 +226,10 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
     def image_1_mouse_down(self, x, y, button, keys, **event_args):
         """This method is called when a mouse button is pressed on this component"""
         screen_size = window.innerWidth
-         # non Vide et pas tel, je peux cliquer sur l'image
-        if self.image_1.source is not None and  screen_size > 800:       
+        # non Vide et pas tel, et l'image non déjà affichée ds column_panel_content je peux cliquer sur l'image
+        if self.image_1.source is not None and  screen_size > 800 and not self.column_panel_content.get_components():       
             self.button_visu_click()
-        else:
-            pass
+  
 
     def button_del_pour_ce_stagiaire_click(self, **event_args):
         """This method is called when the button is clicked"""

@@ -65,6 +65,7 @@ class ItemTemplate6(ItemTemplate6Template):
             self.button_del.visible = False 
             self.button_visu.visible = False
             self.button_rotation.visible = False
+            self.button_download.visible = False
             self.file_loader_1.visible = True
             self.button_del_pour_ce_stagiaire.visible = True   # si pas d'image, je peux enlever le pré requis pour ce stagiaire
 
@@ -95,6 +96,7 @@ class ItemTemplate6(ItemTemplate6Template):
                 # gestion des boutons        
                 self.file_loader_1.visible = False
                 self.button_rotation.visible = True
+                self.button_download.visible = True
                 self.button_visu.visible = True  
                 self.button_del.visible = True 
                 end = French_zone.french_zone_time()
@@ -133,7 +135,7 @@ class ItemTemplate6(ItemTemplate6Template):
             self.file_loader_1.visible = True
             self.button_del_pour_ce_stagiaire.visible = True
             self.button_rotation.visible = False
-            self.b
+            self.button_download.visible = False
             self.date_picker_1.date = None
             self.date_picker_1.background = "theme:Error"
             self.date_picker_1.foreground = "white"
@@ -203,7 +205,8 @@ class ItemTemplate6(ItemTemplate6Template):
 
     def image_1_mouse_down(self, x, y, button, keys, **event_args):
         """This method is called when a mouse button is pressed on this component"""
-        if self.image_1.source is not None:        # non Vide
+        # non Vide et pas tel, et l'image non déjà affichée ds column_panel_content je peux cliquer sur l'image
+        if self.image_1.source is not None and not self.column_panel_content.get_components():       
             self.button_visu_click()
 
     def button_del_pour_ce_stagiaire_click(self, **event_args):
@@ -285,6 +288,7 @@ class ItemTemplate6(ItemTemplate6Template):
         self.file_loader_1.visible = False
         self.button_search.visible = False
         self.button_rotation.visible = True
+        self.button_download.visible = True
         self.button_visu.visible = True  
         self.button_del.visible = True 
 
@@ -320,11 +324,7 @@ class ItemTemplate6(ItemTemplate6Template):
             alert(f"Pas de doc '{self.item['item_requis']['code_pre_requis'].strip()}' trouvé dans les stages AMS précédents")
 
 
-    # POur afficher OK et Retour en FRancais (calendrier)
-    # Cette méthode se lance qd le date_picker component s'affiche
-    def date_picker_1_show(self, **event_args):
-        from .... import Boutons_Calendriers_Fr
-        Boutons_Calendriers_Fr.traduire_boutons_calendrier()
+
         
     def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
@@ -353,6 +353,16 @@ class ItemTemplate6(ItemTemplate6Template):
         result = anvil.server.call('pr_expiration_date_writting', self.item, None, True) 
         if result != "Ok":
             alert(result)
+
+
+    def button_download_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        new_file_name = Pre_R_doc_name.doc_name_creation(self.item['stage_num'], self.item['requis_txt'], self.item['stagiaire_email'])   # extension non incluse
+        new_file_named = anvil.BlobMedia("image/jpg", self.image_1.source.get_bytes(), name=new_file_name+".jpg")
+        anvil.media.download(new_file_named)
+        n = Notification("Téléchargement effectué !",
+                         timeout=1)   # par défaut 2 secondes
+        n.show()
 
             
         
