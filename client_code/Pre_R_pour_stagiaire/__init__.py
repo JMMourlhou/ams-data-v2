@@ -19,19 +19,11 @@ class Pre_R_pour_stagiaire(Pre_R_pour_stagiaireTemplate):
             self.label_1.text = "Documents à fournir pour " + self.user_pr['prenom'] + " " + self.user_pr['nom']
             # Drop down stages inscrits du user
             liste0 = app_tables.stagiaires_inscrits.search(user_email=self.user_pr)
-            print("nb; ", len(liste0))
+            #print("nb; ", len(liste0))
             liste_drop_d = []
             for row in liste0:
-                #lecture fichier père stage
-                alert(f"")
-                stage=app_tables.stages.get(q.fetch_only("date_debut"),
-                                                            numero=row['stage']['numero']
-                                            )
-                
-                #lecture fichier père type de stage
-                type=app_tables.codes_stages.get(q.fetch_only("code"),
-                                                    code=stage['code']['code']
-                                                )
+                numero=row['stage']['numero']
+                code=row[
                 
                 if stage['type_stage']=="S":    # Si stagiaire, j'affiche la date du stage
                     liste_drop_d.append((type['code']+"  du "+str(stage['date_debut']), row))
