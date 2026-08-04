@@ -14,15 +14,16 @@ class Pre_R_pour_stagiaire(Pre_R_pour_stagiaireTemplate):
         
         # Any code you write here will run before the form opens.
         self.user_pr = anvil.users.get_user()
+        alert(self.user_pr['prenom'])
         if self.user_pr:
             self.label_1.text = "Documents à fournir pour " + self.user_pr['prenom'] + " " + self.user_pr['nom']
             # Drop down stages inscrits du user
-            liste0 = app_tables.stagiaires_inscrits.search(q.fetch_only("user_email","stage"),           # <----------------------  A Modifier? 
-                                                            user_email=self.user_pr)
-            #print("nb; ", len(liste0))
+            liste0 = app_tables.stagiaires_inscrits.search(user_email=self.user_pr)
+            print("nb; ", len(liste0))
             liste_drop_d = []
             for row in liste0:
                 #lecture fichier père stage
+                alert(f"")
                 stage=app_tables.stages.get(q.fetch_only("date_debut"),
                                                             numero=row['stage']['numero']
                                             )
