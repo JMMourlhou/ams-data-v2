@@ -14,7 +14,6 @@ class Pre_R_pour_stagiaire(Pre_R_pour_stagiaireTemplate):
         
         # Any code you write here will run before the form opens.
         self.user_pr = anvil.users.get_user()
-        alert(self.user_pr['prenom'])
         if self.user_pr:
             self.label_1.text = "Documents à fournir pour " + self.user_pr['prenom'] + " " + self.user_pr['nom']
             # Drop down stages inscrits du user
@@ -22,13 +21,14 @@ class Pre_R_pour_stagiaire(Pre_R_pour_stagiaireTemplate):
             #print("nb; ", len(liste0))
             liste_drop_d = []
             for row in liste0:
-                numero=row['stage']['numero']
-                code=row[
+                type_stage=row['stage']['code']['type_stage']
+                code=row['stage']['code_txt']
+                date=str(row['stage']['date_debut'])
                 
-                if stage['type_stage']=="S":    # Si stagiaire, j'affiche la date du stage
-                    liste_drop_d.append((type['code']+"  du "+str(stage['date_debut']), row))
+                if type_stage=="S":    # Si stagiaire, j'affiche la date du stage
+                    liste_drop_d.append((code+"  du "+date, row))
                 else:
-                    liste_drop_d.append((type['intitulé'], row))
+                    liste_drop_d.append((code, row))
                     
             #print(liste_drop_d)
             self.drop_down_code_stage.items = liste_drop_d
