@@ -625,7 +625,13 @@ class Main(MainTemplate):
         alert(len(liste_formateurs))
         for formateur in liste_formateurs:
             print(f"{formateur['role']} {formateur['nom']} {formateur['prenom']} {formateur['email']}")
-            lecture 
+            # lecture sur la table pre_requis_stagiaire 
+            liste_pre_requis = app_tables.pre_requis_stagiaire.search(
+                tables.order_by("requis_txt", ascending=True),
+                stagiaire_email=formateur
+            )
+            for pr in liste_pre_requis:
+                print(f"{pr['requis_txt']}  {pr['stagiaire_email']['nom']}")
 
     
 
