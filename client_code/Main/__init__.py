@@ -611,6 +611,22 @@ class Main(MainTemplate):
         from ..Diplomes_nb import Diplomes_nb
         open_form("Diplomes_nb")
 
+
+    def button_pre_requis_formateurs_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from anvil.tables import app_tables
+        import anvil.tables as tables
+        liste_formateurs = app_tables.users.search(
+            q.fetch_only("role","nom", "prenom","email"),
+            tables.order_by("nom", ascending=True),
+            tables.order_by("prenom", ascending=True),
+            role="F"
+        )
+        alert(len(liste_formateurs))
+        for formateur in liste_formateurs:
+            print(f"{formateur['role']} {formateur['nom']} {formateur['prenom']} {formateur['email']}")
+            lecture 
+
     
 
 
