@@ -641,10 +641,13 @@ class Main(MainTemplate):
                             # doc expirable
                             # Est il à jour ?
                             date_expiration = pr['date_expiration']
-                            print(f"date_exp: {date_expiration}")
-                            if self.french_time.date() > date_expiration:
-                                print(f" {pr['stagiaire_email']['nom']} :   {pr['requis_txt']} n'est plus à jour, Date d'expiration : {pr['date_expiration']}  ")
-                    
+                            if pr['date_expiration'] != None:
+                                if self.french_time.date() > date_expiration:
+                                    print(f" {pr['stagiaire_email']['nom']} :   {pr['requis_txt']} n'est plus à jour, Date d'expiration : {pr['date_expiration']}  ")
+                            else:
+                                print()
+                                print(f"ATTENTION: Date_expiration vide pour {pr['stagiaire_email']['nom']} {pr['stagiaire_email']['prenom']}, Pré-Requis:{pr['requis_txt']}, stage: {pr['stage_num']['code_txt']}")
+                                print()
 
     
 
