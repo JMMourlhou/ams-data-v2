@@ -94,8 +94,8 @@ class Main(MainTemplate):
         self.user = anvil.users.get_user()
             
         if self.user:
-            self.time = French_zone.french_zone_time()
-            print(f"time:{self.time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{self.user['email']}, connected as {self.user['role']}.")
+            self.french_time = French_zone.french_zone_time()
+            print(f"time:{self.french_time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{self.user['email']}, connected as {self.user['role']}.")
             
             # Test : Users ne pouvant plus se logger (nb pw failures à 10)
             if self.user['role']=='A':
@@ -615,7 +615,6 @@ class Main(MainTemplate):
     def button_pre_requis_formateurs_click(self, **event_args):
         """This method is called when the button is clicked"""
         import anvil.tables as tables
-        alert(f"Time: {self.time}")
         liste_formateurs = app_tables.users.search(
             q.fetch_only("role","nom", "prenom","email"),
             tables.order_by("nom", ascending=True),
@@ -643,7 +642,7 @@ class Main(MainTemplate):
                             # Est il à jour ?
                             date_expiration = pr['date_expiration']
                             print(f"date_exp: {date_expiration}")
-                            if self.time > date_expiration:
+                            if self.french_time.date() > date_expiration:
                                 print(f" {pr['stagiaire_email']['nom']} :   {pr['requis_txt']} n'est plus à jour, Date d'expiration : {pr['date_expiration']}  ")
                     
 
