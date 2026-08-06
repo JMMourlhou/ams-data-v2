@@ -622,32 +622,92 @@ class Main(MainTemplate):
             role="F"
         )
         for formateur in liste_formateurs:
-            print()
-            print(f"{formateur['role']} {formateur['nom']} {formateur['prenom']} {formateur['email']}")
+            print("")
+            print("--------------------------------------------------------------------------")
+            print(f"DOCUMENTS DE {formateur['role']} {formateur['nom']} {formateur['prenom']} {formateur['email']}")
+            print("")
             # lecture sur la table pre_requis_stagiaire 
             liste_pre_requis = app_tables.pre_requis_stagiaire.search(
                 tables.order_by("requis_txt", ascending=True),
                 stagiaire_email=formateur
             )
+
+            self.cpt=0
             for pr in liste_pre_requis:
-                # PR pour un stage de type formateur
-                if pr['stage_num']['type_stage']=='F':
-                    if pr['doc1'] is None:
-                        # Doc requis manquant
-                        print(f" {pr['requis_txt']} est à renseigner ")
-                    else:
-                        # Doc requis présent, doc expirable ?
-                        if pr['item_requis']['Expiration'] is True:
-                            # doc expirable
-                            # Est il à jour ?
-                            date_expiration = pr['date_expiration']
-                            if pr['date_expiration'] != None:
-                                if self.french_time.date() > date_expiration:
-                                    print(f" {pr['stagiaire_email']['nom']} :   {pr['requis_txt']} n'est plus à jour, Date d'expiration : {pr['date_expiration']}  ")
-                            else:
-                                print()
-                                print(f"ATTENTION: Date_expiration vide pour {pr['stagiaire_email']['nom']} {pr['stagiaire_email']['prenom']}, Pré-Requis:{pr['requis_txt']}, stage: {pr['stage_num']['code_txt']}")
-                                print()
+                if pr['item_requis']['doc_interne_ams'] is True:
+                    # PR pour un stage de type formateur
+                    if pr['stage_num']['type_stage']=='F':
+                        if pr['doc1'] is None:
+                            # Doc requis manquant
+                            self.doc_a_renseigner(pr['requis_txt'],1)   #     ----------------- Envoi fonction def doc_a_renseigner(self, doc, passage):
+                        else:
+                            # Doc requis présent, doc expirable ?
+                            if pr['item_requis']['Expiration'] is True:
+                                # doc expirable
+                                # Est il à jour ?
+                                date_expiration = pr['date_expiration']
+                                if pr['date_expiration'] is not None:
+                                    if self.french_time.date() > date_expiration:
+                                        self.doc_date_expirée(pr['requis_txt'], pr['date_expiration'], 1)   #  ---------------------- Envoi fonction def doc_date_expirée(self, doc, date, passage):
+                                else:
+                                    print()
+                                    print(f"ATTENTION: Date_expiration vide pour {pr['stagiaire_email']['nom']} {pr['stagiaire_email']['prenom']}, Pré-Requis:{pr['requis_txt']}, stage: {pr['stage_num']['code_txt']}")
+                                    print()
+            
+
+            self.cpt=0
+            for pr in liste_pre_requis:
+                if pr['item_requis']['doc_interne_ams'] is False or pr['item_requis']['doc_interne_ams'] is None:
+                    # PR pour un stage de type formateur
+                    if pr['stage_num']['type_stage']=='F':
+                        if pr['doc1'] is None:
+                            # Doc requis manquant
+                            #print(f" {pr['requis_txt']} est à renseigner ")
+                            self.doc_a_renseigner(pr['requis_txt'],2)
+                        else:
+                            # Doc requis présent, doc expirable ?
+                            if pr['item_requis']['Expiration'] is True:
+                                # doc expirable
+                                # Est il à jour ?
+                                date_expiration = pr['date_expiration']
+                                if pr['date_expiration'] is not None:
+                                    if self.french_time.date() > date_expiration:
+                                        #print(f" {pr['requis_txt']} n'est plus à jour, Date d'expiration : {pr['date_expiration']}  ")
+                                        self.doc_date_expirée(pr['requis_txt'], pr['date_expiration'], 2)
+                                else:
+                                    print()
+                                    print(f"ATTENTION: Date_expiration vide pour {pr['stagiaire_email']['nom']} {pr['stagiaire_email']['prenom']}, Pré-Requis:{pr['requis_txt']}, stage: {pr['stage_num']['code_txt']}")
+                                    print()
+            # fin de boucle sur le formateur
+            if self.cpt == 0:  
+                print(f"Tous les documents de {formateur['nom']} {formateur['prenom']} sont à jours")
+
+                
+    def doc_a_renseigner(self, doc, passage):
+        self.cpt += 1   
+        if self.cpt == 1:
+            if passage == 1:
+                print("")
+                print("DOCUMENTS REQUIS INTERNES à AMS:")
+            else:
+                print("")
+                print("DOCUMENTS REQUIS EXTERNES à AMS:")
+                
+        print(f" {doc} est à renseigner ")
+
+    def doc_date_expirée(self, doc, date, passage):
+        self.cpt += 1   
+        if self.cpt == 1:
+            if passage == 1:
+                print("")
+                print("DOCUMENTS REQUIS INTERNES à AMS:")
+            else:
+                print("")
+                print("DOCUMENTS REQUIS EXTERNES à AMS:")
+
+        print(f" {doc} n'est plus à jour, Date d'expiration : {date}  ")
+
+    
 
     
 
