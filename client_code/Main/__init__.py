@@ -94,8 +94,8 @@ class Main(MainTemplate):
         self.user = anvil.users.get_user()
             
         if self.user:
-            time = French_zone.french_zone_time()
-            print(f"time:{time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{self.user['email']}, connected as {self.user['role']}.")
+            self.time = French_zone.french_zone_time()
+            print(f"time:{self.time}: Nom:{self.user['nom']}, Prénom:{self.user['prenom']}, Mail:{self.user['email']}, connected as {self.user['role']}.")
             
             # Test : Users ne pouvant plus se logger (nb pw failures à 10)
             if self.user['role']=='A':
@@ -614,16 +614,16 @@ class Main(MainTemplate):
 
     def button_pre_requis_formateurs_click(self, **event_args):
         """This method is called when the button is clicked"""
-        from anvil.tables import app_tables
         import anvil.tables as tables
+        alert(f"Time: {self.time}")
         liste_formateurs = app_tables.users.search(
             q.fetch_only("role","nom", "prenom","email"),
             tables.order_by("nom", ascending=True),
             tables.order_by("prenom", ascending=True),
             role="F"
         )
-        alert(len(liste_formateurs))
         for formateur in liste_formateurs:
+            print()
             print(f"{formateur['role']} {formateur['nom']} {formateur['prenom']} {formateur['email']}")
             # lecture sur la table pre_requis_stagiaire 
             liste_pre_requis = app_tables.pre_requis_stagiaire.search(
@@ -631,7 +631,21 @@ class Main(MainTemplate):
                 stagiaire_email=formateur
             )
             for pr in liste_pre_requis:
-                print(f"{pr['requis_txt']}  {pr['stagiaire_email']['nom']}")
+                # PR pour un stage de type formateur
+                if pr['stage_num']['type_stage']=='F':
+                    if pr['doc1'] is None:
+                        # Doc requis manquant
+                        print(f" {pr['requis_txt']} est à renseigner ")
+                    else:
+                        # Doc requis présent, doc expirable ?
+                        if pr['item_requis']['Expiration'] is True:
+                            # doc expirable
+                            # Est il à jour ?
+                            date_expiration = pr['date_expiration']
+                            print(f"date_exp: {date_expiration}")
+                            if self.time > date_expiration:
+                                print(f" {pr['stagiaire_email']['nom']} :   {pr['requis_txt']} n'est plus à jour, Date d'expiration : {pr['date_expiration']}  ")
+                    
 
     
 
