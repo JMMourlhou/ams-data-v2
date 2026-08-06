@@ -17,6 +17,7 @@ class ItemTemplate13(ItemTemplate13Template):
         self.text_box_1.text = self.item['requis']
         self.text_box_3.text = self.item['commentaires']
         self.text_box_4.text = self.item['order']
+        self.check_box_1.checked = self.item['doc_interne_ams']
 
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -44,6 +45,7 @@ class ItemTemplate13(ItemTemplate13Template):
     def text_box_4_change(self, **event_args):  # order change
         """This method is called when the text in this text box is edited"""
         self.button_modif.visible = True
+        
     def button_modif_click(self, **event_args):
         """This method is called when the button is clicked"""
         if self.text_box_4.text == "":   # order vide ?
@@ -55,7 +57,7 @@ class ItemTemplate13(ItemTemplate13Template):
         sov_old_code = self.item['code_pre_requis']
         if r :   # oui
             # 1 modif ds les pre-requis stagiaires     pr_row,    intitule,             code,                 order,                commentaire,           old_code    
-            result, nb = anvil.server.call("modif_pr", self.item, self.text_box_1.text, self.text_box_2.text, self.text_box_4.text, self.text_box_3.text,  sov_old_code)
+            result, nb = anvil.server.call("modif_pr", self.item, self.text_box_1.text, self.text_box_2.text, self.text_box_4.text, self.text_box_3.text,  sov_old_code, self.check_box_1.checked)
             if result is not True:
                 alert("ERREUR, Modification non effectuée !")
                 return
@@ -64,6 +66,11 @@ class ItemTemplate13(ItemTemplate13Template):
             self.text_box_1.text = sov_old_pr
             self.text_box_2.text = sov_old_code
         self.button_modif.visible = False
+
+
+    def check_box_1_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.button_modif.visible = True
 
     
 

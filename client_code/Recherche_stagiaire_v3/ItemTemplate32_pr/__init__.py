@@ -68,7 +68,7 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
                     self.date_picker_1.foreground = "white"
                 else:
                     self.date_picker_1.background = "theme:Vert Clair"
-                    self.date_picker_1.foreground = "white"   
+                    self.date_picker_1.foreground = "dark"   
 
             # Si le pré requis est affiché, mais pas la date d'expiration : Erreur
             if self.item['doc1'] is not None and self.date_picker_1.date is None: 
@@ -371,9 +371,16 @@ class ItemTemplate32_pr(ItemTemplate32_prTemplate):
             self.date_picker_1.foreground = "white" 
 
         # Sauvegarde
-        result = anvil.server.call('pr_expiration_date_writting', self.item, date_selectionnee)
+        row = app_tables.pre_requis_stagiaire.get(
+            stage_num=self.item['stage_row'],
+            stagiaire_email=self.item['stagiaire_email'],
+            item_requis=self.item['item_requis']
+        )
+        result = anvil.server.call('pr_expiration_date_writting', row, date_selectionnee)
+        
         if result != "Ok":
             alert(result)
+
 
     def button_download_click(self, **event_args):
         """This method is called when the button is clicked"""

@@ -56,16 +56,18 @@ class Pre_R_MAJ_table(Pre_R_MAJ_tableTemplate):
             alert("Entrez le num de page / nb de pages    ex: 1/2")
             self.text_box_4.focus()
             return
+            
         # Code existant ?
         row = app_tables.pre_requis.get(code_pre_requis=self.text_box_1.text) 
         if row:
             alert("Ce code de Pré-Requis existe déjà !")
             self.text_box_1.focus()
             return
+            
         r=alert("Voulez-vous vraiment ajouter ce Pré-Requis ?",dismissible=False,buttons=[("oui",True),("non",False)])
         if r :   # oui
             code = self.text_box_1.text.upper() # mettre en majuscule le code
-            result = anvil.server.call("add_pr", code, self.text_box_4.text, self.text_box_2.text, self.text_box_3.text )
+            result = anvil.server.call("add_pr", code, self.text_box_4.text, self.text_box_2.text, self.text_box_3.text, self.check_box_doc_interne.checked )
             if result is not True:
                 alert("ERREUR, Ajout non effectué !")
                 return

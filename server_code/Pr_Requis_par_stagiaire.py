@@ -138,6 +138,7 @@ def pr_stagiaire_del(user_email, stage, item_requis, mode="efface"):
 # PRE-REQUIS STAGIAIRES, Ecriture de la date d'expiration du pré requis
 @anvil.server.callable
 def pr_expiration_date_writting(row, date_expiration, effacement=False):
+    #print(f"debug 1: {date_expiration}")
     try:
         if row is None:
             return "Erreur : ligne à modifier non trouvée."
@@ -150,7 +151,7 @@ def pr_expiration_date_writting(row, date_expiration, effacement=False):
                 "Erreur : la valeur reçue n'est pas une date. "
                 f"Type reçu : {type(date_expiration)}"
             )
-            
+        #print(f"debug 2: {date_expiration}")
         row.update(date_expiration = date_expiration)
         return "Ok"
     except Exception as e:

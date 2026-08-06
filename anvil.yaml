@@ -359,12 +359,17 @@ db_schema:
     - admin_ui: {width: 200}
       name: doc
       type: bool
-    - admin_ui: {order: 3, width: 200}
+    - admin_ui: {order: 3, width: 138}
+      client_hidden: false
       name: order
       type: string
     - admin_ui: {order: 4, width: 159}
       client_hidden: false
       name: Expiration
+      type: bool
+    - admin_ui: {order: 5, width: 166}
+      client_hidden: false
+      name: doc_interne_ams
       type: bool
     indexes: []
     server: full

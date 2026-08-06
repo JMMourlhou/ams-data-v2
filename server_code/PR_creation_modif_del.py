@@ -10,14 +10,15 @@ from anvil import *  #pour les alertes
 
 #Création d'un nouveau Pré-Requis
 @anvil.server.callable 
-def add_pr(code, order, intitule, commentaires):          # order 1/1 ou 1/2 ... pour la MAJ auto des PR à partir des docs scannés
+def add_pr(code, order, intitule, commentaires, doc_interne):          # order 1/1 ou 1/2 ... pour la MAJ auto des PR à partir des docs scannés
     
     new_row=app_tables.pre_requis.add_row(
                               code_pre_requis=code,
                               order = order,
                               requis=intitule,
                               commentaires=commentaires,
-                              doc=False
+                              doc=False,
+                              doc_interne_ams=doc_interne
                              )
                  
     pr = app_tables.pre_requis.search(code_pre_requis=new_row['code_pre_requis'])
@@ -30,12 +31,14 @@ def add_pr(code, order, intitule, commentaires):          # order 1/1 ou 1/2 ...
 
 # ==========================================================================================
 @anvil.server.callable           #modif d'un intitulé pr et répercution ds la table pr_stgiaires ET Table Codes_stages, si le dictionnaire des pr pour un stage contient ce code
-def modif_pr(pr_row, intitule, code, order, commentaire, old_code):    # order 1/1 ou 1/2 ... pour la MAJ auto des PR à partir des docs scannés
+def modif_pr(pr_row, intitule, code, order, commentaire, old_code, doc_interne):    # order 1/1 ou 1/2 ... pour la MAJ auto des PR à partir des docs scannés
     valid = False
     pr_row.update(requis = intitule,
                  code_pre_requis = code,
                  order = order, 
-                 commentaires = commentaire)
+                 commentaires = commentaire,
+                 doc_interne_ams = doc_interne
+                 )
     
     # modif du PR existant en table "pre_requis_stagiaire"
     liste = app_tables.pre_requis_stagiaire.search(item_requis=pr_row)
