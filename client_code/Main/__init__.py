@@ -622,6 +622,7 @@ class Main(MainTemplate):
             role="F"
         )
         for formateur in liste_formateurs:
+            self.cpt_erreur=0
             print("")
             print("--------------------------------------------------------------------------")
             print(f"DOCUMENTS DE {formateur['role']} {formateur['nom']} {formateur['prenom']} {formateur['email']}")
@@ -631,7 +632,7 @@ class Main(MainTemplate):
                 tables.order_by("requis_txt", ascending=True),
                 stagiaire_email=formateur
             )
-
+            
             self.cpt=0
             for pr in liste_pre_requis:
                 if pr['item_requis']['doc_interne_ams'] is True:
@@ -679,12 +680,13 @@ class Main(MainTemplate):
                                     print(f"ATTENTION: Date_expiration vide pour {pr['stagiaire_email']['nom']} {pr['stagiaire_email']['prenom']}, Pré-Requis:{pr['requis_txt']}, stage: {pr['stage_num']['code_txt']}")
                                     print()
             # fin de boucle sur le formateur
-            if self.cpt == 0:  
+            if self.cpt_erreur == 0:  
                 print(f"Tous les documents de {formateur['nom']} {formateur['prenom']} sont à jours")
 
                 
     def doc_a_renseigner(self, doc, passage):
         self.cpt += 1   
+        self.cpt_erreur += 1
         if self.cpt == 1:
             if passage == 1:
                 print("")
@@ -696,7 +698,8 @@ class Main(MainTemplate):
         print(f" {doc} est à renseigner ")
 
     def doc_date_expirée(self, doc, date, passage):
-        self.cpt += 1   
+        self.cpt += 1 
+        self.cpt_erreur += 1
         if self.cpt == 1:
             if passage == 1:
                 print("")
