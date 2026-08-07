@@ -710,6 +710,25 @@ class Main(MainTemplate):
 
         print(f" {doc} n'est plus à jour, Date d'expiration : {date}  ")
 
+
+    def button_veille_pr_requis_compact_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pdf = anvil.server.call(
+        "veille_pr_requis_pdf_gen",
+        "compact"
+        )
+        anvil.media.download(pdf)
+
+
+    
+    def button_veille_pr_requis_1page_per_formateur_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pdf = anvil.server.call(
+            "veille_pr_requis_pdf_gen",
+            "une_page"
+        )
+        anvil.media.download(pdf)
+
     
 
     

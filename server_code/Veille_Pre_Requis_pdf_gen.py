@@ -1,0 +1,751 @@
+# -*- coding: utf-8 -*-
+"""
+Module serveur Anvil : veille_pr_requis
+
+Génère un PDF d'état des documents requis pour tous les formateurs AMS.
+
+Deux modes :
+    - "compact"       : les formateurs s'enchaînent sans saut de page forcé.
+    - "une_page"      : chaque nouveau formateur commence sur une nouvelle page.
+
+Le PDF est produit par l'Uplink Pi5 :
+    anvil.server.call("render_pdf", html_doc, css, filename)
+"""
+
+from anvil.tables import app_tables
+import anvil.server
+import anvil.tables as tables
+
+import html
+from datetime import date, datetime
+
+try:
+    from zoneinfo import ZoneInfo
+    TZ_PARIS = ZoneInfo("Europe/Paris")
+except Exception:
+    TZ_PARIS = None
+
+
+# =============================================================================
+# Helpers généraux
+# =============================================================================
+
+def _esc(value):
+    """Échappement HTML."""
+    if value is None:
+        return ""
+    return html.escape(str(value))
+
+
+def _row_value(row, column, default=None):
+    """
+    Lecture tolérante d'une colonne d'une Row Anvil.
+    """
+    if row is None:
+        return default
+
+    try:
+        value = row[column]
+        return default if value is None else value
+    except Exception:
+        pass
+
+    try:
+        value = row.get(column)
+        return default if value is None else value
+    except Exception:
+        return default
+
+
+def _today_paris():
+    now = datetime.now(TZ_PARIS) if TZ_PARIS else datetime.now()
+    return now.date()
+
+
+def _now_paris():
+    return datetime.now(TZ_PARIS) if TZ_PARIS else datetime.now()
+
+
+def _as_date(value):
+    """
+    Transforme date/datetime en date.
+    Renvoie None si la valeur n'est pas exploitable.
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, datetime):
+        return value.date()
+
+    if isinstance(value, date):
+        return value
+
+    return None
+
+
+def _format_date(value):
+    d = _as_date(value)
+    return d.strftime("%d/%m/%Y") if d else ""
+
+
+def _safe_text(value):
+    return "" if value is None else str(value).strip()
+
+
+# =============================================================================
+# Lecture / classification des prérequis
+# =============================================================================
+
+def _classer_document(pr, today):
+    """
+    Retourne un dictionnaire normalisé décrivant l'état d'un prérequis.
+
+    Statuts :
+        ok
+        missing
+        expired
+        no_expiry_date
+    """
+    item_requis = _row_value(pr, "item_requis")
+    doc1 = _row_value(pr, "doc1")
+    date_expiration_raw = _row_value(pr, "date_expiration")
+    date_expiration = _as_date(date_expiration_raw)
+
+    est_expirable = bool(_row_value(item_requis, "Expiration", False))
+
+    if doc1 is None:
+        status = "missing"
+        status_label = "À renseigner"
+
+    elif est_expirable:
+        if date_expiration is None:
+            status = "no_expiry_date"
+            status_label = "Date d'expiration à renseigner"
+        elif today > date_expiration:
+            status = "expired"
+            status_label = "Expiré"
+        else:
+            status = "ok"
+            status_label = "À jour"
+
+    else:
+        status = "ok"
+        status_label = "À jour"
+
+    return {
+        "libelle": _safe_text(_row_value(pr, "requis_txt")),
+        "status": status,
+        "status_label": status_label,
+        "expiration": date_expiration,
+        "est_expirable": est_expirable,
+    }
+
+
+def _documents_formateur(formateur, today):
+    """
+    Lit les prérequis du formateur et conserve uniquement ceux liés
+    à un stage de type 'F'.
+
+    Les documents internes AMS sont séparés des documents externes.
+    """
+    internes = []
+    externes = []
+
+    liste_pre_requis = app_tables.pre_requis_stagiaire.search(
+        tables.order_by("requis_txt", ascending=True),
+        stagiaire_email=formateur
+    )
+
+    for pr in liste_pre_requis:
+        stage_row = _row_value(pr, "stage_num")
+
+        # Même filtre fonctionnel que dans le script de test :
+        # uniquement les prérequis rattachés à un stage de type formateur.
+        if _row_value(stage_row, "type_stage") != "F":
+            continue
+
+        doc = _classer_document(pr, today)
+
+        item_requis = _row_value(pr, "item_requis")
+        doc_interne_ams = _row_value(item_requis, "doc_interne_ams")
+
+        if doc_interne_ams is True:
+            internes.append(doc)
+        else:
+            # Comme dans le script de test :
+            # False OU None => document externe AMS.
+            externes.append(doc)
+
+    return internes, externes
+
+
+def _stats_documents(internes, externes):
+    docs = internes + externes
+
+    stats = {
+        "total": len(docs),
+        "ok": 0,
+        "missing": 0,
+        "expired": 0,
+        "no_expiry_date": 0,
+    }
+
+    for doc in docs:
+        status = doc["status"]
+        if status in stats:
+            stats[status] += 1
+
+    stats["anomalies"] = (
+        stats["missing"]
+        + stats["expired"]
+        + stats["no_expiry_date"]
+    )
+
+    return stats
+
+
+# =============================================================================
+# Génération HTML
+# =============================================================================
+
+def _status_icon(status):
+    return {
+        "ok": "✓",
+        "missing": "!",
+        "expired": "!",
+        "no_expiry_date": "!",
+    }.get(status, "")
+
+
+def _render_document_rows(documents):
+    if not documents:
+        return """
+        <tr class="empty-row">
+            <td colspan="3">Aucun document dans cette catégorie.</td>
+        </tr>
+        """
+
+    rows = []
+
+    for doc in documents:
+        expiration_txt = ""
+
+        if doc["est_expirable"]:
+            if doc["expiration"] is not None:
+                expiration_txt = _format_date(doc["expiration"])
+            elif doc["status"] == "no_expiry_date":
+                expiration_txt = "Non renseignée"
+        else:
+            expiration_txt = "—"
+
+        rows.append(f"""
+        <tr class="doc-row status-{_esc(doc['status'])}">
+            <td class="doc-name">{_esc(doc['libelle'])}</td>
+            <td class="doc-status">
+                <span class="status-badge">
+                    <span class="status-icon">{_status_icon(doc['status'])}</span>
+                    {_esc(doc['status_label'])}
+                </span>
+            </td>
+            <td class="doc-date">{_esc(expiration_txt)}</td>
+        </tr>
+        """)
+
+    return "".join(rows)
+
+
+def _render_document_table(titre, documents, classe):
+    return f"""
+    <div class="doc-section {classe}">
+        <div class="doc-section-title">{_esc(titre)}</div>
+        <table class="doc-table">
+            <colgroup>
+                <col class="col-doc">
+                <col class="col-status">
+                <col class="col-date">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Document requis</th>
+                    <th>État</th>
+                    <th>Expiration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {_render_document_rows(documents)}
+            </tbody>
+        </table>
+    </div>
+    """
+
+
+def _render_formateur(formateur, internes, externes, index, mode):
+    nom = _safe_text(_row_value(formateur, "nom"))
+    prenom = _safe_text(_row_value(formateur, "prenom"))
+    email = _safe_text(_row_value(formateur, "email"))
+
+    stats = _stats_documents(internes, externes)
+
+    if stats["total"] == 0:
+        resume_class = "resume-warning"
+        resume_txt = "Aucun document requis trouvé pour ce formateur."
+    elif stats["anomalies"] == 0:
+        resume_class = "resume-ok"
+        resume_txt = f"Tous les documents sont à jour ({stats['ok']}/{stats['total']})."
+    else:
+        resume_class = "resume-alert"
+        details = []
+
+        if stats["missing"]:
+            details.append(f"{stats['missing']} à renseigner")
+        if stats["expired"]:
+            details.append(f"{stats['expired']} expiré(s)")
+        if stats["no_expiry_date"]:
+            details.append(
+                f"{stats['no_expiry_date']} date(s) d'expiration manquante(s)"
+            )
+
+        resume_txt = (
+            f"{stats['anomalies']} anomalie(s) sur {stats['total']} document(s) : "
+            + ", ".join(details)
+            + "."
+        )
+
+    return f"""
+    <section class="person-card mode-{_esc(mode)}">
+        <div class="person-header">
+            <div class="person-number">{index}</div>
+            <div class="person-identity">
+                <div class="person-name">{_esc(nom)} {_esc(prenom)}</div>
+                <div class="person-email">{_esc(email)}</div>
+            </div>
+            <div class="person-summary {resume_class}">
+                {_esc(resume_txt)}
+            </div>
+        </div>
+
+        {_render_document_table(
+            "Documents requis internes à AMS",
+            internes,
+            "internal-docs"
+        )}
+
+        {_render_document_table(
+            "Documents requis externes à AMS",
+            externes,
+            "external-docs"
+        )}
+    </section>
+    """
+
+
+def _css(mode):
+    """
+    CSS commun + comportement de pagination selon le mode.
+    """
+    if mode == "une_page":
+        pagination_css = """
+        .person-card {
+            break-before: page;
+            page-break-before: always;
+        }
+
+        .person-card:first-of-type {
+            break-before: auto;
+            page-break-before: auto;
+        }
+        """
+    else:
+        # Compact :
+        # aucun saut de page forcé entre deux formateurs.
+        pagination_css = """
+        .person-card {
+            break-before: auto;
+            page-break-before: auto;
+        }
+        """
+
+    return f"""
+@page {{
+    size: A4;
+    margin: 19mm 12mm 16mm 12mm;
+
+    @top-center {{
+        content: element(doc-header);
+    }}
+
+    @top-right {{
+        content: element(doc-meta);
+    }}
+
+    @bottom-center {{
+        content: "Page " counter(page) " / " counter(pages);
+        font-size: 8pt;
+        color: #5f6368;
+    }}
+}}
+
+* {{
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}}
+
+html, body {{
+    margin: 0;
+    padding: 0;
+    font-family: "DejaVu Sans", Arial, sans-serif;
+    font-size: 9.5pt;
+    color: #202124;
+}}
+
+.page-header {{
+    position: running(doc-header);
+    text-align: center;
+    padding-top: 1mm;
+}}
+
+.page-header .title {{
+    color: #0b4f82;
+    font-size: 11pt;
+    font-weight: 700;
+    line-height: 1.2;
+}}
+
+.page-header .subtitle {{
+    color: #4b5563;
+    font-size: 8pt;
+    font-weight: 600;
+    margin-top: 1mm;
+}}
+
+.page-header-right {{
+    position: running(doc-meta);
+    text-align: right;
+    padding-top: 1mm;
+    color: #6b7280;
+    font-size: 6.5pt;
+    font-weight: 600;
+}}
+
+.report-summary {{
+    border: 1px solid #cfd8e3;
+    background: #f7f9fc;
+    border-radius: 6px;
+    padding: 7px 9px;
+    margin: 0 0 8px 0;
+    font-size: 8.7pt;
+}}
+
+.report-summary strong {{
+    color: #0b4f82;
+}}
+
+.person-card {{
+    border: 1px solid #cfd8e3;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 0 0 9px 0;
+    background: #ffffff;
+}}
+
+{pagination_css}
+
+.person-header {{
+    display: grid;
+    grid-template-columns: 8mm 1fr auto;
+    gap: 8px;
+    align-items: center;
+    border-bottom: 1px solid #dbe2ea;
+    padding-bottom: 6px;
+    margin-bottom: 7px;
+}}
+
+.person-number {{
+    width: 7mm;
+    height: 7mm;
+    line-height: 7mm;
+    text-align: center;
+    border-radius: 50%;
+    background: #0b4f82;
+    color: white;
+    font-weight: 700;
+    font-size: 8pt;
+}}
+
+.person-name {{
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0b4f82;
+}}
+
+.person-email {{
+    margin-top: 1px;
+    color: #6b7280;
+    font-size: 7.8pt;
+}}
+
+.person-summary {{
+    max-width: 70mm;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 7.8pt;
+    font-weight: 700;
+    text-align: right;
+}}
+
+.resume-ok {{
+    background: #e7f6ec;
+    color: #236b3c;
+}}
+
+.resume-alert {{
+    background: #fff0df;
+    color: #8a4b08;
+}}
+
+.resume-warning {{
+    background: #fff7d6;
+    color: #725d00;
+}}
+
+.doc-section {{
+    margin-top: 6px;
+}}
+
+.doc-section-title {{
+    font-weight: 700;
+    font-size: 8.8pt;
+    color: #0b4f82;
+    background: #eef5fb;
+    border-left: 3px solid #0b4f82;
+    padding: 4px 6px;
+    margin-bottom: 3px;
+}}
+
+.external-docs .doc-section-title {{
+    color: #5c456f;
+    background: #f5f0f8;
+    border-left-color: #7b5b91;
+}}
+
+.doc-table {{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 8.2pt;
+}}
+
+.doc-table col.col-doc {{
+    width: 56%;
+}}
+
+.doc-table col.col-status {{
+    width: 27%;
+}}
+
+.doc-table col.col-date {{
+    width: 17%;
+}}
+
+.doc-table th {{
+    border: 1px solid #d9e0e7;
+    background: #f7f8fa;
+    color: #4b5563;
+    padding: 3px 5px;
+    font-size: 7.5pt;
+    text-align: left;
+}}
+
+.doc-table td {{
+    border: 1px solid #d9e0e7;
+    padding: 3px 5px;
+    vertical-align: middle;
+}}
+
+.doc-status,
+.doc-date {{
+    white-space: nowrap;
+}}
+
+.doc-date {{
+    text-align: center;
+}}
+
+.status-badge {{
+    display: inline-block;
+    font-weight: 700;
+}}
+
+.status-icon {{
+    display: inline-block;
+    width: 12px;
+    text-align: center;
+    margin-right: 2px;
+}}
+
+.status-ok .doc-status {{
+    color: #236b3c;
+    background: #f0f9f3;
+}}
+
+.status-missing .doc-status {{
+    color: #8a4b08;
+    background: #fff4e8;
+}}
+
+.status-expired .doc-status {{
+    color: #a02d24;
+    background: #fdecea;
+}}
+
+.status-no_expiry_date .doc-status {{
+    color: #725d00;
+    background: #fff8dc;
+}}
+
+.empty-row td {{
+    text-align: center;
+    color: #8a9099;
+    font-style: italic;
+    background: #fafafa;
+}}
+
+.mode-compact {{
+    break-inside: avoid;
+    page-break-inside: avoid;
+}}
+
+/*
+En mode une_page on ne force pas break-inside: avoid :
+si un formateur possède exceptionnellement trop de lignes pour tenir sur une
+seule feuille A4, WeasyPrint peut poursuivre proprement sur la page suivante
+au lieu de perdre/couper le contenu.
+*/
+.mode-une_page {{
+    break-inside: auto;
+    page-break-inside: auto;
+}}
+"""
+
+
+# =============================================================================
+# Générateur principal
+# =============================================================================
+
+@anvil.server.callable
+def veille_pr_requis_pdf_gen(mode="compact"):
+    """
+    Génère l'état PDF des documents requis des formateurs AMS.
+
+    mode :
+        "compact"  -> pas de saut de page forcé entre formateurs
+        "une_page" -> chaque formateur commence sur une nouvelle page
+    """
+    if mode not in ("compact", "une_page"):
+        raise ValueError(
+            "Mode PDF invalide. Utiliser 'compact' ou 'une_page'."
+        )
+
+    today = _today_paris()
+    now = _now_paris()
+
+    liste_formateurs = app_tables.users.search(
+        tables.order_by("nom", ascending=True),
+        tables.order_by("prenom", ascending=True),
+        role="F"
+    )
+
+    people_blocks = []
+
+    nb_formateurs = 0
+    nb_formateurs_ok = 0
+    nb_formateurs_anomalie = 0
+
+    total_docs = 0
+    total_missing = 0
+    total_expired = 0
+    total_no_expiry = 0
+
+    for index, formateur in enumerate(liste_formateurs, start=1):
+        nb_formateurs += 1
+
+        internes, externes = _documents_formateur(formateur, today)
+        stats = _stats_documents(internes, externes)
+
+        total_docs += stats["total"]
+        total_missing += stats["missing"]
+        total_expired += stats["expired"]
+        total_no_expiry += stats["no_expiry_date"]
+
+        if stats["total"] > 0 and stats["anomalies"] == 0:
+            nb_formateurs_ok += 1
+        elif stats["anomalies"] > 0:
+            nb_formateurs_anomalie += 1
+
+        people_blocks.append(
+            _render_formateur(
+                formateur,
+                internes,
+                externes,
+                index,
+                mode
+            )
+        )
+
+    gen_txt = now.strftime("%d/%m/%Y %H:%M")
+    date_fichier = now.strftime("%Y-%m-%d_%H-%M")
+
+    if mode == "compact":
+        mode_label = "Version compacte"
+        filename = f"etat_documents_formateurs_AMS_compact_{date_fichier}.pdf"
+    else:
+        mode_label = "Un formateur par page"
+        filename = f"etat_documents_formateurs_AMS_1page_{date_fichier}.pdf"
+
+    total_anomalies = total_missing + total_expired + total_no_expiry
+
+    summary_html = f"""
+    <div class="report-summary">
+        <strong>{nb_formateurs}</strong> formateur(s) —
+        <strong>{total_docs}</strong> document(s) contrôlé(s) —
+        <strong>{nb_formateurs_ok}</strong> formateur(s) entièrement à jour —
+        <strong>{nb_formateurs_anomalie}</strong> avec anomalie(s) —
+        <strong>{total_anomalies}</strong> anomalie(s) au total
+        ({total_missing} à renseigner, {total_expired} expiré(s),
+        {total_no_expiry} date(s) d'expiration manquante(s)).
+    </div>
+    """
+
+    html_doc = f"""<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>État des documents requis des formateurs AMS</title>
+</head>
+<body>
+    <div class="page-header">
+        <div class="title">État des documents requis des formateurs AMS</div>
+        <div class="subtitle">{_esc(mode_label)}</div>
+    </div>
+
+    <div class="page-header-right">
+        Édité le {_esc(gen_txt)}
+    </div>
+
+    {summary_html}
+
+    {''.join(people_blocks) if people_blocks else '<p>Aucun formateur trouvé.</p>'}
+</body>
+</html>
+"""
+
+    css = _css(mode)
+
+    # Uplink Pi5 existant.
+    return anvil.server.call(
+        "render_pdf",
+        html_doc,
+        css,
+        filename
+    )
