@@ -109,7 +109,7 @@ components:
     - event_bindings: {click: button_veille_pr_requis_compact_click}
       layout_properties: {grid_position: 'JGTTFJ,WDXKAJ'}
       name: button_veille_pr_requis_compact
-      properties: {align: full, background: 'theme:Tertiary', foreground: 'theme:On Tertiary', text: Veille des Pré-Requis}
+      properties: {align: full, background: 'theme:Tertiary', foreground: 'theme:On Tertiary', text: 'Veille des Pré-Requis / '}
       type: Button
     - event_bindings: {click: button_veille_pr_requis_1page_per_formateur_click}
       layout_properties: {grid_position: 'JGTTFJ,CMQUBP'}
