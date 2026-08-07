@@ -266,7 +266,9 @@ class Main(MainTemplate):
                 self.button_qcm.visible = True                  # faire 1 qcm et voir ses résultats
                 self.button_pre_requis.visible = True
                 self.outlined_card_formulaires.visible = False  
-                self.outlined_card_com.visible = False     
+                self.outlined_card_com.visible = False   
+                self.button_veille_pr_requis_compact.visible = True
+                self.button_veille_pr_requis_1page_per_formateur.visible = True
 
                 self.column_panel_others.visible = True
 
