@@ -109,12 +109,12 @@ components:
     - event_bindings: {click: button_veille_pr_requis_compact_click}
       layout_properties: {grid_position: 'JGTTFJ,WDXKAJ'}
       name: button_veille_pr_requis_compact
-      properties: {align: full, background: 'theme:Tertiary', foreground: 'theme:On Tertiary', text: 'Veille des Pré-Requis / '}
+      properties: {align: full, background: 'theme:Tertiary', foreground: 'theme:On Tertiary', text: Veille des Pré-Requis / Résumé}
       type: Button
     - event_bindings: {click: button_veille_pr_requis_1page_per_formateur_click}
       layout_properties: {grid_position: 'JGTTFJ,CMQUBP'}
       name: button_veille_pr_requis_1page_per_formateur
-      properties: {align: full, background: 'theme:Tertiary', foreground: 'theme:On Tertiary', text: button_1}
+      properties: {align: full, background: 'theme:Tertiary', foreground: 'theme:On Tertiary', text: Veille des Pré-Requis / 1 pg/Form.}
       type: Button
     - event_bindings: {click: button_pre_requis_formateurs_click}
       layout_properties: {full_width_row: false, grid_position: 'AWPDZN,MAOXZC'}
