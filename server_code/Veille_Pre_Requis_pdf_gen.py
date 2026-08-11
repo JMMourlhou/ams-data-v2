@@ -686,6 +686,7 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
             tables.order_by("prenom", ascending=True),
             role="F"
         )
+        title="État des documents requis, Formateurs AMSport"
     else:
         formateur = app_tables.users.get(email=email)
         if formateur is None:
@@ -693,7 +694,7 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
                 f"Aucun utilisateur trouvé avec l'adresse email : {email}"
             )
         liste_formateurs = [formateur]
-        
+        title=f"État des documents requis de {formateur['nom']} {formateur['prenom']} - AMSport"
     people_blocks = []
 
     nb_formateurs = 0
@@ -770,11 +771,11 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>État des documents requis des formateurs AMS</title>
+    <title>{title}</title>
 </head>
 <body>
     <div class="page-header">
-        <div class="title">État des documents requis des formateurs AMS</div>
+        <div class="title">{title}</div>
         <div class="subtitle">{_esc(mode_label)}</div>
     </div>
 
