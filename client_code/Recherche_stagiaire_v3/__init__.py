@@ -798,6 +798,22 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         # retour
         self.button_retour_click()
 
+    
+
+    def button_pr_pdf_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        try:
+            user_row = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+            
+        pdf = anvil.server.call(
+            "veille_pr_requis_pdf_gen",
+            "perso",
+            user_row['email']
+        )
+        anvil.media.download(pdf)
+
 
 
     

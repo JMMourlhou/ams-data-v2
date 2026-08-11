@@ -189,6 +189,11 @@ components:
               name: button_pr
               properties: {background: 'theme:On Primary Container', font_size: 11, foreground: 'theme:Tertiary', role: elevated-button, text: P.R.}
               type: Button
+            - event_bindings: {click: button_pr_pdf_click}
+              layout_properties: {}
+              name: button_pr_pdf
+              properties: {background: 'theme:On Primary Container', font_size: 11, foreground: 'theme:Tertiary', icon: 'fa:file-pdf-o', role: elevated-button, text: P.R.}
+              type: Button
             - event_bindings: {click: button_histo_click}
               layout_properties: {}
               name: button_histo

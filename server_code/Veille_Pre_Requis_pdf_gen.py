@@ -26,6 +26,10 @@ except Exception:
     TZ_PARIS = None
 
 
+# Alerte si un document expire dans moins de 60 jours.
+NB_JOURS_ALERTE_EXPIRATION = 60
+
+
 # =============================================================================
 # Helpers généraux
 # =============================================================================
@@ -104,6 +108,7 @@ def _classer_document(pr, today):
         ok
         missing
         expired
+        expiring_soon
         no_expiry_date
     """
     item_requis = _row_value(pr, "item_requis")
@@ -125,8 +130,20 @@ def _classer_document(pr, today):
             status = "expired"
             status_label = "Expiré"
         else:
-            status = "ok"
-            status_label = "À jour"
+            jours_restants = (date_expiration - today).days
+
+            if jours_restants < NB_JOURS_ALERTE_EXPIRATION:
+                status = "expiring_soon"
+
+                if jours_restants == 0:
+                    status_label = "Expire aujourd'hui"
+                elif jours_restants == 1:
+                    status_label = "Expire dans 1 jour"
+                else:
+                    status_label = f"Expire dans {jours_restants} jours"
+            else:
+                status = "ok"
+                status_label = "À jour"
 
     else:
         status = "ok"
@@ -187,6 +204,7 @@ def _stats_documents(internes, externes):
         "ok": 0,
         "missing": 0,
         "expired": 0,
+        "expiring_soon": 0,
         "no_expiry_date": 0,
     }
 
@@ -213,6 +231,7 @@ def _status_icon(status):
         "ok": "✓",
         "missing": "!",
         "expired": "!",
+        "expiring_soon": "!",
         "no_expiry_date": "!",
     }.get(status, "")
 
@@ -441,6 +460,11 @@ html, body {{
     color: #0b4f82;
 }}
 
+.summary-expiry-missing {{
+    color: #a02d24;
+    font-weight: 700;
+}}
+
 .person-card {{
     border: 1px solid #cfd8e3;
     border-radius: 6px;
@@ -453,8 +477,9 @@ html, body {{
 
 .person-header {{
     display: grid;
-    grid-template-columns: 8mm 1fr auto;
-    gap: 8px;
+    grid-template-columns: 8mm 1fr;
+    column-gap: 8px;
+    row-gap: 2px;
     align-items: center;
     border-bottom: 1px solid #dbe2ea;
     padding-bottom: 6px;
@@ -486,12 +511,15 @@ html, body {{
 }}
 
 .person-summary {{
-    max-width: 70mm;
+    grid-column: 2;
+    justify-self: start;
+    max-width: none;
     padding: 4px 6px;
     border-radius: 4px;
     font-size: 7.8pt;
     font-weight: 700;
-    text-align: right;
+    text-align: left;
+    white-space: nowrap;
 }}
 
 .resume-ok {{
@@ -589,14 +617,15 @@ html, body {{
     background: #f0f9f3;
 }}
 
-.status-missing .doc-status {{
-    color: #8a4b08;
-    background: #fff4e8;
-}}
-
+.status-missing .doc-status,
 .status-expired .doc-status {{
     color: #a02d24;
     background: #fdecea;
+}}
+
+.status-expiring_soon .doc-status {{
+    color: #8a4b08;
+    background: #fff4e8;
 }}
 
 .status-no_expiry_date .doc-status {{
@@ -634,15 +663,16 @@ au lieu de perdre/couper le contenu.
 # =============================================================================
 
 @anvil.server.callable
-def veille_pr_requis_pdf_gen(mode="compact"):
+def veille_pr_requis_pdf_gen(mode="compact", email=None):
     """
     Génère l'état PDF des documents requis des formateurs AMS.
-
+    email : provenance de recherche, envoi du mail du formateur 
     mode :
         "compact"  -> pas de saut de page forcé entre formateurs
         "une_page" -> chaque formateur commence sur une nouvelle page
+        "perso"    -> un formateur (de recherche)
     """
-    if mode not in ("compact", "une_page"):
+    if mode not in ("compact", "une_page", "perso"):
         raise ValueError(
             "Mode PDF invalide. Utiliser 'compact' ou 'une_page'."
         )
@@ -650,12 +680,20 @@ def veille_pr_requis_pdf_gen(mode="compact"):
     today = _today_paris()
     now = _now_paris()
 
-    liste_formateurs = app_tables.users.search(
-        tables.order_by("nom", ascending=True),
-        tables.order_by("prenom", ascending=True),
-        role="F"
-    )
-
+    if mode == "compact" or mode == "une_page":
+        liste_formateurs = app_tables.users.search(
+            tables.order_by("nom", ascending=True),
+            tables.order_by("prenom", ascending=True),
+            role="F"
+        )
+    else:
+        formateur = app_tables.users.get(email=email)
+        if formateur is None:
+            raise ValueError(
+                f"Aucun utilisateur trouvé avec l'adresse email : {email}"
+            )
+        liste_formateurs = [formateur]
+        
     people_blocks = []
 
     nb_formateurs = 0
@@ -705,6 +743,17 @@ def veille_pr_requis_pdf_gen(mode="compact"):
 
     total_anomalies = total_missing + total_expired + total_no_expiry
 
+    if total_no_expiry > 0:
+        texte_dates_manquantes = (
+            f'<span class="summary-expiry-missing">'
+            f'{total_no_expiry} date(s) d\'expiration manquante(s)'
+            f'</span>'
+        )
+    else:
+        texte_dates_manquantes = (
+            f"{total_no_expiry} date(s) d'expiration manquante(s)"
+        )
+
     summary_html = f"""
     <div class="report-summary">
         <strong>{nb_formateurs}</strong> formateur(s) —
@@ -713,7 +762,7 @@ def veille_pr_requis_pdf_gen(mode="compact"):
         <strong>{nb_formateurs_anomalie}</strong> avec anomalie(s) —
         <strong>{total_anomalies}</strong> anomalie(s) au total
         ({total_missing} à renseigner, {total_expired} expiré(s),
-        {total_no_expiry} date(s) d'expiration manquante(s)).
+        {texte_dates_manquantes}).
     </div>
     """
 
