@@ -307,7 +307,7 @@ def _render_formateur(formateur, internes, externes, index, mode):
 
     if stats["total"] == 0:
         resume_class = "resume-warning"
-        resume_txt = "Aucun document requis trouvé pour ce formateur."
+        resume_txt = "Ce formateur ne fait plus parti de l'équipe actuelle."
     elif stats["anomalies"] == 0:
         resume_class = "resume-ok"
         resume_txt = f"Tous les documents sont à jour ({stats['ok']}/{stats['total']})."
@@ -686,7 +686,7 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
             tables.order_by("prenom", ascending=True),
             role="F"
         )
-        title="État des documents requis, Formateurs AMSport"
+        title="État Docs requis: Formateurs d'AMSport"
     else:
         formateur = app_tables.users.get(email=email)
         if formateur is None:
@@ -760,10 +760,10 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
 
     summary_html = f"""
     <div class="report-summary">
-        <strong>{nb_formateurs}</strong> formateur(s) —
+        <strong>{nb_formateurs}</strong> formateur(s) enregistrés—
         <strong>{total_docs}</strong> document(s) contrôlé(s) —
         <strong>{nb_formateurs_ok}</strong> formateur(s) entièrement à jour —
-        <strong>{nb_formateurs_anomalie}</strong> avec anomalie(s) —
+        <strong>{nb_formateurs_anomalie}</strong> formateurs avec anomalie(s) —
         <strong>{total_anomalies}</strong> anomalie(s) au total
         ({total_missing} à renseigner, {total_expired} expiré(s),
         {texte_dates_manquantes}).
