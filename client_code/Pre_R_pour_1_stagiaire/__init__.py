@@ -83,9 +83,11 @@ class Pre_R_pour_1_stagiaire(Pre_R_pour_1_stagiaireTemplate):
         dico_pre_requis = {}
 
         # liste des pré-requis existants du stagiaire
-        self.liste_pr_stagiaire = app_tables.pre_requis_stagiaire.search( q.fetch_only("requis_txt",
-                                                                       stagiaire_email=q.fetch_only("email"),
-                                                                       ),
+        self.liste_pr_stagiaire = app_tables.pre_requis_stagiaire.search(
+                                                                        tables.order_by("requis_txt", ascending=True),
+                                                                        q.fetch_only("requis_txt",
+                                                                        stagiaire_email=q.fetch_only("email"),
+                                                                             ),
                                                                         numero=int(self.stagiaire_inscrit_row['numero']),
                                                                         stagiaire_email=self.stagiaire_inscrit_row["user_email"]
                                                                          )

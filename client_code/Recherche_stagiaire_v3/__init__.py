@@ -438,16 +438,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             # j'affiche si les résultats n'étaient pas déjà visible
             if self.repeating_panel_qcm.visible is False:
                 self.repeating_panel_qcm.visible = True
-                # couleurs bt:
-                self.button_qcm.foreground = "red"
-                self.button_nom_p.foreground = "red"
-                self.button_fiche.foreground = "yellow"
-                self.button_histo.foreground = "yellow"
-                self.button_pr.foreground = "yellow"
-                self.button_visu_formulaires.foreground = "yellow"
-                self.button_mail.foreground = "yellow"
-                self.button_del.foreground = "yellow"
-                self.button_add_to_stage.foreground = "yellow"
+                # couleurs bt: Appel de la foction interne 'buttons_colors'
+                self.buttons_colors("button_qcm")
+                
             else:
                 self.repeating_panel_qcm.visible = False
                 self.button_qcm.foreground = "yellow"
@@ -482,16 +475,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             # j'affiche si les résultats n'étaient pas déjà visible
             if self.repeating_panel_histo.visible is False:
                 self.repeating_panel_histo.visible = True
-                # couleurs bt:
-                self.button_histo.foreground = "red"
-                self.button_nom_p.foreground = "red"
-                self.button_fiche.foreground = "yellow"
-                self.button_qcm.foreground = "yellow"
-                self.button_pr.foreground = "yellow"
-                self.button_visu_formulaires.foreground = "yellow"
-                self.button_mail.foreground = "yellow"
-                self.button_del.foreground = "yellow"
-                self.button_add_to_stage.foreground = "yellow"
+                # couleurs bt: Appel de la foction interne 'buttons_colors'
+                self.buttons_colors("button_histo")
+                
                 self.data_grid_users.visible = False
             else:
                 self.repeating_panel_histo.visible = False
@@ -518,19 +504,11 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             return
         if self.repeating_panel_pr.visible is False:
             self.repeating_panel_pr.visible = True
-            # couleurs bt:
-            self.button_pr.foreground = "red"
-            self.button_nom_p.foreground = "red"
-            self.button_fiche.foreground = "yellow"
-            self.button_qcm.foreground = "yellow"
-            self.button_histo.foreground = "yellow"
-            self.button_visu_formulaires.foreground = "yellow"
-            self.button_mail.foreground = "yellow"
-            self.button_del.foreground = "yellow"
-            self.button_add_to_stage.foreground = "yellow"
+            # couleurs bt: Appel de la foction interne 'buttons_colors'
+            self.buttons_colors("button_pr")
         else:
             self.repeating_panel_pr.visible = False
-            self.button_pr.foreground = "yellow"
+            self.button_pr.foreground = "white"
 
         # pour chaque stage, je lis les pré requis en table pré requis stagiaires
         # Création du dict des pr du stagiaire
@@ -598,15 +576,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
             
-        # couleurs bt:
-        self.button_mail.foreground = "red"
-        self.button_nom_p.foreground = "red"
-        self.button_fiche.foreground = "yellow"
-        self.button_qcm.foreground = "yellow"
-        self.button_histo.foreground = "yellow"    
-        self.button_visu_formulaires.foreground = "yellow"   
-        self.button_del.foreground = "yellow"
-        self.button_add_to_stage.foreground = "yellow"
+        # couleurs bt: Appel de la foction interne 'buttons_colors'
+        self.buttons_colors("button_mail")
         
         liste_email = []
         liste_email.append((self.item['email'],self.item['prenom'],""))   # mail et prénom, id pas besoin
@@ -637,16 +608,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.button_histo_click()   # visu de l'histo du stagiaire
                 return
             # Effact de la personne si confirmation
-            # couleurs bt:
-            self.button_del.foreground = "red"
-            self.button_nom_p.foreground = "red"
-            self.button_fiche.foreground = "yellow"
-            self.button_qcm.foreground = "yellow"
-            self.button_histo.foreground = "yellow"
-            self.button_pr.foreground = "yellow"
-            self.button_visu_formulaires.foreground = "yellow"
-            self.button_mail.foreground = "yellow"
-            self.button_add_to_stage.foreground = "yellow"
+            # couleurs bt: Appel de la foction interne 'buttons_colors'
+            self.buttons_colors("button_del")
+            
             r=alert("Voulez-vous vraiment enlever définitivement cette personne ? ",dismissible=False ,buttons=[("oui",True),("non",False)])
             if r :   # oui
                 # lecture row users
@@ -666,15 +630,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
                 self.item = app_tables.users.get(email=self.label_user_email.text)
             except Exception as e:
                 alert(f"Erreur en re-lecture du user: {e}")
-            # couleurs bt:
-            self.button_fiche.foreground="red"
-            self.button_qcm.foreground = "yellow"
-            self.button_histo.foreground = "yellow"
-            self.button_pr.foreground = "yellow"
-            self.button_visu_formulaires.foreground = "yellow"
-            self.button_mail.foreground = "yellow"
-            self.button_del.foreground = "yellow"
-            self.button_add_to_stage.foreground = "yellow"
+                
+            # couleurs bt: Appel de la foction interne 'buttons_colors'
+            self.buttons_colors("button_fiche")
             
             self.text_box_nom.text = self.item['nom']
             from ..Saisie_info_apres_visu import Saisie_info_apres_visu    
@@ -730,12 +688,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             if self.column_panel_formulaires_fin.visible is False:
                     self.column_panel_formulaires_fin.visible = True
                     self.data_grid_users.visible = False
-                    # couleurs bt:
-                    self.button_visu_formulaires.foreground = "red"
-                    self.button_nom_p.foreground = "red"
-                    self.button_fiche.foreground = "yellow"
-                    self.button_qcm.foreground = "yellow"
-                    self.button_pr.foreground = "yellow"
+                     # couleurs bt: Appel de la foction interne 'buttons_colors'
+                    self.buttons_colors("button_visu_formulaires")
             else:
                 self.button_visu_formulaires.foreground = "yellow"
                 self.column_panel_formulaires_fin.visible = False
@@ -765,7 +719,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
     def button_centre_click(self, **event_args):
         """This method is called when the button is clicked"""
         # init du drop down sur le centre (si déjà affecté)
-            
+        
+        # couleurs bt: Appel de la foction interne 'buttons_colors'
+        self.buttons_colors("button_centre")
         try:
             user_row = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
@@ -806,6 +762,9 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             user_row = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
+
+        # couleurs bt: Appel de la foction interne 'buttons_colors'
+        self.buttons_colors("button_pr_pdf")
             
         pdf = anvil.server.call(
             "veille_pr_requis_pdf_gen",
@@ -814,8 +773,33 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         )
         anvil.media.download(pdf)
 
+    def buttons_colors(self, name_bt_clicked):
+        buttons_list = [
+            "button_fiche",
+            "button_qcm",
+            "button_histo",
+            "button_pr",
+            "button_pr_pdf",
+            "button_visu_formulaires",
+            "button_mail",
+            "button_del",
+            "button_add_to_stage",
+            "button_centre",
+        ]
+        # Mise en rouge du bouton cliqué
+        button_in_red = getattr(self, name_bt_clicked)
+        button_in_red.foreground = "white"
+        button_in_red.background = "red"
+        
+        # Mise en normal des autres boutons
+        for bt in buttons_list:
+            button_en_cours = getattr(self, bt)
 
-
+            if bt != name_bt_clicked:
+                button_en_cours.foreground = "white"
+                button_en_cours.background = "theme:Olive"
+                
+ 
     
         
 

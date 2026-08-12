@@ -367,6 +367,12 @@ class Stage_visu_modif(Stage_visu_modifTemplate):
             open_form("Mail_subject_attach_txt",  liste_email, 'stagiaire_tous')
 
 
+    def button_pr_requis_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        num_stage = int(self.text_box_num_stage.text)
+        open_form('Pre_R_pour_stagiaire_admin',num_stage)
+
+
     
         
 
