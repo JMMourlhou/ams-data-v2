@@ -15,7 +15,7 @@ Le PDF est produit par l'Uplink Pi5 :
 from anvil.tables import app_tables
 import anvil.server
 import anvil.tables as tables
-
+from . import Formatage_date   # Module serveur: formatter la date 0102030405 en 01-02-03-04-05
 import html
 from datetime import date, datetime
 
@@ -302,8 +302,8 @@ def _render_formateur(formateur, internes, externes, index, mode):
     nom = _safe_text(_row_value(formateur, "nom"))
     prenom = _safe_text(_row_value(formateur, "prenom"))
     email = _safe_text(_row_value(formateur, "email"))
-    tel = _safe_text(_row_value(formateur, "tel"))
-
+    tel = Formatage_date.telephone_fr(_row_value(formateur, "tel"))   # Formatage tel 0102030405 en 01-02-03-04-05 à partie du module serveur Formatage
+    print(f"Nom: {nom} tel:{tel}")
     stats = _stats_documents(internes, externes)
 
     if stats["total"] == 0:
