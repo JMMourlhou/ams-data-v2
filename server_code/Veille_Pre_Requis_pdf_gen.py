@@ -302,6 +302,7 @@ def _render_formateur(formateur, internes, externes, index, mode):
     nom = _safe_text(_row_value(formateur, "nom"))
     prenom = _safe_text(_row_value(formateur, "prenom"))
     email = _safe_text(_row_value(formateur, "email"))
+    tel = _safe_text(_row_value(formateur, "tel"))
 
     stats = _stats_documents(internes, externes)
 
@@ -337,6 +338,7 @@ def _render_formateur(formateur, internes, externes, index, mode):
             <div class="person-identity">
                 <div class="person-name">{_esc(nom)} {_esc(prenom)}</div>
                 <div class="person-email">{_esc(email)}</div>
+                <div class="person-tel">{_esc(tel)}</div>
             </div>
             <div class="person-summary {resume_class}">
                 {_esc(resume_txt)}
@@ -509,6 +511,13 @@ html, body {{
     color: #6b7280;
     font-size: 7.8pt;
 }}
+
+.person-tel {{
+    margin-top: 1px;
+    color: #6b7280;
+    font-size: 7.8pt;
+}}
+
 
 .person-summary {{
     grid-column: 2;
@@ -694,7 +703,8 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
                 f"Aucun utilisateur trouvé avec l'adresse email : {email}"
             )
         liste_formateurs = [formateur]
-        title=f"État des documents requis de {formateur['nom']} {formateur['prenom']} - AMSport"
+        title=f"État Docs requis de {formateur['nom']} {formateur['prenom']} - AMSport"
+        
     people_blocks = []
 
     nb_formateurs = 0
@@ -757,19 +767,30 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
         texte_dates_manquantes = (
             f"{total_no_expiry} date(s) d'expiration manquante(s)"
         )
+    if mode == "compact" or mode == "une_page":
+        summary_html = f"""
+        <div class="report-summary">
+            <strong>{nb_formateurs}</strong> formateur(s) enregistré(s) —
+            <strong>{total_docs}</strong> document(s) contrôlé(s) —
+            <strong>{nb_formateurs_ok}</strong> formateur(s) entièrement à jour —
+            <strong>{nb_formateurs_anomalie}</strong> formateurs avec anomalie(s) —
+            <strong>{total_anomalies}</strong> anomalie(s) au total
+            ({total_missing} à renseigner, {total_expired} expiré(s),
+            {texte_dates_manquantes}).
+        </div>
+        """
+    else:
+        summary_html = f"""
+        <div class="report-summary">
+            <strong>Rapport pour {nb_formateurs}</strong> formateur —
+            <strong>{total_docs}</strong> document(s) contrôlé(s) —
+            <strong>{total_anomalies}</strong> anomalie(s) au total
+            ({total_missing} à renseigner, {total_expired} expiré(s),
+            {texte_dates_manquantes}).
+        </div>
+        """
 
-    summary_html = f"""
-    <div class="report-summary">
-        <strong>{nb_formateurs}</strong> formateur(s) enregistrés—
-        <strong>{total_docs}</strong> document(s) contrôlé(s) —
-        <strong>{nb_formateurs_ok}</strong> formateur(s) entièrement à jour —
-        <strong>{nb_formateurs_anomalie}</strong> formateurs avec anomalie(s) —
-        <strong>{total_anomalies}</strong> anomalie(s) au total
-        ({total_missing} à renseigner, {total_expired} expiré(s),
-        {texte_dates_manquantes}).
-    </div>
-    """
-
+      
     html_doc = f"""<!doctype html>
 <html lang="fr">
 <head>
