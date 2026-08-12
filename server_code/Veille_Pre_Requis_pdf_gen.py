@@ -738,8 +738,11 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
     if mode == "compact":
         mode_label = "Version compacte"
         filename = f"etat_documents_formateurs_AMS_compact_{date_fichier}.pdf"
-    else:
+    elif mode == "une_page":   # Tous formateurs, 1 page par formateur
         mode_label = "Un formateur par page"
+        filename = f"etat_documents_formateurs_AMS_1page_{date_fichier}.pdf"
+    else:
+        mode_label = ""   # 1 seul formateur, lancé par recherche
         filename = f"etat_documents_formateurs_AMS_1page_{date_fichier}.pdf"
 
     total_anomalies = total_missing + total_expired + total_no_expiry
