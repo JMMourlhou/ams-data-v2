@@ -166,7 +166,7 @@ def _documents_formateur(formateur, today):
     Les documents internes AMS sont séparés des documents externes.
     """
     internes = []
-    externes = []
+    externes = []        
 
     liste_pre_requis = app_tables.pre_requis_stagiaire.search(
         tables.order_by("requis_txt", ascending=True),
@@ -672,7 +672,7 @@ au lieu de perdre/couper le contenu.
 # =============================================================================
 
 @anvil.server.callable
-def veille_pr_requis_pdf_gen(mode="compact", email=None):
+def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
     """
     Génère l'état PDF des documents requis des formateurs AMS.
     email : provenance de recherche, envoi du mail du formateur 
@@ -681,30 +681,37 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
         "une_page" -> chaque formateur commence sur une nouvelle page
         "perso"    -> un formateur (de recherche)
     """
-    if mode not in ("compact", "une_page", "perso"):
+    if mode not in ("compact", "une_page", "perso", "stage"):
         raise ValueError(
-            "Mode PDF invalide. Utiliser 'compact' ou 'une_page'."
+            "Mode PDF invalide. Utiliser 'compact', 'une_page', 'perso', 'stage'."
         )
 
     today = _today_paris()
     now = _now_paris()
 
     if mode == "compact" or mode == "une_page":
-        liste_formateurs = app_tables.users.search(
+        liste = app_tables.users.search(
             tables.order_by("nom", ascending=True),
             tables.order_by("prenom", ascending=True),
             role="F"
         )
-        title="État Docs requis: Formateurs d'AMSport"
-    else:
+        title="État Docs requis: Formateurs d'AMSport."
+    elif mode == "perso":
         formateur = app_tables.users.get(email=email)
         if formateur is None:
             raise ValueError(
                 f"Aucun utilisateur trouvé avec l'adresse email : {email}"
             )
-        liste_formateurs = [formateur]
-        title=f"État Docs requis de {formateur['nom']} {formateur['prenom']} - AMSport"
-        
+        liste = [formateur]
+        title=f"État Docs requis de {formateur['nom']} {formateur['prenom']} - AMSport."
+    else: # mode="stage"
+        liste = app_tables.stagiaires_inscrits.search(
+            tables.order_by("name", ascending=True),
+            tables.order_by("prenom", ascending=True),
+            numero=stage['numero']
+        )
+        title=f"État Docs requis: Stage {stage['code_txt']} débuté le {stage['date_debut']}."
+        print(f"mode {mode}, titre:{title}")
     people_blocks = []
 
     nb_formateurs = 0
@@ -716,7 +723,14 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None):
     total_expired = 0
     total_no_expiry = 0
 
-    for index, formateur in enumerate(liste_formateurs, start=1):
+    for index, formateur in enumerate(liste, start=1):
+        if mode == "stage:": # table stgiaire insrit
+            # trouver le row table user ds table stgiaire insrit donc colonne 'user_email'
+            email_txt = formateur['user_email']['email']
+            print(email_txt)
+            formateur = app_tables.users.get(email=email_txt)
+            print(len(formateur))
+            
         nb_formateurs += 1
 
         internes, externes = _documents_formateur(formateur, today)

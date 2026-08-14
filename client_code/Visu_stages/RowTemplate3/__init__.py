@@ -302,4 +302,15 @@ class RowTemplate3(RowTemplate3Template):
         """This method is called when the button is clicked"""
         #                                      stage_row      
         open_form('Pre_from_scanned_docs',self.item)
+
+    def button_pr_pdf_click(self, **event_args):
+        """This method is called when the button is clicked"""
+
+        pdf = anvil.server.call(
+            "veille_pr_requis_pdf_gen",
+            "stage",
+            None,
+            self.item
+        )
+        anvil.media.download(pdf)
             
