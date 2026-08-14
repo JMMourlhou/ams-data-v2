@@ -158,9 +158,9 @@ def _classer_document(pr, today):
     }
 
 
-def _documents_formateur(formateur, today):
+def _documents_formateur(personne, today, mode):
     """
-    Lit les prérequis du formateur et conserve uniquement ceux liés
+    Lit les prérequis du formateur ou du stagiaire et conserve uniquement ceux liés
     à un stage de type 'F'.
 
     Les documents internes AMS sont séparés des documents externes.
@@ -170,15 +170,15 @@ def _documents_formateur(formateur, today):
 
     liste_pre_requis = app_tables.pre_requis_stagiaire.search(
         tables.order_by("requis_txt", ascending=True),
-        stagiaire_email=formateur
+        stagiaire_email=personne
     )
 
     for pr in liste_pre_requis:
         stage_row = _row_value(pr, "stage_num")
 
         # Même filtre fonctionnel que dans le script de test :
-        # uniquement les prérequis rattachés à un stage de type formateur.
-        if _row_value(stage_row, "type_stage") != "F":
+        # uniquement les prérequis rattachés à un stage de type formateur si mode "compacte" ou "une_page". (docs formateurs)
+        if mode != "stage" and _row_value(stage_row, "type_stage") != "F":
             continue
 
         doc = _classer_document(pr, today)
@@ -378,7 +378,7 @@ def _css(mode):
         """
     else:
         # Compact :
-        # aucun saut de page forcé entre deux formateurs.
+        # aucun saut de page forcé entre deux personnes.
         pagination_css = """
         .person-card {
             break-before: auto;
@@ -574,15 +574,28 @@ html, body {{
 }}
 
 .doc-table col.col-doc {{
-    width: 56%;
+    width: 52%;
 }}
 
 .doc-table col.col-status {{
-    width: 27%;
+    width: 31%;
 }}
 
 .doc-table col.col-date {{
     width: 17%;
+}}
+
+.status-no_expiry_date .doc-status {{
+    color: #725d00;
+    background: #fff8dc;
+
+    padding-left: 2px;
+    font-size: 7.8pt;
+}}
+
+.status-no_expiry_date .status-icon {{
+    width: 8px;
+    margin-right: 1px;
 }}
 
 .doc-table th {{
@@ -674,7 +687,7 @@ au lieu de perdre/couper le contenu.
 @anvil.server.callable
 def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
     """
-    Génère l'état PDF des documents requis des formateurs AMS.
+    Génère l'état PDF des documents requis des formateurs oustagiaires d'1 stage AMS.
     email : provenance de recherche, envoi du mail du formateur 
     mode :
         "compact"  -> pas de saut de page forcé entre formateurs
@@ -697,13 +710,13 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
         )
         title="État Docs requis: Formateurs d'AMSport."
     elif mode == "perso":
-        formateur = app_tables.users.get(email=email)
-        if formateur is None:
+        personne = app_tables.users.get(email=email)
+        if personne is None:
             raise ValueError(
                 f"Aucun utilisateur trouvé avec l'adresse email : {email}"
             )
-        liste = [formateur]
-        title=f"État Docs requis de {formateur['nom']} {formateur['prenom']} - AMSport."
+        liste = [personne]
+        title=f"État Docs requis de {personne['nom']} {personne['prenom']} - AMSport."
     else: # mode="stage"
         liste = app_tables.stagiaires_inscrits.search(
             tables.order_by("name", ascending=True),
@@ -723,17 +736,14 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
     total_expired = 0
     total_no_expiry = 0
 
-    for index, formateur in enumerate(liste, start=1):
-        if mode == "stage:": # table stgiaire insrit
-            # trouver le row table user ds table stgiaire insrit donc colonne 'user_email'
-            email_txt = formateur['user_email']['email']
-            print(email_txt)
-            formateur = app_tables.users.get(email=email_txt)
-            print(len(formateur))
+    for index, personne in enumerate(liste, start=1):
+        # trouver le row table user ds table stgiaire insrit donc colonne 'user_email'
+        if mode == "stage": # table stagiaire_insrit
+            personne = personne['user_email']
             
         nb_formateurs += 1
 
-        internes, externes = _documents_formateur(formateur, today)
+        internes, externes = _documents_formateur(personne, today, mode)
         stats = _stats_documents(internes, externes)
 
         total_docs += stats["total"]
@@ -748,7 +758,7 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
 
         people_blocks.append(
             _render_formateur(
-                formateur,
+                personne,
                 internes,
                 externes,
                 index,
@@ -781,22 +791,22 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
         texte_dates_manquantes = (
             f"{total_no_expiry} date(s) d'expiration manquante(s)"
         )
-    if mode == "compact" or mode == "une_page":
+    if mode == "compact" or mode == "une_page" :
         summary_html = f"""
         <div class="report-summary">
             <strong>{nb_formateurs}</strong> formateur(s) enregistré(s) —
             <strong>{total_docs}</strong> document(s) contrôlé(s) —
-            <strong>{nb_formateurs_ok}</strong> formateur(s) entièrement à jour —
-            <strong>{nb_formateurs_anomalie}</strong> formateurs avec anomalie(s) —
+            <strong>{nb_formateurs_ok}</strong> personne(s) entièrement à jour —
+            <strong>{nb_formateurs_anomalie}</strong> personnes avec anomalie(s) —
             <strong>{total_anomalies}</strong> anomalie(s) au total
             ({total_missing} à renseigner, {total_expired} expiré(s),
             {texte_dates_manquantes}).
         </div>
         """
-    else:
+    else:  # mode "stage" pour stagiaires d'un stage
         summary_html = f"""
         <div class="report-summary">
-            <strong>Rapport pour {nb_formateurs}</strong> formateur —
+            <strong>Rapport pour {nb_formateurs} personne(s) </strong> —
             <strong>{total_docs}</strong> document(s) contrôlé(s) —
             <strong>{total_anomalies}</strong> anomalie(s) au total
             ({total_missing} à renseigner, {total_expired} expiré(s),
