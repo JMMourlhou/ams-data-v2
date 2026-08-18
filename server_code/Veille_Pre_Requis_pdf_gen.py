@@ -180,7 +180,9 @@ def _documents_formateur(personne, today, mode):
         # uniquement les prérequis rattachés à un stage de type formateur si mode "compacte" ou "une_page". (docs formateurs)
         if mode != "stage" and _row_value(stage_row, "type_stage") != "F":
             continue
-
+        # TEST si  docs du stage
+        
+        
         doc = _classer_document(pr, today)
 
         item_requis = _row_value(pr, "item_requis")
@@ -685,7 +687,7 @@ au lieu de perdre/couper le contenu.
 # =============================================================================
 
 @anvil.server.callable
-def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):
+def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):  # stage: stage row
     """
     Génère l'état PDF des documents requis des formateurs oustagiaires d'1 stage AMS.
     email : provenance de recherche, envoi du mail du formateur 
