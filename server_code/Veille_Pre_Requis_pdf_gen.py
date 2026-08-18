@@ -727,7 +727,7 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):  # stage: 
             tables.order_by("prenom", ascending=True),
             numero=stage['numero']
         )
-        title=f"État Docs requis: Stage {stage['code_txt']} débuté le {stage['date_debut']}."
+        title=f"État Docs requis: Stage {stage['code_txt']} n° {stage['numero']} débuté le {stage['date_debut']}."
         print(f"mode {mode}, titre:{title}")
     people_blocks = []
 
