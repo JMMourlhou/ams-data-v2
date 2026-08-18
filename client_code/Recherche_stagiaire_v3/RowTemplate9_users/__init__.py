@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
+from ... import Format_Tel
 
 class RowTemplate9_users(RowTemplate9_usersTemplate):
     def __init__(self, **properties):
@@ -24,20 +24,19 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
                 self.button_nom_prenom.text = self.item['nom']
             except:
                 self.button_nom_prenom.text = self.item['name']
+                
+        # formatage du tel 
         try:        
             self.button_3.text = self.item['email']
             tel = self.item['tel']
-        except:
+        except Exception:
             self.button_3.text = self.item['user_email']['email']
             tel = self.item['user_email']['tel']
-            
-            
         try:
-            if len(tel) == 10 and tel.isdigit():
-                tel = f"{tel[0:2]}-{tel[2:4]}-{tel[4:6]}-{tel[6:8]}-{tel[8:10]}"
-                self.button_telephone.text = tel
+            self.button_telephone.text = Format_Tel.format_tel(tel)
         except Exception:
-            pass
+            print(f"Erreur d'affichage / Tel de {self.item['email']}")
+            
         if self.button_role.text == "A" or self.button_role.text == "B" or self.button_role.text == "J":          # Admin en rouge
             self.button_role.foreground = "red"
             self.button_role.background = "yellow"
@@ -52,9 +51,9 @@ class RowTemplate9_users(RowTemplate9_usersTemplate):
         """This method is called when the button is clicked"""
         # Affichage des infos sur lequel je travaille 
      
-        self.f.button_role.foreground = "red" 
-        self.f.button_nom_p.foreground = "red"    # nom en rouge 
-        self.f.button_tel.foreground = "red"    
+        #self.f.button_role.background = "red" 
+        #self.f.button_nom_p.foreground = "red"    # nom en rouge 
+        #self.f.button_tel.foreground = "red"    
         self.f.button_role.text = self.button_role.text
         self.f.button_nom_p.text = self.button_nom_prenom.text
         self.f.button_tel.text = self.button_telephone.text

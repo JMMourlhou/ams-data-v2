@@ -155,23 +155,24 @@ components:
           - event_bindings: {}
             layout_properties: {grid_position: 'FRZEYR,NOWEZM'}
             name: button_role
-            properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
+            properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:Error', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: Role, tooltip: '', underline: false, visible: true}
             type: Button
           - event_bindings: {}
             layout_properties: {grid_position: 'FRZEYR,XMGAVJ'}
             name: button_nom_p
-            properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 16, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
+            properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 16, foreground: 'theme:Error', icon: '', icon_align: left, italic: false, role: compact-alert, spacing_above: none, spacing_below: none, text: nom p, tooltip: '', underline: false, visible: true}
             type: Button
           - event_bindings: {}
             layout_properties: {grid_position: 'FRZEYR,BLWPBM'}
             name: button_tel
-            properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:On Primary', icon: '', icon_align: left, italic: false, role: outlined-button, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
+            properties: {align: left, background: '', bold: true, border: '', enabled: false, font: '', font_size: 14, foreground: 'theme:Error', icon: '', icon_align: left, italic: false, role: compact-alert, spacing_above: none, spacing_below: none, text: tel, tooltip: '', underline: false, visible: true}
             type: Button
           layout_properties: {grid_position: 'ODLRKC,MAJHSN'}
           name: column_panel_stagiaire
           properties:
-            background: theme:Olive
+            background: theme:Primary
             col_widths: '{"NOWEZM":4,"XMGAVJ":17,"BLWPBM":19}'
+            foreground: theme:Tertiary
             spacing:
               margin: [null, null, '1', null]
             visible: false

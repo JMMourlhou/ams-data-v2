@@ -8,6 +8,7 @@ from anvil.tables import app_tables
 from .. import Mail_valideur  # pour test du mail format 
 from .. AlertHTML import AlertHTML
 from .. AlertConfirmHTML import AlertConfirmHTML
+from .. import Format_Tel
 
 class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
     def __init__(self, mel, num_stage=0, intitule="", row_id=None, **properties):
@@ -65,7 +66,7 @@ class Saisie_info_apres_visu(Saisie_info_apres_visuTemplate):
             self.text_area_rue.text =                self.stagiaire["adresse_rue"]
             self.text_box_ville.text =               self.stagiaire["adresse_ville"]
             self.text_box_code_postal.text =         self.stagiaire["adresse_code_postal"]
-            self.text_box_tel.text =                 self.stagiaire['tel']
+            self.text_box_tel.text =                 Format_Tel.format_tel(self.stagiaire['tel'])
             self.text_box_email2.text =              self.stagiaire['email2']
             self.check_box_accept_data_use.checked = self.stagiaire['accept_data']
             self.text_area_commentaires.text =       self.stagiaire['commentaires']
