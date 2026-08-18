@@ -614,14 +614,16 @@ db_schema:
   stages:
     client: search
     columns:
-    - admin_ui: {width: 131}
+    - admin_ui: {order: 0, width: 184}
+      client_hidden: false
       name: code
       target: codes_stages
       type: link_single
     - admin_ui: {order: 0.5, width: 218}
       name: code_txt
       type: string
-    - admin_ui: {order: -1, width: 119.17}
+    - admin_ui: {order: -1, width: 157.17}
+      client_hidden: false
       name: numero
       type: number
     - admin_ui: {width: 144}
@@ -709,6 +711,11 @@ db_schema:
     - admin_ui: {order: -0.75, width: 100}
       name: num_pv
       type: string
+    - admin_ui: {order: 27, width: 200}
+      client_hidden: false
+      name: stage_sans_pre_requis
+      type: bool
+    indexes: []
     server: full
     title: Stages
   stagiaires_histo:

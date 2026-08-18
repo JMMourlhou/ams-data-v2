@@ -181,8 +181,8 @@ def _documents_formateur(personne, today, mode, stage=None):
         if mode != "stage" and _row_value(stage_row, "type_stage") != "F":
             continue
             
-        # TEST si  docs du stage
-        if stage_row != stage:
+        # TEST si  docs du stage qund vient d'un stage pas d'une recherche perso
+        if stage_row != stage and mode != "perso":
             continue
             
         doc = _classer_document(pr, today)
@@ -629,6 +629,21 @@ html, body {{
 .status-badge {{
     display: inline-block;
     font-weight: 700;
+}}
+
+.doc-section {{
+    break-inside: avoid;
+    page-break-inside: avoid;
+}}
+
+.doc-section-title {{
+    break-after: avoid;
+    page-break-after: avoid;
+}}
+
+.doc-table {{
+    break-inside: avoid;
+    page-break-inside: avoid;
 }}
 
 .status-icon {{

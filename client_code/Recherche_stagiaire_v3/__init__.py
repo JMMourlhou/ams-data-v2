@@ -769,7 +769,8 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         pdf = anvil.server.call(
             "veille_pr_requis_pdf_gen",
             "perso",
-            user_row['email']
+            user_row['email'],
+            None
         )
         anvil.media.download(pdf)
 

@@ -63,6 +63,14 @@ class RowTemplate3(RowTemplate3Template):
         stage = self.item['code']['code']
         stage = stage.strip()
         
+        self.stage_avec_pr.checked = self.item['stage_sans_pre_requis']
+        if self.stage_avec_pr.checked is True:
+            self.button_pre_requis.visible = True
+            self.button_pr_pdf.visible = True
+        else:
+            self.button_pre_requis.visible = False
+            self.button_pr_pdf.visible = False
+
         if len(self.item['commentaires'])>2:
             self.text_box_2.text = self.item['code']['code']+" "+self.item['commentaires'][0:5] # ajout des 5 1eres lettres du commentaire (pour quel stage)
         else:
@@ -313,4 +321,15 @@ class RowTemplate3(RowTemplate3Template):
             self.item
         )
         anvil.media.download(pdf)
-            
+
+    
+    def stage_avec_pr_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        # sauvegarde du paramètre 'Stage_sans_pr'
+        result, erreur = anvil.server.call("stage_sans_pr", self.item, self.stage_avec_pr.checked)    
+        if self.stage_avec_pr.checked is True:
+            self.button_pre_requis.visible = True
+            self.button_pr_pdf.visible = True
+        else:
+            self.button_pre_requis.visible = False
+            self.button_pr_pdf.visible = False

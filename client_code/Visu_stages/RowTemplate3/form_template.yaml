@@ -166,15 +166,20 @@ components:
       type: FlowPanel
     - components:
       - components:
+        - event_bindings: {change: stage_avec_pr_change}
+          layout_properties: {}
+          name: stage_avec_pr
+          properties: {background: 'theme:Primary', foreground: 'theme:On Tertiary', text: Avec_PR}
+          type: CheckBox
         - event_bindings: {click: button_pr_requis_click}
           layout_properties: {}
           name: button_pre_requis
-          properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Tertiary', icon: 'fa:user-circle-o', icon_align: top, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
+          properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Tertiary', icon: 'fa:user-circle-o', icon_align: top, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: false}
           type: Button
         - event_bindings: {click: button_pr_pdf_click}
           layout_properties: {}
           name: button_pr_pdf
-          properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Tertiary', icon: 'fa:file-pdf-o', icon_align: top, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: true}
+          properties: {align: center, background: 'theme:Primary', bold: false, border: '', enabled: true, font: '', font_size: 14, foreground: 'theme:On Tertiary', icon: 'fa:file-pdf-o', icon_align: top, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: PR, tooltip: '', underline: false, visible: false}
           type: Button
         - event_bindings: {click: button_pre_requis_multi_pdfs_click}
           layout_properties: {}

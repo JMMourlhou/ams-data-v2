@@ -293,3 +293,13 @@ def attestions_sent(stage_row, sent_checked):   # stage_row : 1 row table 'stage
         return True, ""
     except Exception as e:
         return False, e
+
+# Appelé par Stage_visu_modif   
+# En cas de maj manuelle du check box stage_sans_pré-requis 
+@anvil.server.callable
+def stage_sans_pr(stage_row, true_false):   # stage_row : 1 row table 'stages' 
+    try:
+        stage_row.update( stage_sans_pre_requis = true_false )
+        return True, ""
+    except Exception as e:
+        return False, e
