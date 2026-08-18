@@ -158,7 +158,7 @@ def _classer_document(pr, today):
     }
 
 
-def _documents_formateur(personne, today, mode):
+def _documents_formateur(personne, today, mode, stage=None):
     """
     Lit les prérequis du formateur ou du stagiaire et conserve uniquement ceux liés
     à un stage de type 'F'.
@@ -180,9 +180,11 @@ def _documents_formateur(personne, today, mode):
         # uniquement les prérequis rattachés à un stage de type formateur si mode "compacte" ou "une_page". (docs formateurs)
         if mode != "stage" and _row_value(stage_row, "type_stage") != "F":
             continue
+            
         # TEST si  docs du stage
-        
-        
+        if stage_row != stage:
+            continue
+            
         doc = _classer_document(pr, today)
 
         item_requis = _row_value(pr, "item_requis")
@@ -745,7 +747,7 @@ def veille_pr_requis_pdf_gen(mode="compact", email=None, stage=None):  # stage: 
             
         nb_formateurs += 1
 
-        internes, externes = _documents_formateur(personne, today, mode)
+        internes, externes = _documents_formateur(personne, today, mode, stage)
         stats = _stats_documents(internes, externes)
 
         total_docs += stats["total"]
