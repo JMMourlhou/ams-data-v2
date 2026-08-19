@@ -178,14 +178,15 @@ def _documents_formateur(personne, today, mode, stage=None):
 
         # Même filtre fonctionnel que dans le script de test :
         # uniquement les prérequis rattachés à un stage de type formateur si mode "compacte" ou "une_page". (docs formateurs)
-        if mode != "stage" and _row_value(stage_row, "type_stage") != "F":
-            continue
+        #if mode != "stage" and _row_value(stage_row, "type_stage") != "F":
+        #    continue
             
         # TEST si  docs du stage qund vient d'un stage pas d'une recherche perso
         if stage_row != stage and mode != "perso":
             continue
 
         # Test: Si mode "perso" (vient de recherche), si le n'appaartient pas à un stage "stage avec PR" on passe
+        print(f"debug: stage sans pr: {stage_row['stage_sans_pre_requis']}")
         if stage_row["stage_sans_pre_requis"] is not True:
             continue
             
@@ -311,7 +312,7 @@ def _render_formateur(formateur, internes, externes, index, mode):
     prenom = _safe_text(_row_value(formateur, "prenom"))
     email = _safe_text(_row_value(formateur, "email"))
     tel = Formatage_date.telephone_fr(_row_value(formateur, "tel"))   # Formatage tel 0102030405 en 01-02-03-04-05 à partie du module serveur Formatage
-    print(f"Nom: {nom} tel:{tel}")
+    print(f"Nom: {nom} tel:{tel} mode:{mode}")
     stats = _stats_documents(internes, externes)
 
     if stats["total"] == 0:
