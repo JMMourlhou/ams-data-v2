@@ -184,6 +184,10 @@ def _documents_formateur(personne, today, mode, stage=None):
         # TEST si  docs du stage qund vient d'un stage pas d'une recherche perso
         if stage_row != stage and mode != "perso":
             continue
+
+        # Test: Si mode "perso" (vient de recherche), si le n'appaartient pas à un stage "stage avec PR" on passe
+        if stage_row["stage_sans_pre_requis"] is not True:
+            continue
             
         doc = _classer_document(pr, today)
 
