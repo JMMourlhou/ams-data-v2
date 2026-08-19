@@ -16,12 +16,17 @@ class Visu_stages(Visu_stagesTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.    
-        
+
+        # Filtres
+        # Init du filtre par centre
+        self.ams = True
+        self.muc = True
         # Drop down codes stages
         self.drop_down_code_stage.items = [(r['code'], r) for r in app_tables.codes_stages.search(tables.order_by("code", ascending=True))]
         
         # Initialisation de la liste des stages à afficher
         self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
+        
         # si le role du user n'est pas 'O' (CREPS ...), je peux afficher tous les stages
         user=anvil.users.get_user()
         if user['role'] != 'O':
@@ -51,23 +56,57 @@ class Visu_stages(Visu_stagesTemplate):
     def drop_down_code_stage_change(self, **event_args):
         """This method is called when an item is selected"""
         # Initialisation de la liste des stages à afficher
-        self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
+        #self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
+        
+        # Acquisition du filtre sur le type de stage à afficher
+        type_stage_row = self.drop_down_code_stage.selected_value
+        if type_stage_row is None:
+            return
+        alert(f"filtre: stage: {type_stage_row['code']} \n AMS: {self.ams} \n  Muc: {self.muc}")
+        
         # si le role du user n'est pas 'O' (CREPS ...), je peux afficher tous les stages
         user=anvil.users.get_user()
-        code_stage = self.drop_down_code_stage.selected_value
-        if code_stage is None:
-            return
-        if user['role'] != 'O':
+        centre = user['centre']  # récupération du centre du user
+        
+        if user['role'] != 'O': # Organisme de formation (Creps)..)
             liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
-                                                   code=code_stage)   
-        else:
-            # récupération du centre du user
-            centre = user['centre']
-            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
-                                                    lieu=centre
-                                                   )
+                                                   code=type_stage_row)   
+        else: # pas de user centre 'O'
+            #AMS ET MUC
+            if self.ams and self.muc:  # Je récupère tous les stages
+                liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False))
+                
+            if self.ams and not self.muc:
+                try:
+                    centre = app_tables.lieux.get(lieu="AMS Carnon")
+                    alert(centre['lieu'])
+                except Exception as e:
+                    alert(f"Erreur en lecture du lieu 'AMS Carnon': {e}")
+                    return
+                if self.drop_down_code_stage.selected_value is None: # tous types de stage 
+                    liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                            lieu=centre,
+                                                            )
+                else: 
+                    liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                            lieu=centre,
+                                                            code=self.drop_down_code_stage.selected_value
+                                                           )
         self.repeating_panel_1.items = liste_stages
 
+    
+    def check_box_filtre_ams_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.ams = self.check_box_filtre_ams.checked
+        self.drop_down_code_stage_change()
+
+    def check_box_filtre_muc_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        self.muc = self.check_box_filtre_muc.checked
+        self.drop_down_code_stage_change()
+
+
+ 
 
 
 
