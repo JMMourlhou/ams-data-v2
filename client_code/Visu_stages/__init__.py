@@ -19,6 +19,8 @@ class Visu_stages(Visu_stagesTemplate):
 
         
         # Filtres
+        self.lieu_row = None
+        self.type_stage_row = None
         # Drop down codes lieux
         self.drop_down_lieux.items = [(r['lieu'], r) for r in app_tables.lieux.search()]
         # Drop down codes stages
@@ -37,6 +39,9 @@ class Visu_stages(Visu_stagesTemplate):
             liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
                                                     lieu=centre
                                                     )
+            # Pas d'affichage des filtres pour un autre OF (Creps...)
+            self.column_panel_filtres.visible = False
+        #Affichage des stages    
         self.repeating_panel_1.items = liste_stages
             
     def button_annuler_click(self, **event_args):
@@ -54,56 +59,84 @@ class Visu_stages(Visu_stagesTemplate):
         self.column_panel_header.scroll_into_view()
         
     def drop_down_code_stage_change(self, **event_args):
-        """This method is called when an item is selected"""
-        # Initialisation de la liste des stages à afficher
-        #self.drop_down_mode_fi.items = [(r['code_fi'], r) for r in app_tables.mode_financement.search(tables.order_by("code_fi", ascending=True))]
-        
         # Acquisition du filtre sur le type de stage à afficher
         self.type_stage_row = self.drop_down_code_stage.selected_value
-        if self.type_stage_row is None:
-            return
-       
+        #if self.type_stage_row is None:
+        #    return
+        self.traitement_filtres()
         
     def drop_down_lieux_change(self, **event_args):
-        """This method is called when an item is selected"""
-        # Acquisition du filtre sur le type de stage à afficher
+        # Acquisition du filtre sur le centre de formation
         self.lieu_row = self.drop_down_lieux.selected_value
-        if self.lieu_row is None:
-            return
+        #if self.lieu_row is None:
+        #    return
         self.traitement_filtres()
 
+    # Traitement des filtres Type et Centre de formation (pas du num de stage)
     def traitement_filtres(self):
-        alert(f"filtre: stage: {self.type_stage_row['code']} \n Centre: {self.lieu_row}")
-        # si le role du user n'est pas 'O' (CREPS ...), je peux afficher tous les stages
-        user=anvil.users.get_user()
-        centre = user['centre']  # récupération du centre du user
+        #alert(f"filtre: stage: {self.type_stage_row} \n Centre: {self.lieu_row}")
 
-        if user['role'] = 'O': # Organisme de formation (Creps)..)
+        # Les 2 drop down ne sont pas sélectionnées: On affiche tout
+        if self.type_stage_row is None and self.lieu_row is None:
+            self.drop_down_code_stage.foreground = "theme:On Primary"
+            self.drop_down_lieux.foreground = "theme:On Primary"
+            self.text_box_num_stage.foreground = "theme:On Primary"
             liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
-                                                    code=type_stage_row)   
-        else: # pas de user centre 'O'
-            #AMS ET MUC
-            if self.ams and self.muc:  # Je récupère tous les stages
-                liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False))
+                                                   )
+            self.text_box_num_stage.text = ""
 
-            if self.ams and not self.muc:
-                try:
-                    centre = app_tables.lieux.get(lieu="AMS Carnon")
-                    alert(centre['lieu'])
-                except Exception as e:
-                    alert(f"Erreur en lecture du lieu 'AMS Carnon': {e}")
-                    return
-                if self.drop_down_code_stage.selected_value is None: # tous types de stage 
-                    liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
-                                                            lieu=centre,
-                                                           )
-                else: 
-                    liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
-                                                            lieu=centre,
-                                                            code=self.drop_down_code_stage.selected_value
-                                                           )
-  
+        if self.type_stage_row is not None and self.lieu_row is not None:
+            self.drop_down_code_stage.foreground = "red"
+            self.drop_down_lieux.foreground = "red"
+            self.text_box_num_stage.foreground = "theme:On Primary"
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                    lieu=self.lieu_row,
+                                                    code=self.type_stage_row
+                                                )
+            self.text_box_num_stage.text = ""
+            
+        if self.type_stage_row is None and self.lieu_row is not None:
+            self.drop_down_code_stage.foreground = "theme:On Primary"
+            self.drop_down_lieux.foreground = "red"
+            self.text_box_num_stage.foreground = "theme:On Primary"
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                    lieu=self.lieu_row,
+                                                   )
+            self.text_box_num_stage.text = ""
+        
+        if self.type_stage_row is not None and self.lieu_row is None:
+            self.drop_down_code_stage.foreground = "red"
+            self.drop_down_lieux.foreground = "theme:On Primary"
+            self.text_box_num_stage.foreground = "theme:On Primary"
+            liste_stages = app_tables.stages.search(tables.order_by("date_debut", ascending=False),
+                                                    code=self.type_stage_row
+                                                   )
+            self.text_box_num_stage.text = ""
+            
+        # Affichage
         self.repeating_panel_1.items = liste_stages
+
+
+    def text_box_num_stage_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.num_stage_txt = self.text_box_num_stage.text
+        try: 
+            self.drop_down_code_stage.foreground = "theme:On Primary"
+            self.drop_down_lieux.foreground = "theme:On Primary"
+            self.text_box_num_stage.foreground = "red"
+            self.num_stage = int(self.num_stage_txt )
+            stage_row = app_tables.stages.get(numero=self.num_stage)
+            # Affichage
+            self.repeating_panel_1.items = list(stage_row)
+        except Exception as e:
+            alert(f"Entrez un chiffre, SVP ! \n \n {e}")
+            self.text_box_num_stage.text = ""
+            self.text_box_num_stage.focus()
+
+    
+    def text_box_num_stage_focus(self, **event_args):
+        """This method is called when the TextBox gets focus"""
+        self.text_box_num_stage.text = ""
 
  
 

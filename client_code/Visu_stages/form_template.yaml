@@ -27,17 +27,38 @@ components:
     - event_bindings: {change: drop_down_code_stage_change}
       layout_properties: {grid_position: 'HWLFDH,COVSIJ'}
       name: drop_down_code_stage
-      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Filtre sur un type de stage}
+      properties:
+        background: theme:Olive
+        bold: true
+        foreground: theme:On Primary
+        include_placeholder: true
+        italic: true
+        margin: [null, null, '4', null]
+        placeholder: Type de stage
       type: DropDown
     - event_bindings: {change: drop_down_lieux_change}
       layout_properties: {grid_position: 'HWLFDH,VHQHHD'}
       name: drop_down_lieux
-      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Filtre sur le Centre de Formation}
+      properties: {background: 'theme:Olive', bold: true, foreground: 'theme:On Primary', include_placeholder: true, placeholder: Centre de Formation}
       type: DropDown
+    - event_bindings: {focus: text_box_num_stage_focus, pressed_enter: text_box_num_stage_pressed_enter}
+      layout_properties: {grid_position: 'HWLFDH,VAZWIS'}
+      name: text_box_num_stage
+      properties:
+        background: theme:Olive
+        bold: true
+        font_size: 12
+        foreground: theme:On Secondary
+        margin: ['5', null, '0', null]
+        placeholder: Num de Stage
+        role: outlined
+        text: Num de stage
+      type: TextBox
     layout_properties: {grid_position: 'NZHUNF,YMCIBW'}
-    name: column_panel_1
+    name: column_panel_filtres
     properties:
-      col_widths: '{"COVSIJ":40,"SKBYXL":10}'
+      col_spacing: small
+      col_widths: '{"COVSIJ":34,"VHQHHD":33,"VAZWIS":23}'
       role: outlined-card
       spacing:
         padding: ['5', '5', '5', '5']
@@ -79,7 +100,7 @@ components:
     columns: []
     foreground: ''
     role: null
-    rows_per_page: 6
+    rows_per_page: 4
     show_page_controls: true
     spacing_above: small
     spacing_below: small
