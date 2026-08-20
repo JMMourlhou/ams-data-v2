@@ -199,12 +199,12 @@ components:
     - event_bindings: {click: button_veille_pr_requis_compact_click}
       layout_properties: {grid_position: 'WEDIYN,NEUOWO'}
       name: button_veille_pr_requis_compact
-      properties: {align: full, background: 'theme:Olive', foreground: 'theme:Primary Container', text: Veille des Pré-Requis / Résumé}
+      properties: {align: full, background: 'theme:Olive', foreground: 'theme:Primary Container', text: Veille des Prérequis Formateurs / Résumé}
       type: Button
     - event_bindings: {click: button_veille_pr_requis_1page_per_formateur_click}
       layout_properties: {grid_position: 'WEDIYN,UHUNQM'}
       name: button_veille_pr_requis_1page_per_formateur
-      properties: {align: full, background: 'theme:Olive', foreground: 'theme:On Primary', text: Veille des Pré-Requis / 1 pg/Form.}
+      properties: {align: full, background: 'theme:Olive', foreground: 'theme:On Primary', text: Veille des Prérequis Formateurs / 1 pg/Form.}
       type: Button
     - event_bindings: {click: bt_gestion_stages_click}
       layout_properties: {grid_position: 'XOIFZD,ZGANVD'}

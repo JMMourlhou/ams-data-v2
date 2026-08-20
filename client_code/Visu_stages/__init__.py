@@ -124,12 +124,17 @@ class Visu_stages(Visu_stagesTemplate):
             self.drop_down_code_stage.foreground = "theme:On Primary"
             self.drop_down_lieux.foreground = "theme:On Primary"
             self.text_box_num_stage.foreground = "red"
+            
             self.num_stage = int(self.num_stage_txt )
             stage_row = app_tables.stages.get(numero=self.num_stage)
             # Affichage
-            self.repeating_panel_1.items = list(stage_row)
+            """
+            get(...) → une ligne ou None → utiliser [stage_row].
+            search(...) → plusieurs lignes → utiliser directement le résultat ou list(...).
+            """
+            self.repeating_panel_1.items = [stage_row]            
         except Exception as e:
-            alert(f"Entrez un chiffre, SVP ! \n \n {e}")
+            alert("Entrez un chiffre, SVP ! ")
             self.text_box_num_stage.text = ""
             self.text_box_num_stage.focus()
 
