@@ -29,33 +29,15 @@ components:
       name: drop_down_code_stage
       properties: {background: 'theme:Olive', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Filtre sur un type de stage}
       type: DropDown
-    - event_bindings: {}
-      layout_properties: {grid_position: 'HWLFDH,YVMCEY'}
-      name: check_box_filtre_ams
-      properties:
-        background: theme:Olive
-        checked: true
-        foreground: theme:On Primary
-        spacing:
-          margin: [null, null, null, '0']
-          padding: [null, '5', null, '25']
-        text: AMS
-      type: CheckBox
-    - event_bindings: {change: check_box_filtre_muc_change}
-      layout_properties: {grid_position: 'HWLFDH,SKBYXL'}
-      name: check_box_filtre_muc
-      properties:
-        background: theme:Olive
-        checked: true
-        foreground: theme:On Primary
-        spacing:
-          padding: [null, null, null, '25']
-        text: MUC
-      type: CheckBox
+    - event_bindings: {change: drop_down_lieux_change}
+      layout_properties: {grid_position: 'HWLFDH,VHQHHD'}
+      name: drop_down_lieux
+      properties: {background: 'theme:Olive', foreground: 'theme:On Primary', include_placeholder: true, placeholder: Filtre sur le Centre de Formation}
+      type: DropDown
     layout_properties: {grid_position: 'NZHUNF,YMCIBW'}
     name: column_panel_1
     properties:
-      col_widths: '{"COVSIJ":40,"YVMCEY":10,"SKBYXL":10}'
+      col_widths: '{"COVSIJ":40,"SKBYXL":10}'
       role: outlined-card
       spacing:
         padding: ['5', '5', '5', '5']
