@@ -1,3 +1,4 @@
+import anvil.secrets
 import anvil.email
 # Display a pdf file loaded into 1 or several pictures (appelé par mailing Mail_suject_attach_txt, bouton attachements, qd user choisit d'envoyer un pdf)
 import anvil.files

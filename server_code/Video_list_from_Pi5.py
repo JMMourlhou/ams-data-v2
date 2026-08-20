@@ -1,3 +1,4 @@
+import anvil.secrets
 import anvil.server
 
 #*****  Récup la liste du répertoire video via uplinks pi5: list_videos()

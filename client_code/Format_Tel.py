@@ -1,3 +1,4 @@
+import anvil.server
 import re
 """
     Formate un numéro français de 10 chiffres :

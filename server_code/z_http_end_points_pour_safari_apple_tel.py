@@ -1,3 +1,4 @@
+import anvil.secrets
 """
 Safari (ou plus probablement l’appareil photo Apple de l'utilisateur + son navigateur intégré au QR code, Safari) envoie des requêtes automatiques comme :
 /security.txt

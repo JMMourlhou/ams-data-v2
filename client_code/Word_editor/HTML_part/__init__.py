@@ -1,5 +1,6 @@
 from ._anvil_designer import HTML_partTemplate
 from anvil import *
+import anvil.server
 
 import anvil.js
 

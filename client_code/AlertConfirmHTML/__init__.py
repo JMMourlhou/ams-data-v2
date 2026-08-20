@@ -1,5 +1,6 @@
 from ._anvil_designer import AlertConfirmHTMLTemplate
 from anvil import *
+import anvil.server
 import anvil.js
 
 

@@ -1,3 +1,4 @@
+import anvil.secrets
 # ServerModule_TrombiPDF
 import anvil.server
 import base64

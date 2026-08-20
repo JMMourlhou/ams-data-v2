@@ -1,3 +1,4 @@
+import anvil.secrets
 from anvil.files import data_files
 import anvil.users
 import anvil.tables as tables

@@ -1,5 +1,6 @@
 from ._anvil_designer import Box_inputTemplate
 from anvil import *
+import anvil.server
 
 class Box_input(Box_inputTemplate):
     def __init__(self, question, drop_down_place_holder=None, drop_down_rows=None, reponse=None, **properties):

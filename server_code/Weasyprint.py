@@ -1,3 +1,4 @@
+import anvil.secrets
 from weasyprint import HTML, CSS
 import anvil.server
 import anvil.media

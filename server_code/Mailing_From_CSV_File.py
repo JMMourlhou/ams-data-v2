@@ -1,3 +1,4 @@
+import anvil.secrets
 import anvil.email
 import anvil.server
 import anvil.tables as tables

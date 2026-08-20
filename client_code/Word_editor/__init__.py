@@ -1,5 +1,6 @@
 from ._anvil_designer import Word_editorTemplate
 from anvil import *
+import anvil.server
 import anvil.js
 from anvil.js import window
 from datetime import datetime

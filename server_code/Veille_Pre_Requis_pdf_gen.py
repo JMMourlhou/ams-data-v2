@@ -1,3 +1,4 @@
+import anvil.secrets
 # -*- coding: utf-8 -*-
 """
 Module serveur Anvil : veille_pr_requis

@@ -1,5 +1,6 @@
 from ._anvil_designer import Video_PlayerTemplate
 from anvil import *
+import anvil.server
 import anvil.js
 
 class Video_Player(Video_PlayerTemplate):

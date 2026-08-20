@@ -1,3 +1,4 @@
+import anvil.secrets
 # Server Module
 import anvil.server
 import anvil.tables as tables

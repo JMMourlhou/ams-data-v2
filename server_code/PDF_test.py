@@ -1,3 +1,4 @@
+import anvil.secrets
 import anvil.server
 import anvil.pdf
 from anvil.tables import app_tables

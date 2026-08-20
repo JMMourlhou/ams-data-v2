@@ -1,3 +1,4 @@
+import anvil.secrets
 from anvil.tables import app_tables
 import anvil.server
 import html, re, unicodedata  # POur génération du HTML 

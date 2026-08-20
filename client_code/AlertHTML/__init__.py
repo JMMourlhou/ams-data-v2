@@ -1,5 +1,6 @@
 from ._anvil_designer import AlertHTMLTemplate
 from anvil import *
+import anvil.server
 
 # style "info", "error", "success"
 class AlertHTML(AlertHTMLTemplate):
