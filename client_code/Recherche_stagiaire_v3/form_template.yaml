@@ -188,7 +188,7 @@ components:
             - event_bindings: {click: button_pr_click}
               layout_properties: {}
               name: button_pr
-              properties: {background: 'theme:Olive', font_size: 12, foreground: 'theme:On Primary', icon: 'fa:bolt', icon_align: top, role: elevated-button, text: P.R.}
+              properties: {background: 'theme:Olive', font_size: 12, foreground: 'theme:On Primary', icon: 'fa:pencil', icon_align: top, role: elevated-button, text: P.R.}
               type: Button
             - event_bindings: {click: button_pr_pdf_click}
               layout_properties: {}
