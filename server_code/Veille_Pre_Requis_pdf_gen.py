@@ -183,10 +183,11 @@ def _documents_formateur(personne, today, mode, stage=None):
         #    continue
             
         # TEST si  docs du stage qund vient d'un stage pas d'une recherche perso
-        if stage_row != stage and mode != "perso":
+        #if stage_row != stage and mode != "perso" and mode != "compact" and mode != "une_page":
+        if stage_row != stage and mode == "stage" :
             continue
 
-        # Test: Si mode "perso" (vient de recherche), si le n'appaartient pas à un stage "stage avec PR" on passe
+        # Test: Si mode "perso" (vient de recherche), si le doc n'appartient pas à un stage "stage avec PR" on passe
         print(f"debug: stage sans pr: {stage_row['stage_sans_pre_requis']}")
         if stage_row["stage_sans_pre_requis"] is not True:
             continue
