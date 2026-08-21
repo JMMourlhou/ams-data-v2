@@ -98,7 +98,8 @@ class Stage_form_suivi(Stage_form_suiviTemplate):
                                                         )
                                                    )
                 for stage in liste1:
-                        liste_drop_d.append((stage["code"]['code'] + " débuté le " + str(stage["date_debut"]), stage))
+                    liste_drop_d.append((stage["code"]['code'], stage))
+                    #liste_drop_d.append((stage["code"]['code'] + " débuté le " + str(stage["date_debut"]), stage))
                 
             # print(liste_drop_d)
             self.drop_down_code_stage.items = liste_drop_d
