@@ -1524,6 +1524,11 @@ BOUTONS OUI / NON — MODE SUCCESS (vert)
 }
 
 
+/* Rend lisible le placeholder du filtre par numéro de stage. */
+input.anvil-role-stage-number-filter::placeholder {
+    color: %color:On Primary%;
+    opacity: 1;
+}
 
 
 
