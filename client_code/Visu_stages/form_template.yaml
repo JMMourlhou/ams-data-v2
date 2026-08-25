@@ -50,7 +50,7 @@ components:
         font_size: 14
         foreground: theme:On Primary
         margin: ['4', null, '0', null]
-        placeholder: ''
+        placeholder: Num de stage
         role: null
         text: Num de stage
       type: TextBox
