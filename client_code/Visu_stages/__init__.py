@@ -43,6 +43,15 @@ class Visu_stages(Visu_stagesTemplate):
             self.column_panel_filtres.visible = False
         #Affichage des stages    
         self.repeating_panel_1.items = liste_stages
+        
+        """
+        # Application du role CSS pour self.text_box_num_stage
+        input.anvil-role-stage-number-filter::placeholder {
+            color: %color:On Primary%;
+            opacity: 1;
+        }
+        """
+        self.text_box_num_stage.role = "stage-number-filter"
             
     def button_annuler_click(self, **event_args):
         """This method is called when the button is clicked"""
