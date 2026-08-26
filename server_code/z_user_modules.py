@@ -17,12 +17,15 @@ from . import French_zone # importation du module pour le calcul du jour / heure
 from datetime import datetime
 from . import Variables_globales # importation du module de lecture des variables globales (de la table Variables_globales) 
 
+"""
 # Forcer login de l'utilisateur qui se connecte    
 @anvil.server.callable
 def force_log(user_row):
     user=anvil.users.force_login(user_row,remember=True)
     user["last_login"]=French_zone.french_zone_time()  # Update the login time
     return user
+"""
+
 
 """ demande de chgt de Password """    
 @anvil.server.callable

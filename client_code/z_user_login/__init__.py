@@ -51,7 +51,7 @@ class z_user_login(z_user_loginTemplate):
         # ------------------------------------------------------------   VALIDATION 
         try:
             user=anvil.users.login_with_email(self.email_box.text, self.password_box.text, remember=True)
-            user=anvil.server.call("force_log",user)
+            #user=anvil.server.call("force_log",user)
             open_form('Main',99)    #x=3 si login normal
             #return_to_mother_app.calling_mother_app(99)    #je retourne et efface l'url
         except anvil.users.EmailNotConfirmed:
