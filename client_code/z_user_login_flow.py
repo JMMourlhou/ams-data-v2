@@ -4,8 +4,7 @@ import anvil.users
 import anvil.tables as tables
 from anvil.tables import app_tables
 
-#from LoginDialog import LoginDialog
-#from SignupDialog import SignupDialog
+
 #from ForgottenPasswordDialog import ForgottenPasswordDialog
 #from PasswordResetDialog import PasswordResetDialog
 
@@ -67,6 +66,11 @@ def login_with_form(allow_cancel=True):
             break # je sors de la boucle while
 """
 
+
+
+
+
+
 def signup_with_form(num_stage):
     d = SignupDialog()
 
@@ -104,6 +108,9 @@ def signup_with_form(num_stage):
             if anvil.server.call("_send_email_confirm_link", d.email_box.text):
                 alert(f"Nous vous avons envoyé un mail de confirmation\n à l'adresse: {d.email_box.text}.\n\nVérifiez votre mail, et cliquez sur le lien.")
                 open_form("Main")
+
+
+
 
 """
 def do_email_reset(h):

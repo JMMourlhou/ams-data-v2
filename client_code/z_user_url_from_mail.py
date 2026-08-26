@@ -39,7 +39,7 @@ def confirm_or_pwreset(h, num_stage=0):
         alert("email vide")
         return
     
-    """ ***************************** URL du mail de password reset  """
+
     """ ***************************** URL du mail de password reset  """
     if url_purpose=='pwreset':
         #alert("pwreset, going to form 'url_from_mail_PW_reset'")
