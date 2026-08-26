@@ -69,8 +69,7 @@ def login_with_form(allow_cancel=True):
 
 
 
-
-
+"""
 def signup_with_form(num_stage):
     d = SignupDialog()
 
@@ -108,7 +107,7 @@ def signup_with_form(num_stage):
             if anvil.server.call("_send_email_confirm_link", d.email_box.text):
                 alert(f"Nous vous avons envoyé un mail de confirmation\n à l'adresse: {d.email_box.text}.\n\nVérifiez votre mail, et cliquez sur le lien.")
                 open_form("Main")
-
+"""
 
 
 

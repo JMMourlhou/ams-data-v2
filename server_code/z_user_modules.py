@@ -113,7 +113,11 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
     if user is None:   # user not created yet
         api = mk_api_key()
         date_heure = French_zone.french_zone_time()
+        # Tout utilisateur qui crée lui-même son compte est créé
+        # avec le rôle stagiaire par défaut.
+        # Le rôle pourra être modifié ultérieurement par une opération contrôlée.
         role_user ="S"  # stagiaire par défaut
+        """
         if num_stage is not None or num_stage != "":
             # lecture du stage sur son num(numéric)
             try:
@@ -126,6 +130,7 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
                 print(e)
                 print("------------------------------------")
                 role_user = "S" # par défaut
+        """
         try:        
             user = app_tables.users.add_row(email=email.lower(),
                                             role=role_user,
