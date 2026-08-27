@@ -65,8 +65,23 @@ class z_user_new_account(z_user_new_accountTemplate):
             self.email_box.focus()
             return
 
+        # Mot de passe vide ?
+        if self.password_box.text == "":
+            alert("Entrez votre mot de passe svp !")
+            self.password_box.focus()
+            return
+        
+        # Confirmation du mot de passe vide ?
+        if self.password_repeat_box.text == "":
+            alert("Confirmez votre mot de passe svp !")
+            self.password_repeat_box.focus()
+            return
+        
+        # Les deux mots de passe doivent être identiques
         if self.password_box.text != self.password_repeat_box.text:
             alert("Les mots de passe sont différents !")
+            self.password_repeat_box.text = ""
+            self.password_repeat_box.focus()
             return
         # ------------------------------------------------------------   VALIDATION 
         err = anvil.server.call('do_signup', self.email_box.text, self.name_box.text, self.password_box.text, self.num_stage, self.pour_stage)

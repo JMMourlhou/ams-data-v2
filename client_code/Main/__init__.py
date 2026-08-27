@@ -144,7 +144,6 @@ class Main(MainTemplate):
             h = {}
             h = anvil.get_url_hash() # récup de l'url venant du lien ds le mail envoyé au user
             self.h = h
-            
 
             if len(h) != 0:  # a URL has openned this app
                 # handling buttons display before going to module externe 'sign_in_for_AMS_Data'
@@ -156,7 +155,7 @@ class Main(MainTemplate):
                 url_time = h["t"]
                 url_time_over = French_zone.time_over(url_time)
                 if url_time_over:
-                    alert("Ce lien n'est plus actif !")
+                    alert("Ce lien n'est pas actif !")
                 else:
                     # stage number in URL's Hash ? (le user vient-il de flacher le Qr code?)
                     # si oui je suis en sign in après flash du qr code par le stagiaire ou click du lien ds un mail

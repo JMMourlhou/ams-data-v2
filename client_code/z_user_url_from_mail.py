@@ -3,7 +3,8 @@ from anvil import *   # to load the alert
 import anvil.users
 import anvil.tables as tables
 import anvil.server
-from . import z_user_login_flow
+#from . import z_user_login_flow
+from .z_user_new_account import z_user_new_account
 from anvil import open_form
 from .AlertHTML import AlertHTML
 from .AlertConfirmHTML import AlertConfirmHTML
@@ -31,14 +32,9 @@ def confirm_or_pwreset(h, num_stage=0):
     """ ***************************** URL crée après que le user ai flaché un qrcode  """
     
     if url_purpose == "qrcode":
-        z_user_login_flow.signup_with_form(num_stage)        # envoyer en sign in
+        pour_stage = h.get("pour", 0)
 
-    # mail in URL ?
-    to_be_confirmed_email=h["email"]
-    if to_be_confirmed_email == "" :
-        alert("email vide")
-        return
-    
+    open_form("z_user_new_account", h, num_stage, pour_stage)
 
     """ ***************************** URL du mail de password reset  """
     if url_purpose=='pwreset':

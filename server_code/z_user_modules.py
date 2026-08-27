@@ -108,6 +108,15 @@ def mk_api_key():
 @anvil.tables.in_transaction
 def do_signup(email, name, password, num_stage, pour_stage="0"):
     print(f"Module 'z_user_modules / do_sign_up': création du user:{email}, {name}, stage {num_stage} pour le stage {pour_stage}")
+    
+    # Le contrôle coté client est utile pour l'utilisateur, mais il peut être contourné par un attaquant, donc on répète le test en serveur
+    # Le mot de passe doit obligatoirement être renseigné.
+    if password is None:
+        return "Le mot de passe est obligatoire."
+    
+    if password == "":
+        return "Le mot de passe est obligatoire."
+    
     pwhash = hash_password(password, bcrypt.gensalt())
     user = app_tables.users.get(email=email)
     if user is None:   # user not created yet
