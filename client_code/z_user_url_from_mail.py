@@ -28,17 +28,16 @@ def confirm_or_pwreset(h, num_stage=0):
         return
 
     # Valeurs par défaut
-    to_be_confirmed_email = ""
     pour_stage = h.get("pour", 0)
     
     # But du lien : qrcode, pwreset ou confirm
     url_purpose=h["a"]  
 
-    """ ***************************** URL crée après que le user ai flaché un qrcode  """
-    
+    """ ***************************** URL crée après que le user ai flaché un qrcode  """ 
     if url_purpose == "qrcode":
         open_form("z_user_new_account", h, num_stage, pour_stage)
-
+        return
+        
     """ ***************************** URL du mail de password reset  """
     if url_purpose=='pwreset':
         #alert("pwreset, going to form 'url_from_mail_PW_reset'")
@@ -48,6 +47,16 @@ def confirm_or_pwreset(h, num_stage=0):
 
     """ ***************************** URL du mail de confirmation après sign in  """
     if url_purpose == "confirm":
+        # Lecture du mail contenu dans l'URL
+        to_be_confirmed_email = h.get("email")
+    
+        if not to_be_confirmed_email:
+            AlertHTML.error(
+                "Erreur :",
+                "L'adresse mail est absente du lien de confirmation."
+            )
+            return
+    
         # Lecture de la clé de confirmation contenue dans l'URL
         api_key = h.get("api")
     
