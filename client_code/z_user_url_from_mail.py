@@ -3,7 +3,7 @@ from anvil import *   # to load the alert
 import anvil.users
 import anvil.tables as tables
 import anvil.server
-from . import z_user_login_flow
+#from . import z_user_login_flow
 from anvil import open_form
 from .AlertHTML import AlertHTML
 from .AlertConfirmHTML import AlertConfirmHTML
@@ -39,7 +39,7 @@ def confirm_or_pwreset(h, num_stage=0):
         alert("email vide")
         return
     
-    """ ***************************** URL du mail de password reset  """
+
     """ ***************************** URL du mail de password reset  """
     if url_purpose=='pwreset':
         #alert("pwreset, going to form 'url_from_mail_PW_reset'")
