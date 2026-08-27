@@ -48,36 +48,36 @@ def confirm_or_pwreset(h, num_stage=0):
 
     """ ***************************** URL du mail de confirmation après sign in  """
     if url_purpose == "confirm":
-    # Lecture de la clé de confirmation contenue dans l'URL
+        # Lecture de la clé de confirmation contenue dans l'URL
         api_key = h.get("api")
-
-    if not api_key:
-        AlertHTML.error(
-            "Erreur :",
-            "Le lien de confirmation est invalide."
+    
+        if not api_key:
+            AlertHTML.error(
+                "Erreur :",
+                "Le lien de confirmation est invalide."
+            )
+            return
+    
+        # Vérification et confirmation côté serveur
+        confirmation_ok = anvil.server.call(
+            "_confirm_email_address",
+            to_be_confirmed_email,
+            api_key
         )
+    
+        if confirmation_ok:
+            AlertHTML.success(
+                "Succès",
+                "Votre adresse mail est maintenant confirmée."
+            )
+        else:
+            AlertHTML.error(
+                "Erreur :",
+                "Ce lien de confirmation n'est pas valide."
+            )
+    
+        open_form("Main", 99)
         return
-
-    # Vérification et confirmation côté serveur
-    confirmation_ok = anvil.server.call(
-        "_confirm_email_address",
-        to_be_confirmed_email,
-        api_key
-    )
-
-    if confirmation_ok:
-        AlertHTML.success(
-            "Succès",
-            "Votre adresse mail est maintenant confirmée."
-        )
-    else:
-        AlertHTML.error(
-            "Erreur :",
-            "Ce lien de confirmation n'est pas valide."
-        )
-
-    open_form("Main", 99)
-    return
 
 
 

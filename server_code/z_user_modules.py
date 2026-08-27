@@ -165,16 +165,35 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
 # for Pw reset or new user email confirmation  
 # is the Api key in URL matches the table API     
 def get_user_if_key_correct(email, api_key):
-  user_row = app_tables.users.get(email=email)
-  if user_row is not None and user_row['api_key'] is not None:
-    # Use bcrypt to hash the api key and compare the hashed version.
-    # The naive way (api_key == user['api_key']) would expose a timing vulnerability.
+    user_row = app_tables.users.get(email=email)
+
+    if user_row is None:
+        print("Le mail n'existe pas dans la table users")
+        return False, None
+
+    if user_row["api_key"] is None:
+        return False, None
+
+    if api_key is None:
+        return False, None
+
+    # Comparaison des deux clés
     salt = bcrypt.gensalt()
-    if hash_password(api_key, salt) == hash_password(user_row['api_key'], salt):
-      return True, user_row
-  else:
-      print("Le mail n'existe pas dans la table users")
-      return False, None
+
+    api_key_hash = hash_password(
+        api_key,
+        salt
+    )
+
+    user_api_key_hash = hash_password(
+        user_row["api_key"],
+        salt
+    )
+
+    if api_key_hash == user_api_key_hash:
+        return True, user_row
+
+    return False, None
 
 
 
@@ -219,15 +238,38 @@ def hash_password(password, salt):
 """ ************************************************************************** """
 @anvil.server.callable
 def _confirm_email_address(email, api_key):
-  """Confirm a user's email address if the api key matches; return True if it did."""
-  bool=False  
-  bool, user_row = get_user_if_key_correct(email, api_key)
-  if bool:
-    user=anvil.users.get_user()  
-    user['confirmed_email'] = True
-    #user['api_key'] = None
-    anvil.users.force_login(user)
-  return bool
+    """
+    Confirme l'adresse mail d'un utilisateur si la clé reçue
+    correspond à celle enregistrée dans la table users.
+
+    Entrées :
+        email : str
+        api_key : str
+
+    Sortie :
+        True si la confirmation a réussi.
+        False dans le cas contraire.
+    """
+
+    key_is_correct, user_row = get_user_if_key_correct(
+        email,
+        api_key
+    )
+
+    if not key_is_correct:
+        return False
+
+    # Confirmation de l'adresse mail
+    user_row["confirmed_email"] = True
+
+    # Création d'une nouvelle clé.
+    # L'ancien lien de confirmation devient ainsi inutilisable.
+    user_row["api_key"] = mk_api_key()
+
+    # Connexion de l'utilisateur dont le mail vient d'être confirmé
+    anvil.users.force_login(user_row)
+
+    return True
 
 def recup_time(): 
     time=French_zone.french_zone_time()
