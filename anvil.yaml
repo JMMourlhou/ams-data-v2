@@ -965,6 +965,14 @@ db_schema:
       name: centre
       target: lieux
       type: link_single
+    - admin_ui: {order: 24.75, width: 200}
+      client_hidden: false
+      name: password_reset_key
+      type: string
+    - admin_ui: {order: 25.75, width: 200}
+      client_hidden: false
+      name: password_reset_expires
+      type: datetime
     server: full
     title: Users
 dependencies: []

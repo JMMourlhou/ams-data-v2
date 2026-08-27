@@ -21,22 +21,68 @@ class z_user_pw_reset(z_user_pw_resetTemplate):
         self.password_box.focus()
 
     def button_validation_click(self, **event_args):
-        """This method is called when the button is clicked"""
+        """Validation et modification du nouveau mot de passe."""
+    
+        # Premier mot de passe vide ?
         if self.password_box.text == "":
-            AlertHTML.info("Oublie :", "Entrez votre Mot de Passe !")
+            AlertHTML.info(
+                "Oubli :",
+                "Entrez votre Mot de Passe !"
+            )
+            self.password_box.focus()
             return
+    
+        # Confirmation vide ?
         if self.password_repeat_box.text == "":
-            AlertHTML.info("Oublie :", "Entrez votre Mot de Passe une 2eme fois !")
-            return         
-        # si 2 pass words identiques
-        if self.password_box.text == self.password_repeat_box.text:
-            r=anvil.server.call("_perform_password_reset",self.email, self.api_key, self.password_box.text)
-            if r:
-                AlertHTML.success("Succès ! ", "Vous pouvez vous connecter avec le nouveau Mot de Passe !")
-                self.button_retour_click()
-        else:
-            AlertHTML.error("Erreur :", "Les Mots de Passe sont différents !")
+            AlertHTML.info(
+                "Oubli :",
+                "Entrez votre Mot de Passe une deuxième fois !"
+            )
+            self.password_repeat_box.focus()
             return
+    
+        # Longueur minimale
+        if len(self.password_box.text) < 6:
+            AlertHTML.info(
+                "Mot de Passe :",
+                "Utilisez au minimum 6 caractères."
+            )
+            self.password_box.focus()
+            return
+    
+        # Les deux mots de passe doivent être identiques
+        if self.password_box.text != self.password_repeat_box.text:
+            AlertHTML.error(
+                "Erreur :",
+                "Les Mots de Passe sont différents !"
+            )
+    
+            self.password_repeat_box.text = ""
+            self.password_repeat_box.focus()
+            return
+    
+        # Validation définitive côté serveur
+        result = anvil.server.call(
+            "_perform_password_reset",
+            self.email,
+            self.api_key,
+            self.password_box.text
+        )
+    
+        if result:
+            AlertHTML.success(
+                "Succès !",
+                "Vous pouvez vous connecter avec le nouveau Mot de Passe !"
+            )
+    
+            self.button_retour_click()
+            return
+    
+        AlertHTML.error(
+            "Erreur :",
+            "Ce lien de réinitialisation est invalide ou a expiré.",
+            "Le lien dure 30 min !"
+        )
 
     def button_retour_click(self, **event_args):
         """This method is called when the button is clicked"""
