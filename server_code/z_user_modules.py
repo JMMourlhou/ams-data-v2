@@ -306,6 +306,9 @@ def _perform_password_reset(email, password_reset_key, new_password):
         bcrypt.gensalt()
     )
 
+    # Réinitialisation du compteur de mots de passe erronés
+    user_row["n_password_failures"] = 0
+    
     # Invalidation immédiate du lien de reset
     user_row["password_reset_key"] = None
     user_row["password_reset_expires"] = None

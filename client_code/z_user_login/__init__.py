@@ -50,19 +50,24 @@ class z_user_login(z_user_loginTemplate):
             return   
         # ------------------------------------------------------------   VALIDATION 
         try:
-            user=anvil.users.login_with_email(self.email_box.text, self.password_box.text, remember=True)
-            #user=anvil.server.call("force_log",user)
-            open_form('Main',99)    #x=3 si login normal
-            #return_to_mother_app.calling_mother_app(99)    #je retourne et efface l'url
+            user = anvil.users.login_with_email(self.email_box.text, self.password_box.text, remember=True)
+            open_form("Main", 99)
+        
         except anvil.users.EmailNotConfirmed:
-            AlertHTML.info("Erreur :","Votre mail n'est pas encore confirmé! Nous vous envoyons un nouveau lien par mail !")
-            if anvil.server.call('_send_email_confirm_link', self.email_box.text):
-                AlertHTML.info("Confirmation de votre mail :", f"Un nouvel email de confirmation vous a été envoyé à {self.email_box.text}.")
-                open_form('Main',99)   #je retourne et efface l'url
-        except anvil.users.AuthenticationFailed as e:
-            #alert(f"Erreur:\n\n{e}")
+            AlertHTML.info("Adresse mail non confirmée :", "Votre adresse mail n'est pas encore confirmée. Nous vous envoyons un nouveau lien de confirmation.")
+        
+            if anvil.server.call("_send_email_confirm_link", self.email_box.text):
+                AlertHTML.info("Confirmation de votre mail :", f"Un nouvel email de confirmation a été envoyé à {self.email_box.text}.")
+        
+        except anvil.users.TooManyPasswordFailures:
+            AlertHTML.error("Connexion bloquée :", "Trop de tentatives de connexion ont échoué. Utilisez « Mot de passe oublié » pour réinitialiser votre mot de passe.")
+            self.password_box.text = ""
+            self.password_box.focus()
+            
+        except anvil.users.AuthenticationFailed:
             AlertHTML.error("Erreur :", "Email ou Mot de Passe erroné !")
-            return
+            self.password_box.text = ""
+            self.password_box.focus()
 
     def reset_pw_link_click(self, **event_args):
         """This method is called when the link is clicked"""
@@ -88,7 +93,7 @@ class z_user_login(z_user_loginTemplate):
             return
 
         if anvil.server.call('_send_password_reset', self.email_box.text):
-            AlertHTML.info("Réinitialisation du Mot de Passe :", f"Un mail de réinitilisation vous a été envoyé à {self.email_box.text}.")
+            AlertHTML.info("Réinitialisation du Mot de Passe :", f"Un mail de réinitilisation vous a été envoyé à {self.email_box.text}.\n (Lien valide 30 minutes.)")
             open_form('Main',99)     #je retourne et efface l'url
 
     def email_box_pressed_enter(self, **event_args):
