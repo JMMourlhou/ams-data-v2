@@ -3,7 +3,7 @@ from anvil import *   # to load the alert
 import anvil.users
 import anvil.tables as tables
 import anvil.server
-#from . import z_user_login_flow
+from . import z_user_login_flow
 from anvil import open_form
 from .AlertHTML import AlertHTML
 from .AlertConfirmHTML import AlertConfirmHTML
