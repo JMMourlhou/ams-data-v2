@@ -27,14 +27,17 @@ def confirm_or_pwreset(h, num_stage=0):
         print("URL not a dict type")
         return
 
-    url_purpose=h["a"]  # contient le but du lien: qrcode ou pwrest ou confirm
+    # Valeurs par défaut
+    to_be_confirmed_email = ""
+    pour_stage = h.get("pour", 0)
+    
+    # But du lien : qrcode, pwreset ou confirm
+    url_purpose=h["a"]  
 
     """ ***************************** URL crée après que le user ai flaché un qrcode  """
     
     if url_purpose == "qrcode":
-        pour_stage = h.get("pour", 0)
-
-    open_form("z_user_new_account", h, num_stage, pour_stage)
+        open_form("z_user_new_account", h, num_stage, pour_stage)
 
     """ ***************************** URL du mail de password reset  """
     if url_purpose=='pwreset':
