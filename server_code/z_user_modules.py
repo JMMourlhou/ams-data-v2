@@ -85,7 +85,7 @@ def _send_email_confirm_link(email):
 Merci de votre enregistrement sur {nom_app_pour_mail} !<br>
 Afin de confirmer votre adresse mail, <b>clickez le lien ci-dessous:</b><br>
 <br>
-{code_app1}/#?a=confirm&email={url_encode(user['email'])}&hpw={url_encode(user['password_hash'])}&t={t} <br>
+{code_app1}/#?a=confirm&email={url_encode(user['email'])}&api={url_encode(user['api_key'])}&t={t} <br>
 <br><br>
 <b><i>         L'équipe d'AMSport,</b></i><br>
 mail: {ams_mail} <br>

@@ -47,26 +47,37 @@ def confirm_or_pwreset(h, num_stage=0):
         open_form("url_from_mail_PW_reset",h["email"],h["api"])
 
     """ ***************************** URL du mail de confirmation après sign in  """
-    if url_purpose=='confirm':
-        # Hash password in URL ?
-        hpw=h["hpw"]
-        if not hpw:
-            alert("Hash Password empty")
-            return
-        try:   
-            #test3: is the user in the users data table ?
-            user=anvil.server.call("search", to_be_confirmed_email, hpw)
-            #Displaying the confirm alert 
-            msg="Mr/Mme "+user["nom"]+", votre mail est confirmé, rentrez maintenant vos données personnelles."
-            AlertHTML.success("Succès", msg)
-        except anvil.users.EmailNotConfirmed:   # pas confirmé ?
-            AlertHTML.error("Erreur :","Votre mail est connu par nos services mais n'est pas confirmé, cliquez le dernier lien envoyé par mail.")
-        except:  #user confirmé
-            #alert("Votre mail est déjà confirmé, essayez de vous connecter.")
-            pass
+    if url_purpose == "confirm":
+    # Lecture de la clé de confirmation contenue dans l'URL
+        api_key = h.get("api")
 
-    #anvil.users.logout()       #logging out the user
-    open_form("Main",99)
+    if not api_key:
+        AlertHTML.error(
+            "Erreur :",
+            "Le lien de confirmation est invalide."
+        )
+        return
+
+    # Vérification et confirmation côté serveur
+    confirmation_ok = anvil.server.call(
+        "_confirm_email_address",
+        to_be_confirmed_email,
+        api_key
+    )
+
+    if confirmation_ok:
+        AlertHTML.success(
+            "Succès",
+            "Votre adresse mail est maintenant confirmée."
+        )
+    else:
+        AlertHTML.error(
+            "Erreur :",
+            "Ce lien de confirmation n'est pas valide."
+        )
+
+    open_form("Main", 99)
+    return
 
 
 
