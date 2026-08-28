@@ -180,9 +180,20 @@ class Main(MainTemplate):
                 self.content_panel.add_component(Saisie_info_de_base(True), full_width_row=True)
 
     def pwreset(self, **event_args):
-        # handling buttons display
+        # Lecture des informations du lien
+        email = self.h.get("email")
+        password_reset_key = self.h.get("api")
+    
+        # Vérification serveur du lien avant d'afficher le formulaire
+        password_reset_link_is_valid = anvil.server.call("_password_reset_link_is_valid", email, password_reset_key)
+    
+        if not password_reset_link_is_valid:
+            alert("Ce lien de réinitialisation a déjà été utilisé ou a expiré.", title="Lien invalide")
+            open_form("Main", 99)
+            return
+    
+        # Affichage du formulaire de réinitialisation
         self.bt_user_mail.text = "Réinitialisation du mot de passe !"
-        #self.display_admin_or_other_buttons()
         self.bt_se_connecter.visible = False
         self.bt_sign_in.visible = False
         self.flow_panel_connect.visible = False
@@ -191,7 +202,7 @@ class Main(MainTemplate):
         self.outlined_card_niv1.visible = False
         self.flow_panel_user_role.visible = False
         self.content_panel.clear()
-        self.content_panel.add_component(z_user_pw_reset(self.h["email"], self.h["api"]), full_width_row=True)
+        self.content_panel.add_component(z_user_pw_reset(email, password_reset_key), full_width_row=True)  
         return
 
     def confirm(self, **event_args):
