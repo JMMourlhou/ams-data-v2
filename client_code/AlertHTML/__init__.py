@@ -1,29 +1,21 @@
 from ._anvil_designer import AlertHTMLTemplate
 from anvil import *
-import anvil.server
 
-# style "info", "error", "success"
+
 class AlertHTML(AlertHTMLTemplate):
-    def __init__(self, titre="Information", contenu="", large=False, style="info", **properties):
+    def __init__(self, contenu="", style="info", **properties):
         self.init_components(**properties)
 
-        # On applique la couleur selon le style choisi
+        # Application du style
         self._apply_style(style)
 
-        # Injection du contenu HTML
+        # Contenu HTML
         self.rt.content = contenu
 
-        # Affichage dans une alert()
-        alert(
-            title=titre,
-            content=self,
-            large=large,
-            buttons=["OK"]
-        )
 
-    # ------------------------------
-    # Méthodes de styles
-    # ------------------------------
+    # ------------------------------------------------------------------------------------------
+    # Application du style de l'alerte
+    # ------------------------------------------------------------------------------------------
     def _apply_style(self, style):
         if style == "error":
             self.role = "error-alert"
@@ -32,17 +24,42 @@ class AlertHTML(AlertHTMLTemplate):
         else:
             self.role = "info-alert"
 
-    # -------------------
-    # Méthodes statiques 
-    # ------------------
+
+    # ------------------------------------------------------------------------------------------
+    # Affichage commun des alertes
+    # ------------------------------------------------------------------------------------------
+    @staticmethod
+    def _show(titre, contenu, large, style):
+        contenu_alert = AlertHTML(contenu=contenu, style=style)
+
+        return alert(
+            title=titre,
+            content=contenu_alert,
+            large=large,
+            dismissible=True,
+            buttons=[("OK", True)]
+        )
+
+
+    # ------------------------------------------------------------------------------------------
+    # Alerte erreur
+    # ------------------------------------------------------------------------------------------
     @staticmethod
     def error(titre, contenu, large=True):
-        return AlertHTML(titre=titre, contenu=contenu, large=large, style="error")
+        return AlertHTML._show(titre, contenu, large, "error")
 
+
+    # ------------------------------------------------------------------------------------------
+    # Alerte information
+    # ------------------------------------------------------------------------------------------
     @staticmethod
     def info(titre, contenu, large=True):
-        return AlertHTML(titre=titre, contenu=contenu, large=large, style="info")
+        return AlertHTML._show(titre, contenu, large, "info")
 
+
+    # ------------------------------------------------------------------------------------------
+    # Alerte succès
+    # ------------------------------------------------------------------------------------------
     @staticmethod
     def success(titre, contenu, large=True):
-        return AlertHTML(titre=titre, contenu=contenu, large=large, style="success")
+        return AlertHTML._show(titre, contenu, large, "success")
