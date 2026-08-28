@@ -433,3 +433,32 @@ def get_user_if_password_reset_key_correct(email, password_reset_key):
         return False, None
 
     return True, user_row
+
+@anvil.server.callable
+def _password_reset_link_is_valid(email, password_reset_key):
+    """Vérifie si un lien de réinitialisation peut encore être utilisé."""
+
+    if email is None or password_reset_key is None:
+        return False
+
+    email = email.strip().lower()
+    user_row = app_tables.users.get(email=email)
+
+    if user_row is None:
+        return False
+
+    stored_password_reset_key = user_row["password_reset_key"]
+    password_reset_expires = user_row["password_reset_expires"]
+
+    if stored_password_reset_key is None or password_reset_expires is None:
+        return False
+
+    if French_zone.french_zone_time() > password_reset_expires:
+        user_row["password_reset_key"] = None
+        user_row["password_reset_expires"] = None
+        return False
+
+    if password_reset_key != stored_password_reset_key:
+        return False
+
+    return True    
