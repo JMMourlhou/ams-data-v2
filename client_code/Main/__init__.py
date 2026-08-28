@@ -203,7 +203,6 @@ class Main(MainTemplate):
         self.flow_panel_user_role.visible = False
         self.content_panel.clear()
         self.content_panel.add_component(z_user_pw_reset(email, password_reset_key), full_width_row=True)  
-        return
 
     def confirm(self, **event_args):
         self.content_panel.clear()
