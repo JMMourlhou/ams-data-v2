@@ -70,6 +70,12 @@ class z_user_new_account(z_user_new_accountTemplate):
             alert("Entrez votre mot de passe svp !")
             self.password_box.focus()
             return
+
+        # Longueur minimale du mot de passe
+        if len(self.password_box.text) < 6:
+            alert("Le mot de passe doit contenir au minimum 6 caractères.")
+            self.password_box.focus()
+            return
         
         # Confirmation du mot de passe vide ?
         if self.password_repeat_box.text == "":
@@ -85,7 +91,7 @@ class z_user_new_account(z_user_new_accountTemplate):
             return
         # ------------------------------------------------------------   VALIDATION 
         err = anvil.server.call('do_signup', self.email_box.text, self.name_box.text, self.password_box.text, self.num_stage, self.pour_stage)
-        if err is not None:    #erreur, on revient ds mother app
+        if err is not None:  
             alert(err)
             open_form("Main",99)
         else:           #Pas d'erreur, on envoi le mail de confirmation

@@ -171,6 +171,9 @@ def do_signup(email, name, password, num_stage, pour_stage="0"):
     
     if password == "":
         return "Le mot de passe est obligatoire."
+
+    if len(password) < 6:
+        return "Le mot de passe doit contenir au minimum 6 caractères."
     
     pwhash = hash_password(password, bcrypt.gensalt())
     user = app_tables.users.get(email=email)
