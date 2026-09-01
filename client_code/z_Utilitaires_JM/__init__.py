@@ -22,7 +22,10 @@ class z_Utilitaires_JM(z_Utilitaires_JMTemplate):
         from ..Main import Main
         open_form('Main',99)
 
-    
+    def bt_maj_txt_stagiaires_inscrits_pour_stage_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        result=anvil.server.call("maj_stagiaires_inscrits_pour_stage")
+        alert(result)
 
     def bt_maj_txt_stagiaires_inscrits_click(self, **event_args):
         """This method is called when the button is clicked"""

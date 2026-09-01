@@ -36,6 +36,11 @@ components:
     name: bt_maj_txt_stagiaires_inscrits
     properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Maj txt nom prenom Stagiaires inscrits', tooltip: '', underline: false, visible: true}
     type: Button
+  - event_bindings: {click: bt_maj_txt_stagiaires_inscrits_pour_stage_click}
+    layout_properties: {grid_position: 'DJYAQB,JROMNJ'}
+    name: bt_maj_txt_stagiaires_inscrits_pour_stage
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', enabled: true, font: '', font_size: null, foreground: 'theme:On Primary Container', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '  Maj txt nom prenom Stagiaires inscrits / tuteur --> pour_stage', tooltip: '', underline: false, visible: true}
+    type: Button
   - event_bindings: {click: bt_del_qcm_2_mois_click}
     layout_properties: {grid_position: 'UNJISK,QTBLPG'}
     name: bt_del_qcm_2_mois

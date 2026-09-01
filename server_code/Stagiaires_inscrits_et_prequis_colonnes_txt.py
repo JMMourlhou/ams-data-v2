@@ -33,6 +33,15 @@ def maj_stagiaires_inscrits_txt():
                   )
 
 #================================================================================================================
+#boucle sur la table stagiaire inscrits pour mettre à jour la col 'pour_stage' (stage Tuteur)
+@anvil.server.callable
+def maj_stagiaires_inscrits_pour_stage():
+    liste_stagiaires = app_tables.stagiaires_inscrits.search()
+    for row in liste_stagiaires:
+
+
+
+#================================================================================================================
 # EN BG TASK
 #boucle sur toute la table pre_requis_stagiaire pour maj colonnes nom, prenom, numero, pr en clair txt 
 # et effact de pr si le user n'existe plus
