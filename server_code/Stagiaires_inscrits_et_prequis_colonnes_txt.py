@@ -42,10 +42,13 @@ def maj_stagiaires_inscrits_pour_stage():
     print(f"nb de tuteurs stage 1003 {len(liste_stagiaires)}")
     # lecture du row du stage BPMotoN
     stage_bp_moto_row = app_tables.stages.get(numero=163)
-    for row in liste_stagiaires:
-        print(row['name'], stage_bp_moto_row['code_txt'], stage_bp_moto_row['numero'])
-        row.update(pour_stage_num = stage_bp_moto_row)
-
+    if stage_bp_moto_row:
+        print(f"Pour stage; {stage_bp_moto_row['code_txt']},numéro {stage_bp_moto_row['numero']}")
+        for row in liste_stagiaires:
+            print(row['name'], stage_bp_moto_row['code_txt'], stage_bp_moto_row['numero'])
+            row.update(pour_stage_num = stage_bp_moto_row)
+    else:
+        print("ERREUR LECTURE")
 
 #================================================================================================================
 # EN BG TASK
