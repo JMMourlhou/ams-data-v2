@@ -36,9 +36,15 @@ def maj_stagiaires_inscrits_txt():
 #boucle sur la table stagiaire inscrits pour mettre à jour la col 'pour_stage' (stage Tuteur)
 @anvil.server.callable
 def maj_stagiaires_inscrits_pour_stage():
-    liste_stagiaires = app_tables.stagiaires_inscrits.search()
+    liste_stagiaires = app_tables.stagiaires_inscrits.search(
+        numero = 1003
+    )
+    print(f"nb de tuteurs stage 1003 {len(liste_stagiaires)}")
+    # lecture du row du stage BPMotoN
+    stage_bp_moto_row = app_tables.stages.get(numero=163)
     for row in liste_stagiaires:
-
+        print(row['name'], stage_bp_moto_row['code_txt'], stage_bp_moto_row['numero'])
+        row.update(pour_stage_num = stage_bp_moto_row)
 
 
 #================================================================================================================

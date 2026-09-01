@@ -787,7 +787,8 @@ db_schema:
     - admin_ui: {order: 0.5, width: 120}
       name: stage_txt
       type: string
-    - admin_ui: {order: 0.75, width: 127}
+    - admin_ui: {order: 0.75, width: 131}
+      client_hidden: false
       name: numero
       type: number
     - admin_ui: {order: 1, width: 275}
@@ -826,6 +827,7 @@ db_schema:
     - admin_ui: {order: 13.5, width: 200}
       name: reussite
       type: bool
+    indexes: []
     server: full
     title: Stagiaires_inscrits
   temp:
