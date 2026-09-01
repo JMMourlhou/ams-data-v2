@@ -100,6 +100,8 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
     def traitement(self, type_de_suivi, row):
         self.row = row
         self.type_de_suivi = type_de_suivi
+
+        
         """ ------------------------------------------------------------------------
                     INITIALISATION DE LA LISTE DES NON REPONSES (pour 'repeating_panel_no_response')
         """
@@ -113,7 +115,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
             self.label_titre_no_response.text = "Tuteurs n'ayant pas encore répondu"
             # liste des tuteurs n'ayant pas remplis leurs Formulaires
             self.liste_no_response = app_tables.stagiaires_inscrits.search(
-                                                                            pour_stage_num=self.row,   # colonne spéciale ds table stagiaires inscrits, tuteur ou formateur pour stage ...
+                                                                            numero=self.row["numero"],   # colonne spéciale ds table stagiaires inscrits, tuteur ou formateur pour stage ...
                                                                             enquete_suivi=False                   
                                                                         )
             
@@ -473,7 +475,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
             print("Formulaire résultats suivi tuteur : ", self.row['numero'])
             self.liste_noms = app_tables.stagiaires_inscrits.search(
                                                             tables.order_by("name", ascending=True),
-                                                            pour_stage_num=self.row,                     # CRITERE DIFFERENT, COLONE DIFFERENTE QUE POUR STAGIAIRE
+                                                            numero=self.row["numero"],                  
                                                             enquete_suivi=True   # Enquete_suivi ds  table stagiaires_inscrits
                                                         )
         #print("stage suivi result ligne 476, nb de noms: ", len(self.liste_noms))              # TROUVER ERREUR: self.row ?

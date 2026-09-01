@@ -40,10 +40,10 @@ class ItemTemplate17(ItemTemplate17Template):
         if type_suivi == "T":
                        
             list = app_tables.stage_suivi.search(
-                                                user_email=self.item['user_email']['email'],
-                                                stage_num_txt=str(self.item['pour_stage_num']['numero']),    # 
-                                                user_role = "T"
-                                                )
+                user_email=self.item['user_email']['email'],
+                stage_num_txt=str(self.item['numero']),
+                user_role="T"
+            )
         nb_formulaires = len(list)
         
         #Boucle sur les formulaires
