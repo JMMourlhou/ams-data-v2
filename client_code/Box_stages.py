@@ -21,7 +21,8 @@ class Box_stages(Box_stagesTemplate):
                                     r['code_txt']+" / "+str(r['date_debut'])+" / "+str(r['numero']), r) for r in app_tables.stages.search(
                                     tables.order_by("code_txt", ascending=True),
                                     tables.order_by("date_debut", ascending=False),
-                                    numero = q.less_than(900)
+                                    numero = q.less_than(900),
+                                    code_txt = 
                                    )]
 
     def drop_down_fi_change(self, **event_args):

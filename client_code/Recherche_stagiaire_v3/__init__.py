@@ -658,9 +658,10 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             stagiaire_row = app_tables.users.get(email=self.label_user_email.text)
         except Exception as e:
             alert(f"Erreur en re-lecture du user: {e}")
-        if stagiaire_row["role"] != "T":   # tous stages sauf tuteurs
+        if stagiaire_row["role"] not in ("T", "F", "A", "B"):   # tous stages sauf tuteurs, Formateurs 
             self.content_panel.add_component(Box_types_fi(stagiaire_row, stage), full_width_row=False)
-        else:  # Ajout d'un Tuteur   
+            
+        if stagiaire_row["role"] == "T":   # Lors de l'Ajout d'un Tuteur 
             self.content_panel.add_component(Box_stages(stagiaire_row, stage), full_width_row=False)
         self.content_panel.scroll_into_view()
 
