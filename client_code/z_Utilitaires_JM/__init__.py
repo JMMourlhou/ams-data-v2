@@ -70,3 +70,7 @@ class z_Utilitaires_JM(z_Utilitaires_JMTemplate):
     def bt_csv_click(self, **event_args):
         """This method is called when the button is clicked"""
         open_form('XLS_reader')
+        
+    def bt_mp_check_up_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        open_form('z_check_up_mp')
