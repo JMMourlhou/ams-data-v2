@@ -102,6 +102,7 @@ def add_1_formulaire_suivi( user_stagiaire,              # users row (celui qui 
                                                             user_email = user_stagiaire
                                                         )
                 row.update(enquete_suivi=True)
+                print("enquete_suivi=True")
             except Exception as e:
                 print(f"Erreur en fin d'écriture/ Check du formulaire du stagiaire: {e}")
         return(True)

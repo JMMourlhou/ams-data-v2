@@ -106,7 +106,7 @@ class RowTemplate4(RowTemplate4Template):
         sov = self.check_box_form_suivi.checked
         # Si ce n'est pas un formulaire d'un tuteur (un tuteur peur refaire plusieurs années des formulaires)
         stagiaire_row=self.item   # formulaire de suivi rempli T/F
-        if self.item['type_stage'] != "T":
+        if self.item['stage']['type_stage'] != "T":
             if self.check_box_form_suivi.checked is False: 
                 r = AlertConfirmHTML.ask(
                     "Annulation d'un ou plusieurs formulaires de SUIVI:",
