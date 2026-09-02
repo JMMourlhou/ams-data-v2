@@ -22,7 +22,7 @@ class Box_stages(Box_stagesTemplate):
                                     tables.order_by("code_txt", ascending=True),
                                     tables.order_by("date_debut", ascending=False),
                                     numero = q.less_than(900),
-                                    code_txt = 
+                                    code_txt=q.any_of("BPAAN", "BPMOTO"),
                                    )]
 
     def drop_down_fi_change(self, **event_args):
