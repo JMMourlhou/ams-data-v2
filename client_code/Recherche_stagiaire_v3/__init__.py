@@ -750,7 +750,7 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
         if not result :
              AlertHTML.error("Erreur :", f"MAJ du centre non effectuée: {result}")
         else:
-            AlertHTML.success("Succès", f"Centre de format° {centre_row['lieu']} enregistré pour {user_row['prenom']} {user_row['nom']} !")
+            AlertHTML.success("Succès", f"Centre de format° {centre_row['lieu']} enregistré pour {user_row['prenom']} {user_row['nom']} !    Cet utilisateur doit possèder le role 'O',    Connecté à AMSdata, il ne verra que les stages de son centre.")
         # retour
         self.button_retour_click()
 
