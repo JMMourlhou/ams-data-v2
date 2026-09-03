@@ -152,6 +152,10 @@ class Parametres(ParametresTemplate):
         from ..Files_MAJ_Table import Files_MAJ_Table
         open_form('Files_MAJ_Table')
 
+    def bt_mp_check_up_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        open_form('z_check_up_mp')
+
 
 
 

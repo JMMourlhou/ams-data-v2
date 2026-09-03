@@ -5,53 +5,55 @@ import anvil.tables as tables
 
 
 @anvil.server.background_task
-def users_with_temp_pword(temporary_password, require_user=True):
+def search_users_with_temp_pword(temporary_password):
     """
-    Recherche les utilisateurs qui utilisent encore le mot de passe temporaire.
-
-    Entrée :
-        temporary_password : mot de passe temporaire à rechercher.
-
-    Sortie :
-        liste des utilisateurs concernés.
+    Recherche en arrière-plan les utilisateurs utilisant encore
+    le mot de passe temporaire.
 
     Cette fonction ne modifie aucune donnée.
     """
-    
-    
+
+    temporary_password_bytes = temporary_password.encode("utf-8")
 
     users_found = []
 
-    for user_row in app_tables.users.search(
-        tables.order_by("nom", ascending=True)
-    ):
-        print(f"{user_row['nom']}")
+    users_list = list(app_tables.users.search())
+    total_users = len(users_list)
+
+    for user_number, user_row in enumerate(users_list, start=1):
         stored_password_hash = user_row["password_hash"]
 
-        if stored_password_hash is None:
-            continue
+        if stored_password_hash is not None:
 
-        # bcrypt.checkpw attend des bytes.
-        if isinstance(stored_password_hash, str):
-            stored_password_hash = stored_password_hash.encode("utf-8")
+            if isinstance(stored_password_hash, str):
+                stored_password_hash = stored_password_hash.encode("utf-8")
 
-        temporary_password_bytes = temporary_password.encode("utf-8")
+            try:
+                password_matches = bcrypt.checkpw(
+                    temporary_password_bytes,
+                    stored_password_hash
+                )
+            except (ValueError, TypeError):
+                password_matches = False
 
-        try:
-            password_matches = bcrypt.checkpw(temporary_password_bytes, stored_password_hash)
-        except (ValueError, TypeError):
-            password_matches = False
+            if password_matches:
+                users_found.append({
+                    "email": user_row["email"],
+                    "nom": user_row["nom"],
+                    "prenom": user_row["prenom"],
+                    "role": user_row["role"],
+                })
 
-        if password_matches:
-            print(f'PW matching: {user_row["email"]}, {user_row["nom"]}, {user_row["prenom"]}, role: {user_row["role"]}, confirmé: {user_row["confirmed_email"]}')
-            users_found.append({
-                "email": user_row["email"],
-                "nom": user_row["nom"],
-                "prenom": user_row["prenom"],
-                "role": user_row["role"],
-                "confirmed_email": user_row["confirmed_email"],
-            })
+        # Informations récupérables depuis le client
+        anvil.server.task_state["current_user"] = user_number
+        anvil.server.task_state["total_users"] = total_users
+        anvil.server.task_state["users_found"] = len(users_found)
 
+    anvil.server.task_state["finished"] = True
+
+    # en fin de task, on retourne la valeur (après la commande 'return')
+    # Cette valeur est récupérée par le timer de la BG task par:  users_found_list = self.task.get_return_value()
+    return users_found
 
 @anvil.server.callable
 def users_with_temporary_password(temporary_password):
@@ -64,6 +66,8 @@ def users_with_temporary_password(temporary_password):
     if connected_user["role"] != "A":
         raise anvil.server.PermissionDenied("Accès réservé à l'administrateur.")
         return
-    task = anvil.server.launch_background_task('users_with_temp_pword',temporary_password)
+    task = anvil.server.launch_background_task('search_users_with_temp_pword',temporary_password)
+    
+    # Renvoi de la task avec ses Informations récupérables depuis le client
     return task
     
