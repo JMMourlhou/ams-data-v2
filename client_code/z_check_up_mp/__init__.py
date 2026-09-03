@@ -11,42 +11,56 @@ from ..AlertConfirmHTML import AlertConfirmHTML
 class z_check_up_mp(z_check_up_mpTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
+        self.task = None
+        self.timer_1.interval = 0
         
-        
-
-
     def button_1_click(self, **event_args):
-        """This method is called when the button is clicked"""
+        """Lance la recherche du mot de passe temporaire."""
+
         temporary_password = self.text_box_temporary_password.text
-        
+    
         if len(temporary_password) == 0:
             alert("Entrez un Mp")
             self.text_box_temporary_password.focus()
             return
-            
+    
         if self.check_box_raz.checked is True:
             r = AlertConfirmHTML.ask(
                 "RAZ des Mp :",
                 "<p>Voulez-vous forcer les users à Réinitialiser leur MP ?</p>",
                 style="error",
-                large = True
+                large=True
             )
-            if not r :   # non
+    
+            if not r:
                 return
-                
+    
         alert("Les users concernés seront visibles en logs")
-        self.label_progress.text = ""
+    
+        # Préparation de l'affichage
+        self.label_progress.text = "Démarrage de la recherche..."
         self.label_progress.visible = True
-        self.task = anvil.server.call("users_with_temporary_password", temporary_password, self.check_box_raz.checked)
+    
+        # Création de la nouvelle Background Task
+        self.task = anvil.server.call(
+            "users_with_temporary_password",
+            temporary_password,
+            self.check_box_raz.checked
+        )
+    
+        # Le Timer ne démarre qu'une fois la nouvelle tâche créée
+        self.timer_1.interval = 0.5
 
 
     def timer_1_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        if not hasattr(self, "task"):
+        """Suit l'avancement de la Background Task."""
+    
+        if self.task is None:
             return
-
-        # récupère le dictionaire maj en BG task
+    
+        # Récupération de l'état de la Background Task
         state = self.task.get_state()
+    
         current_user = state.get("current_user", 0)
         total_users = state.get("total_users", 0)
         users_found = state.get("users_found", 0)
@@ -55,8 +69,8 @@ class z_check_up_mp(z_check_up_mpTemplate):
             f"{current_user}/{total_users} utilisateurs contrôlés "
             f"- {users_found} trouvé(s)"
         )
-
-        # Si task achevée, on récupère la liste des users identifiés
+    
+        # Background Task terminée
         if state.get("finished"):
             self.timer_1.interval = 0
     
@@ -66,7 +80,15 @@ class z_check_up_mp(z_check_up_mpTemplate):
             print(f"{len(users_found_list)} utilisateur(s) trouvé(s)")
     
             for user_found in users_found_list:
-                print(f'{user_found["email"]}, {user_found["nom"]}, {user_found["prenom"]}, role: {user_found["role"]}')
+                print(
+                    f'{user_found["email"]}, '
+                    f'{user_found["nom"]}, '
+                    f'{user_found["prenom"]}, '
+                    f'role: {user_found["role"]}'
+                )
+    
+            # on oublie l'ancienne task
+            self.task = None
 
                 
     def check_box_raz_change(self, **event_args):
