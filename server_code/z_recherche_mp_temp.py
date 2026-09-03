@@ -1,10 +1,11 @@
 import bcrypt
 import anvil.server
 from anvil.tables import app_tables
+import anvil.tables as tables
 
 
-@anvil.server.callable(require_user=True)
-def users_with_temporary_password(temporary_password):
+@anvil.server.background_task
+def users_with_temp_pword(temporary_password, require_user=True):
     """
     Recherche les utilisateurs qui utilisent encore le mot de passe temporaire.
 
@@ -16,18 +17,15 @@ def users_with_temporary_password(temporary_password):
 
     Cette fonction ne modifie aucune donnée.
     """
-
-    connected_user = anvil.users.get_user()
-
-    if connected_user is None:
-        raise anvil.server.PermissionDenied("Utilisateur non connecté.")
-
-    if connected_user["role"] != "A":
-        raise anvil.server.PermissionDenied("Accès réservé à l'administrateur.")
+    
+    
 
     users_found = []
 
-    for user_row in app_tables.users.search():
+    for user_row in app_tables.users.search(
+        tables.order_by("nom", ascending=True)
+    ):
+        print(f"{user_row['nom']}")
         stored_password_hash = user_row["password_hash"]
 
         if stored_password_hash is None:
@@ -45,6 +43,7 @@ def users_with_temporary_password(temporary_password):
             password_matches = False
 
         if password_matches:
+            print(f'PW matching: {user_row["email"]}, {user_row["nom"]}, {user_row["prenom"]}, role: {user_row["role"]}, confirmé: {user_row["confirmed_email"]}')
             users_found.append({
                 "email": user_row["email"],
                 "nom": user_row["nom"],
@@ -53,4 +52,18 @@ def users_with_temporary_password(temporary_password):
                 "confirmed_email": user_row["confirmed_email"],
             })
 
-    return users_found
+
+@anvil.server.callable
+def users_with_temporary_password(temporary_password):
+    connected_user = anvil.users.get_user()
+    print(f"Server side: {connected_user['nom']} {connected_user['prenom']} / role: {connected_user['role']}")
+
+    if connected_user is None:
+        raise anvil.server.PermissionDenied("Utilisateur non connecté.")
+        return
+    if connected_user["role"] != "A":
+        raise anvil.server.PermissionDenied("Accès réservé à l'administrateur.")
+        return
+    task = anvil.server.launch_background_task('users_with_temp_pword',temporary_password)
+    return task
+    
