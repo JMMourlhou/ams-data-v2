@@ -58,6 +58,7 @@ class Stage_satisf_statistics(Stage_satisf_statisticsTemplate):
                     INITIALISATION DE LA LISTE DES NON REPONSES (column panel)
         """ 
         self.liste_no_response = app_tables.stagiaires_inscrits.search(
+                                                                tables.order_by("name", ascending=True),
                                                                 numero = row["numero"],
                                                                 enquete_satisf = False
                                                                 )

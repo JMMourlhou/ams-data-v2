@@ -27,7 +27,7 @@ class z_user_login(z_user_loginTemplate):
 
 
         """
-        # En cas d'erreur : effact du mp admin, voir :  z_user_modules
+        # En cas d'erreur (effact du mp admin), voir :  z_user_modules
         result = anvil.server.call("temporary_restore_admin_password")
         print(result)
         """
@@ -76,7 +76,8 @@ class z_user_login(z_user_loginTemplate):
             self.password_box.focus()
             
         except anvil.users.AuthenticationFailed:
-            AlertHTML.error("Erreur :", "Email ou Mot de Passe erroné !")
+            #AlertHTML.error("Erreur :", "Email ou Mot de Passe erroné !")
+            alert("Email ou Mot de Passe erroné !")
             self.password_box.text = ""
             self.password_box.focus()
 

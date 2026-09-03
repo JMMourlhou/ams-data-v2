@@ -39,7 +39,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         )
         liste_stage_drop_down_stagiaires = []
         for stage in liste1:
-            liste_stage_drop_down_stagiaires.append((stage["code"]['code'] + "du " + str(stage["date_debut"]), stage))
+            liste_stage_drop_down_stagiaires.append((stage["code"]['code'] + " du " + str(stage["date_debut"]), stage))
         self.drop_down_code_stagiaires.items = liste_stage_drop_down_stagiaires
         
         # initialistaion de la drop down codes suivi des tuteurs
@@ -52,7 +52,10 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         )
         liste_stage_drop_down_tuteurs = []
         for stage in liste1:
-            liste_stage_drop_down_tuteurs.append((stage["code"]['code'] + "du " + str(stage["date_debut"]), stage))
+            if stage['type_stage'] != "T" :
+                liste_stage_drop_down_tuteurs.append((stage["code"]['code'] + " du " + str(stage["date_debut"]), stage))
+            else:
+                liste_stage_drop_down_tuteurs.append((stage["code"]['code'], stage))
         self.drop_down_code_tuteurs.items = liste_stage_drop_down_tuteurs
         
         # si génération du pdf, on cache des boutons et on envoi directement en traitement en fonction du type de suivi demandé
@@ -108,6 +111,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         if type_de_suivi == "S":   # Stagiaires du stage sélectionné 
             self.label_titre_no_response.text = "Stagiaires n'ayant pas encore répondu"
             self.liste_no_response = app_tables.stagiaires_inscrits.search(
+                                                                            tables.order_by("name", ascending=True),
                                                                             numero=self.row["numero"],
                                                                             enquete_suivi=False                   
                                                                         )
@@ -115,6 +119,7 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
             self.label_titre_no_response.text = "Tuteurs n'ayant pas encore répondu"
             # liste des tuteurs n'ayant pas remplis leurs Formulaires
             self.liste_no_response = app_tables.stagiaires_inscrits.search(
+                                                                            tables.order_by("name", ascending=True),
                                                                             numero=self.row["numero"],   # colonne spéciale ds table stagiaires inscrits, tuteur ou formateur pour stage ...
                                                                             enquete_suivi=False                   
                                                                         )
@@ -130,20 +135,25 @@ class Stage_suivi_results(Stage_suivi_resultsTemplate):
         # ------------------------------------------------------------------------
         if type_de_suivi == "T":
             self.drop_down_code_stagiaires.visible = False
-            text1 = "Tuteurs du "
+            text1 = "Tuteurs / "
+            self.label_titre.text = (
+                text1
+                + "Stage n°"
+                + str(row["numero"])
+            )
         else:
             text1 = "Stagiaires du "
             self.drop_down_code_tuteurs.visible = False
             
-        self.label_titre.text = (
-            text1
-            + "Stage n°"
-            + str(row["numero"])
-            + " "
-            + row["code_txt"]
-            + " du "
-            + str(row["date_debut"])
-        )
+            self.label_titre.text = (
+                text1
+                + "Stage n°"
+                + str(row["numero"])
+                + " "
+                + row["code_txt"]
+                + " du "
+                + str(row["date_debut"])
+            )
         self.column_panel_titres.visible = True
         self.drop_down_code_stagiaires.visible = False
         self.column_panel_header.visible = False
