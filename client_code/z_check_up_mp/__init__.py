@@ -25,14 +25,17 @@ class z_check_up_mp(z_check_up_mpTemplate):
             
         if self.check_box_raz.checked is True:
             r = AlertConfirmHTML.ask(
-                "RAZ de :",
-                "<p>Voulez-vous annuler ce lieu ?</p>",
+                "RAZ des Mp :",
+                "<p>Voulez-vous forcer les users à Réinitialiser leur MP ?</p>",
                 style="error",
                 large = True
             )
-            if r :   # oui
-                self.label_progress.visible = True
-                self.task = anvil.server.call("users_with_temporary_password", temporary_password)
+            if not r :   # non
+                return
+                
+        alert("Les users concernés seront visibles en logs")
+        self.label_progress.visible = True
+        self.task = anvil.server.call("users_with_temporary_password", temporary_password, self.check_box_raz.checked)
 
 
     def timer_1_tick(self, **event_args):
@@ -42,7 +45,6 @@ class z_check_up_mp(z_check_up_mpTemplate):
 
         # récupère le dictionaire maj en BG task
         state = self.task.get_state()
-    
         current_user = state.get("current_user", 0)
         total_users = state.get("total_users", 0)
         users_found = state.get("users_found", 0)
@@ -62,12 +64,7 @@ class z_check_up_mp(z_check_up_mpTemplate):
             print(f"{len(users_found_list)} utilisateur(s) trouvé(s)")
     
             for user_found in users_found_list:
-                print(
-                    user_found["email"],
-                    user_found["nom"],
-                    user_found["prenom"],
-                    user_found["role"]
-                )
+                print(f'{user_found["email"]}, {user_found["nom"]}, {user_found["prenom"]}, role: {user_found["role"]}')
 
                 
     def check_box_raz_change(self, **event_args):

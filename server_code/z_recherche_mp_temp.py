@@ -5,7 +5,7 @@ import anvil.tables as tables
 
 
 @anvil.server.background_task
-def search_users_with_temp_pword(temporary_password):
+def search_users_with_temp_pword(temporary_password, invalidate_password=False):
     """
     Recherche en arrière-plan les utilisateurs utilisant encore
     le mot de passe temporaire.
@@ -49,6 +49,19 @@ def search_users_with_temp_pword(temporary_password):
         anvil.server.task_state["total_users"] = total_users
         anvil.server.task_state["users_found"] = len(users_found)
 
+        # --------------------------------------------------------------------------
+        # Invalidation du mot de passe temporaire
+        # --------------------------------------------------------------------------
+        if invalidate_password is True:
+            user_row["password_hash"] = None
+
+            # Suppression d'un éventuel ancien reset
+            user_row["password_reset_key"] = None
+            user_row["password_reset_expires"] = None
+
+            # Réinitialisation du compteur d'échecs
+            user_row["n_password_failures"] = 0
+
     anvil.server.task_state["finished"] = True
 
     # en fin de task, on retourne la valeur (après la commande 'return')
@@ -56,7 +69,7 @@ def search_users_with_temp_pword(temporary_password):
     return users_found
 
 @anvil.server.callable
-def users_with_temporary_password(temporary_password):
+def users_with_temporary_password(temporary_password,invalidate_password=False ):
     connected_user = anvil.users.get_user()
     print(f"Server side: {connected_user['nom']} {connected_user['prenom']} / role: {connected_user['role']}")
 
@@ -66,7 +79,7 @@ def users_with_temporary_password(temporary_password):
     if connected_user["role"] != "A":
         raise anvil.server.PermissionDenied("Accès réservé à l'administrateur.")
         return
-    task = anvil.server.launch_background_task('search_users_with_temp_pword',temporary_password)
+    task = anvil.server.launch_background_task('search_users_with_temp_pword',temporary_password, invalidate_password)
     
     # Renvoi de la task avec ses Informations récupérables depuis le client
     return task
