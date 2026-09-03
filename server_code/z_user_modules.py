@@ -18,12 +18,19 @@ from datetime import datetime, timedelta
 from . import Variables_globales # importation du module de lecture des variables globales (de la table Variables_globales) 
 
 """
-# Forcer login de l'utilisateur qui se connecte    
+# En cas d'erreur : Effact du mp admin
+# Rentrer le bon mail de l'admin 
+# Rentrer le mot de passe en clair "...."
+# Relancer l'app et utiliser le mot de passe rentré à la place de ....
 @anvil.server.callable
-def force_log(user_row):
-    user=anvil.users.force_login(user_row,remember=True)
-    user["last_login"]=French_zone.french_zone_time()  # Update the login time
-    return user
+def temporary_restore_admin_password():
+    #Réparation temporaire du mot de passe admin en développement.
+    admin_user = app_tables.users.get(email="jmarc@jmm-formation-et-services.fr")
+    if admin_user is not None:
+        admin_user["password_hash"] = hash_password("....", bcrypt.gensalt())
+        admin_user["n_password_failures"] = 0
+        print("Mot de passe temporaire admin rétabli")
+        print()
 """
 
 

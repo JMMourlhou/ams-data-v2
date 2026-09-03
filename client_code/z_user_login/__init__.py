@@ -24,6 +24,17 @@ class z_user_login(z_user_loginTemplate):
         open_form('Main')
 
     def button_validation_click(self, **event_args):
+
+
+        """
+        # En cas d'erreur : effact du mp admin, voir :  z_user_modules
+        result = anvil.server.call("temporary_restore_admin_password")
+        print(result)
+        """
+
+
+        
+        
         """This method is called when the button is clicked"""
         # --------------------------------Tests sur mail
         # mail vide ?

@@ -44,23 +44,25 @@ def search_users_with_temp_pword(temporary_password, invalidate_password=False):
                     "role": user_row["role"],
                 })
 
+                # --------------------------------------------------------------------------
+                # Invalidation du mot de passe temporaire
+                # --------------------------------------------------------------------------
+                if invalidate_password is True:
+                    user_row["password_hash"] = None
+        
+                    # Suppression d'un éventuel ancien reset
+                    user_row["password_reset_key"] = None
+                    user_row["password_reset_expires"] = None
+        
+                    # Réinitialisation du compteur d'échecs
+                    user_row["n_password_failures"] = 0
+
         # Informations récupérables depuis le client
         anvil.server.task_state["current_user"] = user_number
         anvil.server.task_state["total_users"] = total_users
         anvil.server.task_state["users_found"] = len(users_found)
 
-        # --------------------------------------------------------------------------
-        # Invalidation du mot de passe temporaire
-        # --------------------------------------------------------------------------
-        if invalidate_password is True:
-            user_row["password_hash"] = None
-
-            # Suppression d'un éventuel ancien reset
-            user_row["password_reset_key"] = None
-            user_row["password_reset_expires"] = None
-
-            # Réinitialisation du compteur d'échecs
-            user_row["n_password_failures"] = 0
+        
 
     anvil.server.task_state["finished"] = True
 
