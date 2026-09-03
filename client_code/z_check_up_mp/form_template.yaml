@@ -1,0 +1,36 @@
+components:
+- event_bindings: {tick: timer_1_tick}
+  layout_properties: {grid_position: 'CIZARA,IQFTLU'}
+  name: timer_1
+  properties: {}
+  type: Timer
+- components:
+  - layout_properties: {grid_position: 'YJNPXT,YZCOEE'}
+    name: label_result
+    properties: {align: center, background: 'theme:Tertiary', bold: true, border: '', font: '', font_size: 16, foreground: 'theme:On Tertiary', icon: '', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: 'Vérification des MP, avec option effacement du mp pour forcer une réinitialisation du Mp utilisateur', tooltip: '', underline: false, visible: true}
+    type: Label
+  - event_bindings: {click: button_1_click}
+    layout_properties: {grid_position: 'DLUSRT,TZCEJE'}
+    name: button_1
+    properties: {background: 'theme:On Primary Container', foreground: 'theme:Tertiary', text: 'Recherche des Mp '}
+    type: Button
+  - event_bindings: {pressed_enter: button_1_click}
+    layout_properties: {grid_position: 'DLUSRT,LUGAEL'}
+    name: text_box_temporary_password
+    properties: {background: '', foreground: '', placeholder: entrer le mp recherché}
+    type: TextBox
+  - event_bindings: {change: check_box_raz_change}
+    layout_properties: {grid_position: 'DLUSRT,XBNPJW'}
+    name: check_box_raz
+    properties: {align: center, foreground: 'theme:Error', text: Remettre  le Mp à None}
+    type: CheckBox
+  layout_properties: {grid_position: 'DUSDEG,EVFKCD'}
+  name: column_panel_1
+  properties: {background: ''}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'IHWJLK,JJSVLC'}
+  name: label_progress
+  properties: {align: center, background: 'theme:On Primary Container', bold: true, foreground: 'theme:On Secondary', text: Suivi du traitement., visible: false}
+  type: Label
+container: {type: ColumnPanel}
+is_package: true

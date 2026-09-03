@@ -18,6 +18,7 @@ class z_check_up_mp(z_check_up_mpTemplate):
     def button_1_click(self, **event_args):
         """This method is called when the button is clicked"""
         temporary_password = self.text_box_temporary_password.text
+        
         if len(temporary_password) == 0:
             alert("Entrez un Mp")
             self.text_box_temporary_password.focus()
@@ -34,6 +35,7 @@ class z_check_up_mp(z_check_up_mpTemplate):
                 return
                 
         alert("Les users concernés seront visibles en logs")
+        self.label_progress.text = ""
         self.label_progress.visible = True
         self.task = anvil.server.call("users_with_temporary_password", temporary_password, self.check_box_raz.checked)
 
