@@ -27,7 +27,8 @@ class z_check_up_mp(z_check_up_mpTemplate):
         if self.check_box_raz.checked is True:
             r = AlertConfirmHTML.ask(
                 "RAZ des Mp :",
-                "<p>Voulez-vous forcer les users à Réinitialiser leur MP ?</p>",
+                "<p>Les MP des utilisateurs ayant ce MP seront remis à None:</p>"
+                "<p>Voulez-vous ainsi forcer les users à Réinitialiser leur MP ?</p>",
                 style="error",
                 large=True
             )
@@ -94,6 +95,13 @@ class z_check_up_mp(z_check_up_mpTemplate):
     def check_box_raz_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
         pass  # Write Code Here
+
+
+    def button_annuler_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from ..Main import Main
+        open_form('Main',99)
+
 
 
         
