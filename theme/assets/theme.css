@@ -1529,5 +1529,10 @@ input.anvil-role-stage-number-filter::placeholder {
     opacity: 1;
 }
 
+    /* Rend lisible ds form Visu_stages, le placeholder du filtre par numéro de stage. */
+    input.anvil-role-stage-number-filter::placeholder {
+        color: %color:On Primary%;
+        opacity: 1;
+        }
 
 

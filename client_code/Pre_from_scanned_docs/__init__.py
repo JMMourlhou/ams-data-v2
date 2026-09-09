@@ -22,7 +22,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.file = None
         self.f = get_open_form()
         self.stage_row = stage_row
-        self.text_box_stage.text = f"{self.stage_row['code_txt']} du {str(self.stage_row['date_debut'])} {str(self.stage_row['numero'])}"
+        self.text_box_stage.text = f"{self.stage_row['code_txt']} du {str(self.stage_row['date_debut'])}  (Stage n° {str(self.stage_row['numero'])})"
 
         # INITIALISATION Drop down pré-requis
         global dico_pre_requis_initial   # le dictionaire des PRpour ce stage
@@ -190,7 +190,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # ====================================================================
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
         #alert(self.date_picker_expiration.date)
-        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result, self.date_picker_expiration.date)
+        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result, "multi", self.date_picker_expiration.date)
         alert(f"{nb_pages} pages sauvées...\n pour les {self.text_box_nb_stagiaires_marked.text} stagiaires !")
         self.button_annuler_click()
         
