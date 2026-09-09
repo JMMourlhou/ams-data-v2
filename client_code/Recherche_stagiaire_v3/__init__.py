@@ -10,6 +10,7 @@ from ..Box_types_fi import Box_types_fi
 from ..Box_stages import Box_stages
 from ..AlertHTML import AlertHTML
 from ..AlertConfirmHTML import AlertConfirmHTML
+from .. import Whatsapp
 
 class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
     def __init__(self, num_stage="", **properties):  # inscript="inscription" si vient de visu_stages pour inscription d'1 stagiare
@@ -800,6 +801,16 @@ class Recherche_stagiaire_v3(Recherche_stagiaire_v3Template):
             if bt != name_bt_clicked:
                 button_en_cours.foreground = "white"
                 button_en_cours.background = "theme:Olive"
+
+    def button_whatsapp_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        try:
+            destinataire = app_tables.users.get(email=self.label_user_email.text)
+        except Exception as e:
+            alert(f"Erreur en re-lecture du user: {e}")
+        telephone = destinataire['tel']
+        text_msg = "Essai de texte"
+        Whatsapp.open_whatsapp(telephone, text_msg)
                 
  
     
