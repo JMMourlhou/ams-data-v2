@@ -189,7 +189,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         
         # ====================================================================
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
-        alert(self.date_picker_expiration.date)
+        #alert(self.date_picker_expiration.date)
         nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result, self.date_picker_expiration.date)
         alert(f"{nb_pages} pages sauvées...\n pour les {self.text_box_nb_stagiaires_marked.text} stagiaires !")
         self.button_annuler_click()
