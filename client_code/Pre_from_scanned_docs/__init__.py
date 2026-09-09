@@ -19,6 +19,20 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
+        
+        """
+        -----------------------------------------------------------------------------
+        /* Rendre visible le placeholder du Date Picker de la date d'expiration. */
+        role css:
+        .anvil-role-date-picker input::placeholder {
+            color: %color:On Primary%;
+            opacity: 1;
+        }    
+        ---------------------------------------------------------------------------------
+        """ 
+        self.date_picker_1.role = "date-picker"
+
+        
         self.file = None
         self.f = get_open_form()
         self.stage_row = stage_row
@@ -31,8 +45,11 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         dico_pre_requis_selected = {}
         
         dico_pre_requis_initial = stage_row["code"]['pre_requis']
-        #for key in dico_pre_requis_initial:
-        #    print(f"dico initial en init: {key}")
+        if dico_pre_requis_initial is None:
+            alert("Pas de Pré-Requis en table pour ce stage !")
+            return
+        for key in dico_pre_requis_initial:
+            print(f"dico initial en init: {key}")
         self.drop_down_pr.items = [(r["requis"], r) for r in app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
         if len(self.drop_down_pr.items)==0:  # si le dictionaire n'existe pas encore (pas de pré requis encore introduit pour ce type de stage)
             alert("Pas de PR pour ce stage en table codes_stages !")
@@ -52,8 +69,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             self.content_panel.add_component(new_row)
             cpt += 1
 
-        self.date_picker_1.role = "anvil-role-date-picker"
-
+        
+        
     # Event raised: Changement du check box du stagiaire
     def handle_change_check_box(self, sender, **event_args):
         #alert(sender.row_stagiaire_inscrit['name'])
@@ -75,7 +92,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             return
         # test Pré-Requis de type Expiration = True
         if row['Expiration'] is True:
-            self.date_picker_expiration.visible = True
+            self.date_picker_1.visible = True
             
         # Ajout du PR ds le dico des clés des PR sélectionnés
         clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
@@ -95,7 +112,9 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.drop_down_pr.items = [(r["requis"], r) for r in  app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
         print(f"Nb de clés restantes à sélectionner: {len(dico_pre_requis_initial)}")
         
-        self.button_valid_pr_list.visible = True
+        if self.date_picker_1.visible is False:
+            self.button_valid_pr_list.visible = True
+            
         self.file_loader_docs_pr.visible = True
         self.drop_down_pr.selected_value = None
             
@@ -192,7 +211,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # ====================================================================
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
         #alert(self.date_picker_expiration.date)
-        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result, "multi", self.date_picker_expiration.date)
+        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result, "multi", self.date_picker_1.date)
         alert(f"{nb_pages} pages sauvées...\n pour les {self.text_box_nb_stagiaires_marked.text} stagiaires !")
         self.button_annuler_click()
         
@@ -212,9 +231,12 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.label_stagiaires.visible = True
         self.drop_down_pr.background = "green"
         self.button_valid_pr_list.background = "green"
+        self.date_picker_1.background = "green"
+        self.date_picker_1.foreground = "white"
 
     def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
-        if self.date_picker_expiration.date is None:
+        if self.date_picker_1.date is None:
             alert("Rentrer la date d'expiration du document")
             return
+        self.button_valid_pr_list.visible = True

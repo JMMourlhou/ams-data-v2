@@ -1530,9 +1530,9 @@ input.anvil-role-stage-number-filter::placeholder {
 }
 
 /* Rend lisible ds form Pre_from_scanned_docs, le placeholder du Date Picker de la date d'expiration. */
-input.date_picker_1::placeholder {
-    color: %color:On Primary%;
+.anvil-role-date-picker input::placeholder {
+    color: #FA0000;
     opacity: 1;
-    }
+}    
 
 
