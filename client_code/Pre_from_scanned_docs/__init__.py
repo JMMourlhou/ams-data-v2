@@ -19,7 +19,6 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         # Any code you write here will run before the form opens.
-        self.date_expiration = False   # devient True si un pré requi a colonne 'Expiration à True'  (Pour demander la date)
         self.file = None
         self.f = get_open_form()
         self.stage_row = stage_row
@@ -72,7 +71,10 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             alert("Vous devez sélectionner un pré-requis !")
             self.drop_down_pr.focus()
             return
-
+        # test Pré-Requis de type Expiration = True
+        if row['Expiration'] is True:
+            self.date_picker_expiration.visible = True
+            
         # Ajout du PR ds le dico des clés des PR sélectionnés
         clef = row["code_pre_requis"]  #extraction de la clef à ajouter à partir de la row sélectionnée de la dropbox
         valeur = (row)
@@ -187,7 +189,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         
         # ====================================================================
         # ENVOI EN UPLINK sur Pi5                          pdf file,  dico
-        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result)
+        alert(self.date_picker_expiration.date)
+        nb_pages = anvil.server.call("pre_requis_from_pdf", self.file, result, self.date_picker_expiration.date)
         alert(f"{nb_pages} pages sauvées...\n pour les {self.text_box_nb_stagiaires_marked.text} stagiaires !")
         self.button_annuler_click()
         
@@ -207,3 +210,9 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.label_stagiaires.visible = True
         self.drop_down_pr.background = "green"
         self.button_valid_pr_list.background = "green"
+
+    def date_picker_expiration_change(self, **event_args):
+        """This method is called when the selected date changes"""
+        if self.date_picker_expiration.date is None:
+            alert("Rentrer la date d'expiration du document")
+            return
