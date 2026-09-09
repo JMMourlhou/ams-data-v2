@@ -31,8 +31,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         dico_pre_requis_selected = {}
         
         dico_pre_requis_initial = stage_row["code"]['pre_requis']
-        for key in dico_pre_requis_initial:
-            print(f"dico initial en init: {key}")
+        #for key in dico_pre_requis_initial:
+        #    print(f"dico initial en init: {key}")
         self.drop_down_pr.items = [(r["requis"], r) for r in app_tables.pre_requis.search(tables.order_by("requis", ascending=True)) if dico_pre_requis_initial.get(r["code_pre_requis"])]
         if len(self.drop_down_pr.items)==0:  # si le dictionaire n'existe pas encore (pas de pré requis encore introduit pour ce type de stage)
             alert("Pas de PR pour ce stage en table codes_stages !")
@@ -51,6 +51,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
             new_row.set_event_handler('x-change', self.handle_change_check_box)
             self.content_panel.add_component(new_row)
             cpt += 1
+
+        self.date_picker_1.role = "anvil-role-date-picker"
 
     # Event raised: Changement du check box du stagiaire
     def handle_change_check_box(self, sender, **event_args):
@@ -211,7 +213,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.drop_down_pr.background = "green"
         self.button_valid_pr_list.background = "green"
 
-    def date_picker_expiration_change(self, **event_args):
+    def date_picker_1_change(self, **event_args):
         """This method is called when the selected date changes"""
         if self.date_picker_expiration.date is None:
             alert("Rentrer la date d'expiration du document")

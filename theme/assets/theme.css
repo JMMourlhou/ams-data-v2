@@ -1529,10 +1529,10 @@ input.anvil-role-stage-number-filter::placeholder {
     opacity: 1;
 }
 
-    /* Rend lisible ds form Visu_stages, le placeholder du filtre par numéro de stage. */
-    input.anvil-role-stage-number-filter::placeholder {
-        color: %color:On Primary%;
-        opacity: 1;
-        }
+/* Rend lisible ds form Pre_from_scanned_docs, le placeholder du Date Picker de la date d'expiration. */
+input.date_picker_1::placeholder {
+    color: %color:On Primary%;
+    opacity: 1;
+    }
 
 
