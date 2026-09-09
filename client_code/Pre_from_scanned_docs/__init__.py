@@ -18,9 +18,8 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
     def __init__(self, stage_row, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        
-        
         # Any code you write here will run before the form opens.
+        self.date_expiration = False   # devient True si un pré requi a colonne 'Expiration à True'  (Pour demander la date)
         self.file = None
         self.f = get_open_form()
         self.stage_row = stage_row
@@ -194,10 +193,12 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         
     def file_loader_docs_pr_change(self, file, **event_args):
         """This method is called when a new file is loaded into this FileLoader"""
-        self.file = file
-        self.column_panel_pr_requis.visible = True
-        self.file_loader_docs_pr.background = "green"
-        #self.file_loader_docs_pr.text = 
+        if file is not None:
+            nom_fichier = file.name
+            self.file = file
+            self.column_panel_pr_requis.visible = True
+            self.file_loader_docs_pr.background = "green"
+            self.file_loader_docs_pr.text = nom_fichier
 
     def button_valid_pr_list_click(self, **event_args):
         """This method is called when the button is clicked"""
