@@ -197,6 +197,7 @@ class Pre_from_scanned_docs(Pre_from_scanned_docsTemplate):
         self.file = file
         self.column_panel_pr_requis.visible = True
         self.file_loader_docs_pr.background = "green"
+        #self.file_loader_docs_pr.text = 
 
     def button_valid_pr_list_click(self, **event_args):
         """This method is called when the button is clicked"""
