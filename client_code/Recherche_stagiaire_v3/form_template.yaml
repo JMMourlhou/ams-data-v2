@@ -203,7 +203,7 @@ components:
             - event_bindings: {click: button_whatsapp_click}
               layout_properties: {}
               name: button_whatsapp
-              properties: {align: center, background: 'theme:Olive', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:send', icon_align: top, role: outlined-button, spacing_above: none, spacing_below: none, text: Wath'sP}
+              properties: {align: center, background: 'theme:Olive', font_size: 12, foreground: 'theme:Tertiary', icon: 'fa:whatsapp', icon_align: top, role: outlined-button, spacing_above: none, spacing_below: none, text: Whats'p}
               type: Button
             - event_bindings: {click: button_histo_click}
               layout_properties: {}
