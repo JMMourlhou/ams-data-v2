@@ -1535,9 +1535,8 @@ input.anvil-role-stage-number-filter::placeholder {
     opacity: 1;
 }    
 
-
-/* Test : placer la fenêtre d'alerte au-dessus du fond modal.
-   Pour revenir en arrière, supprimer ce bloc. */
+/* Pour éviter que le bouton 'ok' soit inactif quand une form alert est affichée */
+/* Place la fenêtre d'alerte au-dessus du fond modal.*/
 #alert-modal {
-    z-index: 1050;
+    z-index: 1050 !important;
 }
