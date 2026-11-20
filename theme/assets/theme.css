@@ -1536,3 +1536,8 @@ input.anvil-role-stage-number-filter::placeholder {
 }    
 
 
+/* Test : placer la fenêtre d'alerte au-dessus du fond modal.
+   Pour revenir en arrière, supprimer ce bloc. */
+#alert-modal {
+    z-index: 1050;
+}
